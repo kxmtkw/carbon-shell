@@ -27,9 +27,14 @@ WrapperRectangle
 
 			delegate:
 
-			Text {
-				required property string modelData
-				text: modelData
+			Rectangle {
+				Layout.alignment: Qt.AlignHCenter
+
+				width: Material.Style.dpi(180)
+				height: Material.Style.dpi(180)
+				
+				radius: Material.Style.round(Material.Style.roundExtraLarge, width, height)
+				color: modelData.focused ? Material.Color.primary_container : Material.Color.surface_dim 
 			}
 			
 		}

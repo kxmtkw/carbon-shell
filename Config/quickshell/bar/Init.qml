@@ -16,17 +16,30 @@ PanelWindow {
 	}		
 
 	implicitWidth: Material.Style.dpi(600)
-
 	color: Material.Color.background
 	
 
-	ColumnLayout
+	
+	ColumnLayout 
 	{
-		anchors.centerIn: parent
-		spacing: Material.Style.dpi(400)
+		anchors.fill: parent
+		spacing: 30       
+		anchors.margins: 10  
 
-		Clock{}
+		
+
+		Workspaces {
+			Layout.fillWidth: true
+			Layout.preferredHeight: 200
+			Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+		}
+
+
+		Clock 
+		{
+			Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+		}
 	}
-}
 
-1
+	
+}

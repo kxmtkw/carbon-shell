@@ -6,13 +6,10 @@ import "../material" as Material
 
 WrapperRectangle
 {
-	anchors.centerIn: parent
-
 	margin: Material.Style.dpi(70)
 	topMargin: Material.Style.dpi(120)
 
 	color: Material.Color.surface_container
-
 	radius: Material.Style.round(Material.Style.roundLargeInc, width, height)
 
 	SystemClock {
