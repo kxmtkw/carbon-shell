@@ -1,38 +1,57 @@
+from genericpath import isdir, isfile
 from pathlib import Path
+from pydoc import isdata
 import shutil
+import json
 
 import subprocess
 
-exclude = ["alacritty", "quickshell"]
+CONFIG = Path("Config")
+
+
+def get_transfer_details() -> dict:
+
+	json_path = CONFIG.joinpath("transfer.json")
+
+	with open(json_path) as file:
+		details = json.load(file)
+
+	return details
+
 
 def main():
 
 	print("Starting install...")
 
+	transfer_details: dict = get_transfer_details()
 
-	user = Path("~/.config").expanduser()
-	config = Path("Config")
+	for item in transfer_details["config"]:
 
-	for item in config.iterdir():
+		src = CONFIG.joinpath(item["name"])
 
-		if item.name in exclude:
-			print(f"Excluded: {item.name}")
+		if not item["include"]:
+			print(f"Skipped :: {item["name"]}")
 			continue
+		
+		dest = Path(item["dest"]).expanduser()
 
-		print(f"Transferring: {item.name}")
+		if src.is_file():
+			shutil.copy(src, dest)
 
-		dest = user.joinpath(item.name) 
+		if src.is_dir():
 
-		if dest.exists():
-			print(f"Removed previous: {dest.absolute()}")
-			shutil.rmtree(dest)
+			if dest.exists():
+				shutil.rmtree(dest)
+				print(f"Removed :: {dest.absolute()}")
 
-		shutil.copytree(item.absolute(), dest)
-		print(f"Created: {dest.absolute()}")
+			shutil.copytree(src, dest)
 
+		print(f"Transferred :: {src.name} -> {dest.absolute()}")
 
+		
 	print("Reloading hyprland...")
 
 	subprocess.run("hyprctl reload", shell=True, capture_output=True)
+
 
 main()

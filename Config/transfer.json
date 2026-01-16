@@ -1,0 +1,40 @@
+{
+    "config" :
+    [
+        {
+            "name" : "hypr",
+            "dest" : "~/.config/hypr",
+            "include" : true
+        },
+        {
+            "name" : "kitty",
+            "dest" : "~/.config/kitty",
+            "include" : true
+        },
+        {
+            "name" : "quickshell",
+            "dest" : "~/.config/quickshell",
+            "include" : false
+        },
+        {
+            "name" : ".zshenv",
+            "dest" : "~/.zshenv",
+            "include" : true
+        },
+        {
+            "name" : ".zprofile",
+            "dest" : "~/.zprofile",
+            "include" : true
+        },
+        {
+            "name" : ".zshrc",
+            "dest" : "~/.zshrc",
+            "include" : true
+        },
+        {
+            "name" : ".zsh_autocomplete",
+            "dest" : "~/.zshac",
+            "include" : true
+        }
+    ]
+}
