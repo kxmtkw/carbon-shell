@@ -3,7 +3,7 @@ import shutil
 
 import subprocess
 
-exclude = ["alacritty"]
+exclude = ["alacritty", "quickshell"]
 
 def main():
 
