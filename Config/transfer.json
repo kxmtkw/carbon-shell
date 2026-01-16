@@ -17,22 +17,22 @@
             "include" : false
         },
         {
-            "name" : ".zshenv",
+            "name" : "zsh/.zshenv",
             "dest" : "~/.zshenv",
             "include" : true
         },
         {
-            "name" : ".zprofile",
+            "name" : "zsh/.zprofile",
             "dest" : "~/.zprofile",
             "include" : true
         },
         {
-            "name" : ".zshrc",
+            "name" : "zsh/.zshrc",
             "dest" : "~/.zshrc",
             "include" : true
         },
         {
-            "name" : ".zsh_autocomplete",
+            "name" : "zsh/.zsh_autocomplete",
             "dest" : "~/.zshac",
             "include" : true
         }

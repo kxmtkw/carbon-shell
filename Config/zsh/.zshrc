@@ -16,5 +16,4 @@ alias grep='grep --color'
 
 alias gs='git status'
 
-
-ssh-add ~/.ssh/github
+ssh-add ~/.ssh/github >/dev/null 2>&1
