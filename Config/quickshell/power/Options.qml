@@ -46,7 +46,7 @@ WrapperRectangle {
 
                     color: Material.Color.on_surface
                     text: modelData
-                    font.family: "Iosevka"
+                    font.family: "Iosevka Nerd Font"
                     font.pointSize: Material.Style.dpi(180)
                 }
 
