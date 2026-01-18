@@ -14,7 +14,7 @@ WrapperRectangle
 
 	color: Material.Color.surface_container
 
-	radius: Material.Style.round(Material.Style.roundLargeInc, width, height)
+	radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
 
 	
 	

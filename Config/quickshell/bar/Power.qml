@@ -6,6 +6,8 @@ import QtQuick.Layouts
 
 import "../material" as Material
 
+import "../global" as Global
+
 
 WrapperRectangle
 {
@@ -14,7 +16,7 @@ WrapperRectangle
 
 	color: Material.Color.surface_container
 
-	radius: Material.Style.round(Material.Style.roundLargeInc, width, height)
+	radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
 
 
 	MouseArea
@@ -34,6 +36,10 @@ WrapperRectangle
 			color: Material.Color.on_surface
 
 			
+		}
+
+		onClicked: {
+			Global.State.powerMenuShown = !Global.State.powerMenuShown
 		}
 		
 		hoverEnabled: true 

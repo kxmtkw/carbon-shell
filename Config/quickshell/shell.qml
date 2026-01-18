@@ -4,5 +4,13 @@ import QtQuick
 
 import "material" as Material
 import "bar" as Bar
+import "power" as Power
 
-Bar.Init{}
+
+ShellRoot
+{
+    Power.Init{}
+    Bar.Init{}
+}
+
+
