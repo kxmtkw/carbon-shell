@@ -9,32 +9,32 @@
         {
             "name" : "kitty",
             "dest" : "~/.config/kitty",
-            "include" : true
+            "include" : false
         },
         {
             "name" : "quickshell",
             "dest" : "~/.config/quickshell",
-            "include" : false
+            "include" : true
         },
         {
             "name" : "zsh/.zshenv",
             "dest" : "~/.zshenv",
-            "include" : true
+            "include" : false
         },
         {
             "name" : "zsh/.zprofile",
             "dest" : "~/.zprofile",
-            "include" : true
+            "include" : false
         },
         {
             "name" : "zsh/.zshrc",
             "dest" : "~/.zshrc",
-            "include" : true
+            "include" : false
         },
         {
             "name" : "zsh/.zsh_autocomplete",
             "dest" : "~/.zshac",
-            "include" : true
+            "include" : false
         }
     ]
 }

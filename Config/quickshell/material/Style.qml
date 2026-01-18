@@ -27,4 +27,19 @@ Singleton
 	{
 		return round_value * (Math.min(width, height) / 8)
 	}
+
+
+	function setOpacity(hexColor, opacity) {
+
+		opacity = Math.max(0, Math.min(1, opacity))
+
+		let alpha = Math.round(opacity * 255)
+			.toString(16)
+			.padStart(2, "0")
+
+		hex = hexColor.replace("#", "")
+
+		return "#" + alpha + hex
+	}
 }
+

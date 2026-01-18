@@ -23,20 +23,27 @@ PanelWindow {
 	ColumnLayout 
 	{
 		anchors.fill: parent
-		spacing: 30       
+		spacing: 10   
 		anchors.margins: 10  
 
 		
 
 		Workspaces {
 			Layout.fillWidth: true
-			Layout.preferredHeight: 200
+			Layout.preferredHeight: Material.Style.dpi(2200)
 			Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 		}
 
 
 		Clock 
 		{
+			Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+		}
+
+		Power
+		{
+			Layout.fillWidth: true
+			Layout.preferredHeight: Material.Style.dpi(360)
 			Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 		}
 	}

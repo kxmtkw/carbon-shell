@@ -33,8 +33,8 @@ WrapperRectangle
 				width: Material.Style.dpi(180)
 				height: Material.Style.dpi(180)
 				
-				radius: Material.Style.round(Material.Style.roundExtraLarge, width, height)
-				color: modelData.focused ? Material.Color.primary_container : Material.Color.surface_dim 
+				radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
+				color: modelData.focused ? Material.Color.on_surface : Material.Color.background
 			}
 			
 		}

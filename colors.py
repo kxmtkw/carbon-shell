@@ -1,7 +1,7 @@
 import material_color_utilities as material
 from PIL import Image
 
-theme = material.theme_from_color("#00E1FF")
+theme = material.theme_from_color("#38FFF5", 0.01, material.Variant.CONTENT)
 s = theme.schemes.dark
 
 s = [
