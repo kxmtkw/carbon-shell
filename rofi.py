@@ -17,7 +17,7 @@ class RofiShell:
 
 	@classmethod
 	def Run(cls, cmd: str) -> str:
-		output = subprocess.run(f"rofi {cmd}", shell=True, capture_output=True, text=True)
+		output = subprocess.run(cmd, shell=True, capture_output=True, text=True)
 		return output.stdout if (output.returncode == 0) else output.stderr
 
 
@@ -29,13 +29,25 @@ class RofiShell:
 			
 
 	def openMode(self, mode: str):
-		cmd = f"-show {mode} -theme {self.theme.absolute() if self.theme else ""}"
+		cmd = f"rofi -show {mode} -theme {self.theme.absolute() if self.theme else ""}"
 		self.Run(cmd)
+
+	def open(self, options: list[str]):
+		cmd = f"echo -e \"{"\n".join(options)}\" | rofi -dmenu"
+		print(self.Run(cmd))
 
 	
 
 
 
 
-rofi = RofiShell("/home/haseeb/code/dots/Config/rofi/launcher/style.rasi")
-rofi.openMode(RofiShell.Mode.Filebrower)
+rofi = RofiShell()
+
+rofi.open( [
+				"  Shutdown",
+					"  Reboot",
+					"  Lock",
+					"  Sleep",
+					"  Hibernate",
+					"  BIOS"
+				])

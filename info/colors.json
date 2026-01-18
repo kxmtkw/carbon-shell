@@ -1,0 +1,5 @@
+{
+    "qml"   : "Config/quickshell/material/Color.qml",
+    "rofi"  : "Config/rofi/material/color.rasi",
+    "kitty" : "Config/kitty/material/color.conf"
+}
