@@ -15,7 +15,7 @@ class PowerMenu():
 		]
 
 
-	def run(self):
+	def launch(self):
 		selected: str = self.rofi.display(
 			"",
 			"Power",

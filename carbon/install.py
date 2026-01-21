@@ -57,11 +57,11 @@ def link(src: Path, dest: Path):
     Color.Print(f"Symlinked :: {dest} -> {src}", Color.green)
 
 
-def install():
+def installCarbon():
 
     config_files = loadConfig()
 
-    Color.Print("Installing mShell...", Color.blue)
+    Color.Print("Installing carbon shell...", Color.blue)
 
     for file in config_files:
         link(Path(file["src"]), Path(file["dest"]))
@@ -70,7 +70,9 @@ def install():
             subprocess.run("hyprctl reload", shell=True, capture_output=True)
 
     
-    Color.Print("Installation Complete!", Color.blue)
+    Color.Print("Installation complete!", Color.blue)
 
 
     
+def uninstallCarbon():
+    pass
