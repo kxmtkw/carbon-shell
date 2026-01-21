@@ -19,20 +19,25 @@ uptime="`uptime -p | sed -e 's/up //g'`"
 host=`hostname`
 
 # Options
-shutdown=''
-reboot=''
-lock=''
-suspend=''
-logout=''
-yes=''
-no=''
+shutdown=' Shutdown'
+reboot=' Reboot'
+lock=' Lock'
+suspend=' Sleep'
+logout=' Logout'
+yes=' Yes'
+no=' No'
+
+shutdown="  Shutdown"
+reboot="  Reboot"
+lock="  Lock"
+sleep="  Sleep"
+hibernate="  Hibernate"
+bios="  BIOS"
 
 # Rofi CMD
 rofi_cmd() {
 	rofi -dmenu \
-		-p "Uptime: $uptime" \
-		-mesg "Uptime: $uptime" \
-		-theme /home/haseeb/code/shell/Config/rofi/power.rasi
+		-theme /home/haseeb/code/mShell/Config/rofi/power.rasi
 }
 
 # Confirmation CMD
@@ -45,7 +50,7 @@ confirm_cmd() {
 		-dmenu \
 		-p 'Confirmation' \
 		-mesg 'Are you Sure?' \
-		-theme /home/haseeb/code/shell/Config/rofi/power.rasi
+		-theme /home/haseeb/code/mShell/Config/rofi/power.rasi
 }
 
 # Ask for confirmation
@@ -55,7 +60,7 @@ confirm_exit() {
 
 # Pass variables to rofi dmenu
 run_rofi() {
-	echo -e "$lock\n$suspend\n$logout\n$reboot\n$shutdown" | rofi_cmd
+	echo -e "$shutdown\n$reboot\n$lock\n$sleep\n$hibernate\n$bios" | rofi_cmd
 }
 
 # Execute Command
