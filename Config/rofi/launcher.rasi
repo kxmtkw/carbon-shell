@@ -1,13 +1,12 @@
 
-configuration {
-	modi:                       "drun,run,filebrowser,window";
+configuration 
+{
+	modi:                       "drun,run";
     show-icons:                 true;
     display-drun:               "Apps";
     display-run:                "Run";
-    display-filebrowser:        "Files";
-    display-window:             "Windows";
 	drun-display-format:        "{name}";
-	window-format:              "{w} · {c} · {t}";
+	window-format:              "{w} · {c}";
 
     hover-select: true;
     me-select-entry: "";
@@ -15,24 +14,29 @@ configuration {
     on-click-right: "";
 }
 
-@import "style.rasi"
+@import "theme/colors.rasi"
+@import "theme/fonts.rasi"
 
-window {
+
+window
+ {
     transparency:                "real";
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       1000px;
+    width:                       50%;
+    height:                      70%;
     x-offset:                    0px;
     y-offset:                    0px;
 
     enabled:                     true;
-    border-radius:               20px;
+    border-radius:               30px;
     cursor:                      "default";
     background-color:            @background;
 }
 
-mainbox {
+mainbox 
+{
     enabled:                     true;
     spacing:                     0px;
     background-color:            transparent;
@@ -40,73 +44,82 @@ mainbox {
     children:                    [ "inputbar", "listbox" ];
 }
 
-listbox {
-    spacing:                     20px;
-    padding:                     20px;
+listbox 
+{
+    spacing:                     2%;
+    padding:                     2%;
     background-color:            transparent;
     orientation:                 vertical;
     children:                    [ "message", "listview" ];
 }
 
 /*****----- Inputbar -----*****/
-inputbar {
+inputbar 
+{
     enabled:                     true;
     spacing:                     10px;
     padding:                     80px 60px;
     background-color:            transparent;
-    background-image:            url("~/.config/rofi/wall.jpg", width);
-    text-color:                  @foreground;
+    background-image:            url("wall.jpg", width);
+    text-color:                  @onSurface;
     orientation:                 horizontal;
     children:                    [ "textbox-prompt-colon", "entry", "dummy", "mode-switcher" ];
 }
-textbox-prompt-colon {
+textbox-prompt-colon 
+{
     enabled:                     true;
     expand:                      false;
     str:                         "";
     padding:                     12px 15px;
     border-radius:               100%;
-    background-color:            @background-alt;
+    background-color:            @surfaceContainer;
     text-color:                  inherit;
 }
-entry {
+entry 
+{
     enabled:                     true;
     expand:                      false;
     width:                       300px;
     padding:                     10px 12px;
     border-radius:               12px;
-    background-color:            @background-alt;
+    background-color:            @surfaceContainer;
     text-color:                  inherit;
     cursor:                      text;
     placeholder:                 "Search";
     placeholder-color:           inherit;
 }
-dummy {
+dummy 
+{
     expand:                      true;
     background-color:            transparent;
 }
 
 /*****----- Mode Switcher -----*****/
-mode-switcher{
+mode-switcher
+{
     enabled:                     true;
     spacing:                     10px;
     background-color:            transparent;
-    text-color:                  @foreground;
+    text-color:                  @onSurface;
 }
-button {
+button 
+{
     width:                       80px;
     padding:                     12px;
     border-radius:               100%;
-    background-color:            @background-alt;
+    background-color:            @surfaceContainer;
     text-color:                  inherit;
     cursor:                      pointer;
 }
-button selected {
-    background-color:            @selected;
-    text-color:                  @foreground;
+button selected 
+{
+    background-color:            @surfaceContainerHigh;
+    text-color:                  @onSurface;
 }
 
 /*****----- Listview -----*****/
-listview {
+listview 
+{
     enabled:                     true;
     columns:                     1;
     lines:                       10;
@@ -120,51 +133,40 @@ listview {
     
     spacing:                     10px;
     background-color:            transparent;
-    text-color:                  @foreground;
+    text-color:                  @onSurface;
     cursor:                      "default";
 }
 
 /*****----- Elements -----*****/
-element {
+element 
+{
     enabled:                     true;
     spacing:                     10px;
     padding:                     8px;
     border-radius:               12px;
     background-color:            transparent;
-    text-color:                  @foreground;
+    text-color:                  @onSurface;
     cursor:                      pointer;
 }
-element normal.normal {
+element normal.normal 
+{
     background-color:            inherit;
     text-color:                  inherit;
 }
-element normal.urgent {
-    background-color:            @urgent;
-    text-color:                  @foreground;
+element selected.normal 
+{
+    background-color:            @surfaceContainerHigh;
+    text-color:                  @onSurface;
 }
-element normal.active {
-    background-color:            @active;
-    text-color:                  @foreground;
-}
-element selected.normal {
-    background-color:            @selected;
-    text-color:                  @foreground;
-}
-element selected.urgent {
-    background-color:            @urgent;
-    text-color:                  @foreground;
-}
-element selected.active {
-    background-color:            @urgent;
-    text-color:                  @foreground;
-}
-element-icon {
+element-icon 
+{
     background-color:            transparent;
     text-color:                  inherit;
     size:                        32px;
     cursor:                      inherit;
 }
-element-text {
+element-text 
+{
     background-color:            transparent;
     text-color:                  inherit;
     cursor:                      inherit;
@@ -173,20 +175,23 @@ element-text {
 }
 
 /*****----- Message -----*****/
-message {
+message 
+{
     background-color:            transparent;
 }
 textbox {
+
     padding:                     12px;
     border-radius:               100%;
-    background-color:            @background-alt;
-    text-color:                  @foreground;
+    background-color:            @surfaceContainer;
+    text-color:                  @onSurface;
     vertical-align:              0.5;
     horizontal-align:            0.0;
 }
-error-message {
+error-message 
+{
     padding:                     12px;
     border-radius:               20px;
     background-color:            @background;
-    text-color:                  @foreground;
+    text-color:                  @onSurface;
 }

@@ -1,0 +1,8 @@
+* {
+    background:                     #0f150b;
+    surfaceContainer:              #1b2217;
+    onSurface:                     #dee5d4;
+    surfaceContainerHigh:         #262c21;
+    surfaceContainerHighest:      #b0b0b0;
+    primary:                        #00ff44;
+}
