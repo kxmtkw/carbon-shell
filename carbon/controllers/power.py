@@ -24,8 +24,6 @@ class PowerMenu():
 
 		if not selected: return
 
-		if not self.confirm(): return
-
 		self.exec(selected.strip())
 
 
@@ -43,16 +41,22 @@ class PowerMenu():
 	def exec(self, selected: str):
 		
 		options = self.options
+		
 
 		if selected == options[0]:
-			self.rofi.Run("systemctl poweroff")
+			cmd = "systemctl poweroff"
 		elif selected == options[1]:
-			self.rofi.Run("systemctl reboot")
+			cmd = "systemctl reboot"
 		elif selected == options[2]:
-			self.rofi.Run("loginctl lock")
+			cmd = "loginctl lock"
+			self.rofi.Run(cmd)
+			return
 		elif selected == options[3]:
-			self.rofi.Run("systemctl suspend")
+			cmd = "systemctl suspend"
 		elif selected == options[4]:
-			self.rofi.Run("systemctl hibernate")
-		elif selected == options[5]:
-			self.rofi.Run("systemctl reboot --firmware-setup")
+			cmd = "systemctl hibernate"
+		else:
+			cmd = "systemctl reboot --firmware-setup"
+
+		if not self.confirm(): return
+		self.rofi.Run(cmd)
