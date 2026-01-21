@@ -24,7 +24,7 @@ reboot=' Reboot'
 lock=' Lock'
 suspend=' Sleep'
 logout=' Logout'
-yes=' Yes'
+yes=' Yes' 
 no=' No'
 
 shutdown="  Shutdown"

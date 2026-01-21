@@ -3,7 +3,9 @@ from pathlib import Path
 import json
 import shutil
 
-from .misc import Color, mShellError, prompt
+from .misc import Color, CarbonError, prompt
+
+mShellError = CarbonError
 
 CONFIG = Path("info/config.json")
 
@@ -28,7 +30,10 @@ def link(src: Path, dest: Path):
     if not src.exists():
         mShellError().throw(f"Config Src '{src}' does not exist!").halt()
         
-    if dest.exists():
+    if dest.is_symlink():
+        dest.unlink()
+        
+    elif dest.exists():
 
         choice = prompt(
             f"{dest} already exists! Do you want to remove it?",
@@ -38,7 +43,7 @@ def link(src: Path, dest: Path):
         if choice == "y":
 
             Color.Print(f"Removing {dest}", Color.yellow)
-            if dest.is_symlink() or dest.is_file():
+            if dest.is_file():
                 dest.unlink()
             elif dest.is_dir():
                 shutil.rmtree(dest)
@@ -46,7 +51,7 @@ def link(src: Path, dest: Path):
         else:
             Color.Print(f"Skipped {dest}", Color.yellow)
             return
-       
+        
     dest.symlink_to(src.absolute(), src.is_dir())
 
     Color.Print(f"Symlinked :: {dest} -> {src}", Color.green)
