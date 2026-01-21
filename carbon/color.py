@@ -3,7 +3,7 @@ from PIL import Image
 from pathlib import Path
 import json
 
-from .misc import Color, mShellError
+from .misc import Color, CarbonError
 
 
 class MaterialColors:
@@ -97,7 +97,7 @@ COLORS = Path("info/colors.json")
 def loadColors() -> dict[str, str]:
 
     if not COLORS.exists():
-        mShellError().throw(f"Color file '{COLORS}' does not exist!").halt()
+        CarbonError().throw(f"Color file '{COLORS}' does not exist!").halt()
 
     with open(COLORS) as file:
         config = json.load(file)

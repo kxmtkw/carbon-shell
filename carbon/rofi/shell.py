@@ -30,7 +30,7 @@ class RofiShell:
 
 
     def display(self, prompt: str, mesg: str, options: list[str]) -> str:
-        cmd = f"echo -e '{"\n".join(options)}' | rofi -dmenu -p {prompt} -mesg {mesg} -theme {self.rasi}"
+        cmd = f"echo -e '{"\n".join(options)}' | rofi -dmenu -p '{prompt}' -mesg '{mesg}' -theme {self.rasi}"
         return self.Run(cmd)
     
 
