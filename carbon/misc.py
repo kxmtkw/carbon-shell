@@ -1,8 +1,9 @@
+from typing import Self
 
 
-class mShellError():
+class CarbonError():
 
-    def throw(self, msg: str) -> "mShellError":
+    def throw(self, msg: str) -> Self:
         Color.Print("[Error]", Color.red)
         print(msg)
         return self
@@ -53,4 +54,4 @@ def prompt(msg: str, options: list[str]) -> str:
 
         return chosen 
     
-    mShellError().throw("Too many retries").halt()
+    CarbonError().throw("Too many retries").halt()
