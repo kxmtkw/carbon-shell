@@ -23,8 +23,8 @@ PanelWindow {
 	ColumnLayout 
 	{
 		anchors.fill: parent
-		spacing: 10   
-		anchors.margins: 10  
+		spacing: Material.Style.dpi(160)
+		anchors.margins: Material.Style.dpi(100)
 
 		
 
@@ -34,6 +34,10 @@ PanelWindow {
 			Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 		}
 
+		Item 
+		{
+			Layout.fillHeight: true
+		}
 
 		Clock 
 		{
@@ -46,6 +50,7 @@ PanelWindow {
 			Layout.preferredHeight: Material.Style.dpi(360)
 			Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 		}
+		
 	}
 
 	

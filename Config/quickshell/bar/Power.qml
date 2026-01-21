@@ -1,4 +1,5 @@
 import Quickshell
+import Quickshell.Io
 import Quickshell.Widgets
 import Quickshell.Hyprland
 import QtQuick
@@ -14,10 +15,16 @@ WrapperRectangle
 	margin: Material.Style.dpi(70)
 	topMargin: Material.Style.dpi(120)
 
-	color: Material.Color.surface_container
+	color: Material.Color.background
 
 	radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
 
+	Process 
+	{
+		id: power_menu
+		running: false
+		command: [ "python3", "-m", "carbon", "--run", "power"]
+	}
 
 	MouseArea
 	{
@@ -35,11 +42,10 @@ WrapperRectangle
 			font.pixelSize: Material.Style.dpi(260)
 			color: Material.Color.on_surface
 
-			
 		}
 
 		onClicked: {
-			Global.State.powerMenuShown = !Global.State.powerMenuShown
+			power_menu.running = true
 		}
 		
 		hoverEnabled: true 
