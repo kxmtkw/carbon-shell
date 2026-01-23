@@ -1,4 +1,4 @@
-from carbon.rofi import RofiShell
+from rofi import RofiShell
 
 class PowerMenu():
 	
@@ -60,3 +60,8 @@ class PowerMenu():
 
 		if not self.confirm(): return
 		self.rofi.Run(cmd)
+
+
+if __name__ == "__main__":
+	p = PowerMenu()
+	p.launch()
