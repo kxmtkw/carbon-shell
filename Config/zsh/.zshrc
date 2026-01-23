@@ -1,4 +1,5 @@
 
+# AutoComplete
 source ~/.zshac
 
 zstyle ':completion:*' menu select
@@ -9,11 +10,22 @@ autoload -Uz compinit
 compinit
 
 
-alias ls='ls --color'
-alias la='ls --color --all'
 
+# Prompt
+autoload -U colors && colors
+
+PROMPT='%F{cyan}[%n@%m]%f %F{white}%~%f
+%F{green}$ %f'
+
+
+
+# Aliases
+alias ls='lsd'
+alias la='lsd --all'
 alias grep='grep --color'
-
 alias gs='git status'
+alias env='source ./.venv/bin/activate || echo No .venv found!'
+alias denv='deactivate || echo No .venv activated!'
 
-ssh-add ~/.ssh/github >/dev/null 2>&1
+
+
