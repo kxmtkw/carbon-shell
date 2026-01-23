@@ -23,7 +23,7 @@ WrapperRectangle
 	{
 		id: power_menu
 		running: false
-		command: [ "python3", "-m", "carbon", "--run", "power"]
+		command: [ "zsh", "-c", "~/.carbon/scripts/power.sh"]
 	}
 
 	MouseArea

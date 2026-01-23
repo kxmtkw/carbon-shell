@@ -1,3 +1,3 @@
 rofi \
 -show drun \
--theme ~/.carbon/Config/rofi/launcher.rasi
+-theme ~/.config/rofi/launcher.rasi
