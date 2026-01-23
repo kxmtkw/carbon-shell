@@ -20,7 +20,7 @@ WrapperRectangle
 	
 	ColumnLayout {
 		anchors.centerIn: parent
-		spacing: 6
+		spacing: 0
 
 		Repeater {
 			model: Hyprland.workspaces
@@ -30,11 +30,11 @@ WrapperRectangle
 			Rectangle {
 				Layout.alignment: Qt.AlignHCenter
 
-				width: Material.Style.dpi(180)
-				height: Material.Style.dpi(180)
+				width: Material.Style.dpi(200)
+				height: Material.Style.dpi(200)
 				
 				radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
-				color: modelData.focused ? Material.Color.primary_container : Material.Color.background
+				color: modelData.focused ? Material.Color.tertiary_container : Material.Color.background
 
 
 				MouseArea

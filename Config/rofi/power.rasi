@@ -124,6 +124,6 @@ element-text
 }
 element selected.normal 
 {
-    background-color:            var(surfaceContainerHigh);
+    background-color:            var(surfaceContainer);
     text-color:                  var(onSurface);
 }

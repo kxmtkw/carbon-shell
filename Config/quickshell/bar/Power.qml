@@ -51,7 +51,7 @@ WrapperRectangle
 		hoverEnabled: true 
 
 		onEntered: {
-			parent.color = Material.Color.surface_container_high
+			parent.color = Material.Color.surface_container
 		}
 
 		onExited: {
