@@ -11,8 +11,8 @@ configuration
 
     hover-select: true;
     me-select-entry: "";
-    me-accept-entry: [ MousePrimary, MouseSecondary, MouseDPrimary ];
-    on-click-right: "";
+    me-accept-entry: "!MousePrimary"; 
+    kb-cancel: ["MousePrimary", "Escape"];
 }
 
 @import "theme/colors.rasi"
@@ -48,7 +48,7 @@ mainbox
 listbox 
 {
     spacing:                     2%;
-    padding:                     2%;
+    padding:                     1%;
     background-color:            transparent;
     orientation:                 vertical;
     children:                    [ "message", "listview" ];
@@ -59,7 +59,7 @@ inputbar
 {
     enabled:                     true;
     spacing:                     1%;
-    padding:                     4%;
+    padding:                     3%;
     background-color:            transparent;
     text-color:                  @onSurface;
     orientation:                 horizontal;
@@ -120,6 +120,7 @@ listview
     reverse:                     false;
     fixed-height:                true;
     fixed-columns:               true;
+    padding:                     1%;
     
     spacing:                     10px;
     background-color:            transparent;

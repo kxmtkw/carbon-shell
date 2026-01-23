@@ -4,8 +4,8 @@ configuration
     show-icons:                 false;
     hover-select: true;
     me-select-entry: "";
-    me-accept-entry: [ MousePrimary, MouseSecondary, MouseDPrimary ];
-    on-click-right: "";
+    me-accept-entry: "!MousePrimary"; 
+    kb-cancel: ["MousePrimary", "Escape"];
 }
 
 @import "theme/colors.rasi"

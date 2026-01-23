@@ -23,7 +23,7 @@ WrapperRectangle
 	{
 		id: power_menu
 		running: false
-		command: [ "zsh", "-c", "~/.carbon/scripts/power.sh"]
+		command: [ "sh", "-c", "~/.carbon/scripts/power.sh"]
 	}
 
 	MouseArea
@@ -55,7 +55,7 @@ WrapperRectangle
 		}
 
 		onExited: {
-			parent.color = Material.Color.surface_container
+			parent.color = Material.Color.background
 		}
 
 	}
