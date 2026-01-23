@@ -13,8 +13,8 @@ class MaterialColors:
 
     class Variant:
         ash      = (0.1, material.Variant.VIBRANT)
-        coal     = (0.1, material.Variant.MONOCHROME)
-        graphite = (0.4, material.Variant.TONALSPOT)
+        coal     = (0.2, material.Variant.MONOCHROME)
+        graphite = (0.2, material.Variant.TONALSPOT)
         diamond  = (2, material.Variant.VIBRANT)
 
 
@@ -147,7 +147,7 @@ def updateKitty(s: dict[str, str]):
         f"inactive_tab_background  {s["background"]}\n"
         f"background               {s["background"]}\n"
         f"foreground               {s["on_surface"]}\n"
-        f"color0                   #1c1b1f\n"
+        f"color0                   #323234\n"
         f"color1                   #b3261e\n"
         f"color2                   #1b6b44\n"
         f"color3                   #7f5700\n"
@@ -216,7 +216,7 @@ def updateColors(colors: dict[str, str]):
     color_files = loadColors()
 
     for type, filepath in color_files.items():
-        print(type)
+        print(f"Updated :: {type}")
         match type:
             case "qml":
                 string = updateQuickshell(colors)
@@ -230,6 +230,7 @@ def updateColors(colors: dict[str, str]):
         
         with open(filepath, "w") as file:
             file.write(string)
+
 
 
 def main():
@@ -279,6 +280,9 @@ def main():
             updateColors(colors.darkMapping)
         else:
             CarbonError().throw("Invalid theme!").halt()
+
+    info = f"Color Info :: theme:{theme} {'image' if option == "-i" else 'color'}:{source} variant:{variant}"
+    print(info)
 
 if __name__ == "__main__":
     main()

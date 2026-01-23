@@ -1,9 +1,9 @@
 // NOTE: written by carbon shell
 * {
-background:                     #121318;
-surfaceContainer:               #25262b;
-onSurface:                      #ffffff;
-surfaceContainerHigh:           #303036;
-surfaceContainerHighest:        #3b3b41;
-primary:                        #c4cfff;
+background:                     #10131c;
+surfaceContainer:               #1e212b;
+onSurface:                      #e1e1ef;
+surfaceContainerHigh:           #292b35;
+surfaceContainerHighest:        #343641;
+primary:                        #b5c4ff;
 }
