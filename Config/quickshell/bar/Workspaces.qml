@@ -35,6 +35,14 @@ WrapperRectangle
 				
 				radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
 				color: modelData.focused ? Material.Color.on_surface : Material.Color.background
+
+
+				MouseArea
+				{
+					anchors.fill: parent
+					hoverEnabled: true
+					onEntered: {modelData.activate()}
+				}
 			}
 			
 		}
