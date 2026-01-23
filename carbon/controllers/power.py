@@ -3,7 +3,7 @@ from rofi import RofiShell
 class PowerMenu():
 	
 	def __init__(self):
-		self.rofi = RofiShell("Config/rofi/power.rasi")
+		self.rofi = RofiShell("~/.config/rofi/power.rasi")
 
 		self.options: list[str] = [
 		"  Shutdown",
