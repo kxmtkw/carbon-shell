@@ -31,7 +31,7 @@ class PowerMenu():
 		selected = self.rofi.display(
 			"",
 			"Are you sure?",
-			["  Yes", "  No"]
+			["  No", "  Yes"]
 		)
 
 		if (selected.strip() == "  Yes"): return True
