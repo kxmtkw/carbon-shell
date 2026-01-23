@@ -8,7 +8,7 @@ configuration
     kb-cancel: ["MousePrimary", "Escape"];
 }
 
-@import "theme/colors.rasi"
+@import "theme/color.rasi"
 @import "theme/fonts.rasi"
 
 

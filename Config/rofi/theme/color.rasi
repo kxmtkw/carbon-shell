@@ -1,0 +1,9 @@
+// NOTE: written by carbon shell
+* {
+background:                     #fff8f6;
+surfaceContainer:               #ffe8e4;
+onSurface:                      #271815;
+surfaceContainerHigh:           #fce0db;
+surfaceContainerHighest:        #f5d9d4;
+primary:                        #b00100;
+}
