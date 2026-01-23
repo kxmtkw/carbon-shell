@@ -2,12 +2,7 @@ import os
 from pathlib import Path
 
 from .args import parseArgs
-
 from .install import installCarbon, uninstallCarbon
-
-from .controllers.power import PowerMenu
-from .controllers.launcher import Launcher
-
 from .misc import CarbonError
 
 def main():
@@ -30,21 +25,6 @@ def main():
     elif args.colorify:
         pass 
 
-    elif args.run:
-        
-        match args.run:
-            
-            case "power":
-                menu = PowerMenu()
-                menu.launch()
-
-            case "launcher_apps":
-                launcher = Launcher()
-                launcher.launchApps()
-
-            case "launcher_run":
-                launcher = Launcher()
-                launcher.launchRun()
 
 
 
