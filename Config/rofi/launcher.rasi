@@ -1,10 +1,11 @@
 
 configuration 
 {
-	modi:                       "drun,run";
+	modi:                       "drun,run,filebrowser";
     show-icons:                 true;
-    display-drun:               "Apps";
-    display-run:                "Run";
+    display-drun:               "  Apps";
+    display-run:                "  Run";
+    display-filebrowser:        "  Files";
 	drun-display-format:        "{name}";
 	window-format:              "{w} · {c}";
 	icon-theme: "Papirus";
@@ -13,103 +14,130 @@ configuration
     me-select-entry: "";
     me-accept-entry: "!MousePrimary"; 
     kb-cancel: ["MousePrimary", "Escape"];
+
+    drun-categories: "";
+	drun-match-fields: "name,generic,exec,categories,keywords";
+	drun-display-format: "{name} <span weight='regular' size='small'><i>{generic}</i></span>";
+
+    drun {
+		parse-user:   true;
+		parse-system: true;
+    }
+
+    filebrowser {
+        directory: "~";
+        directories-first: true;
+        sorting-method:    "name";
+    }
+
+    run-command: "{cmd}";
+	run-list-command: "";
+	run-shell-command: "{terminal} -e {cmd}";
 }
 
 @import "theme/color.rasi"
-@import "style/fonts.rasi"
+@import "theme/fonts.rasi"
 
+* {
+    font:                        "IosevkaTerm Nerd Font 14";
+}
 
 window
  {
     transparency:                "real";
-    location:                    center;
+    location:                    west;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       50%;
-    height:                      70%;
+    width:                       600px;
+    height:                      97%;
     x-offset:                    0px;
     y-offset:                    0px;
 
     enabled:                     true;
+    margin:                      10px;
     border:                      2px solid;
     border-color:                @outline;
-    border-radius:               30px;
+    border-radius:               20px;
     cursor:                      "default";
-    background-color:            @background;
+    background-color:            rgba(41, 41, 41, 0.2);
 }
 
 mainbox 
 {
     enabled:                     true;
-    spacing:                     0px;
-    background-color:            transparent;
-    orientation:                 vertical;
-    children:                    [ "inputbar", "listbox" ];
-}
-
-listbox 
-{
-    spacing:                     2%;
-    padding:                     1%;
-    background-color:            transparent;
-    orientation:                 vertical;
-    children:                    [ "message", "listview" ];
-}
-
-/*****----- Inputbar -----*****/
-inputbar 
-{
-    enabled:                     true;
     spacing:                     1%;
-    padding:                     3%;
+    padding:                     0%;
+    background-color:            transparent;
+    orientation:                 vertical;
+    children:                    [ "inputbar", "mode-switcher", "listbox"];
+}
+
+
+// INPUT BAR
+
+inputbar {
+    enabled:                     true;
+    spacing:                     10px;
+    padding:                     9% 4%;
     background-color:            transparent;
     text-color:                  @onSurface;
     orientation:                 horizontal;
-    children:                    [ "entry", "dummy", "mode-switcher" ];
+    children:                    [ "dummy", "entry", "dummy"];
 }
-entry 
-{
+
+entry {
     enabled:                     true;
     expand:                      false;
-    width:                       300px;
-    padding:                     10px;
-    border-radius:               10px;
-    background-color:            @surfaceContainer;
+    width:                       20%;
+    padding:                     12px 16px;
+    border-radius:               12px;
+    background-color:            @background;
     text-color:                  inherit;
-    vertical-align:              0.5;
     cursor:                      text;
+    placeholder:                 "Search...";
     placeholder-color:           inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0;
 }
-dummy 
-{
+
+dummy {
     expand:                      true;
     background-color:            transparent;
 }
 
-/*****----- Mode Switcher -----*****/
-mode-switcher
-{
+mode-switcher{
     enabled:                     true;
-    spacing:                     1%;
-    background-color:            transparent;
+    spacing:                     10px;
+    margin:                      20px 48px;
+    border-radius:               12px;
+    background-color:            @background;
     text-color:                  @onSurface;
 }
-button 
-{
-    width:                       4%;
-    padding:                     1%;
-    border-radius:               10px;
-    background-color:            @surfaceContainer;
+button {
+    width:                       6%;
+    padding:                     10px;
+    border-radius:               12px;
+    background-color:            @background;
     text-color:                  inherit;
     cursor:                      pointer;
 }
-button selected 
-{
-    background-color:            @surfaceContainerHigh;
-    text-color:                  @onSurface;
+button selected {
+    background-color:            @primary;
+    text-color:                  @onPrimary;
 }
 
-/*****----- Listview -----*****/
+
+// LIST VIEW
+
+listbox 
+{
+    spacing:                     1%;
+    padding:                     2%;
+    background-color:            @background;
+    orientation:                 vertical;
+    children:                    [ "message", "listview" ];
+}
+
 listview 
 {
     enabled:                     true;
@@ -122,7 +150,6 @@ listview
     reverse:                     false;
     fixed-height:                true;
     fixed-columns:               true;
-    padding:                     1%;
     
     spacing:                     10px;
     background-color:            transparent;
@@ -130,7 +157,6 @@ listview
     cursor:                      "default";
 }
 
-/*****----- Elements -----*****/
 element 
 {
     enabled:                     true;
@@ -173,9 +199,8 @@ message
     background-color:            transparent;
 }
 textbox {
-
     padding:                     12px;
-    border-radius:               100%;
+    border-radius:               40px;
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
     vertical-align:              0.5;
