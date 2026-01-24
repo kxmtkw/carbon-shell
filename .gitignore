@@ -2,3 +2,9 @@ whiteboard.txt
 .vscode/**
 .venv/**
 __pycache__
+
+
+# Color files
+Color.qml
+color.conf
+color.rasi
