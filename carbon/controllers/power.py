@@ -4,6 +4,7 @@ class PowerMenu():
 	
 	def __init__(self):
 		self.rofi = RofiShell("~/.config/rofi/power.rasi")
+		self.confirmation = RofiShell("~/.config/rofi/confirmation.rasi")
 
 		self.options: list[str] = [
 		"  Shutdown",
@@ -28,7 +29,7 @@ class PowerMenu():
 
 
 	def confirm(self) -> bool:
-		selected = self.rofi.display(
+		selected = self.confirmation.display(
 			"",
 			"Are you sure?",
 			["  No", "  Yes"]
