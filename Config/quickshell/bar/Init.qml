@@ -57,6 +57,13 @@ PanelWindow {
 				Layout.fillHeight: true
 			}
 
+			Battery
+			{
+				Layout.fillWidth: true
+				Layout.preferredHeight: Material.Style.dpi(360)
+				Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+			}
+
 			Clock 
 			{
 				Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
