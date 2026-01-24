@@ -31,6 +31,8 @@ window
     y-offset:                    0px;
 
     enabled:                     true;
+    border:                      2px solid;
+    border-color:                @outline;
     border-radius:               30px;
     cursor:                      "default";
     background-color:            @background;
