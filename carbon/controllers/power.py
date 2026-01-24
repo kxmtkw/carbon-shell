@@ -12,6 +12,7 @@ class PowerMenu():
 		"  Lock",
 		"  Sleep",
 		"  Hibernate",
+		"󰍃  Logout",
 		"  BIOS" 
 		]
 
@@ -56,6 +57,8 @@ class PowerMenu():
 			cmd = "systemctl suspend"
 		elif selected == options[4]:
 			cmd = "systemctl hibernate"
+		elif selected == options[5]:
+			cmd = "hyprland dispatch exit"
 		else:
 			cmd = "systemctl reboot --firmware-setup"
 

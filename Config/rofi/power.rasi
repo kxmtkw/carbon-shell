@@ -103,7 +103,7 @@ listview
     
     spacing:                     1%;
     margin:                      0%;
-    padding:                     5% 2%;
+    padding:                     3% 2%;
     border:                      0px solid;
     border-radius:               0px;
     background-color:            @background;
