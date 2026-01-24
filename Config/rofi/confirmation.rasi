@@ -9,11 +9,7 @@ configuration
 }
 
 @import "theme/color.rasi"
-@import "style/fonts.rasi"
-
-* {
-    font:                        "IosevkaTerm Nerd Font 15";
-}
+@import "theme/fonts.rasi"
 
 window 
 {    
