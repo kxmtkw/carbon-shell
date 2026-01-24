@@ -18,8 +18,8 @@ class PowerMenu():
 
 	def launch(self):
 		selected: str = self.rofi.display(
-			"",
-			"Power",
+			self.rofi.Run("echo Uptime: $(uptime -p | sed -e 's/up //g')").strip(),
+			self.rofi.Run("echo \"$(whoami)@$(hostname)\"").strip(),
 			self.options
 		)
 
