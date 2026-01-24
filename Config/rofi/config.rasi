@@ -15,7 +15,7 @@ configuration {
 
 	matching: "normal";
 	tokenize: true;
-
+ 
 	ssh-client: "ssh";
 	ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";
 	parse-hosts: true;

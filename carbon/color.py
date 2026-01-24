@@ -184,6 +184,7 @@ def updateRofi(s: dict[str, str]):
         f"surfaceContainerHighest:        {s["surface_container_highest"]};\n"
         f"outline:                        {s["outline"]};\n"
         f"primary:                        {s["primary"]};\n"
+        f"onPrimary:                      {s["on_primary"]};\n"
         "}"
     )
 
