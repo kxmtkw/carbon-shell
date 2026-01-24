@@ -182,6 +182,7 @@ def updateRofi(s: dict[str, str]):
         f"onSurface:                      {s["on_surface"]};\n"
         f"surfaceContainerHigh:           {s["surface_container_high"]};\n"
         f"surfaceContainerHighest:        {s["surface_container_highest"]};\n"
+        f"outline:                        {s["outline"]};\n"
         f"primary:                        {s["primary"]};\n"
         "}"
     )
@@ -199,8 +200,7 @@ def updateQuickshell(s: dict[str, str]) -> str:
 
     Singleton 
     {
-        property color invisible					 : "#00000000"
-
+    property color invisible					 : "#00000000"\n
     """
 
     for name, val in s.items():
