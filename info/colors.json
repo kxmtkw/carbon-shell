@@ -1,4 +1,5 @@
 {
+    "hypr"  : "Config/hypr/color.conf",
     "qml"   : "Config/quickshell/material/Color.qml",
     "rofi"  : "Config/rofi/theme/color.rasi",
     "kitty" : "Config/kitty/color.conf"
