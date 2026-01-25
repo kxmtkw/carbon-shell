@@ -2,9 +2,9 @@
 configuration 
 {
     show-icons:                 false;
-    hover-select: true;
+    hover-select: false;
     me-select-entry: "";
-    me-accept-entry: "!MousePrimary"; 
+    me-accept-entry: ""; 
     kb-cancel: ["MousePrimary", "Escape"];
 }
 
@@ -66,9 +66,9 @@ prompt {
 
 message {
     enabled:                     true;
-    margin:                      10px;
-    padding:                     15px;
-    border-radius:               10px;
+    margin:                      0px;
+    padding:                     5% 10px;
+    border-radius:               0px;
     background-color:            transparent;
     text-color:                  @onSurface;
 }
@@ -77,7 +77,8 @@ textbox {
     background-color:            inherit;
     text-color:                  inherit;
     vertical-align:              0.5;
-    horizontal-align:            0;
+    horizontal-align:            0.5;
+    font:                        "MajorMonoDisplay Bold 26";
 }
 
 
@@ -127,6 +128,6 @@ element-text
 }
 element selected.normal 
 {
-    background-color:            var(surfaceContainer);
+    background-color:            var(background);
     text-color:                  var(onSurface);
 }

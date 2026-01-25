@@ -23,16 +23,12 @@ class BatteryInfo():
 
 		self.prompt: str = "Battery Info"
 
-		self.mesg: str = (
-			f"Status:            {status.capitalize()} {perc}\n"
-			f"Time remaining:    {timing}\n"
-			f"Charge Cycles:     {cycles}\n"
-			f"Health:            {health}"
-		)
+		self.mesg: str = f"{status} {perc}"
 
 		self.options: list[str] = [
-			f"Time till Full: {self.grab_key("time to full:")}",
-			
+			f"Time remaining:    {timing}",
+			f"Charge Cycles:     {cycles}",
+			f"Health:            {health}"
 		]
 
 
