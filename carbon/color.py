@@ -171,6 +171,16 @@ def updateKitty(s: dict[str, str]):
     return base
 
 
+def updateHypr(s: dict[str, str]):
+    outline = s["outline"][1:]
+
+    base = (
+        "# NOTE: written by carbon shell\n"
+        f"$border_active = rgb({outline})\n"
+        f"$border_inactive = rgba({outline}40)\n"
+    )
+
+    return base
 
 
 def updateRofi(s: dict[str, str]):
@@ -205,7 +215,7 @@ def updateQuickshell(s: dict[str, str]) -> str:
     """
 
     for name, val in s.items():
-        base += f"	property color {name:<30}: \"{val}\"\n"
+        base += f"property color {name:<30}: \"{val}\"\n"
 
     base += "\n}"
 
@@ -217,20 +227,24 @@ def updateColors(colors: dict[str, str]):
     color_files = loadColors()
 
     for type, filepath in color_files.items():
-        print(f"Updated :: {type}")
+        
         match type:
+            case "hypr":
+                string = updateHypr(colors)
             case "qml":
                 string = updateQuickshell(colors)
             case "kitty":
                 string = updateKitty(colors)
             case "rofi":
-                string = updateRofi(colors)
+                string = updateRofi(colors)    
             case _:
-                string = ""
-                return
+                print(f"Error :: {type}")
+                continue
         
         with open(filepath, "w") as file:
             file.write(string)
+
+        print(f"Updated :: {type}")
 
 
 
