@@ -1,0 +1,132 @@
+
+configuration 
+{
+    show-icons:                 false;
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "!MousePrimary"; 
+    kb-cancel: ["MousePrimary", "Escape"];
+}
+
+@import "theme/color.rasi"
+@import "theme/fonts.rasi"
+
+
+window 
+{    
+    transparency:                "real";
+    location:                    southwest;
+    anchor:                      southwest;
+    fullscreen:                  false;
+    width:                       26%;
+    height:                      54%;
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    /* properties for all widgets */
+    enabled:                     true;
+    margin:                      10px;
+    padding:                     0;
+    border:                      2px solid;
+    border-color:                @outline;
+    border-radius:               40px;
+    cursor:                      "default";
+    background-color:            transparent;
+}
+
+mainbox 
+{
+    enabled:                     true;
+    spacing:                     0;
+    margin:                      0px;
+    border:                      0px solid;
+    border-radius:               0%;
+    background-color:            rgba(41, 41, 41, 0.3);
+    vertical-align:              0.5;
+    orientation:                 vertical;
+    children:                    [ "inputbar", "message", "listview" ];
+}
+
+inputbar {
+    padding:                     15px;
+    border-radius:               0px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    children:                    [ "dummy", "prompt", "dummy"];
+}
+
+dummy {
+    background-color:            transparent;
+}
+
+prompt {
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+
+message {
+    enabled:                     true;
+    margin:                      10px;
+    padding:                     15px;
+    border-radius:               10px;
+    background-color:            transparent;
+    text-color:                  @onSurface;
+}
+
+textbox {
+    background-color:            inherit;
+    text-color:                  inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0;
+}
+
+
+listview 
+{
+    enabled:                     true;
+    columns:                     1;
+    lines:                       10;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                false;
+    fixed-columns:               false;
+    
+    spacing:                     1%;
+    margin:                      0%;
+    padding:                     3% 2%;
+    border:                      0px solid;
+    border-radius:               0px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    vertical-align:              0.5;
+    cursor:                      "default";
+}
+
+element 
+{
+    enabled:                     true;
+    spacing:                     0px;
+    margin:                      0px;
+    padding:                     10px 10px;
+    border:                      0px solid;
+    border-radius:               10px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    cursor:                      pointer;
+}
+element-text 
+{
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0;
+}
+element selected.normal 
+{
+    background-color:            var(surfaceContainer);
+    text-color:                  var(onSurface);
+}
