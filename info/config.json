@@ -17,7 +17,6 @@
             "src"  : "Config/kitty",
             "dest" : "~/.config/kitty"
         },
-
         {
             "src"  : "Config/zsh/.zshrc",
             "dest" : "~/.zshrc"
