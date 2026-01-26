@@ -44,6 +44,11 @@ PanelWindow {
 			spacing: Material.Style.dpi(160)
 			anchors.margins: Material.Style.dpi(100)
 			
+			Arch {
+				Layout.fillWidth: true
+				Layout.preferredHeight: Material.Style.dpi(360)
+				Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom	
+			}
 			
 
 			Workspaces {
