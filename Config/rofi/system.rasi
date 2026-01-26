@@ -54,7 +54,7 @@ mainbox
 inputbar {
     padding:                     2% 1%;
     background-color:            transparent;
-    text-color:                  @onSurface;
+    text-color:                  @primary;
     children:                    [ "dummy", "prompt", "dummy"];
 }
 
