@@ -3,7 +3,7 @@
 configuration {
 
 	modi: "drun,run,filebrowser,window";
-	case-sensitive: true;
+	case-sensitive: false;
 	cycle: true;
 	filter: "";
 	scroll-method: 0;
