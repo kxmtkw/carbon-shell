@@ -3,9 +3,9 @@ configuration
 {
 	modi:                       "drun,run,filebrowser";
     show-icons:                 true;
-    display-drun:               "  Apps";
+    display-drun:               "  Apps";
     display-run:                "  Run";
-    display-filebrowser:        "  Files";
+    display-filebrowser:        "  Files";
 	drun-display-format:        "{name}";
 	window-format:              "{w} · {c}";
 	icon-theme: "Papirus";
@@ -27,10 +27,10 @@ configuration
     filebrowser {
         directory: "~";
         directories-first: true;
-        sorting-method:    "name";
+        sorting-method: "name";
     }
 
-    run-command: "{cmd}";
+    run-command: "{terminal} -e {cmd}";
 	run-list-command: "";
 	run-shell-command: "{terminal} -e {cmd}";
 }
