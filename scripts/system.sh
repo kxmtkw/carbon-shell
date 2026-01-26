@@ -1,0 +1,1 @@
+python3 ~/.carbon/carbon/controllers/system.py
