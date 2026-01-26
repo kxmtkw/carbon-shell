@@ -13,6 +13,10 @@ configuration
     hover-select: true;
     me-select-entry: "";
     me-accept-entry: "!MousePrimary"; 
+    kb-move-char-back: "";
+    kb-move-char-forward: "";
+    kb-mode-next: "Right";
+    kb-mode-previous: "Left";
     kb-cancel: ["MousePrimary", "Escape"];
 
     drun-categories: "";
@@ -30,7 +34,7 @@ configuration
         sorting-method: "name";
     }
 
-    run-command: "{terminal} -e {cmd}";
+    run-command: "{cmd}";
 	run-list-command: "";
 	run-shell-command: "{terminal} -e {cmd}";
 }
@@ -174,7 +178,7 @@ element normal.normal
 }
 element selected.normal 
 {
-    background-color:            @surfaceContainerHigh;
+    background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }
 element-icon 
@@ -200,8 +204,8 @@ message
 }
 textbox {
     padding:                     12px;
-    border-radius:               40px;
-    background-color:            @surfaceContainer;
+    border-radius:               12px;
+    background-color:            @surfaceContainerHigh;
     text-color:                  @onSurface;
     vertical-align:              0.5;
     horizontal-align:            0.0;
