@@ -1,3 +1,3 @@
 rofi \
--show drun \
+-show $1 \
 -theme ~/.config/rofi/launcher.rasi
