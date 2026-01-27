@@ -14,7 +14,9 @@ requires-python = ">=3.10"
 authors = [
 	{ name = "haseeb" }
 ]
-dependencies = []
+dependencies = [
+    "material-color-utilities"
+]
 
 [project.scripts]
 carbon = "carbon.main:main"
