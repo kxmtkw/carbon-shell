@@ -1,1 +1,1 @@
-from .color import colorifyCarbon, switchTheme, setWallpaper
+from .color import colorify, set_wallpaper, switch_theme
