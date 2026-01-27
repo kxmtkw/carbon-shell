@@ -12,8 +12,10 @@ def launch_controller(controller: str):
             PowerMenu().launch()
         case "battery":
             BatteryInfo().launch()
-        case "battery":
+        case "system":
             SystemInfo().launch()
+        case "windows":
+            RofiShell.Run("rofi -show window -theme ~/.config/rofi/windows.rasi")
         case "launcher":
             RofiShell.Run("rofi -show drun -theme ~/.config/rofi/launcher.rasi")
         case "launcher-run":
