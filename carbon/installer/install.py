@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 import shutil
 
-from misc import Color, CarbonError, prompt
+from carbon.helpers import Color, CarbonError, prompt
 
 mShellError = CarbonError
 
@@ -71,8 +71,3 @@ def installCarbon():
 
     
     Color.Print("Installation complete!", Color.blue)
-
-
-
-if __name__ == "__main__":
-    installCarbon()
