@@ -1,7 +1,7 @@
-from rofi import RofiShell
+from .rofi import RofiShell
 import os
 
-class BatteryInfo():
+class SystemInfo():
 	
 	def __init__(self):
 		self.rofi = RofiShell("~/.config/rofi/system.rasi")	
@@ -63,7 +63,3 @@ class BatteryInfo():
 		if not selected: return
 
 	
-
-if __name__ == "__main__":
-	p = BatteryInfo()
-	p.launch()

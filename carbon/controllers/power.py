@@ -1,4 +1,4 @@
-from rofi import RofiShell
+from .rofi import RofiShell
 
 class PowerMenu():
 	
@@ -66,6 +66,3 @@ class PowerMenu():
 		self.rofi.Run(cmd)
 
 
-if __name__ == "__main__":
-	p = PowerMenu()
-	p.launch()
