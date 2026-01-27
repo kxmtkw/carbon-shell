@@ -271,9 +271,9 @@ def colorifyCarbon(
         case _:
             theme_variant = MaterialColors.Variant.graphite
 
+    colors = MaterialColors()
 
     if img:
-        colors = MaterialColors()
         colors.generateFromImage(img, theme_variant)
 
         if theme == "light":
@@ -284,7 +284,6 @@ def colorifyCarbon(
             CarbonError().throw("Invalid theme!").halt()
 
     elif hex:
-        colors = MaterialColors()
         colors.generateFromColor(hex, theme_variant)
 
         if theme == "light":
@@ -292,3 +291,12 @@ def colorifyCarbon(
         else:
             updateColors(colors.darkMapping)
 
+    cache = Path("~/.carbon/cache").expanduser()
+    if not cache.exists():
+        CarbonError(f"Cache dir not found :: {cache}.\nSomething is really really wrong.")
+
+    with open(cache.joinpath("darktheme.json"), "w") as file:
+        json.dump(colors.darkMapping, file, indent=4)
+
+    with open(cache.joinpath("lighttheme.json"), "w") as file:
+        json.dump(colors.lightMapping, file, indent=4)
