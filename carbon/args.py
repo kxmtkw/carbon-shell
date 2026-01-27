@@ -1,41 +1,54 @@
 import argparse
 
+def buildParser() -> argparse.ArgumentParser:
+	
+	parser = argparse.ArgumentParser(
+		prog="carbon",
+		description="Carbon Shell — because theming your system is apparently a personality trait.",
+		formatter_class=argparse.RawTextHelpFormatter
+	)
+
+	subparsers = parser.add_subparsers(dest="command", required=True)
+
+	# install / uninstall
+	subparsers.add_parser("install", help="Install Carbon")
+	subparsers.add_parser("uninstall", help="Uninstall Carbon")
+
+	# colorify
+	colorify = subparsers.add_parser("colorify", help="Set color theme")
+	colorify.add_argument("theme", choices=["dark", "light"], help="Theme mode")
+	source_group = colorify.add_mutually_exclusive_group(required=True)
+	source_group.add_argument("--img", dest="image", help="Source image")
+	source_group.add_argument("--hex", dest="hex", help="Source hex color")
+	colorify.add_argument(
+		"variant",
+		choices=["ash", "coal", "graphite", "diamond"],
+		help="Theme variant"
+	)
+
+	# switch
+	theme =subparsers.add_parser("switch", help="Switch between light and dark mode")
+	theme.add_argument("theme", choices=["light", "dark"])
+
+	# wall
+	wall = subparsers.add_parser(
+		"wall",
+		help="Set wallpaper (via swww) and change the color theme"
+	)
+	wall.add_argument("img", help="Path to Image.")
+	wall.add_argument("theme", choices=["dark", "light"], help="Theme mode")
+	wall.add_argument(
+		"variant",
+		choices=["ash", "coal", "graphite", "diamond"],
+		help="Theme variant"
+	)
+	wall.add_argument("--cache", action="store_true")
+
+	return parser
+
 
 def parseArgs():
-
-    parser = argparse.ArgumentParser(
-        description="Carbon Shell - Minimal yet Functional"
-    )
-
-    group = parser.add_mutually_exclusive_group(required=True)
-
-    group.add_argument(
-        "--install",
-        action="store_true",
-        help="Install Carbon Shell"
-    )
-
-    group.add_argument(
-        "--colorify",
-        action="store_true",
-        help="Update the color theme of the shell. Can take a hex color value or path to an image."
-    )
-
-    group.add_argument(
-        "--run",
-        metavar="TARGET",
-        help="Run a controller."
-    )
-
-    group.add_argument(
-        "--uninstall",
-        action="store_true",
-        help="Uninstall Carbon Shell"
-    )
-
-    
-    args = parser.parse_args()
-    
-    return args
-
+	parser = buildParser()
+	args = parser.parse_args()
+	return args
 
