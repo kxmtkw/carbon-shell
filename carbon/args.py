@@ -35,7 +35,7 @@ def buildParser() -> argparse.ArgumentParser:
 		"wall",
 		help="Set wallpaper (via swww) and change the color theme"
 	)
-	wall.add_argument("img", help="Path to Image.")
+	wall.add_argument("image", help="Path to Image.")
 	wall.add_argument("theme", choices=["dark", "light"], help="Theme mode")
 	wall.add_argument(
 		"variant",

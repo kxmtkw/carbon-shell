@@ -1,3 +1,4 @@
+import subprocess
 from typing import Literal
 import material_color_utilities as material
 from PIL import Image
@@ -334,3 +335,20 @@ def switchTheme(color: Literal["dark", "light"]):
         updateColors(mapping)
 
         
+def setWallpaper(
+    theme: Literal["dark", "light"],
+    variant: str,
+    img: str 
+    ):
+
+    img_path = Path(img).expanduser()
+
+    if not img_path.exists():
+        CarbonError(f"File not found :: {img_path}").halt()
+
+    output = subprocess.run(f"swww img {img_path}", shell=True, capture_output=True, text=True)
+    
+    if output.returncode != 0:
+        CarbonError(f"Failed to change wallpaper :: {output.stderr}").halt()
+
+    colorifyCarbon(theme, variant, img)
