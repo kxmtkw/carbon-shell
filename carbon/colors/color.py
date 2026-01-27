@@ -300,3 +300,37 @@ def colorifyCarbon(
 
     with open(cache.joinpath("lighttheme.json"), "w") as file:
         json.dump(colors.lightMapping, file, indent=4)
+
+
+def switchTheme(color: Literal["dark", "light"]):
+
+    cache = Path("~/.carbon/cache").expanduser()
+
+    if not cache.exists():
+        CarbonError(f"Cache dir not found :: {cache}.\nSomething is really really wrong. Cannot switch without cached themes.").halt()
+
+
+    if color == "dark":
+        dark_path = cache.joinpath("darktheme.json")
+        
+        if not dark_path.exists():
+            CarbonError(f"Color file not found :: {dark_path}.\nSomething is really really wrong. Cannot switch without cached themes.").halt()
+
+        with open(dark_path, "r") as file:
+            mapping = json.load(file)
+
+        updateColors(mapping)
+
+    else:
+
+        light_path = cache.joinpath("lighttheme.json")
+        
+        if not light_path.exists():
+            CarbonError(f"Color file not found :: {light_path}.\nSomething is really really wrong. Cannot switch without cached themes.").halt()
+
+        with open(light_path, "r") as file:
+            mapping = json.load(file)
+
+        updateColors(mapping)
+
+        

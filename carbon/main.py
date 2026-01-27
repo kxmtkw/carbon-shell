@@ -1,7 +1,7 @@
 from carbon.args import parseArgs
 
 from carbon.installer import installCarbon
-from carbon.colors import colorifyCarbon
+from carbon.colors import colorifyCarbon, switchTheme
 
 def main():
 
@@ -19,7 +19,7 @@ def main():
             colorifyCarbon(args.theme, args.variant, args.image, args.hex)
 
         case "switch":
-            print("switch-theme")
+            switchTheme(args.theme)
 
         case "wall":
             print()

@@ -1,1 +1,1 @@
-from .color import colorifyCarbon
+from .color import colorifyCarbon, switchTheme
