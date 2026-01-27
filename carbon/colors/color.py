@@ -1,9 +1,10 @@
+from typing import Literal
 import material_color_utilities as material
 from PIL import Image
 from pathlib import Path
 import json
 
-from misc import Color, CarbonError
+from carbon.helpers import Color, CarbonError
 
 import sys
 
@@ -32,7 +33,7 @@ class MaterialColors:
     def generateFromImage(self, image: str, variant: tuple):
 
         if not Path(image).exists():
-            CarbonError().throw(f"Image not found: {image}").halt()
+            CarbonError(f"Image not found: {image}").halt()
 
         theme = material.theme_from_image(Image.open(image), variant[0], variant[1])
 
@@ -123,7 +124,7 @@ COLORS = Path("~/.carbon/info/colors.json").expanduser()
 def loadColors() -> dict[str, str]:
 
     if not COLORS.exists():
-        CarbonError().throw(f"Color file '{COLORS}' does not exist!").halt()
+        CarbonError(f"Color file '{COLORS}' does not exist!").halt()
 
     with open(COLORS) as file:
         config = json.load(file)
@@ -248,17 +249,13 @@ def updateColors(colors: dict[str, str]):
 
 
 
-def main():
+def colorifyCarbon(
+    theme: Literal["dark", "light"],
+    variant: str,
+    img: str | None = None,
+    hex: str | None = None,
+    ):
     
-    if len(sys.argv) != 5:
-        CarbonError().throw(
-            "Insufficient arguments. Need: dark/light -i image / -c hexcolor variant[ash/coal/graphite/diamond]"
-        ).halt()
-
-    theme = sys.argv[1]
-    option = sys.argv[2]
-    source = sys.argv[3]
-    variant = sys.argv[4]
 
     theme_variant: tuple[float, str]
 
@@ -272,11 +269,12 @@ def main():
         case "diamond":
             theme_variant = MaterialColors.Variant.diamond
         case _:
-            CarbonError().throw("Invalid variant[ash/coal/graphite/diamond]").halt()
+            theme_variant = MaterialColors.Variant.graphite
 
-    if option == "-i":
+
+    if img:
         colors = MaterialColors()
-        colors.generateFromImage(source, theme_variant)
+        colors.generateFromImage(img, theme_variant)
 
         if theme == "light":
             updateColors(colors.lightMapping)
@@ -285,19 +283,12 @@ def main():
         else:
             CarbonError().throw("Invalid theme!").halt()
 
-    elif option == "-c":
+    elif hex:
         colors = MaterialColors()
-        colors.generateFromColor(source, theme_variant)
+        colors.generateFromColor(hex, theme_variant)
 
         if theme == "light":
             updateColors(colors.lightMapping)
-        elif theme == "dark":
-            updateColors(colors.darkMapping)
         else:
-            CarbonError().throw("Invalid theme!").halt()
+            updateColors(colors.darkMapping)
 
-    info = f"Color Info :: theme:{theme} {'image' if option == "-i" else 'color'}:{source} variant:{variant}"
-    print(info)
-
-if __name__ == "__main__":
-    main()
