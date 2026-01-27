@@ -1,11 +1,12 @@
 from carbon.args import parseArgs
 
 from carbon.installer import installCarbon
+from carbon.colors import colorifyCarbon
 
 def main():
 
     args = parseArgs()
-    
+
     match args.command:
 
         case "install":
@@ -15,7 +16,7 @@ def main():
             print("Uninstall unsupported")
 
         case "colorify":
-            print("Uninstall unsupported")
+            colorifyCarbon(args.theme, args.variant, args.image, args.hex)
 
         case "switch":
             print("switch-theme")
