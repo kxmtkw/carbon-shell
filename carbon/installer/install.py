@@ -5,6 +5,7 @@ import shutil
 
 from carbon.helpers import Color, CarbonError, prompt
 
+from carbon.colors import colorify
 
 CONFIG = Path("info/config.json")
 
@@ -72,5 +73,7 @@ def installCarbon():
         if Path(file["src"]).name == "hypr":
             subprocess.run("hyprctl reload", shell=True, capture_output=True)
 
+    # default theme
+    colorify("dark", "graphite", None, "#4169e1")
     
     Color.Print("Installation complete!", Color.blue)
