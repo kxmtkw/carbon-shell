@@ -1,1 +1,0 @@
-python3 ~/.carbon/carbon/controllers/power.py
