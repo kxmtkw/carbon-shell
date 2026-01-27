@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["carbon"]
+
+[project]
+name = "carbon"
+version = "0.1.0"
+description = "Carbon Shell"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+	{ name = "haseeb" }
+]
+dependencies = []
+
+[project.scripts]
+carbon = "carbon.main:main"
