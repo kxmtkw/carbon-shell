@@ -1,5 +1,6 @@
 from carbon.args import parseArgs
 
+from carbon.colors.color import setWallpaper
 from carbon.installer import installCarbon
 from carbon.colors import colorifyCarbon, switchTheme
 
@@ -22,4 +23,4 @@ def main():
             switchTheme(args.theme)
 
         case "wall":
-            print()
+            setWallpaper(args.theme, args.variant, args.image)
