@@ -1,4 +1,4 @@
-from rofi import RofiShell
+from .rofi import RofiShell
 
 class BatteryInfo():
 	
@@ -54,9 +54,3 @@ class BatteryInfo():
 
 		if not selected: return
 
-	
-
-
-if __name__ == "__main__":
-	p = BatteryInfo()
-	p.launch()
