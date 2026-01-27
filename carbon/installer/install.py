@@ -5,7 +5,6 @@ import shutil
 
 from carbon.helpers import Color, CarbonError, prompt
 
-mShellError = CarbonError
 
 CONFIG = Path("info/config.json")
 
@@ -13,7 +12,7 @@ CONFIG = Path("info/config.json")
 def loadConfig() -> list[dict[str, str]]:
 
     if not CONFIG.exists():
-        mShellError().throw(f"Config file '{CONFIG}' does not exist!").halt()
+        CarbonError(f"Config file '{CONFIG}' does not exist!").halt()
 
     with open(CONFIG) as file:
         config = json.load(file)
@@ -28,7 +27,7 @@ def link(src: Path, dest: Path):
     dest = dest.expanduser()
 
     if not src.exists():
-        mShellError().throw(f"Config Src '{src}' does not exist!").halt()
+        CarbonError(f"Config Src '{src}' does not exist!").halt()
         
     if dest.is_symlink():
         dest.unlink()

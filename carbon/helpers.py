@@ -3,11 +3,11 @@ from typing import Self
 
 class CarbonError():
 
-    def throw(self, msg: str) -> Self:
+    def __init__(self, msg: str) -> None:
+        self.msg = msg 
         Color.Print("[Error]", Color.red)
         print(msg)
-        return self
-
+        
     def halt(self):
         exit()
 
@@ -54,4 +54,4 @@ def prompt(msg: str, options: list[str]) -> str:
 
         return chosen 
     
-    CarbonError().throw("Too many retries").halt()
+    CarbonError("Too many retries").halt()
