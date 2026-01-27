@@ -62,6 +62,10 @@ def installCarbon():
 
     Color.Print("Installing carbon shell...", Color.blue)
 
+    cache = Path("~/.carbon/cache").expanduser()
+    cache.mkdir(exist_ok=True)
+    Color.Print(f"Created cache :: {cache}", Color.green)
+
     for file in config_files:
         link(Path(file["src"]), Path(file["dest"]))
 

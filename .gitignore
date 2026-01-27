@@ -8,3 +8,6 @@ __pycache__
 Color.qml
 color.conf
 color.rasi
+
+# Carbon specific
+cache/
