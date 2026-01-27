@@ -2,7 +2,7 @@ whiteboard.txt
 .vscode/**
 .venv/**
 __pycache__
-
+**.egg-info/
 
 # Color files
 Color.qml
