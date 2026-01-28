@@ -1,5 +1,3 @@
-
-
 case $1 in
 	"--list")
 		echo launcher_apps launcher_run launcher_files windows power battery system
@@ -26,6 +24,6 @@ case $1 in
 		python3 ~/.carbon/controllers/impl/system.py
 	;;
 	*)
-		notify-send "Unknown controller!"
+		notify-send "Unknown controller!" $1
 	;;
 esac
