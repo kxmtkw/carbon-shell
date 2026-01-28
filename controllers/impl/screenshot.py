@@ -1,4 +1,6 @@
+from pathlib import Path
 from rofi import RofiShell
+import sys
 
 class ScreenshotMenu():
 	
@@ -7,6 +9,11 @@ class ScreenshotMenu():
 
 		self.prompt = "Screenshot"
 		self.mesg = ""
+
+		try:
+			self.save_dir = Path(sys.argv[1])
+		except IndexError:
+			self.save_dir = Path("~/Images").expanduser()
 
 		self.options: list[str] = [
 			"  Screen",
@@ -31,13 +38,13 @@ class ScreenshotMenu():
 	def exec(self, option: str):
 
 		if option == self.options[0]:
-			self.rofi.Run("hyprshot -m output")
+			self.rofi.Run(f"hyprshot -m output -o {self.save_dir}")
 
 		elif option == self.options[1]:
-			self.rofi.Run("hyprshot -m window")
+			self.rofi.Run(f"hyprshot -m window -o {self.save_dir}")
 
 		elif option == self.options[2]:
-			self.rofi.Run("hyprshot -m region")
+			self.rofi.Run(f"hyprshot -m region -o {self.save_dir}")
 
 
 
