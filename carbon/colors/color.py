@@ -4,26 +4,16 @@ from pathlib import Path
 import json
 
 from carbon.helpers import Color, CarbonError
+from carbon.settings import SettingsLoader
 from .material import MaterialColors
 from . import configs  
 
-COLORS = Path("~/.carbon/info/colors.json").expanduser()
-
-def load_color_file() -> dict[str, str]:
-
-    if not COLORS.exists():
-        CarbonError(f"Color file '{COLORS}' does not exist!\nThis should'nt happen at all. Try reinstalling carbon from scratch.").halt()
-
-    with open(COLORS) as file:
-        config = json.load(file)
-
-    return config
+settings = SettingsLoader("~/.carbon/settings/colors.toml")
 
 
 def update_colors(colors: dict[str, str]):
-    color_files = load_color_file()
 
-    for type, filepath in color_files.items():
+    for type, filepath in settings.get("colorfiles").items():
         
         match type:
             case "hypr":

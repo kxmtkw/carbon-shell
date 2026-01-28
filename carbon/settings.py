@@ -5,18 +5,26 @@ from carbon.helpers import CarbonError
 
 class SettingsLoader():
 
-    def __init__(self, filepath: str):
+    def __init__(self, src: str | dict):
         
-        self.filepath = Path(filepath)
+        if isinstance(src, dict):
+            self.settings = src
+            return
+        
+        self.filepath = Path(src).expanduser()
         self.settings: dict[any, any] = {}
 
         if not self.filepath.exists():
             CarbonError(f"Could not find settings file: {self.filepath}").halt()
 
-        with open(self.filepath) as file:
+        with open(self.filepath, "rb") as file:
             self.settings = tomllib.load(file)
 
-    def get(self, path: str):
+    def get(self, path: str | None = None):
+
+        if not path:
+            return self.settings
+        
         sections = path.split(".")
 
         val = self.settings
