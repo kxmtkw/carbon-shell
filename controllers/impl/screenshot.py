@@ -3,15 +3,15 @@ from rofi import RofiShell
 class ScreenshotMenu():
 	
 	def __init__(self):
-		self.rofi = RofiShell("~/.config/rofi/windows.rasi")
+		self.rofi = RofiShell("~/.config/rofi/screenshot.rasi")
 
 		self.prompt = "Screenshot"
 		self.mesg = ""
 
 		self.options: list[str] = [
-			"Screen",
-			"Window",
-			"Region"
+			"  Screen",
+			"  Window",
+			"󰿦  Region"
 		]
 
 
