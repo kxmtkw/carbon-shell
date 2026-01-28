@@ -19,14 +19,14 @@ window
     location:                    southwest;
     anchor:                      southwest;
     fullscreen:                  false;
-    width:                       32%;
+    width:                       28%;
     height:                      42%;
     x-offset:                    0px;
     y-offset:                    0px;
 
     /* properties for all widgets */
     enabled:                     true;
-    margin:                      1%;
+    margin:                      10px;
     padding:                     0;
     border:                      2px solid;
     border-color:                @outline;
