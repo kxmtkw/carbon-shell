@@ -1,0 +1,27 @@
+[hypr]
+src  = "Config/hypr"
+dest = "~/.config/hypr"
+
+[rofi]
+src  = "Config/rofi"
+dest = "~/.config/rofi"
+
+[quickshell]
+src  = "Config/quickshell"
+dest = "~/.config/quickshell"
+
+[kitty]
+src  = "Config/kitty"
+dest = "~/.config/kitty"
+
+[zshrc]
+src  = "Config/zsh/.zshrc"
+dest = "~/.zshrc"
+
+[zshenv]
+src  = "Config/zsh/.zshenv"
+dest = "~/.zshenv"
+
+[zsh_autocomplete]
+src  = "Config/zsh/.zsh_autocomplete"
+dest = "~/.zshac"
