@@ -44,14 +44,6 @@ def buildParser() -> argparse.ArgumentParser:
 	)
 	wall.add_argument("--cache", action="store_true")
 
-
-	# controllers
-	launch = subparsers.add_parser(
-		"launch",
-		help="Launch a controller"
-	)
-	launch.add_argument("controller", help="controller name")
-
 	return parser
 
 

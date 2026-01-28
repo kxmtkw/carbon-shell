@@ -1,4 +1,4 @@
-from .rofi import RofiShell
+from rofi import RofiShell
 import os
 
 class SystemInfo():
@@ -63,3 +63,6 @@ class SystemInfo():
 		if not selected: return
 
 	
+if __name__ == "__main__":
+	c = SystemInfo()
+	c.launch()
