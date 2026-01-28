@@ -20,9 +20,6 @@ case $1 in
 	"battery") 
 		python3 ~/.carbon/controllers/impl/battery.py
 	;;
-	"system") 
-		python3 ~/.carbon/controllers/impl/system.py
-	;;
 	*)
 		notify-send "Unknown controller!" $1
 	;;
