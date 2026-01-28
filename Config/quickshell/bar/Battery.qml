@@ -6,6 +6,7 @@ import Quickshell.Services.UPower
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 
 import "../material" as Material
 
@@ -120,6 +121,7 @@ WrapperRectangle
 			{
 				battery_icon.text = "󰂎";
 				battery_icon.color = Material.Color.error
+				return
 			}
 
 			battery_icon.color = Material.Color.on_surface
