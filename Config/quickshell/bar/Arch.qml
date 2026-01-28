@@ -25,7 +25,7 @@ WrapperRectangle
 	{
 		id: power_menu
 		running: false
-		command: [ "sh", "-c", "~/.carbon/scripts/system.sh"]
+		command: [ "sh", "~/.carbon/controllers/launch.sh", "system"]
 	}
 
 	MouseArea

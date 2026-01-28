@@ -2,7 +2,6 @@ from carbon.args import parseArgs
 
 from carbon.installer import installCarbon
 from carbon.colors import colorify, set_wallpaper, switch_theme
-from carbon.controllers import launch_controller
 
 def main():
 
@@ -24,6 +23,3 @@ def main():
 
         case "wall":
             set_wallpaper(args.theme, args.variant, args.image)
-
-        case "launch":
-            launch_controller(args.controller)
