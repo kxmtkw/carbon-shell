@@ -1,0 +1,26 @@
+
+[general]
+
+import = [
+    "~/.config/alacritty/colors.toml"
+]
+
+[window]
+
+dimensions = { columns = 80, lines = 25}
+padding = { x = 16, y = 16 }
+opacity = 0.85
+
+[font]
+normal = { family = "Iosevka", style = "Regular"}
+size = 14
+
+
+[cursor]
+style = { shape = "underline", blinking = "On" }
+
+[keyboard]
+bindings = [
+    { key ="c", mods = "Control", mode = "AppCursor", action = "Copy" },
+    { key ="v", mods = "Control", mode = "AppCursor", action = "Paste" },
+]
