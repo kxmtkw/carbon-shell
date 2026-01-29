@@ -1,4 +1,34 @@
 
+
+def update_alacritty(s: dict[str, str]):
+
+    base = f"""
+# NOTE: written by carbon shell
+[colors]
+[colors.primary]
+foreground = "{s['on_surface']}"
+background = "{s['background']}"
+
+[colors.normal]
+red     = "#fdb2d4"
+yellow  = "#f8e9a6"
+green   = "#cdf6a0"
+cyan    = "#aaeaf6"
+blue    = "#98c4f3"
+magenta = "#c4a9f8"
+
+[colors.bright]
+red     = "#fdb2d4"
+yellow  = "#f8e9a6"
+green   = "#cdf6a0"
+cyan    = "#aaeaf6"
+blue    = "#98c4f3"
+magenta = "#c4a9f8"
+"""
+
+    return base
+
+
 def update_kitty(s: dict[str, str]):
 
     base = (
