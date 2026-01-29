@@ -24,6 +24,8 @@ def update_colors(colors: dict[str, str]):
                 string = configs.update_kitty(colors)
             case "rofi":
                 string = configs.update_rofi(colors)    
+            case "alacritty":
+                string = configs.update_alacritty(colors)   
             case _:
                 print(f"Error :: {type}")
                 continue

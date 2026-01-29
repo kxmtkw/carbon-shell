@@ -9,6 +9,7 @@ build/
 Color.qml
 color.conf
 color.rasi
+color.toml
 
 # Carbon specific
 cache/
