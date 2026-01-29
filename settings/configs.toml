@@ -25,3 +25,7 @@ dest = "~/.zshenv"
 [zsh_autocomplete]
 src  = "Config/zsh/.zsh_autocomplete"
 dest = "~/.zshac"
+
+[alacritty]
+src  = "Config/alacritty"
+dest = "~/.config/alacritty"
