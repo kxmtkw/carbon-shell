@@ -59,7 +59,7 @@ window
     border-color:                @outline;
     border-radius:               40px;
     cursor:                      "default";
-    background-color:            rgba(0, 0, 0, 0.2);
+    background-color:            rgba(18, 18, 18, 0.2);
 }
 
 mainbox 

@@ -11,6 +11,9 @@ configuration
 @import "theme/color.rasi"
 @import "theme/fonts.rasi"
 
+* {
+    font:                        "IosevkaTerm Nerd Font 15";
+}
 
 window 
 {    
@@ -41,7 +44,7 @@ mainbox
     margin:                      0px;
     border:                      0px solid;
     border-radius:               0%;
-    background-color:            rgba(41, 41, 41, 0.3);
+    background-color:            rgba(18, 18, 18, 0.3);
     vertical-align:              0.5;
     orientation:                 horizontal;
     children:                    [ "imagebox", "listview" ];

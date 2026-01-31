@@ -6,7 +6,7 @@ configuration
 
     window-match-fields: "title,class,role,name,desktop";
 	window-command: "wmctrl -i -R {window}";
-	window-format: "{w} {c}  ::  {t:50}";
+	window-format: "{c}  ::  {t:50}";
 	window-thumbnail: false;
 
     hover-select: true;
