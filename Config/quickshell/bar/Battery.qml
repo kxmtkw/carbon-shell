@@ -42,7 +42,7 @@ WrapperRectangle
 			text: ""
 
 			font.family: "IosevkaTerm Nerd Font"
-			font.pixelSize: Material.Style.dpi(280)
+			font.pixelSize: Material.Style.dpi(260)
 			color: Material.Color.on_surface
 
 		}
