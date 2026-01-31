@@ -20,7 +20,7 @@ WrapperRectangle
 	
 	ColumnLayout {
 		anchors.centerIn: parent
-		spacing: 0
+		spacing: Material.Style.dpi(120)
 
 		Repeater {
 			model: Hyprland.workspaces

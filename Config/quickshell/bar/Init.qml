@@ -53,7 +53,6 @@ PanelWindow {
 
 			Workspaces {
 				Layout.fillWidth: true
-				Layout.preferredHeight: Material.Style.dpi(2200)
 				Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 			}
 
