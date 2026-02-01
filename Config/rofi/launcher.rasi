@@ -173,11 +173,29 @@ element normal.normal
     background-color:            inherit;
     text-color:                  inherit;
 }
+element normal.active {
+    background-color:            @primary;
+    text-color:                  @onSurface;
+}
+element alternate normal.active {
+    background-color:            @primary;
+    text-color:                  @onSurface;
+}
 element selected.normal 
 {
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }
+element selected.active {
+    background-color:            @primary;
+    text-color:                  @onSurface;
+}
+element alternate selected.active {
+    background-color:            @primary;
+    text-color:                  @onSurface;
+}
+
+
 element-icon 
 {
     background-color:            transparent;
