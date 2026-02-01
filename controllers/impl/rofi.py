@@ -12,6 +12,9 @@ class RofiShell:
         filebrowser = "filebrowser"
         ssh = "ssh"
 
+    MarkActive = "\\x00active\\x1ftrue"
+    MarkUrgent = "\\x00urgent\\x1ftrue"
+
     @classmethod
     def Run(cls, cmd: str) -> str:
         output = subprocess.run(cmd, capture_output=True, text=True, shell=True)
