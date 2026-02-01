@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from helpers import shellRun, processRun, ShellOutput
+from .helpers import shellRun, processRun, ShellOutput
 
 
 @dataclass
@@ -106,7 +106,7 @@ class WifiManager:
         if output.success:
             return
         
-        output = processRun(["nmcli", "connection", "delete", network.ssid])
+        processRun(["nmcli", "connection", "delete", network.ssid])
 
         raise WifiError(f"Could not connect to {network.ssid}.", f"Error:\n{output.stdout}")
 
@@ -122,14 +122,3 @@ class WifiManager:
 
         if not output.success:
             raise WifiError(f"Could not forget {network.ssid}:", f"Error:\n{output.stdout}")
-
-
-
-wifi = WifiManager()
-wifi.rescan()
-
-networks = wifi.list_networks()
-nets = {net.ssid:net for net in networks}
-print(networks)
-
-wifi.forget_network(nets["Pakistan International Airlines"])
