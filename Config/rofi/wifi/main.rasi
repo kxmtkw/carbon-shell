@@ -94,6 +94,16 @@ element selected.normal
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }
+element normal.active
+{
+    background-color:            @surfaceContainer;
+    text-color:                  @onSurface;
+}
+element selected.active 
+{
+    background-color:            @surfaceContainerHigh;
+    text-color:                  @onSurface;
+}
 
 element-icon 
 {
