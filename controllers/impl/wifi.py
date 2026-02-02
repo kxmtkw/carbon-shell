@@ -37,11 +37,11 @@ class WifiMenu:
 		
 
 	def extract_id(self, entry: str) -> int:
-		id = entry.split("]")[0].split("[")[1]
 		try:
+			id = entry.split("]")[0].split("[")[1]
 			return int(id)
 		except ValueError:
-			print("Error encountered when extracting id from entry. This should not happen at all.")
+			print(f"Error encountered when extracting id from entry. This should not happen at all. {entry}")
 			exit(1)
 
 
@@ -71,6 +71,8 @@ class WifiMenu:
 			list_items
 		)
 
+		print(selected)
+
 		if not selected:
 			exit()
 
@@ -86,6 +88,7 @@ class WifiMenu:
 			self.wifi.set_radio(not self.wifi.is_radio_on())
 
 		else:
+			print(networks)
 			if networks:
 				self.show_wifi_options(networks[self.extract_id(selected)])
 
@@ -111,18 +114,44 @@ class WifiMenu:
 			exit()
 
 		if selected == wifi_options[0]:
+
 			if net.active:
+
+				proc = self.trigger_displayer(
+					" ",
+					f"Disconnecting from {net.ssid}!"
+				)
 				self.wifi.disconnect_network(net)
+				proc.kill()
+				proc.wait()
+
 			else:
+				proc = self.trigger_displayer(
+					" ",
+					f"Connecting to {net.ssid}!"
+				)
 				try:
 					self.wifi.connect_network(net)
 				except WifiError:
+					proc.kill()
+					proc.wait()
 					self.show_password_prompt(net)
+				else:
+					proc.kill()
+					proc.wait()
 
 
 		elif selected == wifi_options[1]:
-			self.wifi.forget_network(net)
+			try:
+				self.wifi.forget_network(net)
+			except WifiError:
+				proc = self.trigger_displayer(
+					" ",
+					f"Network {net.ssid} already unknown"
+				)
 
+				proc.wait()
+				return
 
 	
 	def show_password_prompt(self, net: WifiNetwork) -> None:
@@ -135,20 +164,36 @@ class WifiMenu:
 			[]
 		)
 
+		proc = self.trigger_displayer(
+			" ",
+			f"Connecting to {net.ssid}!"
+		)
+		
 		try:
 			self.wifi.connect_network(net, password)
+
 		except WifiError:
-			self.trigger_displayer(
+			proc.kill()
+			proc.wait()
+
+			proc2 = self.trigger_displayer(
 				" ",
 				f"Incorrect password for {net.ssid}!"
 			)
+
+			proc2.wait()
+			return
+		
+		else:
+			proc.kill()
+			proc.wait()
 
 	
 	def trigger_displayer(self, prompt: str, msg: str):
 
 		self.rofi.updateTheme(display_rasi)
 
-		selected = self.rofi.display(
+		return self.rofi.displayNoBlock(
 			prompt,
 			msg,
 			[]
