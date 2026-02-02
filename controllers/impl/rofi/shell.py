@@ -22,10 +22,14 @@ class RofiShell:
         return output.stderr
 
 
-    def __init__(self, rasi: str) -> None:
-        self.rasi = Path(rasi)
+    def __init__(self, themepath: str) -> None:
+        self.rasi = Path(themepath)
 
 
+    def updateTheme(self, themepath: str) -> None:
+        self.rasi = Path(themepath)
+    
+    
     def displayMode(self, mode: str):
         cmd = f"rofi -show {mode} -theme {self.rasi}"
         self.Run(cmd)
