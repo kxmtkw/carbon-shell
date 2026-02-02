@@ -56,6 +56,11 @@ class WifiManager:
         if not output.success:
             raise WifiError(f"Could rescan wifi radio.", f"Error:\n{output.stdout}")
 
+
+
+
+    def list_networks(self) -> list[WifiNetwork]:
+
         networks = []
 
         output = shellRun("nmcli -t -f SSID,BSSID,RATE,SIGNAL,SECURITY,ACTIVE device wifi list")
@@ -84,12 +89,7 @@ class WifiManager:
 
         self._scanned_networks = networks
 
-
-    def list_networks(self) -> list[WifiNetwork]:
-        if not self._scanned_networks:
-            self.rescan()
-
-        return self._scanned_networks
+        return networks
 
 
     def get_active_network(self) -> WifiNetwork | None:

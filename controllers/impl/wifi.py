@@ -1,17 +1,21 @@
 from rofi import RofiShell
 from networker.wifi import WifiManager, WifiError, WifiNetwork
 
+main_rasi = "~/.config/rofi/wifi/main.rasi"
+options_rasi = "~/.config/rofi/wifi/options.rasi"
+display_rasi = "~/.config/rofi/wifi/display.rasi"
+password_rasi = "~/.config/rofi/wifi/password.rasi"
+
+
 class WifiMenu:
 
 	def __init__(self) -> None:
 		self.wifi = WifiManager()
 		self.closed: bool = False
 
-		self.rofi = RofiShell("~/.config/rofi/wifi/main.rasi")
+		self.rofi = RofiShell(main_rasi)
 
 		self.title = "Wifi"
-
-		self.status = ""
 
 		self.options = [
 			">>     Toggle Wifi",
@@ -42,8 +46,8 @@ class WifiMenu:
 
 
 	def show_main_menu(self):
-
-		self.wifi.rescan()
+		
+		self.rofi.updateTheme(main_rasi)
 
 		list_items = []
 		list_items.extend(self.options)
@@ -51,21 +55,19 @@ class WifiMenu:
 		if self.wifi.is_radio_on():
 			
 			networks = self.wifi.list_networks()
-			
-			active = self.wifi.get_active_network()
-
-			self.status = f"Status: ON | Connected: {active.ssid if active else 'None'}"
+		
+			status = f"Status: ON"
 
 			list_items.extend([self.make_wifi_entry(id, wifi) for id, wifi in enumerate(networks)])
 
 		else:
 			networks = None
-			self.status = f"Status: OFF"
+			status = f"Status: OFF"
 
 
 		selected = self.rofi.display(
 			self.title,
-			self.status,
+			status,
 			list_items
 		)
 
@@ -77,6 +79,7 @@ class WifiMenu:
 			return
 		
 		elif selected == self.options[1]:
+			self.wifi.rescan()
 			return
 		
 		elif selected == self.options[2]:
@@ -89,6 +92,8 @@ class WifiMenu:
 
 	def show_wifi_options(self, net: WifiNetwork):
 		
+		self.rofi.updateTheme(options_rasi)
+
 		wifi_options = [
 			"󱘖  Disconnect" if net.active else "󱘖  Connect",
 			"  Forget"
@@ -109,7 +114,10 @@ class WifiMenu:
 			if net.active:
 				self.wifi.disconnect_network(net)
 			else:
-				self.wifi.connect_network(net)
+				try:
+					self.wifi.connect_network(net)
+				except WifiError:
+					self.show_password_prompt(net)
 
 
 		elif selected == wifi_options[1]:
@@ -117,12 +125,34 @@ class WifiMenu:
 
 
 	
-	def show_password_prompt(self, net: WifiNetwork) -> str:
-		return "s"
+	def show_password_prompt(self, net: WifiNetwork) -> None:
+
+		self.rofi.updateTheme(password_rasi)
+		
+		password = self.rofi.display(
+			self.title,
+			f"Enter password for {net.ssid}",
+			[]
+		)
+
+		try:
+			self.wifi.connect_network(net, password)
+		except WifiError:
+			self.trigger_displayer(
+				" ",
+				f"Incorrect password for {net.ssid}!"
+			)
 
 	
-	def trigger_loading_screen(self, prompt: str, msg: str):
-		pass
+	def trigger_displayer(self, prompt: str, msg: str):
+
+		self.rofi.updateTheme(display_rasi)
+
+		selected = self.rofi.display(
+			prompt,
+			msg,
+			[]
+		)
 
 
 if __name__ == "__main__":
