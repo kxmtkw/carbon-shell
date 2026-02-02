@@ -43,6 +43,8 @@ class WifiMenu:
 
 	def show_main_menu(self):
 
+		self.wifi.rescan()
+
 		list_items = []
 		list_items.extend(self.options)
 
@@ -75,7 +77,6 @@ class WifiMenu:
 			return
 		
 		elif selected == self.options[1]:
-			self.wifi.rescan()
 			return
 		
 		elif selected == self.options[2]:
@@ -83,13 +84,38 @@ class WifiMenu:
 
 		else:
 			if networks:
-				self.wifi.connect_network(networks[self.extract_id(selected)])
-				self.wifi.rescan()
+				self.show_wifi_options(networks[self.extract_id(selected)])
 
 
-	def show_wifi_menu(self, net: WifiNetwork):
-		pass
+	def show_wifi_options(self, net: WifiNetwork):
 		
+		wifi_options = [
+			"󱘖  Disconnect" if net.active else "󱘖  Connect",
+			"  Forget"
+		]
+
+		details = f"SSID : {net.ssid}"
+
+		selected = self.rofi.display(
+			self.title,
+			details,
+			wifi_options
+		)
+
+		if not selected:
+			exit()
+
+		if selected == wifi_options[0]:
+			if net.active:
+				self.wifi.disconnect_network(net)
+			else:
+				self.wifi.connect_network(net)
+
+
+		elif selected == wifi_options[1]:
+			self.wifi.forget_network(net)
+
+
 	
 	def show_password_prompt(self, net: WifiNetwork) -> str:
 		return "s"
