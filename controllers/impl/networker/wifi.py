@@ -44,7 +44,7 @@ class WifiManager:
     def set_radio(self, on: bool):
         
         output = shellRun(f"nmcli radio wifi {'on' if on else 'off'}")
-
+        
         if not output.success:
             raise WifiError(f"Could set wifi radio", f"Error:\n{output.stdout}")
 
@@ -55,8 +55,6 @@ class WifiManager:
 
         if not output.success:
             raise WifiError(f"Could rescan wifi radio.", f"Error:\n{output.stdout}")
-
-
 
 
     def list_networks(self) -> list[WifiNetwork]:
