@@ -1,0 +1,111 @@
+@import "common.rasi"
+
+
+mainbox 
+{
+    enabled:                     true;
+    spacing:                     0;
+    margin:                      0px;
+    border:                      0px solid;
+    border-radius:               0%;
+    background-color:            @background;
+    vertical-align:              0.5;
+    orientation:                 vertical;
+    children:                    [ "inputbar", "message", "listview" ];
+}
+
+inputbar {
+    padding:                     15px;
+    border-radius:               0px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    children:                    [ "dummy", "prompt", "dummy"];
+}
+
+dummy {
+    background-color:            transparent;
+}
+
+prompt {
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+
+message {
+    enabled:                     true;
+    margin:                      1% 2%;
+    padding:                     20px;
+    border-radius:               10px;
+    background-color:            @surfaceContainer;
+    text-color:                  @onSurface;
+}
+
+textbox {
+    background-color:            inherit;
+    text-color:                  inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+    font:                        "Iosevka 16";
+}
+
+
+listview 
+{
+    enabled:                     true;
+    columns:                     1;
+    lines:                       10;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                false;
+    fixed-columns:               false;
+    
+    spacing:                     1%;
+    margin:                      0%;
+    padding:                     3% 2%;
+    border:                      0px solid;
+    border-radius:               0px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    vertical-align:              0.5;
+    cursor:                      "default";
+}
+
+element 
+{
+    enabled:                     true;
+    spacing:                     10px;
+    padding:                     8px;
+    border-radius:               12px;
+    background-color:            transparent;
+    text-color:                  @onSurface;
+    cursor:                      pointer;
+}
+element normal.normal 
+{
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+element selected.normal 
+{
+    background-color:            @surfaceContainer;
+    text-color:                  @onSurface;
+}
+
+element-icon 
+{
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        32px;
+    cursor:                      inherit;
+}
+element-text 
+{
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}

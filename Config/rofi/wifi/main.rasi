@@ -1,81 +1,53 @@
 @import "common.rasi"
 
+
 mainbox 
 {
     enabled:                     true;
-    spacing:                     1%;
-    padding:                     0%;
-    background-color:            transparent;
+    spacing:                     0;
+    margin:                      0px;
+    border:                      0px solid;
+    border-radius:               0%;
+    background-color:            @background;
+    vertical-align:              0.5;
     orientation:                 vertical;
-    children:                    [ "inputbar", "listbox"];
+    children:                    [ "inputbar", "message", "listview" ];
 }
-
-
-// INPUT BAR
 
 inputbar {
-    enabled:                     true;
-    spacing:                     10px;
-    padding:                     8% 4% 2% 4%;
-    background-color:            transparent;
-    text-color:                  @onSurface;
-    orientation:                 horizontal;
-    children:                    [ "dummy", "entry", "dummy"];
-}
-
-entry {
-    enabled:                     true;
-    expand:                      false;
-    width:                       20%;
-    padding:                     12px 16px;
-    border-radius:               12px;
+    padding:                     15px;
+    border-radius:               0px;
     background-color:            @background;
-    text-color:                  inherit;
-    cursor:                      text;
-    placeholder:                 "Search...";
-    placeholder-color:           inherit;
-    vertical-align:              0.5;
-    horizontal-align:            0;
+    text-color:                  @onSurface;
+    children:                    [ "dummy", "prompt", "dummy"];
 }
 
 dummy {
-    expand:                      true;
     background-color:            transparent;
 }
 
-mode-switcher{
+prompt {
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+
+message {
     enabled:                     true;
-    spacing:                     10px;
-    margin:                      3% 5%;
-    border-radius:               16px;
-    padding:                     10px;
-    background-color:            @background;
+    margin:                      1% 2%;
+    padding:                     20px;
+    border-radius:               10px;
+    background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }
-button {
-    width:                       6%;
-    padding:                     10px;
-    border-radius:               12px;
-    background-color:            @background;
+
+textbox {
+    background-color:            inherit;
     text-color:                  inherit;
-    cursor:                      pointer;
-}
-button selected {
-    background-color:            @primary;
-    text-color:                  @onPrimary;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+    font:                        "Iosevka 16";
 }
 
-
-// LIST VIEW
-
-listbox 
-{
-    spacing:                     1%;
-    padding:                     2%;
-    background-color:            @background;
-    orientation:                 vertical;
-    children:                    [ "message", "listview" ];
-}
 
 listview 
 {
@@ -87,12 +59,17 @@ listview
     scrollbar:                   false;
     layout:                      vertical;
     reverse:                     false;
-    fixed-height:                true;
-    fixed-columns:               true;
+    fixed-height:                false;
+    fixed-columns:               false;
     
-    spacing:                     10px;
-    background-color:            transparent;
+    spacing:                     1%;
+    margin:                      0%;
+    padding:                     3% 2%;
+    border:                      0px solid;
+    border-radius:               0px;
+    background-color:            @background;
     text-color:                  @onSurface;
+    vertical-align:              0.5;
     cursor:                      "default";
 }
 
@@ -116,15 +93,6 @@ element selected.normal
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }
-element selected.active {
-    background-color:            @primary;
-    text-color:                  @onSurface;
-}
-element normal.active {
-    background-color:            @primary;
-    text-color:                  @onSurface;
-}
-
 
 element-icon 
 {
@@ -140,25 +108,4 @@ element-text
     cursor:                      inherit;
     vertical-align:              0.5;
     horizontal-align:            0.0;
-}
-
-/*****----- Message -----*****/
-message 
-{
-    background-color:            transparent;
-}
-textbox {
-    padding:                     12px;
-    border-radius:               12px;
-    background-color:            @surfaceContainerHigh;
-    text-color:                  @onSurface;
-    vertical-align:              0.5;
-    horizontal-align:            0.0;
-}
-error-message 
-{
-    padding:                     12px;
-    border-radius:               20px;
-    background-color:            @background;
-    text-color:                  @onSurface;
 }
