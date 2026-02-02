@@ -1,0 +1,39 @@
+
+configuration 
+{
+	modi:                       "drun,run,filebrowser";
+    show-icons:                 true;
+	icon-theme: "Papirus";
+
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "!MousePrimary"; 
+    kb-move-char-back: "";
+    kb-move-char-forward: "";
+    kb-mode-next: "Right";
+    kb-mode-previous: "Left";
+    kb-cancel: ["MousePrimary", "Escape"];
+}
+
+@import "../theme/color.rasi"
+@import "../theme/fonts.rasi"
+
+window
+ {
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       48%;
+    height:                      78%;
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    enabled:                     true;
+    margin:                      10px;
+    border:                      2px solid;
+    border-color:                @outline;
+    border-radius:               40px;
+    cursor:                      "default";
+    background-color:            rgba(18, 18, 18, 0.2);
+}
