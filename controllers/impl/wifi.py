@@ -98,11 +98,12 @@ class WifiMenu:
 		self.rofi.updateTheme(options_rasi)
 
 		wifi_options = [
+			"<  Return",
 			"󱘖  Disconnect" if net.active else "󱘖  Connect",
 			"  Forget"
 		]
 
-		details = f"SSID : {net.ssid}"
+		details = f"""SSID: {net.ssid}\nBSSID: {net.bssid}\nSecurity: {net.security}\nSignal: {net.signal}\nRate: {net.rate}"""
 
 		selected = self.rofi.display(
 			self.title,
@@ -114,6 +115,9 @@ class WifiMenu:
 			exit()
 
 		if selected == wifi_options[0]:
+			return
+
+		elif selected == wifi_options[1]:
 
 			if net.active:
 
@@ -141,7 +145,7 @@ class WifiMenu:
 					proc.wait()
 
 
-		elif selected == wifi_options[1]:
+		elif selected == wifi_options[2]:
 			try:
 				self.wifi.forget_network(net)
 			except WifiError:
