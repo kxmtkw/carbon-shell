@@ -21,11 +21,11 @@ configuration
 window
  {
     transparency:                "real";
-    location:                    center;
+    location:                    east;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       48%;
-    height:                      78%;
+    width:                       34%;
+    height:                      100%;
     x-offset:                    0px;
     y-offset:                    0px;
 
