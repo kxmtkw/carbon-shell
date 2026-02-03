@@ -23,7 +23,7 @@ class BatteryInfo():
 
 		self.prompt: str = "Battery Info"
 
-		self.mesg: str = f"{status} {perc}"
+		self.mesg: str = f"{status.capitalize()} {perc}"
 
 		self.options: list[str] = [
 			f"Time remaining:    {timing}",

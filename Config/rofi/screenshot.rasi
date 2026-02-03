@@ -10,6 +10,7 @@ configuration
 
 @import "theme/color.rasi"
 @import "theme/fonts.rasi"
+@import "theme/style.rasi"
 
 
 
@@ -28,9 +29,9 @@ window
     enabled:                     true;
     margin:                      10px;
     padding:                     0;
-    border:                      2px solid;
+    border:                      @themeBorderWidth;
     border-color:                @outline;
-    border-radius:               40px;
+    border-radius:               @themeBorderRadius;
     cursor:                      "default";
     background-color:            transparent;
 }
@@ -49,7 +50,7 @@ mainbox
 }
 
 inputbar {
-    padding:                     20px;
+    padding:                     2% 1%;
     border-radius:               0px;
     background-color:            @background;
     text-color:                  @onSurface;
@@ -94,7 +95,7 @@ element {
     margin:                      0px;
     padding:                     15px;
     border:                      0px;
-    border-radius:               20px;
+    border-radius:               @themeBorderRadius;
     background-color:            @background;
     text-color:                  @onSurface;
     orientation:                 horizontal;

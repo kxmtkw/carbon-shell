@@ -10,10 +10,13 @@ configuration
 
 @import "theme/color.rasi"
 @import "theme/fonts.rasi"
+@import "theme/style.rasi"
+
 
 * {
-    font:                        "IosevkaTerm Nerd Font 15";
+    font: @fontTextBig;
 }
+
 
 window 
 {    
@@ -30,9 +33,9 @@ window
     enabled:                     true;
     margin:                      0;
     padding:                     0;
-    border:                      2px solid;
+    border:                      @themeBorderWidth;
     border-color:                @outline;
-    border-radius:               40px;
+    border-radius:               @themeBorderRadius;
     cursor:                      "default";
     background-color:            transparent;
 }
@@ -51,15 +54,15 @@ mainbox
 }
 
 imagebox {
-    spacing:                     30px;
-    padding:                     30px;
+    spacing:                     0px;
+    padding:                     3% 2%;
     background-color:            transparent;
     children:                    [ "inputbar", "dummy", "message" ];
 }
 
 inputbar {
     padding:                     15px;
-    border-radius:               10px;
+    border-radius:               @themeBorderRadius;
     background-color:            @background;
     text-color:                  @onSurface;
     children:                    [ "dummy", "prompt", "dummy"];
@@ -78,7 +81,7 @@ message {
     enabled:                     true;
     margin:                      0px;
     padding:                     15px;
-    border-radius:               10px;
+    border-radius:               @themeBorderRadius;
     background-color:            @background;
     text-color:                  @onSurface;
 }
@@ -120,7 +123,7 @@ element
     enabled:                     true;
     spacing:                     0px;
     margin:                      0px;
-    padding:                     10px 10px;
+    padding:                     10px 16px;
     border:                      0px solid;
     border-radius:               10px;
     background-color:            @background;

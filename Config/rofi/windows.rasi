@@ -20,9 +20,10 @@ configuration
 
 @import "theme/color.rasi"
 @import "theme/fonts.rasi"
+@import "theme/style.rasi"
 
 * {
-    font:                        "IosevkaTerm Nerd Font 12";
+    font:                        @fontTextSmall;
 }
 
 window 
@@ -40,9 +41,9 @@ window
     enabled:                     true;
     margin:                      0;
     padding:                     0;
-    border:                      2px solid;
+    border:                      @themeBorderWidth;
     border-color:                @outline;
-    border-radius:               40px;
+    border-radius:               @themeBorderRadius;
     cursor:                      "default";
     background-color:            transparent;
 }
@@ -90,7 +91,7 @@ element {
     margin:                      0px;
     padding:                     15px;
     border:                      0px;
-    border-radius:               20px;
+    border-radius:               @themeBorderRadius;
     background-color:            @background;
     text-color:                  @onSurface;
     orientation:                 horizontal;

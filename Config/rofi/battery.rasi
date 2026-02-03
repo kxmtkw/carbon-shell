@@ -10,7 +10,7 @@ configuration
 
 @import "theme/color.rasi"
 @import "theme/fonts.rasi"
-
+@import "theme/style.rasi"
 
 window 
 {    
@@ -27,9 +27,9 @@ window
     enabled:                     true;
     margin:                      10px;
     padding:                     0;
-    border:                      2px solid;
+    border:                      @themeBorderWidth;
     border-color:                @outline;
-    border-radius:               40px;
+    border-radius:               @themeBorderRadius;
     cursor:                      "default";
     background-color:            transparent;
 }
@@ -41,7 +41,7 @@ mainbox
     margin:                      0px;
     border:                      0px solid;
     border-radius:               0%;
-    background-color:            rgba(41, 41, 41, 0.3);
+    background-color:            @background;
     vertical-align:              0.5;
     orientation:                 vertical;
     children:                    [ "inputbar", "message", "listview" ];
@@ -66,10 +66,10 @@ prompt {
 
 message {
     enabled:                     true;
-    margin:                      0px;
+    margin:                      2% 3%;
     padding:                     5% 10px;
-    border-radius:               0px;
-    background-color:            transparent;
+    border-radius:               @themeBorderRadius;
+    background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }
 
@@ -78,7 +78,7 @@ textbox {
     text-color:                  inherit;
     vertical-align:              0.5;
     horizontal-align:            0.5;
-    font:                        "MajorMonoDisplay Bold 26";
+    font:                        @fontTextBiggest;
 }
 
 

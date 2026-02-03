@@ -1,0 +1,4 @@
+* {
+    themeBorderWidth:                         2px;
+    themeBorderRadius:                        12px;
+}

@@ -5,7 +5,7 @@ case $1 in
 		echo launcher_apps launcher_run launcher_files windows power battery screenshot
 	;;
 	"launcher_apps")
-		rofi -show drun -theme ~/.config/rofi/launcher.rasi
+		rofi -show drun -theme ~/.config/rofi/launcher.rasi 
 	;;
 	"launcher_run")
 		rofi -show run -theme ~/.config/rofi/launcher.rasi

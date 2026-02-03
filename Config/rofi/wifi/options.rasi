@@ -35,7 +35,7 @@ message {
     enabled:                     true;
     margin:                      1% 2%;
     padding:                     20px;
-    border-radius:               10px;
+    border-radius:               @themeBorderRadius;
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }
@@ -45,7 +45,6 @@ textbox {
     text-color:                  inherit;
     vertical-align:              0.5;
     horizontal-align:            0;
-    font:                        "Iosevka 14";
 }
 
 
@@ -78,7 +77,7 @@ element
     enabled:                     true;
     spacing:                     10px;
     padding:                     8px;
-    border-radius:               12px;
+    border-radius:               @themeBorderRadius;
     background-color:            transparent;
     text-color:                  @onSurface;
     cursor:                      pointer;
