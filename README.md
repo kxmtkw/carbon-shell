@@ -1,80 +1,37 @@
 
-# mShell
+# Carbon Shell
 
-mShell = Material Shell
+Carbon Shell is a UI shell for linux designed to be highly functional and efficient. It uses quickshell and rofi to achieve this.
 
-## Main Functions
+## Installation
 
-This shell will take base arch and make it a fully fledged usable DE. This means that the following needs to be done.
+First install dependancies.
 
-- System UI
-- Apps
-- Theming
-- Quality of Life
+```bash
+hyprland \
+hyprsunset \
+hyprshot \
+swww \ 
+quickshell \
+rofi
+```
 
+Other than these, the shell also expects `NetworkManager` and it's associated tools like `nmcli` for the wifi controller to work.
 
-## Features (To be implemented)
+Clone the repo at `~/.carbon` and it MUST be cloned exactly at this path for the shell to work.
 
-### Bar
+```
+git clone git@github.com:kxmtkw/carbon-shell.git ~/.carbon
+cd ~/.carbon
+chmod +x install.sh
+./install.sh
+```
 
-Written in Quickshell
+What this script would do:
++ Setup a python venv at `~/.carbon/.venv`
++ Install all python dependancies
++ Finally run `carbon install` to install the shell.
 
-Indicators for:
+> The shell is still barebones, Soon a better and quicker way to install will be implemented.
 
-- Workspaces
-- Clock
-- Power
-- Wifi
-- Battery
-- Bluetooth
-- Sound
-
-
-### Controllers
-
-Written in Rofi
-
-Controllers to well control the desktop.
-
-- Wifi controller
-- Bluetooth controller
-- SSH? controller
-- Theme controller
-- Wallpaper applier
-
-
-### OSDs
-
-Written in quickshell.
-
-- Sound
-- Mic
-- Brightness
-
-
-### Lock
-
-Probably going to use Hyprlock
-
-
-### Launcher
-
-Rofi ofc.
-
-"Super"-ish launcher. Features include:
-
-- App launcher
-- File traverser
-- Command runner
-
-
-## Configs
-
-Configs included will be:
-
-- hyprland
-- quickshell
-- rofi
-- zsh
-- kitty
 
