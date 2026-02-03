@@ -25,13 +25,13 @@ PanelWindow {
 	}
 
 	implicitWidth: Material.Style.dpi(600)
-	color: Material.Color.invisible
+	color: Material.Color._invisible
 	
 
 	WrapperRectangle
 	{	
 		anchors.fill: parent
-		color: Material.Color.background
+		color: Material.Color._background
 		radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
 
 		margin: Material.Style.dpi(120)

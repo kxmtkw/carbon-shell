@@ -9,7 +9,7 @@ WrapperRectangle
 	margin: Material.Style.dpi(70)
 	topMargin: Material.Style.dpi(120)
 
-	color: Material.Color.surface_container
+	color: Material.Color._surfaceContainer
 	radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
 
 	SystemClock {
@@ -20,7 +20,7 @@ WrapperRectangle
 	Text {
 		id: barClock
 		anchors.centerIn: parent
-		color: Material.Color.on_surface
+		color: Material.Color._onSurface
 		text: Qt.formatDateTime(sysclock.date, "hh\nmm\nAP")
 	}
 }

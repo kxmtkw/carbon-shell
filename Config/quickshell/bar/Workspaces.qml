@@ -12,7 +12,7 @@ WrapperRectangle
 	margin: Material.Style.dpi(70)
 	topMargin: Material.Style.dpi(120)
 
-	color: Material.Color.surface_container
+	color: Material.Color._surfaceContainer
 
 	radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
 
@@ -34,7 +34,7 @@ WrapperRectangle
 				height: Material.Style.dpi(200)
 				
 				radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
-				color: modelData.focused ? Material.Color.tertiary_container : Material.Color.background
+				color: modelData.focused ? Material.Color._tertiaryContainer : Material.Color._background
 
 
 				MouseArea

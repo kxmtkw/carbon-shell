@@ -17,7 +17,7 @@ WrapperRectangle
 	margin: Material.Style.dpi(70)
 	topMargin: Material.Style.dpi(120)
 
-	color: Material.Color.background
+	color: Material.Color._background
 
 	radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
 
@@ -42,7 +42,7 @@ WrapperRectangle
 
 			font.family: "IosevkaTerm Nerd Font"
 			font.pixelSize: Material.Style.dpi(280)
-			color: Material.Color.on_surface
+			color: Material.Color._onSurface
 
 		}
 
@@ -54,11 +54,11 @@ WrapperRectangle
 		hoverEnabled: true 
 
 		onEntered: {
-			parent.color = Material.Color.surface_container
+			parent.color = Material.Color._surfaceContainer
 		}
 
 		onExited: {
-			parent.color = Material.Color.background
+			parent.color = Material.Color._background
 		}
 	}
 }
