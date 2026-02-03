@@ -17,6 +17,7 @@ configuration
 
 @import "../theme/color.rasi"
 @import "../theme/fonts.rasi"
+@import "../theme/style.rasi"
 
 window
  {
@@ -31,9 +32,9 @@ window
 
     enabled:                     true;
     margin:                      10px;
-    border:                      2px solid;
+    border:                      @themeBorderWidth;
     border-color:                @outline;
-    border-radius:               40px;
+    border-radius:               @themeBorderRadius;
     cursor:                      "default";
     background-color:            rgba(18, 18, 18, 0.2);
 }

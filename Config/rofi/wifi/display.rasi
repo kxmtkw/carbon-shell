@@ -31,7 +31,7 @@ dummy {
 prompt {
     background-color:            inherit;
     text-color:                  inherit;
-    font:                        "Iosevka 96";
+    font:                        @fontTextHuge;
 }
 
 message {
@@ -48,5 +48,4 @@ textbox {
     text-color:                  inherit;
     vertical-align:              0.5;
     horizontal-align:            0.5;
-    font:                        "Iosevka 15";
 }

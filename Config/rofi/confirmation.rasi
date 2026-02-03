@@ -10,6 +10,7 @@ configuration
 
 @import "theme/color.rasi"
 @import "theme/fonts.rasi"
+@import "theme/style.rasi"
 
 window 
 {    
@@ -26,9 +27,9 @@ window
     enabled:                     true;
     margin:                      1%;
     padding:                     0px;
-    border:                      2px solid;
+    border:                      @themeBorderWidth;
     border-color:                @outline;
-    border-radius:               40px;
+    border-radius:               @themeBorderRadius;
     cursor:                      "default";
     background-color:            @background;
 }
@@ -38,7 +39,7 @@ mainbox
     enabled:                     true;
     spacing:                     1%;
     margin:                      0px;
-    padding:                     10px;
+    padding:                     1%;
     border:                      0px solid;
     border-radius:               0%;
     background-color:            transparent;
@@ -86,13 +87,13 @@ listview
     
     spacing:                     1%;
     margin:                      0%;
-    padding:                     10px 30px;
+    padding:                     1%;
     border:                      0px solid;
     border-radius:               0px;
     background-color:            transparent;
     text-color:                  @onSurface;
     vertical-align:              0.5;
-    horizontal-align:              0.5;
+    horizontal-align:            0.5;
     cursor:                      "default";
 }
 
