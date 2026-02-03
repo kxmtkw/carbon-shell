@@ -97,17 +97,21 @@ element {
     orientation:                 horizontal;
     cursor:                      pointer;
 }
-element normal.active {
-    background-color:            @surfaceContainer;
-    text-color:                  @onSurface;
+element normal.normal {
+    background-color:            inherit;
+    text-color:                  inherit;
 }
 element selected.normal {
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }
+element normal.active {
+    background-color:            @secondary;
+    text-color:                  @onSecondary;
+}
 element selected.active {
-    background-color:            @surfaceContainerHigh;
-    text-color:                  @onSurface;
+    background-color:            @primary;
+    text-color:                  @onPrimary;
 }
 element-icon {
     background-color:            transparent;
