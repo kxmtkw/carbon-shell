@@ -65,17 +65,27 @@ WrapperRectangle
 
 		function setSymbol()
 		{
-			
+			var value = UPower.displayDevice.percentage * 100;
+
 			if (!UPower.onBattery)
 			{
 				battery_icon.text = ""
 				battery_icon.font.pixelSize = Material.Style.dpi(260)
-				battery_icon.color = Material.Color._primary
+
+				if (value >= 98)
+				{
+					battery_icon.color = Material.Color._primary
+				}
+				else
+				{
+					battery_icon.color = Material.Color._secondary
+				}
+				
 				return
 			}
 
-			var value = UPower.displayDevice.percentage * 100;
 			var sym
+			battery_icon.color = Material.Color._onSurface
 
 			if (value >= 95)
 			{
@@ -112,19 +122,19 @@ WrapperRectangle
 			else if (value >= 15)
 			{
 				sym = "󰁻";
+				battery_icon.color = Material.Color._error
 			}
 			else if (value >= 5)
 			{
 				sym = "󰁺";
+				battery_icon.color = Material.Color._error
 			}
 			else
 			{
-				battery_icon.text = "󰂎";
+				sym = "󰂎";
 				battery_icon.color = Material.Color._error
-				return
 			}
 
-			battery_icon.color = Material.Color._onSurface
 			battery_icon.text = sym
 		}
 
