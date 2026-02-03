@@ -179,21 +179,25 @@ Rate:       {net.rate}
 
 	
 	def forget_network(self, net: WifiNetwork):
+		proc = self.trigger_displayer(
+			" ",
+			f"Forgetting network \"{net.ssid}\"..."
+		)
 		try:
-			proc = self.trigger_displayer(
-				" ",
-				f"Forgetting network \"{net.ssid}\"..."
-			)
 			self.wifi.forget_network(net)
+
+		except WifiError:
 			proc.kill()
 			proc.wait()
 
-		except WifiError:
-			proc = self.trigger_displayer(
+			proc2 = self.trigger_displayer(
 				" ",
 				f"Network \"{net.ssid}\" already unknown!"
 			)
-
+			proc2.wait()
+		
+		else:
+			proc.kill()
 			proc.wait()
 
 
