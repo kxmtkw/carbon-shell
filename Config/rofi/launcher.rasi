@@ -39,7 +39,6 @@ configuration
 @import "theme/style.rasi"
 @import "theme/fonts.rasi"
 
-
 window
  {
     transparency:                "real";
