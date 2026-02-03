@@ -1,6 +1,7 @@
 @import "common.rasi"
 
 
+
 mainbox 
 {
     enabled:                     true;
@@ -35,8 +36,8 @@ prompt {
 
 message {
     enabled:                     true;
-    margin:                      1% 2%;
-    padding:                     20px;
+    margin:                      1% 1%;
+    padding:                     80px 10px;
     border-radius:               10px;
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
@@ -47,5 +48,5 @@ textbox {
     text-color:                  inherit;
     vertical-align:              0.5;
     horizontal-align:            0.5;
-    font:                        "Iosevka 16";
+    font:                        "Iosevka 15";
 }

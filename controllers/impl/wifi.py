@@ -1,3 +1,5 @@
+import time
+
 from rofi import RofiShell
 from networker.wifi import WifiManager, WifiError, WifiNetwork
 
@@ -20,8 +22,6 @@ class WifiMenu:
 		self.options = [
 			">>     Toggle Wifi",
 			">>     Rescan",
-			">>  󰀝   Toggle Airplane Mode",
-			">>  󰀝   Hotspot"
 		]
 
 
@@ -32,7 +32,20 @@ class WifiMenu:
 	
 	def make_wifi_entry(self, id: int, net: WifiNetwork) -> str:
 		icon = "󰤥"
-		entry = f"{icon}  [{id}] {net.ssid}{RofiShell.MarkActive if net.active else ''}"
+		sig = int(net.signal.strip())
+
+		if sig > 80:
+			icon = "󰤨"
+		elif sig > 60:
+			icon = "󰤥"
+		elif sig > 40:
+			icon = "󰤢"
+		elif sig > 20:
+			icon = "󰤟"
+		else:
+			icon = "󰤯"
+
+		entry = f"{icon}   [{id}]  {net.ssid}{RofiShell.MarkActive if net.active else ''}"
 		return entry
 		
 
@@ -40,7 +53,7 @@ class WifiMenu:
 		try:
 			id = entry.split("]")[0].split("[")[1]
 			return int(id)
-		except ValueError:
+		except ValueError, IndexError, TypeError:
 			print(f"Error encountered when extracting id from entry. This should not happen at all. {entry}")
 			exit(1)
 
@@ -81,11 +94,13 @@ class WifiMenu:
 			return
 		
 		elif selected == self.options[1]:
-			self.wifi.rescan()
-			return
-		
-		elif selected == self.options[2]:
-			self.wifi.set_radio(not self.wifi.is_radio_on())
+			try:
+				self.wifi.rescan()
+			except WifiError as w:
+				print(w.details)
+				
+				if not self.wifi.is_radio_on():
+					self.wifi.set_radio(True)
 
 		else:
 			print(networks)
@@ -103,7 +118,13 @@ class WifiMenu:
 			"  Forget"
 		]
 
-		details = f"""SSID: {net.ssid}\nBSSID: {net.bssid}\nSecurity: {net.security}\nSignal: {net.signal}\nRate: {net.rate}"""
+		details = f"""
+SSID:       {net.ssid}\n
+BSSID:      {net.bssid}\n
+Security:   {net.security}\n
+Signal:     {net.signal}\n
+Rate:       {net.rate}
+"""
 
 		selected = self.rofi.display(
 			self.title,
@@ -120,57 +141,78 @@ class WifiMenu:
 		elif selected == wifi_options[1]:
 
 			if net.active:
-
-				proc = self.trigger_displayer(
-					" ",
-					f"Disconnecting from {net.ssid}!"
-				)
-				self.wifi.disconnect_network(net)
-				proc.kill()
-				proc.wait()
-
+				self.disconnect_network(net)
 			else:
-				proc = self.trigger_displayer(
-					" ",
-					f"Connecting to {net.ssid}!"
-				)
-				try:
-					self.wifi.connect_network(net)
-				except WifiError:
-					proc.kill()
-					proc.wait()
-					self.show_password_prompt(net)
-				else:
-					proc.kill()
-					proc.wait()
+				self.connect_network(net)
 
 
 		elif selected == wifi_options[2]:
-			try:
-				self.wifi.forget_network(net)
-			except WifiError:
-				proc = self.trigger_displayer(
-					" ",
-					f"Network {net.ssid} already unknown"
-				)
+			self.forget_network(net)
 
-				proc.wait()
-				return
+
+	def connect_network(self, net: WifiNetwork):
+
+		proc = self.trigger_displayer(
+			" ",
+			f"Connecting to network \"{net.ssid}\"..."
+		)
+		try:
+			self.wifi.connect_network(net)
+		except WifiError:
+			proc.kill()
+			proc.wait()
+			self.show_password_prompt(net)
+		else:
+			proc.kill()
+			proc.wait()
+
+
+	def disconnect_network(self, net: WifiNetwork):
+
+		proc = self.trigger_displayer(
+			" ",
+			f"Disconnecting from network \"{net.ssid}\"..."
+		)
+		self.wifi.disconnect_network(net)
+		proc.kill()
+		proc.wait()
 
 	
+	def forget_network(self, net: WifiNetwork):
+		try:
+			proc = self.trigger_displayer(
+				" ",
+				f"Forgetting network \"{net.ssid}\"..."
+			)
+			self.wifi.forget_network(net)
+			proc.kill()
+			proc.wait()
+
+		except WifiError:
+			proc = self.trigger_displayer(
+				" ",
+				f"Network \"{net.ssid}\" already unknown!"
+			)
+
+			proc.wait()
+
+
 	def show_password_prompt(self, net: WifiNetwork) -> None:
 
 		self.rofi.updateTheme(password_rasi)
 		
 		password = self.rofi.display(
 			self.title,
-			f"Enter password for {net.ssid}",
+			f"Enter password for: {net.ssid}",
 			[]
 		)
 
+		if not password:
+			return
+
 		proc = self.trigger_displayer(
-			" ",
-			f"Connecting to {net.ssid}!"
+			" ",
+			f"Connecting to network \"{net.ssid}\"..."
 		)
 		
 		try:
@@ -182,7 +224,7 @@ class WifiMenu:
 
 			proc2 = self.trigger_displayer(
 				" ",
-				f"Incorrect password for {net.ssid}!"
+				f"Incorrect password for \"{net.ssid}\"!"
 			)
 
 			proc2.wait()
