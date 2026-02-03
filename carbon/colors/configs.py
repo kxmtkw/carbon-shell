@@ -6,7 +6,7 @@ def update_alacritty(s: dict[str, str]):
 # NOTE: written by carbon shell
 [colors]
 [colors.primary]
-foreground = "{s['on_surface']}"
+foreground = "{s['onSurface']}"
 background = "{s['background']}"
 
 [colors.normal]
@@ -33,16 +33,16 @@ def update_kitty(s: dict[str, str]):
 
     base = (
         "// NOTE: written by carbon shell\n" 
-        f"selection_foreground     {s["on_surface"]}\n"
-        f"selection_background     {s["surface_container_highest"]}\n"
-        f"active_border_color      {s["on_surface"]}\n"
-        f"inactive_border_color    {s["on_surface"]}\n"
-        f"active_tab_foreground    {s["on_surface"]}\n"
-        f"active_tab_background    {s["surface_container"]}\n"
-        f"inactive_tab_foreground  {s["on_surface"]}\n"
+        f"selection_foreground     {s["onSurface"]}\n"
+        f"selection_background     {s["surfaceContainerHighest"]}\n"
+        f"active_border_color      {s["onSurface"]}\n"
+        f"inactive_border_color    {s["onSurface"]}\n"
+        f"active_tab_foreground    {s["onSurface"]}\n"
+        f"active_tab_background    {s["surfaceContainer"]}\n"
+        f"inactive_tab_foreground  {s["onSurface"]}\n"
         f"inactive_tab_background  {s["background"]}\n"
         f"background               {s["background"]}\n"
-        f"foreground               {s["on_surface"]}\n"
+        f"foreground               {s["onSurface"]}\n"
         f"color0                   #323234\n"
         f"color1                   #b3261e\n"
         f"color2                   #1b6b44\n"
@@ -59,8 +59,8 @@ def update_kitty(s: dict[str, str]):
         f"color13                  #ce93d8\n"
         f"color14                  #4dd0e1\n"
         f"color15                  #ffffff\n"
-        f"cursor                   {s["on_surface"]}\n"
-        f"cursor_text_color        {s["on_surface"]}\n"
+        f"cursor                   {s["onSurface"]}\n"
+        f"cursor_text_color        {s["onSurface"]}\n"
         f"url_color                {s["tertiary"]}\n"
     )
 
@@ -80,38 +80,33 @@ def update_hypr(s: dict[str, str]):
 
 
 def update_rofi(s: dict[str, str]):
-    base = (
-        "// NOTE: written by carbon shell\n"
-        "* {\n"
-        f"background:                     {s["background"]};\n"
-        f"surfaceContainer:               {s["surface_container"]};\n"
-        f"onSurface:                      {s["on_surface"]};\n"
-        f"surfaceContainerHigh:           {s["surface_container_high"]};\n"
-        f"surfaceContainerHighest:        {s["surface_container_highest"]};\n"
-        f"outline:                        {s["outline"]};\n"
-        f"primary:                        {s["primary"]};\n"
-        f"onPrimary:                      {s["on_primary"]};\n"
-        "}"
-    )
+    base = theme_str = f"""
+# NOTE: written by carbon shell
+* {'{'}
+"""
+    for name, val in s.items():
+        base += f"{name:<30}: \"{val}\"\n"
+
+    base += "\n}"
 
     return base
 
 
 def update_quickshell(s: dict[str, str]) -> str:
     base = """
-    // NOTE: written by carbon shell
-    pragma Singleton
+// NOTE: written by carbon shell
+pragma Singleton
 
-    import QtQuick
-    import Quickshell
+import QtQuick
+import Quickshell
 
-    Singleton 
-    {
-    property color invisible					 : "#00000000"\n
-    """
+Singleton 
+{
+property color _invisible					 : "#00000000"\n
+"""
 
     for name, val in s.items():
-        base += f"property color {name:<30}: \"{val}\"\n"
+        base += f"property color _{name:<30}: \"{val}\"\n"
 
     base += "\n}"
 
