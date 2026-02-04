@@ -8,19 +8,19 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
-import "../material" as Material
+import "../theme" as Theme
 
 import "../global" as Global
 
 
 WrapperRectangle
 {
-	margin: Material.Style.dpi(70)
-	topMargin: Material.Style.dpi(120)
+	margin: Theme.Style.dpi(70)
+	topMargin: Theme.Style.dpi(120)
 
-	color: Material.Color._background
+	color: Theme.Color._background
 
-	radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
+	radius: Theme.Style.round(Theme.Style.roundExtraLargeInc, width, height)
 
 	Process 
 	{
@@ -42,8 +42,8 @@ WrapperRectangle
 			text: ""
 
 			font.family: "IosevkaTerm Nerd Font"
-			font.pixelSize: Material.Style.dpi(260)
-			color: Material.Color._onSurface
+			font.pixelSize: Theme.Style.dpi(300)
+			color: Theme.Color._onSurface
 
 		}
 
@@ -55,11 +55,11 @@ WrapperRectangle
 		hoverEnabled: true 
 
 		onEntered: {
-			parent.color = Material.Color._surfaceContainer
+			parent.color = Theme.Color._surfaceContainer
 		}
 
 		onExited: {
-			parent.color = Material.Color._background
+			parent.color = Theme.Color._background
 		}
 
 
@@ -70,22 +70,22 @@ WrapperRectangle
 			if (!UPower.onBattery)
 			{
 				battery_icon.text = ""
-				battery_icon.font.pixelSize = Material.Style.dpi(260)
+				battery_icon.font.pixelSize = Theme.Style.dpi(300)
 
 				if (value >= 98)
 				{
-					battery_icon.color = Material.Color._primary
+					battery_icon.color = Theme.Color._primary
 				}
 				else
 				{
-					battery_icon.color = Material.Color._secondary
+					battery_icon.color = Theme.Color._secondary
 				}
 				
 				return
 			}
 
 			var sym
-			battery_icon.color = Material.Color._onSurface
+			battery_icon.color = Theme.Color._onSurface
 
 			if (value >= 95)
 			{
@@ -122,17 +122,17 @@ WrapperRectangle
 			else if (value >= 15)
 			{
 				sym = "󰁻";
-				battery_icon.color = Material.Color._error
+				battery_icon.color = Theme.Color._error
 			}
 			else if (value >= 5)
 			{
 				sym = "󰁺";
-				battery_icon.color = Material.Color._error
+				battery_icon.color = Theme.Color._error
 			}
 			else
 			{
 				sym = "󰂎";
-				battery_icon.color = Material.Color._error
+				battery_icon.color = Theme.Color._error
 			}
 
 			battery_icon.text = sym
