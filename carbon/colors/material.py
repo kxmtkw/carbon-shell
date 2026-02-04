@@ -9,10 +9,10 @@ class MaterialColors:
 
 
     class Variant:
-        ash      = (0.1, material.Variant.TONALSPOT)
+        ash      = (0.1, material.Variant.VIBRANT)
         coal     = (0.2, material.Variant.MONOCHROME)
-        graphite = (0.4, material.Variant.TONALSPOT)
-        diamond  = (1, material.Variant.VIBRANT)
+        graphite = (0.2, material.Variant.TONALSPOT)
+        diamond  = (0.6, material.Variant.VIBRANT)
 
 
     def __init__(self):
