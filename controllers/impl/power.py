@@ -19,7 +19,7 @@ class PowerMenu():
 
 	def launch(self):
 		selected: str = self.rofi.display(
-			self.rofi.Run("echo \"$(whoami)@$(hostname)\"").strip(),
+			self.rofi.Run("echo \"$(whoami)@$(hostnamectl | awk -F': ' '/Static hostname/ {print $2}')\"").strip(),
 			self.rofi.Run("uptime -p").strip().capitalize(),
 			self.options
 		)
