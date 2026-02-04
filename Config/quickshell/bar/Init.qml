@@ -4,7 +4,7 @@ import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
 
-import "../material" as Material
+import "../theme" as Theme
 
 
 PanelWindow {
@@ -24,29 +24,29 @@ PanelWindow {
 		bottom: 8
 	}
 
-	implicitWidth: Material.Style.dpi(600)
-	color: Material.Color._invisible
+	implicitWidth: Theme.Style.dpi(740)
+	color: Theme.Color._invisible
 	
 
 	WrapperRectangle
 	{	
 		anchors.fill: parent
-		color: Material.Color._background
-		radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
+		color: Theme.Color._background
+		radius: Theme.Style.round
 
-		margin: Material.Style.dpi(120)
-		topMargin: Material.Style.dpi(160)
-		bottomMargin: Material.Style.dpi(160)
+		margin: Theme.Style.dpi(140)
+		topMargin: Theme.Style.dpi(180)
+		bottomMargin: Theme.Style.dpi(180)
 
 		ColumnLayout 
 		{
 			
-			spacing: Material.Style.dpi(160)
-			anchors.margins: Material.Style.dpi(100)
+			spacing: Theme.Style.dpi(200)
+			anchors.margins: Theme.Style.dpi(100)
 			
 			Arch {
 				Layout.fillWidth: true
-				Layout.preferredHeight: Material.Style.dpi(360)
+				Layout.preferredHeight: Theme.Style.dpi(360)
 				Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom	
 			}
 			
@@ -64,7 +64,7 @@ PanelWindow {
 			Battery
 			{
 				Layout.fillWidth: true
-				Layout.preferredHeight: Material.Style.dpi(360)
+				Layout.preferredHeight: Theme.Style.dpi(360)
 				Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 			}
 
@@ -76,7 +76,7 @@ PanelWindow {
 			Power
 			{
 				Layout.fillWidth: true
-				Layout.preferredHeight: Material.Style.dpi(360)
+				Layout.preferredHeight: Theme.Style.dpi(360)
 				Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 			}
 			

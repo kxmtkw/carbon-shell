@@ -4,23 +4,24 @@ import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 
-import "../material" as Material
+import "../theme" as Theme
 
 
 WrapperRectangle
 {
-	margin: Material.Style.dpi(70)
-	topMargin: Material.Style.dpi(120)
+	margin: Theme.Style.dpi(70)
+	topMargin: Theme.Style.dpi(200)
+	bottomMargin: Theme.Style.dpi(200)
 
-	color: Material.Color._surfaceContainer
+	color: Theme.Color._surfaceContainer
 
-	radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
+	radius: Theme.Style.roundLess
 
 	
 	
 	ColumnLayout {
 		anchors.centerIn: parent
-		spacing: Material.Style.dpi(120)
+		spacing: Theme.Style.dpi(140)
 
 		Repeater {
 			model: Hyprland.workspaces
@@ -30,11 +31,11 @@ WrapperRectangle
 			Rectangle {
 				Layout.alignment: Qt.AlignHCenter
 
-				width: Material.Style.dpi(200)
-				height: Material.Style.dpi(200)
+				width: Theme.Style.dpi(240)
+				height: Theme.Style.dpi(240)
 				
-				radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
-				color: modelData.focused ? Material.Color._tertiaryContainer : Material.Color._background
+				radius: Theme.Style.roundLesser
+				color: modelData.focused ? Theme.Color._tertiaryContainer : Theme.Color._background
 
 
 				MouseArea

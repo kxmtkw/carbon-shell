@@ -5,19 +5,19 @@ import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 
-import "../material" as Material
+import "../theme" as Theme
 
 import "../global" as Global
 
 
 WrapperRectangle
 {
-	margin: Material.Style.dpi(70)
-	topMargin: Material.Style.dpi(120)
+	margin: Theme.Style.dpi(70)
+	bottomMargin: Theme.Style.dpi(120)
 
-	color: Material.Color._background
+	color: Theme.Color._background
 
-	radius: Material.Style.round(Material.Style.roundExtraLargeInc, width, height)
+	radius: Theme.Style.round
 
 	Process 
 	{
@@ -39,8 +39,8 @@ WrapperRectangle
 			text: ""
 
 			font.family: "IosevkaTerm Nerd Font"
-			font.pixelSize: Material.Style.dpi(260)
-			color: Material.Color._onSurface
+			font.pixelSize: Theme.Style.dpi(300)
+			color: Theme.Color._onSurface
 
 		}
 
@@ -51,11 +51,11 @@ WrapperRectangle
 		hoverEnabled: true 
 
 		onEntered: {
-			parent.color = Material.Color._surfaceContainer
+			parent.color = Theme.Color._surfaceContainer
 		}
 
 		onExited: {
-			parent.color = Material.Color._background
+			parent.color = Theme.Color._background
 		}
 
 	}
