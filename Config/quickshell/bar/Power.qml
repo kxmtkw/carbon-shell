@@ -13,6 +13,7 @@ import "../global" as Global
 WrapperRectangle
 {
 	margin: Theme.Style.dpi(70)
+	topMargin: Theme.Style.dpi(120)
 	bottomMargin: Theme.Style.dpi(120)
 
 	color: Theme.Color._background
