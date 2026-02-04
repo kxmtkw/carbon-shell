@@ -40,13 +40,12 @@ PanelWindow {
 
 		ColumnLayout 
 		{
-			
-			spacing: Theme.Style.dpi(200)
-			anchors.margins: Theme.Style.dpi(100)
+			spacing: Theme.Style.dpi(120)
+			anchors.margins: Theme.Style.dpi(0)
 			
 			Arch {
 				Layout.fillWidth: true
-				Layout.preferredHeight: Theme.Style.dpi(360)
+				Layout.preferredHeight: Theme.Style.dpi(440)
 				Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom	
 			}
 			
@@ -64,7 +63,7 @@ PanelWindow {
 			Battery
 			{
 				Layout.fillWidth: true
-				Layout.preferredHeight: Theme.Style.dpi(360)
+				Layout.preferredHeight: Theme.Style.dpi(440)
 				Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 			}
 
@@ -76,7 +75,7 @@ PanelWindow {
 			Power
 			{
 				Layout.fillWidth: true
-				Layout.preferredHeight: Theme.Style.dpi(360)
+				Layout.preferredHeight: Theme.Style.dpi(440)
 				Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 			}
 			
