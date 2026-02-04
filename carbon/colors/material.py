@@ -5,7 +5,6 @@ from pathlib import Path
 
 from carbon.helpers import CarbonError
 
-
 class MaterialColors:
 
 
@@ -52,9 +51,29 @@ class MaterialColors:
         self.lightMapping = self.make_mapping(self.lightScheme)
 
 
+    def hex_to_rgb(self, hex_color, alpha=None) -> str:
+        h = hex_color.lstrip("#")
+
+        if len(h) == 3:  # #RGB
+            r, g, b = (int(c * 2, 16) for c in h)
+            a = alpha
+        elif len(h) == 6:  # #RRGGBB
+            r, g, b = (int(h[i:i+2], 16) for i in (0, 2, 4))
+            a = alpha
+        elif len(h) == 8:  # #RRGGBBAA
+            r, g, b, a = (int(h[i:i+2], 16) for i in (0, 2, 4, 6))
+            a = a / 255 if alpha is None else alpha
+        else:
+            raise ValueError("Invalid hex color")
+
+        return f"rgb({r}, {g}, {b})" if a is None else f"rgba({r}, {g}, {b}, {a})"
+
+
     def make_mapping(self, s: material.DynamicScheme) -> dict[str, str]:
         scheme = {
             "background": s.background,
+            "backgroundTransparentxAA": f"{s.background}40",
+            "backgroundTransparentAAx": f"#40{s.background.removeprefix('#')}",
             "surface": s.surface,
             "surfaceDim": s.surface_dim,
             "surfaceBright": s.surface_bright,
