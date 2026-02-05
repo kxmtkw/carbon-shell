@@ -2,16 +2,11 @@ pkill rofi # a bit brute force but meh
 
 case $1 in
 	"--list")
-		echo launcher_apps launcher_run launcher_files windows power battery screenshot
+		echo Supporter controllers:
+		echo launcher windows power battery screenshot wifi run
 	;;
-	"launcher_apps")
+	"launcher")
 		rofi -show drun -theme ~/.config/rofi/launcher.rasi 
-	;;
-	"launcher_run")
-		rofi -show run -theme ~/.config/rofi/launcher.rasi
-	;;
-	"launcher_files")
-		rofi -show filebrowser -theme ~/.config/rofi/launcher.rasi
 	;;
 	"windows")
 		rofi -show window -theme ~/.config/rofi/windows.rasi
@@ -27,6 +22,9 @@ case $1 in
 	;;
 	"wifi") 
 		python3 ~/.carbon/controllers/impl/wifi.py
+	;;
+	"run") 
+		python3 ~/.carbon/controllers/impl/run.py
 	;;
 	*)
 		notify-send "Unknown controller!" $1
