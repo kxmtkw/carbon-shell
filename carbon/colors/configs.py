@@ -74,6 +74,15 @@ def update_hypr(s: dict[str, str]):
 		"# NOTE: written by carbon shell\n"
 		f"$border_active = rgb({outline})\n"
 		f"$border_inactive = rgba({outline}40)\n"
+		f"$background = rgb({s['background'][1:]})\n"
+		f"$surface = rgb({s['surface'][1:]})\n"
+		f"$onSurface = rgb({s['onSurface'][1:]})\n"
+		f"$primary = rgb({s['primary'][1:]})\n"
+		f"$onPrimary = rgb({s['onPrimary'][1:]})\n"
+		f"$primaryContainer = rgb({s['primaryContainer'][1:]})\n"
+		f"$error = rgb({s['error'][1:]})\n"
+		f"$errorContainer = rgb({s['errorContainer'][1:]})\n"
+		f"$onErrorContainer = rgb({s['onErrorContainer'][1:]})\n"
 	)
 
 	return base
