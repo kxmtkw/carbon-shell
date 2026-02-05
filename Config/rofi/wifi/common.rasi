@@ -22,7 +22,7 @@ configuration
 window
  {
     transparency:                "real";
-    location:                    east;
+    location:                    west;
     anchor:                      center;
     fullscreen:                  false;
     width:                       34%;
