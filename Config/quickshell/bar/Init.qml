@@ -40,17 +40,19 @@ PanelWindow {
 
 		ColumnLayout 
 		{
-			spacing: Theme.Style.dpi(120)
+			spacing: Theme.Style.dpi(140)
 			anchors.margins: Theme.Style.dpi(0)
 			
-			Arch {
+			Arch 
+			{
 				Layout.fillWidth: true
 				Layout.preferredHeight: Theme.Style.dpi(440)
 				Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom	
 			}
 			
 
-			Workspaces {
+			Workspaces 
+			{
 				Layout.fillWidth: true
 				Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 			}
@@ -60,11 +62,23 @@ PanelWindow {
 				Layout.fillHeight: true
 			}
 
-			Battery
-			{
-				Layout.fillWidth: true
-				Layout.preferredHeight: Theme.Style.dpi(440)
-				Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+			ColumnLayout 
+			{	
+				spacing: Theme.Style.dpi(60)
+				Wifi
+				{
+					Layout.fillWidth: true
+					Layout.preferredHeight: Theme.Style.dpi(440)
+					Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+				}
+
+				Battery
+				{
+					Layout.fillWidth: true
+					Layout.preferredHeight: Theme.Style.dpi(440)
+					Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+				}
+
 			}
 
 			Clock 
