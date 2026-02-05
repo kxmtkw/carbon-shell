@@ -15,7 +15,7 @@ compinit
 autoload -U colors && colors
 
 PROMPT='%F{cyan}[%n@%m]%f %F{white}%~%f
-%F{green}$ %f'
+%F{green}>> %f'
 
 
 
