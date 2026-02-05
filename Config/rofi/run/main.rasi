@@ -1,0 +1,178 @@
+
+configuration 
+{
+	modi:                       "drun";
+    show-icons:                 true;
+	icon-theme: "Papirus";
+
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "!MousePrimary"; 
+    kb-cancel: ["MousePrimary", "Escape"];
+}
+
+@import "theme/color.rasi"
+@import "theme/style.rasi"
+@import "theme/fonts.rasi"
+
+window
+ {
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       32%;
+    height:                      24%;
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    enabled:                     true;
+    margin:                      10px;
+    border:                      @themeBorderWidth;
+    border-color:                @outline;
+    border-radius:               @themeBorderRadius;
+    cursor:                      "default";
+    background-color:            @backgroundTransparentxAA;
+}
+
+mainbox 
+{
+    enabled:                     true;
+    spacing:                     0;
+    padding:                     0% 0%;
+    background-color:            @background;
+    orientation:                 vertical;
+    children:                    [ "inputbar", "listbox"];
+}
+
+
+inputbar {
+    enabled:                     true;
+    margin:                      1% 0%;
+    padding:                     1% 2%;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    border-radius:               @themeBorderRadius;
+    orientation:                 horizontal;
+    children:                    [ "prompt", "entry", "dummy"];
+}
+
+prompt {
+    padding:                     0;
+    border-radius:               0px;
+    background-color:            inherit;
+    text-color:                  @onSurface;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+
+entry {
+    enabled:                     true;
+    expand:                      false;
+    width:                       20%;
+    padding:                     12px 16px;
+    border-radius:               @themeBorderRadius;
+    background-color:            inherit;
+    text-color:                  inherit;
+    cursor:                      text;
+    placeholder:                 "";
+    placeholder-color:           inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0;
+}
+
+dummy {
+    expand:                      true;
+    background-color:            transparent;
+}
+
+
+
+// LIST VIEW
+
+listbox 
+{
+    spacing:                     1%;
+    padding:                     1% 2%;
+    background-color:            @background;
+    orientation:                 horizontal;
+    children:                    [ "listview" ];
+}
+
+listview 
+{
+    enabled:                     true;
+    columns:                     1;
+    lines:                       10;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    
+    spacing:                     10px;
+    background-color:            transparent;
+    text-color:                  @onSurface;
+    cursor:                      "default";
+}
+
+element 
+{
+    enabled:                     true;
+    spacing:                     10px;
+    padding:                     10px;
+    border-radius:               @themeBorderRadius;
+    background-color:            transparent;
+    text-color:                  @onSurface;
+    cursor:                      pointer;
+}
+element normal.normal 
+{
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+element selected.normal 
+{
+    background-color:            @surfaceContainer;
+    text-color:                  @onSurface;
+}
+
+element-icon 
+{
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        32px;
+    cursor:                      inherit;
+}
+element-text 
+{
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    padding:                     4px;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+
+/*****----- Message -----*****/
+message 
+{
+    background-color:            transparent;
+}
+textbox {
+    padding:                     12px;
+    border-radius:               12px;
+    background-color:            @surfaceContainerHigh;
+    text-color:                  @onSurface;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+error-message 
+{
+    padding:                     12px;
+    border-radius:               20px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+}
