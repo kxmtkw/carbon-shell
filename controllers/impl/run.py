@@ -1,6 +1,7 @@
 from pathlib import Path
 from rofi import RofiShell
 import subprocess, shlex
+import os
 
 class RunPrompt():
 	
@@ -49,7 +50,7 @@ class RunPrompt():
 
 		modifier = cmd[-1]
 
-		if not modifier.startswith("/"):
+		if not modifier.startswith("#"):
 			self.exec(cmd)
 			return
 		
@@ -57,7 +58,8 @@ class RunPrompt():
 
 		match modifier:
 
-			case "/t": pass
+			case "#t":
+				self.execTerminal(cmd)
 
 		
 	
@@ -71,10 +73,18 @@ class RunPrompt():
 			)
 		except FileNotFoundError:
 			self.show_error(f"Command not found: {cmd[0]}")
+		except PermissionError:
+			self.show_error("Insufficient Permissions!")
 
 
 	def execTerminal(self, cmd: list[str]):
-		pass
+		
+		terminal = os.environ.get("TERM")
+		term_cmd = [terminal, "-e"]
+		term_cmd.extend(cmd)
+
+		self.exec(term_cmd)
+
 	def show_error(self, msg: str):
 
 		self.rofi.updateTheme("~/.config/rofi/run/error.rasi")
@@ -86,8 +96,7 @@ class RunPrompt():
 		)
 
 
-import os
+
 if __name__ == "__main__":
-	print(os.environ.get("TERM"))
 	c = RunPrompt()
 	c.launch()
