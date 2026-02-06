@@ -2,7 +2,7 @@ import Quickshell
 import Quickshell.Widgets
 import QtQuick
 
-import "../theme" as Theme
+import qs.theme as Theme
 
 WrapperRectangle
 {

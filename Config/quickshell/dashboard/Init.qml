@@ -5,7 +5,7 @@ import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 
-import "../theme" as Theme
+import qs.theme as Theme
 
 PanelWindow {
     

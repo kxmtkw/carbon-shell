@@ -2,14 +2,10 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
 import Quickshell.Hyprland
-import Quickshell.Services.UPower
-
 import QtQuick
 import QtQuick.Layouts
 
-import "../theme" as Theme
-
-import "../global" as Global
+import qs.theme as Theme
 
 
 WrapperRectangle
@@ -26,7 +22,7 @@ WrapperRectangle
 	{
 		id: power_menu
 		running: false
-		command: ["sh", "-c", "~/.carbon/controllers/launch.sh launcher_apps"]
+		command: ["sh", "-c", "~/.carbon/controllers/launch.sh power"]
 	}
 
 	MouseArea
@@ -36,17 +32,16 @@ WrapperRectangle
 
 		Text
 		{
-			id: battery_icon
+			id: power_icon
 			anchors.centerIn: parent
 			
-			text: "󰣇"
+			text: ""
 
 			font.family: "IosevkaTerm Nerd Font"
-			font.pixelSize: Theme.Style.dpi(320)
+			font.pixelSize: Theme.Style.dpi(300)
 			color: Theme.Color._onSurface
 
 		}
-
 
 		onClicked: {
 			power_menu.running = true
@@ -61,5 +56,6 @@ WrapperRectangle
 		onExited: {
 			parent.color = Theme.Color._background
 		}
+
 	}
 }
