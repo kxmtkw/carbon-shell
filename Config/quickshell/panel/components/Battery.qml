@@ -8,9 +8,8 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
-import "../theme" as Theme
+import qs.theme as Theme
 
-import "../global" as Global
 
 
 WrapperRectangle

@@ -5,9 +5,8 @@ import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 
-import "../theme" as Theme
+import qs.theme as Theme
 
-import "../global" as Global
 
 
 WrapperRectangle
@@ -24,7 +23,7 @@ WrapperRectangle
 	{
 		id: power_menu
 		running: false
-		command: ["sh", "-c", "~/.carbon/controllers/launch.sh power"]
+		command: ["sh", "-c", "~/.carbon/controllers/launch.sh wifi"]
 	}
 
 	MouseArea
@@ -37,7 +36,7 @@ WrapperRectangle
 			id: power_icon
 			anchors.centerIn: parent
 			
-			text: ""
+			text: ""
 
 			font.family: "IosevkaTerm Nerd Font"
 			font.pixelSize: Theme.Style.dpi(300)

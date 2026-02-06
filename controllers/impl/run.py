@@ -73,9 +73,15 @@ class RunPrompt():
 			)
 		except FileNotFoundError:
 			self.show_error(f"Command not found: {cmd[0]}")
+			return
 		except PermissionError:
 			self.show_error("Insufficient Permissions!")
+			return
 
+		try:
+			proc.wait(1)
+		except subprocess.TimeoutExpired:
+			pass
 
 	def execTerminal(self, cmd: list[str]):
 		
