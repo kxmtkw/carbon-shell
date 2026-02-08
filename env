@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# CARBON envs. Don't Touch these please.
+export CARBON="$HOME/.carbon"
+export CARBONPY="$HOME/.carbon/.venv/bin/python3"
