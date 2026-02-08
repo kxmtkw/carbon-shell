@@ -12,39 +12,37 @@ import qs.theme as Theme
 
 
 
-WrapperRectangle
-{
+WrapperRectangle {
+	Layout.fillWidth:       true
+	Layout.preferredHeight: Theme.Style.dpi(440)
+	Layout.alignment:       Qt.AlignHCenter
+
 	margin: Theme.Style.dpi(70)
-	topMargin: Theme.Style.dpi(120)
-	bottomMargin: Theme.Style.dpi(120)
-
-	color: Theme.Color._background
-
+	color:  Theme.Color._background
 	radius: Theme.Style.round
 
-	Process 
-	{
+
+	Process {
 		id: power_menu
 		running: false
 		command: ["sh", "-c", "~/.carbon/controllers/launch.sh battery"]
 	}
 
-	MouseArea
-	{
+	MouseArea {
 		Layout.fillHeight: true
-		Layout.fillWidth: true
+		Layout.fillWidth:  true
 
-		Text
-		{
-			id: battery_icon
+		hoverEnabled: true
+
+		Text {
+			id:               panelBatteryIcon
 			anchors.centerIn: parent
 			
-			text: ""
+			text: " "
 
-			font.family: "IosevkaTerm Nerd Font"
+			font.family:    Theme.Font.mainFont
 			font.pixelSize: Theme.Style.dpi(300)
-			color: Theme.Color._onSurface
-
+			color:          Theme.Color._onSurface
 		}
 
 
@@ -52,8 +50,6 @@ WrapperRectangle
 			power_menu.running = true
 		}
 		
-		hoverEnabled: true 
-
 		onEntered: {
 			parent.color = Theme.Color._surfaceContainer
 		}
@@ -63,84 +59,7 @@ WrapperRectangle
 		}
 
 
-		function setSymbol()
-		{
-			var value = UPower.displayDevice.percentage * 100;
-
-			if (!UPower.onBattery)
-			{
-				battery_icon.text = ""
-				battery_icon.font.pixelSize = Theme.Style.dpi(300)
-
-				if (value >= 98)
-				{
-					battery_icon.color = Theme.Color._primary
-				}
-				else
-				{
-					battery_icon.color = Theme.Color._secondary
-				}
-				
-				return
-			}
-
-			var sym
-			battery_icon.color = Theme.Color._onSurface
-
-			if (value >= 95)
-			{
-				sym = "󰁹";
-			}
-			else if (value >= 85)
-			{
-				sym = "󰂂";
-			}
-			else if (value >= 75)
-			{
-				sym = "󰂁";
-			}
-			else if (value >= 65)
-			{
-				sym = "󰂀";
-			}
-			else if (value >= 55)
-			{
-				sym = "󰁿";
-			}
-			else if (value >= 45)
-			{
-				sym = "󰁾";
-			}
-			else if (value >= 35)
-			{
-				sym = "󰁽";
-			}
-			else if (value >= 25)
-			{
-				sym = "󰁼";
-			}
-			else if (value >= 15)
-			{
-				sym = "󰁻";
-				battery_icon.color = Theme.Color._error
-			}
-			else if (value >= 5)
-			{
-				sym = "󰁺";
-				battery_icon.color = Theme.Color._error
-			}
-			else
-			{
-				sym = "󰂎";
-				battery_icon.color = Theme.Color._error
-			}
-
-			battery_icon.text = sym
-		}
-
-
-		Timer
-		{
+		Timer {
 			id: update_timer
 			interval: 250
 			running: true
@@ -150,6 +69,66 @@ WrapperRectangle
 			}
 		}
 
+		function setSymbol() {
+			var value = UPower.displayDevice.percentage * 100;
+
+			if (!UPower.onBattery) {
+
+				panelBatteryIcon.text = ""
+				panelBatteryIcon.font.pixelSize = Theme.Style.dpi(300)
+
+				if (value >= 98) {
+					panelBatteryIcon.color = Theme.Color._primary
+				}
+				else {
+					panelBatteryIcon.color = Theme.Color._secondary
+				}
+				
+				return
+			}
+
+			var sym
+			panelBatteryIcon.color = Theme.Color._onSurface
+
+			if (value >= 95) {
+				sym = "󰁹";
+			} 
+			else if (value >= 85) {
+				sym = "󰂂";
+			}
+			else if (value >= 75) {
+				sym = "󰂁";
+			}
+			else if (value >= 65) {
+				sym = "󰂀";
+			}
+			else if (value >= 55) {
+				sym = "󰁿";
+			}
+			else if (value >= 45) {
+				sym = "󰁾";
+			}
+			else if (value >= 35) {
+				sym = "󰁽";
+			}
+			else if (value >= 25) {
+				sym = "󰁼";
+			}
+			else if (value >= 15) {
+				sym = "󰁻";
+				panelBatteryIcon.color = Theme.Color._error
+			}
+			else if (value >= 5) {
+				sym = "󰁺";
+				panelBatteryIcon.color = Theme.Color._error
+			}
+			else {
+				sym = "󰂎";
+				panelBatteryIcon.color = Theme.Color._error
+			}
+
+			panelBatteryIcon.text = sym
+		}
 
 	}
 }

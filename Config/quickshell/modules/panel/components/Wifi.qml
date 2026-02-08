@@ -11,12 +11,12 @@ import qs.theme as Theme
 
 WrapperRectangle
 {
+	Layout.fillWidth:        true
+	Layout.preferredHeight: Theme.Style.dpi(440)
+	Layout.alignment:       Qt.AlignHCenter
+
 	margin: Theme.Style.dpi(70)
-	topMargin: Theme.Style.dpi(120)
-	bottomMargin: Theme.Style.dpi(120)
-
-	color: Theme.Color._background
-
+	color:  Theme.Color._background
 	radius: Theme.Style.round
 
 	Process 
@@ -29,26 +29,26 @@ WrapperRectangle
 	MouseArea
 	{
 		Layout.fillHeight: true
-		Layout.fillWidth: true
+		Layout.fillWidth:  true
+
+		hoverEnabled: true 
 
 		Text
 		{
-			id: power_icon
+			id: panelWifiIcon
 			anchors.centerIn: parent
 			
 			text: ""
 
-			font.family: "IosevkaTerm Nerd Font"
+			font.family:    Theme.Font.fontMain
 			font.pixelSize: Theme.Style.dpi(300)
-			color: Theme.Color._onSurface
+			color:          Theme.Color._onSurface
 
 		}
 
 		onClicked: {
 			power_menu.running = true
 		}
-		
-		hoverEnabled: true 
 
 		onEntered: {
 			parent.color = Theme.Color._surfaceContainer
