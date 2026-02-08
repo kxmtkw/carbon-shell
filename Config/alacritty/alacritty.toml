@@ -11,6 +11,8 @@ dimensions = { columns = 80, lines = 25}
 padding = { x = 16, y = 16 }
 opacity = 0.85
 
+dynamic_title = true 
+
 [font]
 normal = { family = "Iosevka", style = "Regular"}
 size = 13
