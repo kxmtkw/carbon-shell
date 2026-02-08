@@ -8,11 +8,16 @@ class RunPrompt():
 	def __init__(self):
 		self.rofi = RofiShell("~/.config/rofi/run/main.rasi")
 
-		self.prompt = "Run"
+		self.prompt = "Run ::"
 		self.mesg = ""
+		
+		PATH = os.environ.get("PATH")
 
-		dirs = [Path("/usr/bin"), Path("~/.local/share/bin").expanduser()]
-
+		if not PATH:
+			self.show_error("No $PATH env var found!")
+			exit(1)
+		else:
+			dirs = [Path(s) for s in PATH.split(":")]
 
 		self.options: list[str] = []
 
@@ -85,7 +90,14 @@ class RunPrompt():
 
 	def execTerminal(self, cmd: list[str]):
 		
-		terminal = os.environ.get("TERM")
+		terminal = os.environ.get("TERMINAL")
+		
+		if not terminal:
+			self.show_error(
+				"Set a $TERMINAL env to specify a terminal."
+			)
+			exit(1)
+
 		term_cmd = [terminal, "-e"]
 		term_cmd.extend(cmd)
 
