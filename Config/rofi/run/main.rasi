@@ -2,6 +2,7 @@
 configuration 
 {
 	modi:                       "drun";
+    display-run:               ">>> ";
     show-icons:                 true;
 	icon-theme: "Papirus";
 
