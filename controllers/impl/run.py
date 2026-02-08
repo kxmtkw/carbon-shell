@@ -1,7 +1,18 @@
 from pathlib import Path
 from rofi import RofiShell
 import subprocess, shlex
-import os
+import os, time
+
+
+end = 0
+start = time.perf_counter()
+
+def timed():
+	global end
+	global start
+	end = time.perf_counter()
+	print(end - start)
+	start = end 
 
 class RunPrompt():
 	
@@ -18,18 +29,50 @@ class RunPrompt():
 			exit(1)
 		else:
 			dirs = [Path(s) for s in PATH.split(":")]
+			dirs.reverse()
 
-		self.options: list[str] = []
+		self.options = []
+		self.history = set(self.load_history())
 
+		
 		for d in dirs:
 			
 			if not d.exists(): continue
 			if not d.is_dir(): continue
 
 			for binary in d.iterdir():
-				self.options.append(binary.name)
+				if binary.name in self.history:
+					self.history.remove(binary.name)
+					
+				self.options.append(f"  {binary.name}")
 
-		self.options.sort()
+		self.options.extend([f"  {item}" for item in self.history])
+
+
+	def load_history(self) -> list[str]:
+
+		history_file = Path("~/.carbon/cache/run_history.txt").expanduser()
+
+		if not history_file.exists(): return []
+
+		with open(history_file, "r") as file:
+			history = file.read()
+
+		return history.splitlines()
+		 
+
+	def add_to_history(self, cmd: str):
+
+		if cmd in self.history:
+			return
+		
+		history_file = Path("~/.carbon/cache/run_history.txt").expanduser()
+
+		if not history_file.exists():
+			history_file.touch()
+
+		with open(history_file, "a") as file:
+			file.write(cmd+"\n")
 
 
 	def launch(self):
@@ -47,6 +90,8 @@ class RunPrompt():
 
 	def parse(self, selected: str):
 		
+		selected = selected.encode("ascii", "ignore").decode()
+
 		try:
 			cmd = shlex.split(selected)
 		except ValueError as e:
@@ -67,7 +112,6 @@ class RunPrompt():
 				self.execTerminal(cmd)
 
 		
-	
 	def exec(self, cmd: list[str]):
 		try:
 			proc = subprocess.Popen(
@@ -88,6 +132,9 @@ class RunPrompt():
 		except subprocess.TimeoutExpired:
 			pass
 
+		self.add_to_history(shlex.join(cmd))
+
+
 	def execTerminal(self, cmd: list[str]):
 		
 		terminal = os.environ.get("TERMINAL")
@@ -103,6 +150,7 @@ class RunPrompt():
 
 		self.exec(term_cmd)
 
+
 	def show_error(self, msg: str):
 
 		self.rofi.updateTheme("~/.config/rofi/run/error.rasi")
@@ -114,7 +162,8 @@ class RunPrompt():
 		)
 
 
-
 if __name__ == "__main__":
+	timed()
 	c = RunPrompt()
+	timed()
 	c.launch()
