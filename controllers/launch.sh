@@ -1,5 +1,11 @@
 pkill rofi # a bit brute force but meh
 
+echo $CARBONPY
+
+if [[ -z $1 ]]; then
+    set -- "--list"
+fi
+
 case $1 in
 	"--list")
 		echo Supporter controllers:
@@ -12,19 +18,19 @@ case $1 in
 		rofi -show window -theme ~/.config/rofi/windows.rasi
 	;;
 	"power")
-		python3 ~/.carbon/controllers/impl/power.py
+		$CARBONPY ~/.carbon/controllers/impl/power.py
 	;;
 	"battery") 
-		python3 ~/.carbon/controllers/impl/battery.py
+		$CARBONPY ~/.carbon/controllers/impl/battery.py
 	;;
 	"screenshot") 
-		python3 ~/.carbon/controllers/impl/screenshot.py
+		$CARBONPY ~/.carbon/controllers/impl/screenshot.py
 	;;
 	"wifi") 
-		python3 ~/.carbon/controllers/impl/wifi.py
+		$CARBONPY ~/.carbon/controllers/impl/wifi.py
 	;;
 	"run") 
-		python3 ~/.carbon/controllers/impl/run.py
+		$CARBONPY ~/.carbon/controllers/impl/run.py
 	;;
 	*)
 		notify-send "Unknown controller!" $1
