@@ -36,8 +36,8 @@ prompt {
 
 message {
     enabled:                     true;
-    margin:                      1% 1%;
-    padding:                     80px 10px;
+    margin:                      1% 2%;
+    padding:                     2% 2%;
     border-radius:               10px;
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
