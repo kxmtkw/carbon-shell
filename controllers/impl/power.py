@@ -1,4 +1,5 @@
 from rofi import RofiShell
+import time
 
 class PowerMenu():
 	
@@ -50,7 +51,8 @@ class PowerMenu():
 		elif selected == options[1]:
 			cmd = "systemctl reboot"
 		elif selected == options[2]:
-			cmd = "loginctl lock"
+			cmd = "hyprlock"
+			time.sleep(0.25) # rofi closes
 			self.rofi.Run(cmd)
 			return
 		elif selected == options[3]:
