@@ -1,15 +1,17 @@
 import Quickshell
 import Quickshell.Widgets
 import QtQuick
+import QtQuick.Layouts
 
 import qs.theme as Theme
 
 WrapperRectangle
 {
-	margin: Theme.Style.dpi(70)
-	topMargin: Theme.Style.dpi(120)
-
-	color: Theme.Color._surfaceContainer
+	Layout.fillWidth: true
+	Layout.alignment: Qt.AlignCenter 
+	margin: Theme.Style.dpi(80)
+	
+	color:  Theme.Color._surfaceContainer
 	radius: Theme.Style.roundLess
 
 	SystemClock {
@@ -18,9 +20,13 @@ WrapperRectangle
 	}
 	
 	Text {
-		id: barClock
-		anchors.centerIn: parent
+		id:    panelClockText
 		color: Theme.Color._onSurface
-		text: Qt.formatDateTime(sysclock.date, "hh\nmm\nAP")
+		text:  Qt.formatDateTime(sysclock.date, "hh\nmm\nAP")
+
+		horizontalAlignment: Text.AlignHCenter
+
+		font.family:    Theme.Font.fontMain
+		font.pixelSize: Theme.Style.dpi(250)
 	}
 }

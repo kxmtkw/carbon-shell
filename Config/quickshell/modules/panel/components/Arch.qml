@@ -11,38 +11,35 @@ import qs.theme as Theme
 
 
 
-WrapperRectangle
-{
-	margin: Theme.Style.dpi(70)
-	topMargin: Theme.Style.dpi(120)
-	bottomMargin: Theme.Style.dpi(120)
+WrapperRectangle {
+	Layout.fillWidth:       true
+	Layout.preferredHeight: Theme.Style.dpi(400)
+	Layout.alignment:       Qt.AlignHCenter | Qt.AlignBottom
 
-	color: Theme.Color._background
-
+	color:  Theme.Color._background
 	radius: Theme.Style.round
 
-	Process 
-	{
-		id: power_menu
+	Process {
+		id:      power_menu
 		running: false
 		command: ["sh", "-c", "~/.carbon/controllers/launch.sh launcher_apps"]
 	}
 
-	MouseArea
-	{
+	MouseArea {
 		Layout.fillHeight: true
-		Layout.fillWidth: true
+		Layout.fillWidth:  true
+	
+		hoverEnabled: true 
 
-		Text
-		{
-			id: battery_icon
+		Text {
+			id: panelArchIcon
 			anchors.centerIn: parent
 			
 			text: "󰣇"
 
-			font.family: "IosevkaTerm Nerd Font"
+			font.family:    Theme.Font.mainFont
 			font.pixelSize: Theme.Style.dpi(320)
-			color: Theme.Color._onSurface
+			color:          Theme.Color._onSurface
 
 		}
 
@@ -51,8 +48,6 @@ WrapperRectangle
 			power_menu.running = true
 		}
 		
-		hoverEnabled: true 
-
 		onEntered: {
 			parent.color = Theme.Color._surfaceContainer
 		}
@@ -60,5 +55,7 @@ WrapperRectangle
 		onExited: {
 			parent.color = Theme.Color._background
 		}
+
+		
 	}
 }

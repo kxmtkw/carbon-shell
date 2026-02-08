@@ -9,12 +9,14 @@ import qs.theme as Theme
 
 WrapperRectangle
 {
-	margin: Theme.Style.dpi(70)
-	topMargin: Theme.Style.dpi(200)
+	Layout.fillWidth: true
+	Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+
+	margin:       Theme.Style.dpi(70)
+	topMargin:    Theme.Style.dpi(200)
 	bottomMargin: Theme.Style.dpi(200)
 
-	color: Theme.Color._surfaceContainer
-
+	color:  Theme.Color._surfaceContainer
 	radius: Theme.Style.roundLess
 
 	
@@ -31,18 +33,18 @@ WrapperRectangle
 			Rectangle {
 				Layout.alignment: Qt.AlignHCenter
 
-				width: Theme.Style.dpi(240)
+				width:  Theme.Style.dpi(240)
 				height: Theme.Style.dpi(240)
 				
 				radius: Theme.Style.roundLesser
-				color: modelData.focused ? Theme.Color._tertiaryContainer : Theme.Color._background
+				color:  modelData.focused ? Theme.Color._tertiaryContainer : Theme.Color._background
 
 
 				MouseArea
 				{
 					anchors.fill: parent
 					hoverEnabled: true
-					onEntered: {modelData.activate()}
+					onEntered:   {modelData.activate()}
 				}
 			}
 			
