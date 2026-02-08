@@ -9,11 +9,11 @@ Either configure dunst or build your own notification daemon. The latter is only
 
 No power daemon is present, no notifs sent obviously. Also need a critical reminder that forces the user to shutdown or something.
 
-#### Terminal
+#### Terminal (DONE)
 
 Switch terminal from kitty to alacritty maybe? the reason being that kitty does'nt support dynamic theming so the whole thing does'nt feel that satisfying but i'll think about it.
 
-#### Wifi 
+#### Wifi (DONE)
 
 Need a proper UI to control wifi. Stuff like hotspot and airplane mode would be nice
 
