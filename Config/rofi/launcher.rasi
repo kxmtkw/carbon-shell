@@ -17,7 +17,7 @@ configuration
 
     drun-categories: "";
 	drun-match-fields: "name,generic,exec,categories,keywords";
-	drun-display-format: "{name} <span weight='regular' size='small'>({generic})</span>";
+	drun-display-format: "{name}  -  <span weight='regular' size='small'>{comment}</span>";
 
     drun {
 		parse-user:   true;
