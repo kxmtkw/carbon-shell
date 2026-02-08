@@ -16,7 +16,8 @@ authors = [
 	{ name = "haseeb" }
 ]
 dependencies = [
-    "material-color-utilities"
+    "material-color-utilities",
+    "python-pam"
 ]
 
 [project.scripts]
