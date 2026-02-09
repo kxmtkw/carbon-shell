@@ -1,3 +1,5 @@
+#!/bin/sh
+
 pkill rofi # a bit brute force but meh
 
 echo $CARBONPY
