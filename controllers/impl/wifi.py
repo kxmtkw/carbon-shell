@@ -66,16 +66,16 @@ class WifiMenu:
 		list_items.extend(self.options)
 
 		if self.wifi.is_radio_on():
-			
+
 			networks = self.wifi.list_networks()
 		
-			status = f"Status: ON"
+			status = f"Status: ON | Connected: {'Yes' if self.wifi.get_active_network() else 'No'}"
 
 			list_items.extend([self.make_wifi_entry(id, wifi) for id, wifi in enumerate(networks)])
 
 		else:
 			networks = None
-			status = f"Status: OFF"
+			status = f"Status: OFF | Connected: No"
 
 
 		selected = self.rofi.display(
