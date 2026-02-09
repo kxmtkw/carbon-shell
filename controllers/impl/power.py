@@ -45,6 +45,7 @@ class PowerMenu():
 		
 		options = self.options
 		
+		time.sleep(0.25) #rofi closes
 
 		if selected == options[0]:
 			cmd = "systemctl poweroff"
@@ -52,13 +53,12 @@ class PowerMenu():
 			cmd = "systemctl reboot"
 		elif selected == options[2]:
 			cmd = "hyprlock"
-			time.sleep(0.25) # rofi closes
 			self.rofi.Run(cmd)
 			return
 		elif selected == options[3]:
-			cmd = "systemctl suspend"
+			cmd = "systemctl suspend && sleep 0.25 && hyprlock"
 		elif selected == options[4]:
-			cmd = "systemctl hibernate"
+			cmd = "systemctl hibernate && sleep 0.25 && hyprlock"
 		elif selected == options[5]:
 			cmd = "hyprland dispatch exit"
 		else:
