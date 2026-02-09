@@ -29,15 +29,15 @@ I want a single config file for the whole of carbon. And moreover i want the she
 
 Central menu for theming carbon
 
-#### Lock screen + Login screen
+#### Lock screen (DONE)
 
-Probably need something that can handle both
+Probably need something that can handle both. Nevermind, let the user themselves handle the login manager for now.
 
 #### Fastfetch
 
 Maybe have a default fastfetch config or something
 
-#### Screenshot util
+#### Screenshot util (DONE)
 
 Improve that
 
