@@ -29,3 +29,13 @@ dest = "~/.zshac"
 [alacritty]
 src  = "Config/alacritty"
 dest = "~/.config/alacritty"
+
+[fastfetch]
+src  = "Config/fastfetch"
+dest = "~/.config/fastfetch"
+
+[kdecolors]
+src  = "Config/kde/Carbon.colors"
+dest = "~/.local/share/color-schemes/Carbon.colors"
+
+
