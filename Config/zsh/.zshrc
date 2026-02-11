@@ -35,6 +35,7 @@ alias grep='grep --color'
 alias gs='git status'
 alias env='source ./.venv/bin/activate || echo No .venv found!'
 alias denv='deactivate || echo No .venv activated!'
+alias fetch='fastfetch'
 
 
 
