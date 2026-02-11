@@ -1,0 +1,127 @@
+
+configuration 
+{
+    show-icons:                 false;
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "!MousePrimary"; 
+    kb-cancel: ["MousePrimary", "Escape"];
+}
+
+@import "theme/color.rasi"
+@import "theme/fonts.rasi"
+@import "theme/style.rasi"
+
+
+
+window 
+{    
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       34%;
+    height:                      42%;
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    /* properties for all widgets */
+    enabled:                     true;
+    margin:                      10px;
+    padding:                     0;
+    border:                      @themeBorderWidth;
+    border-color:                @outline;
+    border-radius:               @themeBorderRadius;
+    cursor:                      "default";
+    background-color:            transparent;
+}
+
+mainbox 
+{
+    enabled:                     true;
+    spacing:                     0;
+    margin:                      0px;
+    border:                      0px solid;
+    border-radius:               0%;
+    background-color:            @backgroundTransparentxAA;
+    vertical-align:              0.5;
+    orientation:                 vertical;
+    children:                    [ "inputbar", "listview" ];
+}
+
+inputbar {
+    padding:                     2% 1%;
+    border-radius:               0px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    children:                    [ "dummy", "prompt", "dummy"];
+}
+dummy {
+    background-color:            transparent;
+}
+prompt {
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+
+
+listview 
+{
+    enabled:                     true;
+    columns:                     1;
+    lines:                       10;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                false;
+    fixed-columns:               false;
+    
+    spacing:                     1%;
+    margin:                      0%;
+    padding:                     2% 2%;
+    border:                      0px solid;
+    border-radius:               0px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    vertical-align:              0.5;
+    cursor:                      "default";
+}
+
+element {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     15px;
+    border:                      0px;
+    border-radius:               @themeBorderRadius;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    orientation:                 horizontal;
+    cursor:                      pointer;
+}
+element normal.active {
+    background-color:            @surfaceContainer;
+    text-color:                  @onSurface;
+}
+element selected.normal {
+    background-color:            @surfaceContainer;
+    text-color:                  @onSurface;
+}
+element selected.active {
+    background-color:            @surfaceContainerHigh;
+    text-color:                  @onSurface;
+}
+element-icon {
+    background-color:            transparent;
+    size:                        32px;
+    cursor:                      inherit;
+}
+element-text {
+    background-color:            inherit;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
