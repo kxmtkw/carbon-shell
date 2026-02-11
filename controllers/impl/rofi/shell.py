@@ -36,11 +36,12 @@ class RofiShell:
         self.Run(cmd)
 
 
-    def display(self, prompt: str, mesg: str, options: list[str]) -> str:
+    def display(self, prompt: str, mesg: str, options: list[str], *, password: bool = False) -> str:
         proc = subprocess.Popen(
             [
                 "rofi",
                 "-dmenu",
+                "-password" if password else "",
                 "-p", prompt,
                 "-mesg", mesg,
                 "-theme", self.rasi,
