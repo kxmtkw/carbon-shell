@@ -1,7 +1,7 @@
 
 configuration 
 {
-	modi:                       "drun,run,filebrowser";
+	modi:                       "";
     show-icons:                 true;
 	icon-theme: "Papirus";
 
