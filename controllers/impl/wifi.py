@@ -208,7 +208,8 @@ Rate:       {net.rate}
 		password = self.rofi.display(
 			self.title,
 			f"Enter password for: {net.ssid}",
-			[]
+			[],
+			password=True
 		)
 
 		if not password:
