@@ -2,9 +2,11 @@
 add_newline = false
 
 format = '''
-\[($username@(bold)$hostname)\] \($directory\)$python$git_branch$git_status ($status)
+\[($username@(bold)$hostname)\] \($directory\)$git_branch$git_status$python
 $character
 '''
+right_format = '($status)'
+
 
 [username]
 style_user = 'cyan bold'
@@ -33,7 +35,7 @@ truncation_symbol = '.../'
 
 [status]
 style = 'bold red'
-format = '[\[$common_meaning$signal_name$maybe_int\]]($style) '
+format = ' [$common_meaning$signal_name]($style) [\($status\)]($style)'
 map_symbol = true
 disabled = false
 
@@ -52,8 +54,7 @@ ahead = 'ahead'
 behind = 'behind'
 diverged = 'diverged'
 up_to_date = 'up-to-date'
-
-format = ' $ahead_behind$conflicted(@$ahead_behind)($style)'
+format = '$ahead_behind$conflicted(@$ahead_behind)($style)'
 
 
 [character]
