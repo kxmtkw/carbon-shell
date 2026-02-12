@@ -1,0 +1,109 @@
+
+@import "common.rasi"
+
+mainbox 
+{
+    enabled:                     true;
+    spacing:                     0;
+    padding:                     3% 2%;
+    margin:                      0px;
+    border:                      0px solid;
+    border-radius:               0%;
+    background-color:            @background;
+    orientation:                 vertical;
+    children:                    [ "inputbar", "listview" ];
+}
+
+imagebox {
+    spacing:                     0px;
+    padding:                     5% 2%;
+    background-color:            transparent;
+    background-image:            url("/home/haseeb/.config/mozilla/firefox/firefox-mpris/10381_10.png", height);
+    children:                    [ "dummy", "dummy"];
+}
+
+inputbar {
+    margin:                      0% 0% 3% 0%;
+    padding:                     2% 5px;
+    border-radius:               @themeBorderRadius;
+    background-color:            @primaryContainer;
+    text-color:                  @onPrimary;
+    children:                    [ "dummy", "prompt", "dummy"];
+}
+
+dummy {
+    background-color:            transparent;
+}
+
+prompt {
+    background-color:            inherit;
+    text-color:                  inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+}
+
+message {
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     2% 1%;
+    border-radius:               @themeBorderRadius;
+    background-color:            @background;
+    text-color:                  @onSurface;
+}
+
+textbox {
+    background-color:            inherit;
+    text-color:                  inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+}
+
+
+listview 
+{
+    enabled:                     true;
+    columns:                     1;
+    lines:                       10;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                false;
+    fixed-columns:               false;
+    
+    spacing:                     1%;
+    margin:                      0%;
+    border:                      0px solid;
+    border-radius:               0px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    vertical-align:              0.5;
+    cursor:                      "default";
+}
+
+element 
+{
+    enabled:                     true;
+    spacing:                     0px;
+    margin:                      0px;
+    padding:                     10px 16px;
+    border:                      0px solid;
+    border-radius:               10px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    cursor:                      pointer;
+}
+element-text 
+{
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0;
+}
+element selected.normal 
+{
+    background-color:            var(surfaceContainer);
+    text-color:                  var(onSurface);
+}
