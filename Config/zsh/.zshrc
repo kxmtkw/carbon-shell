@@ -1,4 +1,18 @@
 
+#  History
+
+HISTFILE=$HOME/.history
+HISTSIZE=100000
+SAVEHIST=$HISTSIZE
+
+setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
+setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
+setopt HIST_IGNORE_ALL_DUPS      # Delete an old recorded event if a new event is a duplicate.
+setopt SHARE_HISTORY             # Share history between all sessions.
+
+
+
 # AutoComplete
 source ~/.zshac
 
@@ -37,5 +51,6 @@ alias env='source ./.venv/bin/activate || echo No .venv found!'
 alias denv='deactivate || echo No .venv activated!'
 alias fetch='fastfetch'
 
-
+# Prompt
+eval "$(starship init zsh)"
 
