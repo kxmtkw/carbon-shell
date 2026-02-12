@@ -19,8 +19,8 @@ class RofiShell:
     @classmethod
     def Run(cls, cmd: str) -> str:
         output = subprocess.run(cmd, capture_output=True, text=True, shell=True)
-        if (output.returncode == 0): return output.stdout
-        return output.stderr
+        if (output.returncode == 0): return output.stdout.strip()
+        return output.stderr.strip()
     
 
     def __init__(self, themepath: str) -> None:
