@@ -1,0 +1,67 @@
+
+add_newline = false
+
+format = '''
+\[($username@(bold)$hostname)\] \($directory\)$python$git_branch$git_status ($status)
+$character
+'''
+
+[username]
+style_user = 'cyan bold'
+style_root = 'magenta bold'
+format = '[$user]($style)'
+show_always = true
+
+
+[hostname]
+ssh_only = false
+ssh_symbol = '  '
+format = '[$hostname](bold red)[$ssh_symbol](bold red)'
+trim_at = ''
+disabled = false
+
+
+[directory]
+style = 'white'
+read_only_style = 'white'
+read_only = '  '
+format = '[$path]($style)[$read_only]($read_only_style)'
+truncation_length = 10
+truncate_to_repo = false
+truncation_symbol = '.../'
+
+
+[status]
+style = 'bold red'
+format = '[\[$common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false
+
+
+[git_branch]
+style = 'bold yellow'
+symbol = '󰘬 '
+format = ' [On]($style) [$symbol$branch]($style)'
+truncation_length = 20
+truncation_symbol = '...'
+
+
+[git_status]
+conflicted = '  '
+ahead = 'ahead'
+behind = 'behind'
+diverged = 'diverged'
+up_to_date = 'up-to-date'
+
+format = ' $ahead_behind$conflicted(@$ahead_behind)($style)'
+
+
+[character]
+
+success_symbol = '[❱](green)'
+error_symbol = '[❱](red)'
+
+
+[python]
+style = 'yellow'
+format = ' [(\($virtualenv\))]($style)'

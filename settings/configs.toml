@@ -34,6 +34,10 @@ dest = "~/.config/alacritty"
 src  = "Config/fastfetch"
 dest = "~/.config/fastfetch"
 
+[starship]
+src  = "Config/starship/starship.toml"
+dest = "~/.config/starship.toml"
+
 [kdecolors]
 src  = "Config/kde/Carbon.colors"
 dest = "~/.local/share/color-schemes/Carbon.colors"
