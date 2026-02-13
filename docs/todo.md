@@ -23,7 +23,7 @@ This would be a little more complicated to make than the wifi one since i need t
 
 #### Settings for Carbon
 
-I want a single config file for the whole of carbon. And moreover i want the shell to be configured from a settings menu (maybe a gui with qt even or just winging it with rofi)
+I want a single config file for the whole of carbon. And moreover i want the shell to be configured from a settings menu (maybe a gui with qt even or just winging it with rofi). I should be ble to configure themes, bar position, defualt terminals, workspace count etc
 
 #### Theming
 
@@ -33,7 +33,7 @@ Central menu for theming carbon
 
 Probably need something that can handle both. Nevermind, let the user themselves handle the login manager for now.
 
-#### Fastfetch
+#### Fastfetch (ONGOING)
 
 Maybe have a default fastfetch config or something
 
@@ -49,11 +49,13 @@ Cache themes generated from wallpapers
 
 OSDs for brightness, sound and mic
 
-#### Media Control
+#### Media Control (ONGOING)
 
 Add a media controller, don't know how i will do it. Rofi stutters a bit but maybe i can find some hyprland way to fix it.
 
-#### KDE apps and coloring
+> Make it update dynamically? that could be cool
+
+#### KDE apps and coloring (ONGOING)
 
 I found out how KDE apps are themed so maybe if i can connect it with my colorify, we can have material kde apps as well, this will take some work.
 
@@ -65,7 +67,10 @@ Add the rainbow colors for terminals by shifting some base colors towards the pr
 
 Maybe add a small rofi calculator?
 
-#### Fonts
+#### Small Pacman rofi
 
-Eventually I want the ability to be able to change fonts as well.
+A small pacman wrapper for basic tasks like: see all packages, all user packages, update everything, install a new package, uninstall a package and stuff like that.
+
+#### A sudo runner?
+
 
