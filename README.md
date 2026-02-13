@@ -20,11 +20,11 @@ Other than these, the shell also expects `NetworkManager` and it's associated to
 
 Clone the repo at `~/.carbon` and it MUST be cloned exactly at this path for the shell to work.
 
-```
+``` bash
 git clone git@github.com:kxmtkw/carbon-shell.git ~/.carbon
 cd ~/.carbon
-chmod +x install.sh
-./install.sh
+chmod +x setup.sh
+./setup.sh
 ```
 
 What this script would do:
