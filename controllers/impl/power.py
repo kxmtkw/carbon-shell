@@ -44,27 +44,28 @@ class PowerMenu():
 	def exec(self, selected: str):
 		
 		options = self.options
-		
-		time.sleep(0.25) #rofi closes
 
 		if selected == options[0]:
 			cmd = "systemctl poweroff"
 		elif selected == options[1]:
 			cmd = "systemctl reboot"
 		elif selected == options[2]:
+			time.sleep(0.25) #rofi closes
 			cmd = "hyprlock"
 			self.rofi.Run(cmd)
 			return
 		elif selected == options[3]:
-			cmd = "systemctl suspend && sleep 0.25 && hyprlock"
+			cmd = "systemctl suspend && sleep 0.5 && hyprlock"
 		elif selected == options[4]:
-			cmd = "systemctl hibernate && sleep 0.25 && hyprlock"
+			cmd = "systemctl hibernate && sleep 0.5 && hyprlock"
 		elif selected == options[5]:
 			cmd = "hyprland dispatch exit"
 		else:
 			cmd = "systemctl reboot --firmware-setup"
 
 		if not self.confirm(): return
+		time.sleep(0.25) #rofi closes
+		
 		self.rofi.Run(cmd)
 
 
