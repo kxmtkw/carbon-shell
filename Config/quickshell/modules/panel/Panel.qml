@@ -42,6 +42,7 @@ PanelWindow {
 			
 			Arch{}
 			Workspaces{}
+			Player{}
 				
 			Item {Layout.fillHeight: true}
 			
