@@ -10,6 +10,7 @@ Color.qml
 color.conf
 color.rasi
 color.toml
+Carbon.colors
 
 # Carbon specific
 cache/

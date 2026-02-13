@@ -1,3 +1,8 @@
+
+commands = [
+    "plasma-apply-colorscheme BreezeDark && plasma-apply-colorscheme Carbon"
+]
+
 [colorfiles]
 hypr      = "Config/hypr/color.conf"
 qml       = "Config/quickshell/theme/Color.qml"
