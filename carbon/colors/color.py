@@ -37,6 +37,9 @@ def update_colors(colors: dict[str, str]):
 
         print(f"Updated :: {type}")
 
+    for cmd in settings.get("commands"):
+        subprocess.run(cmd, shell=True, capture_output=True, text=True)
+
 
 def colorify(
     theme: Literal["dark", "light"],

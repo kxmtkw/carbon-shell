@@ -42,6 +42,12 @@ def link(src: Path, dest: Path):
         else:
             Color.Print(f"Skipped {dest}", Color.yellow)
             return
+    else: 
+        parent = dest.parent
+
+        if not parent.exists():
+            parent.mkdir(parents=True, exist_ok=True)
+
         
     dest.symlink_to(src.absolute(), src.is_dir())
 
@@ -56,6 +62,8 @@ def installCarbon():
     cache.mkdir(exist_ok=True)
     Color.Print(f"Created cache :: {cache}", Color.green)
 
+    colorify('dark', "graphite", None, "#84d0d9") # default theme, will move this later
+
     for name, details  in settings.get().items():
 
         item_settings = SettingsLoader(details)
@@ -65,5 +73,5 @@ def installCarbon():
         if name == "hypr":
             subprocess.run("hyprctl reload", shell=True, capture_output=True)
 
-    
+   
     Color.Print("Installation complete!", Color.blue)

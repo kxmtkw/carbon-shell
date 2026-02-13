@@ -1,5 +1,6 @@
 from pathlib import Path
 import tomllib
+from typing import Any
 
 from carbon.helpers import CarbonError
 
@@ -12,7 +13,7 @@ class SettingsLoader():
             return
         
         self.filepath = Path(src).expanduser()
-        self.settings: dict[any, any] = {}
+        self.settings: dict[Any, Any] = {}
 
         if not self.filepath.exists():
             CarbonError(f"Could not find settings file: {self.filepath}").halt()
