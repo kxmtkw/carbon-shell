@@ -13,7 +13,9 @@ hyprsunset \
 hyprshot \
 swww \ 
 quickshell \
-rofi
+rofi \ 
+fastfetch \
+plasma-workspace # for switching kde themes, optional if you don't use kde apps
 ```
 
 Other than these, the shell also expects `NetworkManager` and it's associated tools like `nmcli` for the wifi controller to work.
