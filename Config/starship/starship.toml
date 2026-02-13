@@ -49,12 +49,13 @@ truncation_symbol = '...'
 
 
 [git_status]
+style = 'white'
 conflicted = '  '
 ahead = 'ahead'
 behind = 'behind'
 diverged = 'diverged'
 up_to_date = 'up-to-date'
-format = '$ahead_behind$conflicted(@$ahead_behind)($style)'
+format = ' [{$ahead_behind$conflicted}]($style)'
 
 
 [character]
