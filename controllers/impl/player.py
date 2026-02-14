@@ -1,26 +1,82 @@
+import subprocess
+from typing import Literal
 from rofi import RofiShell
 import time
 
 no_players_mesg = "No players found"
 playing_mesg = "Playing"
 
-
 main_rasi = "~/.config/rofi/player/main.rasi"
 display_rasi = "~/.config/rofi/player/display.rasi"
+
 
 class PlayerController:
 
     def __init__(self) -> None:
         self.rofi = RofiShell(main_rasi)
+        self.current_title: str = None
 
 
-    def get_info(self):
+    def launch(self):
+        active_process = None 
+
+        while True:
+
+            status = self.get_info()
+            print(status)
+
+            if status == "NoPlayers":
+                if active_process: active_process.kill(); active_process.wait()
+                active_process = self.trigger_display(" ", "No Players Found.")
+
+            elif status == "NoUpdates":
+                pass
+
+            elif status == "Updated":
+                if active_process: active_process.kill(); active_process.wait()
+                active_process = self.trigger_main(self.name, self.options)
+
+            # listen for rofi if it returned
+
+            try:
+                if active_process:
+                    active_process.wait(1)
+                else:
+                    continue
+            except subprocess.TimeoutExpired:
+                continue
+            
+            # this only executes if rofi has ended, the script should also end after this
+
+            selected = active_process.stdout.read().strip()
+            print("Selected: ", selected)
+
+            if not selected: # dispaly rofi will always return "" so it won't go past here
+                exit()
+            
+            self.exec(selected)
+            exit()
+
+
+    def get_info(self) -> Literal["NoPlayers", "NoUpdates", "Updates"]:
 
         self.title = RofiShell.Run("playerctl metadata xesam:title")
 
+        # only update the rofi process if player starts/stops or title changes
+
         if self.title == no_players_mesg:
-            self.trigger_display(" ", "No Players Found")
-            exit()
+            if self.current_title == "":
+                return "NoUpdates"
+            
+            self.current_title = ""
+            return "NoPlayers"
+        
+        if self.title == self.current_title:
+            return "NoUpdates"
+        
+        # formatting
+
+        self.current_title = self.title
 
         self.artist = RofiShell.Run("playerctl metadata xesam:artist")
 
@@ -34,7 +90,6 @@ class PlayerController:
 
         self.is_playing = True if RofiShell.Run("playerctl status") == playing_mesg else False
 
-
         self.options = [
             "  Pause" if self.is_playing else "  Play",
             "  Next",
@@ -42,21 +97,7 @@ class PlayerController:
             "  Stop"
         ]
 
-
-    def launch(self):
-        
-        self.get_info()
-
-        selected = self.rofi.display(
-            self.name,
-            "",
-            self.options
-        )
-
-        if not selected:
-            exit()
-        
-        self.exec(selected)
+        return "Updated"
         
 
     def exec(self, seleted: str):
@@ -71,11 +112,21 @@ class PlayerController:
             RofiShell.Run("playerctl stop")
 
     
-    def trigger_display(self, prompt: str, mesg: str):
+    def trigger_main(self, prompt: str, options: list[str]) -> subprocess.Popen:
+
+        self.rofi.updateTheme(main_rasi)
+
+        return self.rofi.displayNoBlock(
+            prompt,
+            "",
+            options
+        )
+
+    def trigger_display(self, prompt: str, mesg: str) -> subprocess.Popen:
 
         self.rofi.updateTheme(display_rasi)
 
-        self.rofi.display(
+        return self.rofi.displayNoBlock(
             prompt,
             mesg,
             []
