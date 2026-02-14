@@ -22,75 +22,75 @@ Enable=false
 IntensityAmount=0
 IntensityEffect=0
 
-[s:Button]
-BackgroundAlternate={s["surface"]}
-BackgroundNormal={s["background"]}
-DecorationFocus={s["primaryContainer"]}
-DecorationHover={s["surfaceContainer"]}
-ForegroundActive={s["onPrimary"]}
+[Colors:Button]
+BackgroundAlternate={s["primaryContainer"]}
+BackgroundNormal={s["surfaceContainer"]}
+DecorationFocus={s["primary"]}
+DecorationHover={s["primary"]}
+ForegroundActive={s["primary"]}
 ForegroundInactive={s["onSurface"]}
-ForegroundLink={s["secondaryContainer"]}
+ForegroundLink={s["tertiary"]}
 ForegroundNegative={s["secondary"]}
-ForegroundNeutral={s["tertiary"]}
+ForegroundNeutral={s["onSurface"]}
 ForegroundNormal={s["onSurface"]}
 ForegroundPositive={s["primary"]}
-ForegroundVisited={s["primaryContainer"]}
+ForegroundVisited={s["tertiary"]}
 
-[s:Selection]
-BackgroundAlternate={s["surface"]}
-BackgroundNormal={s["background"]}
-DecorationFocus={s["primaryContainer"]}
-DecorationHover={s["surfaceContainer"]}
-ForegroundActive={s["onPrimary"]}
+[Colors:Selection]
+BackgroundAlternate={s["surfaceContainerHigh"]}
+BackgroundNormal={s["surfaceContainerHigh"]}
+DecorationFocus={s["primary"]}
+DecorationHover={s["primary"]}
+ForegroundActive={s["primary"]}
 ForegroundInactive={s["onSurface"]}
-ForegroundLink={s["secondaryContainer"]}
+ForegroundLink={s["tertiary"]}
 ForegroundNegative={s["secondary"]}
-ForegroundNeutral={s["tertiary"]}
+ForegroundNeutral={s["onSurface"]}
 ForegroundNormal={s["onSurface"]}
 ForegroundPositive={s["primary"]}
-ForegroundVisited={s["primaryContainer"]}
+ForegroundVisited={s["tertiary"]}
 
-[s:Tooltip]
-BackgroundAlternate={s["surface"]}
+[Colors:Tooltip]
+BackgroundAlternate={s["surfaceContainer"]}
 BackgroundNormal={s["background"]}
-DecorationFocus={s["primaryContainer"]}
-DecorationHover={s["surfaceContainer"]}
-ForegroundActive={s["onPrimary"]}
+DecorationFocus={s["primary"]}
+DecorationHover={s["primary"]}
+ForegroundActive={s["primary"]}
 ForegroundInactive={s["onSurface"]}
-ForegroundLink={s["secondaryContainer"]}
+ForegroundLink={s["tertiary"]}
 ForegroundNegative={s["secondary"]}
-ForegroundNeutral={s["tertiary"]}
+ForegroundNeutral={s["onSurface"]}
 ForegroundNormal={s["onSurface"]}
 ForegroundPositive={s["primary"]}
-ForegroundVisited={s["primaryContainer"]}
+ForegroundVisited={s["tertiary"]}
 
-[s:View]
-BackgroundAlternate={s["surface"]}
+[Colors:View]
+BackgroundAlternate={s["surfaceContainer"]}
 BackgroundNormal={s["background"]}
-DecorationFocus={s["primaryContainer"]}
-DecorationHover={s["surfaceContainer"]}
-ForegroundActive={s["onPrimary"]}
+DecorationFocus={s["primary"]}
+DecorationHover={s["primary"]}
+ForegroundActive={s["primary"]}
 ForegroundInactive={s["onSurface"]}
-ForegroundLink={s["secondaryContainer"]}
+ForegroundLink={s["tertiary"]}
 ForegroundNegative={s["secondary"]}
-ForegroundNeutral={s["tertiary"]}
+ForegroundNeutral={s["onSurface"]}
 ForegroundNormal={s["onSurface"]}
 ForegroundPositive={s["primary"]}
-ForegroundVisited={s["primaryContainer"]}
+ForegroundVisited={s["tertiary"]}
 
-[s:Window]
-BackgroundAlternate={s["surface"]}
+[Colors:Window]
+BackgroundAlternate={s["surfaceContainer"]}
 BackgroundNormal={s["background"]}
-DecorationFocus={s["primaryContainer"]}
-DecorationHover={s["surfaceContainer"]}
-ForegroundActive={s["onPrimary"]}
+DecorationFocus={s["primary"]}
+DecorationHover={s["primary"]}
+ForegroundActive={s["primary"]}
 ForegroundInactive={s["onSurface"]}
-ForegroundLink={s["secondaryContainer"]}
+ForegroundLink={s["tertiary"]}
 ForegroundNegative={s["secondary"]}
-ForegroundNeutral={s["tertiary"]}
+ForegroundNeutral={s["onSurface"]}
 ForegroundNormal={s["onSurface"]}
 ForegroundPositive={s["primary"]}
-ForegroundVisited={s["primaryContainer"]}
+ForegroundVisited={s["tertiary"]}
 
 [General]
 Name=Carbon
@@ -98,14 +98,6 @@ shadeSortColumn=true
 
 [KDE]
 contrast=10
-
-[WM]
-activeBackground=10,13,19
-activeBlend=14,18,24
-activeForeground=179,177,173
-inactiveBackground=14,18,24
-inactiveBlend=14,18,24
-inactiveForeground=179,177,173
 """
 
 	return base
@@ -200,6 +192,28 @@ def update_hypr(s: dict[str, str]):
 		f"$onErrorContainer = rgb({s['onErrorContainer'][1:]})\n"
 	)
 
+	return base
+
+
+def update_dunst(s: dict[str, str]):
+
+	base = f"""
+# NOTE: written by carbon shell
+[urgency_low]
+background = "{s['surfaceContainer']}"
+foreground = "{s['onSurface']}"
+frame_color = "{s['surfaceContainer']}"
+
+[urgency_normal]
+background = "{s['surfaceContainer']}"
+foreground = "{s['onSurface']}"
+frame_color = "{s['secondary']}"
+
+[urgency_critical]
+background = "{s['surfaceContainer']}"
+foreground = "{s['onSurface']}"
+frame_color = "{s['primary']}"
+"""
 	return base
 
 
