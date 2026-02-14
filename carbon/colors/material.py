@@ -5,6 +5,22 @@ from pathlib import Path
 
 from carbon.helpers import CarbonError
 
+
+def hex_to_rgb(hex: str) -> tuple[int, int, int]:
+    hex = hex.lstrip('#')
+    return tuple(int(hex[i:i+2], 16) for i in (0, 2, 4))
+
+def rgb_to_hex(rgb: tuple[int, int, int]) -> str:
+    hex = f"#{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}"
+    return hex 
+
+def lerp_color(c1, c2, t):
+    return tuple(
+        int(c1[i] + (c2[i] - c1[i]) * t)
+        for i in range(3)
+    )
+
+
 class MaterialColors:
 
 
@@ -24,6 +40,7 @@ class MaterialColors:
 
         self._contrast: float = 0
         self._variant = 0
+        
 
 
     def generate_from_image(self, image: str, variant: tuple):
@@ -50,6 +67,34 @@ class MaterialColors:
         self.darkMapping = self.make_mapping(self.darkScheme)
         self.lightMapping = self.make_mapping(self.lightScheme)
 
+
+    def shift_colors(self, s: material.DynamicScheme) -> dict[str, str]:
+
+        primary = hex_to_rgb(s.primary)
+
+        
+        colors = {
+            "red": "#FF2F2F",
+            "blue": "#2D53FF",
+            "yellow": "#FFFF2A",
+            "orange": "#FFB12A",
+            "green": "#29FF29",
+            "cyan": "#3AFFFF",
+            "magenta": "#FF30FF",
+            "white" : "#ffffff",
+            "black" : "#000000",
+        }
+
+        for name, hex in colors.items():
+            rgb = hex_to_rgb(hex)
+            
+            new_rgb = lerp_color(rgb, primary, 0.4)
+
+            colors[name] = rgb_to_hex(new_rgb)
+
+        
+        return colors
+    
 
     def make_mapping(self, s: material.DynamicScheme) -> dict[str, str]:
         scheme = {
@@ -112,5 +157,6 @@ class MaterialColors:
             "onTertiaryFixedVariant": s.on_tertiary_fixed_variant,
         }
 
-
+        scheme.update(self.shift_colors(s))
+        
         return scheme
