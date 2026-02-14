@@ -1,0 +1,165 @@
+# See dunst(5) for all configuration options
+
+[global]
+
+monitor = 0
+follow = keyboard
+
+### Geometry ###
+
+width = (400, 600)
+height = (100, 400)
+
+origin = top-right
+
+offset = (10, 10)
+scale = 0
+
+## Style ##
+
+transparency = 10
+separator_height = 0
+separator_color = frame
+
+gap_size = 6
+
+padding = 12
+horizontal_padding = 12
+
+font = Monospace 11
+
+corner_radius = 10
+
+## Behavior ## 
+
+notification_limit = 20
+history_length = 20
+
+
+# Sort type.
+# possible values are:
+#  * id: sort by id
+#  * urgency_ascending: sort by urgency (low then normal then critical)
+#  * urgency_descending: sort by urgency (critical then normal then low)
+#  * update: sort by update (most recent always at the top)
+sort = yes
+
+line_height = 0
+
+
+markup = full
+
+format = "<b>%s</b>\n%b"
+
+# Possible values are "left", "center" and "right".
+alignment = center
+# Possible values are "top", "center" and "bottom".
+vertical_alignment = center
+
+
+stack_duplicates = true
+hide_duplicate_count = false
+show_indicators = yes
+
+sticky_history = yes
+
+show_age_threshold = 60
+
+
+# Ignore the dbus closeNotification message.
+# Useful to enforce the timeout set by dunst configuration. Without this
+# parameter, an application may close the notification sent before the
+# user defined timeout.
+ignore_dbusclose = false
+
+timeout = 0
+
+# Specify where to make an ellipsis in long lines.
+# Possible values are "start", "middle" and "end".
+ellipsize = middle
+
+# Ignore newlines '\n' in notifications.
+ignore_newline = no
+
+
+## KeyBinds ##
+
+# Defines list of actions for each mouse event
+# Possible values are:
+# * none: Don't do anything.
+# * do_action: Invoke the action determined by the action_name rule. If there is no
+#              such action, open the context menu.
+# * open_url: If the notification has exactly one url, open it. If there are multiple
+#             ones, open the context menu.
+# * close_current: Close current notification.
+# * remove_current: Remove current notification from history.
+# * close_all: Close all notifications.
+# * context: Open context menu for the notification.
+# * context_all: Open context menu for all notifications.
+# These values can be strung together for each mouse event, and
+# will be executed in sequence.
+
+mouse_left_click = do_action, close_current
+mouse_middle_click = do_action, close_current
+mouse_right_click = close_all
+
+
+### Misc ###
+
+# Browser for opening urls in context menu.
+browser = /usr/bin/xdg-open
+
+
+
+### Progress bar ###
+
+# Turn on the progress bar. It appears when a progress hint is passed with
+# for example dunstify -h int:value:12
+progress_bar = true
+
+progress_bar_height = 12
+progress_bar_frame_width = 1
+
+progress_bar_min_width = 150
+progress_bar_max_width = 300
+
+progress_bar_corner_radius = 0
+
+
+progress_bar_corners = all
+
+## Icon ##
+
+icon_corner_radius = 0
+icon_corners = all
+enable_recursive_icon_lookup = true
+icon_position = left
+
+icon_theme = Papirus
+min_icon_size = 64
+max_icon_size = 128
+
+
+## Theme ##
+
+# Since dunst has no 'include' for multiple configs, I have to
+# edit the main config file itself. This is the workaround i could think of.
+# Don't remove the next comment. 
+
+# CARBON_BREAK_POINT
+
+# NOTE: written by carbon shell
+[urgency_low]
+background = "#232228"
+foreground = "#e9e5ed"
+frame_color = "#232228"
+
+[urgency_normal]
+background = "#232228"
+foreground = "#e9e5ed"
+frame_color = "#c6c4dd"
+
+[urgency_critical]
+background = "#232228"
+foreground = "#e9e5ed"
+frame_color = "#c1c1ff"
