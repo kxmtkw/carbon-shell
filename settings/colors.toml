@@ -1,6 +1,7 @@
 
 commands = [
     "plasma-apply-colorscheme BreezeDark && plasma-apply-colorscheme Carbon",
+    "killall dunst",
     "hyprctl reload"
 ]
 
