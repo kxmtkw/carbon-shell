@@ -51,7 +51,7 @@ WrapperRectangle
 		}
 
 		onEntered: {
-			parent.color = Theme.Color._surfaceContainer
+			parent.color = Theme.Color._surfaceContainerLow
 		}
 
 		onExited: {

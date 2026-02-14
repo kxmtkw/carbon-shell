@@ -14,7 +14,7 @@ WrapperRectangle
 	Layout.preferredHeight: Theme.Style.dpi(400)
 	Layout.alignment:       Qt.AlignHCenter | Qt.AlignBottom
 	
-	margin: Theme.Style.dpi(70)
+	margin: Theme.Style.dpi(100)
 	color:  Theme.Color._background
 	radius: Theme.Style.round
 
@@ -50,7 +50,7 @@ WrapperRectangle
 		}
 
 		onEntered: {
-			parent.color = Theme.Color._surfaceContainer
+			parent.color = Theme.Color._surfaceContainerLow
 		}
 
 		onExited: {
