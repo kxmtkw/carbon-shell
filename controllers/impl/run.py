@@ -90,66 +90,26 @@ class RunPrompt():
 
 	def parse(self, selected: str):
 		
-		selected = selected.encode("ascii", "ignore").decode()
-
-		try:
-			cmd = shlex.split(selected)
-		except ValueError as e:
-			self.show_error(f"Invalid Syntax!\n{str(e)}.")
-			exit(1)
-
-		modifier = cmd[-1]
-
-		if not modifier.startswith("#"):
-			self.exec(cmd)
-			return
-		
-		cmd.pop()
-
-		match modifier:
-
-			case "#t":
-				self.execTerminal(cmd)
+		cmd = selected.encode("ascii", "ignore").decode()
+		self.exec(cmd)
 
 		
-	def exec(self, cmd: list[str]):
+	def exec(self, cmd: str):
 		try:
-			proc = subprocess.Popen(
+			subprocess.run(
 				cmd,
 				stdin=subprocess.PIPE,
 				stdout=subprocess.PIPE,
-				text=True
+				shell=True
 			)
 		except FileNotFoundError:
-			self.show_error(f"Command not found: {cmd[0]}")
+			self.show_error(f"Command not found: {cmd}")
 			return
 		except PermissionError:
 			self.show_error("Insufficient Permissions!")
 			return
 
-		try:
-			proc.wait(1)
-		except subprocess.TimeoutExpired:
-			pass
-
-		self.add_to_history(shlex.join(cmd))
-
-
-	def execTerminal(self, cmd: list[str]):
-		
-		terminal = os.environ.get("TERMINAL")
-		
-		if not terminal:
-			self.show_error(
-				"Set a $TERMINAL env to specify a terminal."
-			)
-			exit(1)
-
-		term_cmd = [terminal, "-e"]
-		term_cmd.extend(cmd)
-
-		self.exec(term_cmd)
-
+		self.add_to_history(cmd)
 
 	def show_error(self, msg: str):
 

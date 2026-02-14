@@ -55,9 +55,9 @@ class PowerMenu():
 			self.rofi.Run(cmd)
 			return
 		elif selected == options[3]:
-			cmd = "systemctl suspend && sleep 0.5 && hyprlock"
+			cmd = "systemctl suspend"
 		elif selected == options[4]:
-			cmd = "systemctl hibernate && sleep 0.5 && hyprlock"
+			cmd = "systemctl hibernate"
 		elif selected == options[5]:
 			cmd = "hyprland dispatch exit"
 		else:
