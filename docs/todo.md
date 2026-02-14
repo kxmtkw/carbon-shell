@@ -49,17 +49,17 @@ Cache themes generated from wallpapers
 
 OSDs for brightness, sound and mic
 
-#### Media Control (ONGOING)
+#### Media Control (DONE)
 
 Add a media controller, don't know how i will do it. Rofi stutters a bit but maybe i can find some hyprland way to fix it.
 
-> Make it update dynamically? that could be cool
+> Make it update dynamically? that could be cool (DONE)
 
-#### KDE apps and coloring (ONGOING)
+#### KDE apps and coloring (DONE)
 
 I found out how KDE apps are themed so maybe if i can connect it with my colorify, we can have material kde apps as well, this will take some work.
 
-#### Rainbow colors
+#### Rainbow colors (DONE)
 
 Add the rainbow colors for terminals by shifting some base colors towards the primary or something. 
 
