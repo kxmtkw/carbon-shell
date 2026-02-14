@@ -1,6 +1,7 @@
 
 commands = [
-    "plasma-apply-colorscheme BreezeDark && plasma-apply-colorscheme Carbon"
+    "plasma-apply-colorscheme BreezeDark && plasma-apply-colorscheme Carbon",
+    "hyprctl reload"
 ]
 
 [colorfiles]
@@ -10,3 +11,5 @@ rofi      = "Config/rofi/theme/color.rasi"
 kitty     = "Config/kitty/color.conf"
 alacritty = "Config/alacritty/color.toml"
 kde       = "Config/kde/Carbon.colors"
+
+dunst     = "Config/dunst/dunstrc"

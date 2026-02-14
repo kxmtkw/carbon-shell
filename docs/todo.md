@@ -73,4 +73,17 @@ A small pacman wrapper for basic tasks like: see all packages, all user packages
 
 #### A sudo runner?
 
+no, build a askpass
 
+#### Better Runner
+
+Runner needs more modes:
+
+- Default: Executes binaries from $PATH
+- Shell($): Executes shell commands using default shell
+- Calculate(=): Calculates a string
+- Sudo(#): Run a command with sudo -A
+- File(/): Search the file system
+- Search(?): Search the web
+- Custom(!): Built-in runner commands (these should also be with $PATH entries)
+- History(%): Last executed commands (thes should also be with $PATH entries)

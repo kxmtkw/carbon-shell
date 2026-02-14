@@ -24,7 +24,7 @@ def link(src: Path, dest: Path):
     if dest.is_symlink():
         dest.unlink()
         
-    elif dest.exists():
+    elif dest.exists(follow_symlinks=True):
 
         choice = prompt(
             f"{dest} already exists! Do you want to remove it?",
@@ -44,8 +44,7 @@ def link(src: Path, dest: Path):
             return
     else: 
         parent = dest.parent
-
-        if not parent.exists():
+        if not parent.exists(follow_symlinks=True):
             parent.mkdir(parents=True, exist_ok=True)
 
         

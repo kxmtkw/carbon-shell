@@ -42,4 +42,7 @@ dest = "~/.config/starship.toml"
 src  = "Config/kde/Carbon.colors"
 dest = "~/.local/share/color-schemes/Carbon.colors"
 
+[dunst]
+src  = "Config/dunst"
+dest = "~/.config/dunst"
 
