@@ -13,6 +13,8 @@ import qs.theme as Theme
 
 
 WrapperRectangle {
+	id: player_root
+
 	Layout.fillWidth:       true
 	Layout.preferredHeight: Theme.Style.dpi(440)
 	Layout.alignment:       Qt.AlignHCenter
@@ -21,7 +23,6 @@ WrapperRectangle {
 	color:  Theme.Color._background
 	radius: Theme.Style.round
 
-    property string no_players: "No players found"
 
 	Process {
 		id: power_menu
@@ -30,6 +31,8 @@ WrapperRectangle {
 	}
 
 	MouseArea {
+		id: hover_area
+
 		Layout.fillHeight: true
 		Layout.fillWidth:  true
 
@@ -42,7 +45,7 @@ WrapperRectangle {
 			text: " "
 
 			font.family:    Theme.Font.mainFont
-			font.pixelSize: Theme.Style.dpi(320)
+			font.pixelSize: Theme.Style.dpi(300)
 			color:          Theme.Color._surfaceVariant
 		}
 
@@ -52,7 +55,7 @@ WrapperRectangle {
 		}
 		
 		onEntered: {
-			parent.color = Theme.Color._surfaceContainer
+			parent.color = Theme.Color._surfaceContainerLow
 		}
 
 		onExited: {
@@ -69,6 +72,7 @@ WrapperRectangle {
         stdout: StdioCollector {
             onStreamFinished: {
                 var out = text.trim()
+				
                 if (out == "Playing") {
                     panelPlayerIcon.color = Theme.Color._primary
                 }
