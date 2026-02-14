@@ -10,24 +10,6 @@ from . import configs
 
 settings = SettingsLoader("~/.carbon/settings/colors.toml")
 
-def write_theme(filepath: str, theme: str):
-    with open(filepath, "w") as file:
-        file.write(theme)
-
-
-def write_dunst_theme(dunstrc: str, theme: str):
-    with open(dunstrc, "r") as file:
-        contents = file.read()
-
-    breakpoint = "CARBON_BREAK_POINT"
-
-    parts = contents.split(breakpoint)
-
-    updated = f"{parts[0]}{breakpoint}\n{theme}"
-
-    with open(dunstrc, "w") as file:
-        file.write(updated)
-    
 
 def update_colors(colors: dict[str, str]):
 
@@ -36,36 +18,27 @@ def update_colors(colors: dict[str, str]):
         match type:
             case "hypr":
                 string = configs.update_hypr(colors)
-                write_theme(filepath, string)
             case "qml":
                 string = configs.update_quickshell(colors)
-                write_theme(filepath, string)
             case "kitty":
                 string = configs.update_kitty(colors)
-                write_theme(filepath, string)
             case "rofi":
-                string = configs.update_rofi(colors)  
-                write_theme(filepath, string)  
+                string = configs.update_rofi(colors)    
             case "alacritty":
-                string = configs.update_alacritty(colors)
-                write_theme(filepath, string)   
+                string = configs.update_alacritty(colors)   
             case "kde":
                 string = configs.update_kde(colors) 
-                write_theme(filepath, string)
-            case "dunst":
-                string = configs.update_dunst(colors)
-                write_dunst_theme(filepath, string)
             case _:
                 print(f"Error :: {type}")
                 continue
         
+        with open(filepath, "w") as file:
+            file.write(string)
 
         print(f"Updated :: {type}")
 
-
     for cmd in settings.get("commands"):
-        print(f"Running cmd: {cmd}")
-        subprocess.run(cmd, shell=True, capture_output=True)
+        subprocess.run(cmd, shell=True, capture_output=True, text=True)
 
 
 def colorify(
