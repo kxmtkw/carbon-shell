@@ -22,7 +22,7 @@ Enable=false
 IntensityAmount=0
 IntensityEffect=0
 
-[Colors:Button]
+[s:Button]
 BackgroundAlternate={s["surface"]}
 BackgroundNormal={s["background"]}
 DecorationFocus={s["primaryContainer"]}
@@ -36,7 +36,7 @@ ForegroundNormal={s["onSurface"]}
 ForegroundPositive={s["primary"]}
 ForegroundVisited={s["primaryContainer"]}
 
-[Colors:Selection]
+[s:Selection]
 BackgroundAlternate={s["surface"]}
 BackgroundNormal={s["background"]}
 DecorationFocus={s["primaryContainer"]}
@@ -50,7 +50,7 @@ ForegroundNormal={s["onSurface"]}
 ForegroundPositive={s["primary"]}
 ForegroundVisited={s["primaryContainer"]}
 
-[Colors:Tooltip]
+[s:Tooltip]
 BackgroundAlternate={s["surface"]}
 BackgroundNormal={s["background"]}
 DecorationFocus={s["primaryContainer"]}
@@ -64,7 +64,7 @@ ForegroundNormal={s["onSurface"]}
 ForegroundPositive={s["primary"]}
 ForegroundVisited={s["primaryContainer"]}
 
-[Colors:View]
+[s:View]
 BackgroundAlternate={s["surface"]}
 BackgroundNormal={s["background"]}
 DecorationFocus={s["primaryContainer"]}
@@ -78,7 +78,7 @@ ForegroundNormal={s["onSurface"]}
 ForegroundPositive={s["primary"]}
 ForegroundVisited={s["primaryContainer"]}
 
-[Colors:Window]
+[s:Window]
 BackgroundAlternate={s["surface"]}
 BackgroundNormal={s["background"]}
 DecorationFocus={s["primaryContainer"]}
@@ -118,23 +118,27 @@ def update_alacritty(s: dict[str, str]):
 [colors]
 [colors.primary]
 foreground = "{s['onSurface']}"
-background = "{s['background']}"
+background = "{s['surface']}"
 
 [colors.normal]
-red     = "#fdb2d4"
-yellow  = "#f8e9a6"
-green   = "#cdf6a0"
-cyan    = "#aaeaf6"
-blue    = "#98c4f3"
-magenta = "#c4a9f8"
+red     = "{s['red']}"
+yellow  = "{s['yellow']}"
+green   = "{s['green']}"
+cyan    = "{s['cyan']}"
+blue    = "{s['blue']}"
+magenta = "{s['magenta']}"
+white   = "{s['white']}"
+black   = "{s['black']}"
 
 [colors.bright]
-red     = "#fdb2d4"
-yellow  = "#f8e9a6"
-green   = "#cdf6a0"
-cyan    = "#aaeaf6"
-blue    = "#98c4f3"
-magenta = "#c4a9f8"
+red     = "{s['red']}"
+yellow  = "{s['yellow']}"
+green   = "{s['green']}"
+cyan    = "{s['cyan']}"
+blue    = "{s['blue']}"
+magenta = "{s['magenta']}"
+white   = "{s['white']}"
+black   = "{s['black']}"
 """
 
 	return base
@@ -154,22 +158,22 @@ def update_kitty(s: dict[str, str]):
 		f"inactive_tab_background  {s["background"]}\n"
 		f"background               {s["background"]}\n"
 		f"foreground               {s["onSurface"]}\n"
-		f"color0                   #323234\n"
-		f"color1                   #b3261e\n"
-		f"color2                   #1b6b44\n"
-		f"color3                   #7f5700\n"
-		f"color4                   #005ac1\n"
-		f"color5                   #7b1fa2\n"
-		f"color6                   #006a6a\n"
-		f"color7                   #e6e1e5\n"
-		f"color8                   #49454f\n"
-		f"color9                   #ff5449\n"
-		f"color10                  #4fd8a0\n"
-		f"color11                  #ffb74d\n"
-		f"color12                  #6f9cff\n"
-		f"color13                  #ce93d8\n"
-		f"color14                  #4dd0e1\n"
-		f"color15                  #ffffff\n"
+		f"color0                   {s['black']}\n"
+		f"color1                   {s['red']}\n"
+		f"color2                   {s['green']}\n"
+		f"color3                   {s['yellow']}\n"
+		f"color4                   {s['blue']}\n"
+		f"color5                   {s['magenta']}\n"
+		f"color6                   {s['cyan']}\n"
+		f"color7                   {s['white']}\n"
+		f"color8                   {s['black']}\n"
+		f"color9                   {s['red']}\n"
+		f"color10                  {s['green']}\n"
+		f"color11                  {s['yellow']}\n"
+		f"color12                  {s['blue']}\n"
+		f"color13                  {s['magenta']}\n"
+		f"color14                  {s['cyan']}\n"
+		f"color15                  {s['white']}\n"
 		f"cursor                   {s["onSurface"]}\n"
 		f"cursor_text_color        {s["onSurface"]}\n"
 		f"url_color                {s["tertiary"]}\n"
