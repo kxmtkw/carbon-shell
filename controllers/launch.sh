@@ -1,18 +1,31 @@
 #!/bin/sh
 
-pkill rofi # a bit brute force but meh
-
-echo $CARBONPY
-
 if [[ -z $1 ]]; then
-    set -- "--list"
+	echo Supporter controllers:
+	echo launcher windows power battery screenshot wifi run clipboard player
+	exit 0
 fi
 
+pkill rofi
+
+echo "CARBONPY: "$CARBONPY
+
+active_file=/tmp/carbon_active_controller
+
+current="$1"
+active=$(< $active_file)
+
+if [ "$active" = "$current" ]; then
+    echo "Launched rofi controller already open, closing it."
+    exit 0
+fi
+
+
+echo "Launching controller" \'$1\'
+echo $current > $active_file
+
+
 case $1 in
-	"--list")
-		echo Supporter controllers:
-		echo launcher windows power battery screenshot wifi run clipboard player
-	;;
 	"launcher")
 		rofi -show drun -theme ~/.config/rofi/launcher.rasi 
 	;;
@@ -44,3 +57,6 @@ case $1 in
 		notify-send "Unknown controller!" $1
 	;;
 esac
+
+
+: > $active_file
