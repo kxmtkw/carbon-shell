@@ -43,10 +43,10 @@ mainbox
     margin:                      0px;
     border:                      0px solid;
     border-radius:               0%;
-    background-color:            @backgroundTransparentxAA;
+    background-color:            @background;
     vertical-align:              0.5;
     orientation:                 vertical;
-    children:                    [ "inputbar", "listview" ];
+    children:                    [ "inputbar", "entry", "listview"];
 }
 
 inputbar {
@@ -56,14 +56,31 @@ inputbar {
     text-color:                  @onSurface;
     children:                    [ "dummy", "prompt", "dummy"];
 }
+
 dummy {
     background-color:            transparent;
 }
+
 prompt {
     background-color:            inherit;
     text-color:                  inherit;
 }
 
+entry {
+    enabled:                     true;
+    expand:                      false;
+    width:                       10%;
+    padding:                     12px 16px;
+    margin:                      0% 1%;    
+    border-radius:               @themeBorderRadius;
+    background-color:            inherit;
+    text-color:                  @onSurface;
+    cursor:                      text;
+    placeholder:                 "Search...";
+    placeholder-color:           inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0;
+}
 
 listview 
 {
