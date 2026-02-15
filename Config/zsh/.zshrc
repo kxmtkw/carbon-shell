@@ -46,10 +46,16 @@ alias la='lsd --all'
 alias grep='grep --color'
 
 # personal
-alias gs='git status'
 alias env='source ./.venv/bin/activate || echo No .venv found!'
 alias denv='deactivate || echo No .venv activated!'
 alias fetch='fastfetch'
+
+# git related
+alias gs='git status'
+alias ga='git add'
+alias gb='git branch'
+alias gr='git remote'
+alias gp='git push'
 
 # Prompt
 eval "$(starship init zsh)"

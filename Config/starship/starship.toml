@@ -61,7 +61,7 @@ format = ' [{$ahead_behind$conflicted}]($style)'
 [character]
 
 success_symbol = '[❱](green)'
-error_symbol = '[❱](red)'
+error_symbol = '[❱](green)'
 
 
 [python]
