@@ -20,8 +20,8 @@ window
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       34%;
-    height:                      42%;
+    width:                       700px;
+    height:                      520px;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -50,7 +50,7 @@ mainbox
 }
 
 inputbar {
-    padding:                     2% 1%;
+    padding:                     30px 20px;
     border-radius:               0px;
     background-color:            @background;
     text-color:                  @onSurface;
@@ -69,9 +69,9 @@ prompt {
 entry {
     enabled:                     true;
     expand:                      false;
-    width:                       10%;
+    width:                       500px;
     padding:                     12px 16px;
-    margin:                      0% 1%;    
+    margin:                      0 20px;    
     border-radius:               @themeBorderRadius;
     background-color:            inherit;
     text-color:                  @onSurface;
@@ -95,9 +95,9 @@ listview
     fixed-height:                false;
     fixed-columns:               false;
     
-    spacing:                     1%;
-    margin:                      0%;
-    padding:                     2% 2%;
+    spacing:                     10px;
+    margin:                      20px 0 0 0;
+    padding:                     10px 40px;
     border:                      0px solid;
     border-radius:               0px;
     background-color:            @background;

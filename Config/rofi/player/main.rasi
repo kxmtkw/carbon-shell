@@ -5,7 +5,7 @@ mainbox
 {
     enabled:                     true;
     spacing:                     0;
-    padding:                     3% 2%;
+    padding:                     30px 30px;
     margin:                      0px;
     border:                      0px solid;
     border-radius:               0%;
@@ -16,15 +16,15 @@ mainbox
 
 imagebox {
     spacing:                     0px;
-    padding:                     5% 2%;
+    padding:                     50px 30px;
     background-color:            transparent;
     background-image:            url("/home/haseeb/.config/mozilla/firefox/firefox-mpris/10381_10.png", height);
     children:                    [ "dummy", "dummy"];
 }
 
 inputbar {
-    margin:                      0% 0% 3% 0%;
-    padding:                     2% 5px;
+    margin:                      0% 0% 30px 0%;
+    padding:                     20px 5px;
     border-radius:               @themeBorderRadius;
     background-color:            @primary;
     text-color:                  @onPrimary;
@@ -45,7 +45,7 @@ prompt {
 message {
     enabled:                     true;
     margin:                      0px;
-    padding:                     2% 1%;
+    padding:                     20px 20px;
     border-radius:               @themeBorderRadius;
     background-color:            @background;
     text-color:                  @onSurface;
@@ -72,7 +72,7 @@ listview
     fixed-height:                false;
     fixed-columns:               false;
     
-    spacing:                     1%;
+    spacing:                     10px;
     margin:                      0%;
     border:                      0px solid;
     border-radius:               0px;

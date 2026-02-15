@@ -45,8 +45,8 @@ window
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       46%;
-    height:                      72%;
+    width:                       880px;
+    height:                      770px;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -72,8 +72,8 @@ mainbox
 
 inputbar {
     enabled:                     true;
-    margin:                      6% 3%;
-    padding:                     1% 2%;
+    margin:                      60px 50px;
+    padding:                     10px 30px;
     background-color:            @background;
     text-color:                  @onSurface;
     border-radius:               @themeBorderRadius;
@@ -93,7 +93,7 @@ prompt {
 entry {
     enabled:                     true;
     expand:                      false;
-    width:                       20%;
+    width:                       620px;
     padding:                     12px 16px;
     border-radius:               @themeBorderRadius;
     background-color:            inherit;
@@ -116,8 +116,8 @@ dummy {
 
 listbox 
 {
-    spacing:                     1%;
-    padding:                     3% 2%;
+    spacing:                     10px;
+    padding:                     30px 30px;
     background-color:            @background;
     orientation:                 horizontal;
     children:                    [ "listview" ];

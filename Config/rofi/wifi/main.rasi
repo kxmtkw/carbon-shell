@@ -15,8 +15,8 @@ mainbox
 }
 
 inputbar {
-    margin:                      2% 4%;
-    padding:                     1% 2%;
+    margin:                      10px 40px;
+    padding:                     10px;
     border-radius:               0px;
     background-color:            @background;
     text-color:                  @onSurface;
@@ -34,7 +34,7 @@ prompt {
 
 message {
     enabled:                     true;
-    margin:                      1% 2%;
+    margin:                      10px 30px;
     padding:                     20px;
     border-radius:               10px;
     background-color:            @surfaceContainer;
@@ -63,9 +63,9 @@ listview
     fixed-height:                false;
     fixed-columns:               false;
     
-    spacing:                     1%;
+    spacing:                     10px;
     margin:                      0%;
-    padding:                     3% 2%;
+    padding:                     20px 30px;
     border:                      0px solid;
     border-radius:               0px;
     background-color:            @background;
