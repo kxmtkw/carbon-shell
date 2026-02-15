@@ -24,8 +24,8 @@ window
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       750px;
-    height:                      42%;
+    width:                       720px;
+    height:                      450px;
     x-offset:                    0px;
     y-offset:                    0px;
 
