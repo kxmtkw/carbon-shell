@@ -18,8 +18,8 @@ window
     location:                    southwest;
     anchor:                      southwest;
     fullscreen:                  false;
-    width:                       26%;
-    height:                      54%;
+    width:                       500px;
+    height:                      600px;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -66,8 +66,8 @@ prompt {
 
 message {
     enabled:                     true;
-    margin:                      2% 3%;
-    padding:                     5% 10px;
+    margin:                      30px 40px;
+    padding:                     50px 20px;
     border-radius:               @themeBorderRadius;
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
@@ -95,9 +95,9 @@ listview
     fixed-height:                false;
     fixed-columns:               false;
     
-    spacing:                     1%;
+    spacing:                     10px;
     margin:                      0%;
-    padding:                     3% 2%;
+    padding:                     20px 40px;
     border:                      0px solid;
     border-radius:               0px;
     background-color:            @background;

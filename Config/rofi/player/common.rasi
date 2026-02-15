@@ -24,8 +24,8 @@ window
     location:                    northwest;
     anchor:                      northwest;
     fullscreen:                  false;
-    width:                       26%;
-    height:                      38%;
+    width:                       500px;
+    height:                      400px;
     x-offset:                    0px;
     y-offset:                    0px;
 

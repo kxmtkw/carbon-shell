@@ -33,7 +33,7 @@ prompt {
 
 message {
     enabled:                     true;
-    margin:                      1% 2%;
+    margin:                      20px 30px;
     padding:                     20px;
     border-radius:               @themeBorderRadius;
     background-color:            @surfaceContainer;
@@ -61,9 +61,9 @@ listview
     fixed-height:                false;
     fixed-columns:               false;
     
-    spacing:                     1%;
+    spacing:                     10px;
     margin:                      0%;
-    padding:                     3% 2%;
+    padding:                     20px 30px;
     border:                      0px solid;
     border-radius:               0px;
     background-color:            @background;
