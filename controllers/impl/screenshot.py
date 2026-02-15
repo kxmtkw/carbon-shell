@@ -38,7 +38,7 @@ class ScreenshotMenu():
 	def exec(self, option: str):
 
 		if option == self.options[0]:
-			self.rofi.Run(f"hyprshot -m output -o {self.save_dir}")
+			self.rofi.Run(f"hyprshot -m active -m output -o {self.save_dir}")
 
 		elif option == self.options[1]:
 			self.rofi.Run(f"hyprshot -m window -o {self.save_dir}")
