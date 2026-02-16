@@ -1,6 +1,6 @@
 from pathlib import Path
 from rofi import RofiShell
-import sys
+import sys, time
 
 class ScreenshotMenu():
 	
@@ -37,6 +37,8 @@ class ScreenshotMenu():
 
 	def exec(self, option: str):
 
+		time.sleep(0.2) # rofi closes
+		
 		if option == self.options[0]:
 			self.rofi.Run(f"hyprshot -m active -m output -o {self.save_dir}")
 
