@@ -200,17 +200,17 @@ def update_dunst(s: dict[str, str]):
 	base = f"""
 # NOTE: written by carbon shell
 [urgency_low]
-background = "{s['surfaceContainer']}"
+background = "{s['background']}"
 foreground = "{s['onSurface']}"
 frame_color = "{s['surfaceContainer']}"
 
 [urgency_normal]
-background = "{s['surfaceContainer']}"
+background = "{s['background']}"
 foreground = "{s['onSurface']}"
 frame_color = "{s['secondary']}"
 
 [urgency_critical]
-background = "{s['surfaceContainer']}"
+background = "{s['background']}"
 foreground = "{s['onSurface']}"
 frame_color = "{s['primary']}"
 """
