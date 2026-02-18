@@ -1,7 +1,8 @@
 from pathlib import Path
-from rofi import RofiShell
 import subprocess, shlex
 import os, time
+
+from lib.rofi import RofiShell
 
 
 end = 0

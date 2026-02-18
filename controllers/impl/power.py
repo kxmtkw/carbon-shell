@@ -1,4 +1,4 @@
-from rofi import RofiShell
+from lib.rofi import RofiShell
 import time
 
 class PowerMenu():
@@ -19,23 +19,25 @@ class PowerMenu():
 
 
 	def launch(self):
-		selected: str = self.rofi.display(
-			self.rofi.Run("echo \"$(whoami)@$(hostnamectl | awk -F': ' '/Static hostname/ {print $2}')\"").strip(),
-			self.rofi.Run("uptime -p").strip().capitalize(),
-			self.options
+		self.rofi.display(
+			mode = RofiShell.Mode.dmenu,
+			prompt = self.rofi.Run("echo \"$(whoami)@$(hostnamectl | awk -F': ' '/Static hostname/ {print $2}')\"").strip(),
+			mesg = self.rofi.Run("uptime -p").strip().capitalize(),
+			options = self.options
 		)
+		selected: str = self.rofi.wait()
 
 		if not selected: return
-
 		self.exec(selected.strip())
 
 
 	def confirm(self) -> bool:
-		selected = self.confirmation.display(
-			"",
-			"Are you sure?",
-			["  No", "  Yes"]
+		self.confirmation.display(
+			mode = RofiShell.Mode.dmenu,
+			mesg="Are you sure?",
+			options=["  No", "  Yes"]
 		)
+		selected = self.confirmation.wait()
 
 		if (selected.strip() == "  Yes"): return True
 		return False

@@ -1,8 +1,9 @@
-from rofi import RofiShell
+from lib.rofi import RofiShell
 
 class BatteryInfo():
 	
 	def __init__(self):
+
 		self.rofi = RofiShell("~/.config/rofi/battery.rasi")
 
 		self.battery_info = self.rofi.Run("upower -b")
@@ -46,12 +47,13 @@ class BatteryInfo():
 
 	def launch(self):
 
-		selected: str = self.rofi.display(
-			self.prompt,
-			self.mesg,
-			self.options
+		self.rofi.display(
+			mode=RofiShell.Mode.dmenu,
+			prompt=self.prompt,
+			mesg=self.mesg,
+			options=self.options
 		)
-
+		selected: str = self.rofi.wait()
 		if not selected: return
 
 

@@ -14,6 +14,7 @@ class WifiNetwork:
 
 
 class WifiError(Exception):
+
     def __init__(self, msg: str, details: str) -> None:
         self.msg = msg
         self.details = details
@@ -21,6 +22,7 @@ class WifiError(Exception):
 
 
 class WifiManager:
+
 
     def __init__(self) -> None:
         self._scanned_networks: list[WifiNetwork] = []
@@ -38,7 +40,7 @@ class WifiManager:
             
             return False
         
-        raise WifiError(f"Could check wifi radio.", f"Error:\n{output.stdout}")
+        raise WifiError(f"Could check wifi radio.", output.stdout)
 
         
     def set_radio(self, on: bool):
@@ -46,7 +48,7 @@ class WifiManager:
         output = shellRun(f"nmcli radio wifi {'on' if on else 'off'}")
         
         if not output.success:
-            raise WifiError(f"Could set wifi radio", f"Error:\n{output.stdout}")
+            raise WifiError(f"Could set wifi radio", output.stdout)
 
 
     def rescan(self):
@@ -54,7 +56,7 @@ class WifiManager:
         output = shellRun(f"nmcli device wifi rescan")
 
         if not output.success:
-            raise WifiError(f"Could rescan wifi radio.", f"Error:\n{output.stdout}")
+            raise WifiError(f"Could not rescan wifi radio.", output.stdout)
 
 
     def list_networks(self) -> list[WifiNetwork]:
@@ -64,7 +66,7 @@ class WifiManager:
         output = shellRun("nmcli -t -f SSID,BSSID,RATE,SIGNAL,SECURITY,ACTIVE device wifi list")
 
         if not output.success:
-            raise WifiError(f"Could get wifi networks.", f"Error:\n{output.stdout}")
+            raise WifiError(f"Could get wifi networks.", output.stdout)
         
         for line in output.stdout.splitlines():
 
@@ -106,17 +108,18 @@ class WifiManager:
         
         processRun(["nmcli", "connection", "delete", network.ssid])
 
-        raise WifiError(f"Could not connect to {network.ssid}.", f"Error:\n{output.stdout}")
+        raise WifiError(f"Could not connect to {network.ssid}.", output.stdout)
 
 
     def disconnect_network(self, network: WifiNetwork):
         output = processRun(["nmcli", "connection", "down", network.ssid])
 
         if not output.success:
-            raise WifiError(f"Could not disconnect from {network.ssid}.", f"Error:\n{output.stdout}")
+            raise WifiError(f"Could not disconnect from {network.ssid}.", output.stdout)
+
 
     def forget_network(self, network: WifiNetwork):
         output = processRun(["nmcli", "connection", "delete", network.ssid])
 
         if not output.success:
-            raise WifiError(f"Could not forget {network.ssid}:", f"Error:\n{output.stdout}")
+            raise WifiError(f"Could not forget {network.ssid}:", {output.stdout})

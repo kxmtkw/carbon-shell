@@ -1,6 +1,7 @@
 from pathlib import Path
-from rofi import RofiShell
 import sys, time
+
+from lib.rofi import RofiShell
 
 class ScreenshotMenu():
 	
@@ -24,12 +25,14 @@ class ScreenshotMenu():
 
 	def launch(self):
 
-		selected: str = self.rofi.display(
-			self.prompt,
-			self.mesg,
-			self.options
+		self.rofi.display(
+			mode= RofiShell.Mode.dmenu,
+			prompt= self.prompt,
+			mesg= self.mesg,
+			options= self.options
 		)
 
+		selected: str = self.rofi.wait()
 		if not selected: return
 
 		self.exec(selected.strip())
