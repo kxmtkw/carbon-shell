@@ -150,16 +150,16 @@ max_icon_size = 128
 
 # NOTE: written by carbon shell
 [urgency_low]
-background = "#232228"
+background = "#131318"
 foreground = "#e9e5ed"
 frame_color = "#232228"
 
 [urgency_normal]
-background = "#232228"
+background = "#131318"
 foreground = "#e9e5ed"
 frame_color = "#c6c4dd"
 
 [urgency_critical]
-background = "#232228"
+background = "#131318"
 foreground = "#e9e5ed"
 frame_color = "#c1c1ff"

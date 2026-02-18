@@ -1,7 +1,7 @@
 import time
 
-from rofi import RofiShell
-from networker.wifi import WifiManager, WifiError, WifiNetwork
+from lib.rofi import RofiShell
+from lib.networker.wifi import WifiManager, WifiError, WifiNetwork
 
 main_rasi = "~/.config/rofi/wifi/main.rasi"
 options_rasi = "~/.config/rofi/wifi/options.rasi"
@@ -9,7 +9,7 @@ display_rasi = "~/.config/rofi/wifi/display.rasi"
 password_rasi = "~/.config/rofi/wifi/password.rasi"
 
 
-class WifiMenu:
+class Wifi:
 
 	def __init__(self) -> None:
 		self.wifi = WifiManager()
@@ -45,7 +45,7 @@ class WifiMenu:
 		else:
 			icon = "󰤯"
 
-		entry = f"{icon}   [{id}]  {net.ssid}{RofiShell.MarkActive if net.active else ''}"
+		entry = f"{icon}   [{id}]  {RofiShell.markActive(net.ssid) if net.active else net.ssid}"
 		return entry
 		
 
@@ -78,12 +78,14 @@ class WifiMenu:
 			status = f"Status: OFF | Connected: No"
 
 
-		selected = self.rofi.display(
-			self.title,
-			status,
-			list_items
+		self.rofi.display(
+			mode= RofiShell.Mode.dmenu,
+			prompt= self.title,
+			mesg= status,
+			options= list_items
 		)
 
+		selected = self.rofi.wait()
 		print(selected)
 
 		if not selected:
@@ -126,11 +128,13 @@ Signal:     {net.signal}\n
 Rate:       {net.rate}
 """
 
-		selected = self.rofi.display(
-			self.title,
-			details,
-			wifi_options
+		self.rofi.display(
+			mode= RofiShell.Mode.dmenu,
+			prompt= self.title,
+			mesg= details,
+			options= wifi_options
 		)
+		selected = self.rofi.wait()
 
 		if not selected:
 			exit()
@@ -152,30 +156,27 @@ Rate:       {net.rate}
 
 	def connect_network(self, net: WifiNetwork):
 
-		proc = self.trigger_displayer(
+		self.trigger_displayer(
 			" ",
 			f"Connecting to network \"{net.ssid}\"..."
 		)
 		try:
 			self.wifi.connect_network(net)
 		except WifiError:
-			proc.kill()
-			proc.wait()
+			self.rofi.close()
 			self.show_password_prompt(net)
 		else:
-			proc.kill()
-			proc.wait()
+			self.rofi.close()
 
 
 	def disconnect_network(self, net: WifiNetwork):
 
-		proc = self.trigger_displayer(
+		self.trigger_displayer(
 			" ",
 			f"Disconnecting from network \"{net.ssid}\"..."
 		)
 		self.wifi.disconnect_network(net)
-		proc.kill()
-		proc.wait()
+		self.rofi.close()
 
 	
 	def forget_network(self, net: WifiNetwork):
@@ -187,35 +188,33 @@ Rate:       {net.rate}
 			self.wifi.forget_network(net)
 
 		except WifiError:
-			proc.kill()
-			proc.wait()
+			self.rofi.close()
 
-			proc2 = self.trigger_displayer(
+			self.trigger_displayer(
 				" ",
 				f"Network \"{net.ssid}\" already unknown!"
 			)
-			proc2.wait()
-		
+			self.rofi.wait()
 		else:
-			proc.kill()
-			proc.wait()
+			self.rofi.close()
 
 
 	def show_password_prompt(self, net: WifiNetwork) -> None:
 
 		self.rofi.updateTheme(password_rasi)
-		
-		password = self.rofi.display(
-			self.title,
-			f"Enter password for: {net.ssid}",
-			[],
+		self.rofi.display(
+			mode= RofiShell.Mode.dmenu,
+			prompt= self.title,
+			mesg= f"Enter password for: {net.ssid}",
 			password=True
 		)
+		
+		password = self.rofi.wait()
 
 		if not password:
 			return
 
-		proc = self.trigger_displayer(
+		self.trigger_displayer(
 			" ",
 			f"Connecting to network \"{net.ssid}\"..."
 		)
@@ -224,33 +223,31 @@ Rate:       {net.rate}
 			self.wifi.connect_network(net, password)
 
 		except WifiError:
-			proc.kill()
-			proc.wait()
+			self.rofi.close()
 
-			proc2 = self.trigger_displayer(
+			self.trigger_displayer(
 				" ",
 				f"Incorrect password for \"{net.ssid}\"!"
 			)
 
-			proc2.wait()
+			self.rofi.wait()
 			return
 		
 		else:
-			proc.kill()
-			proc.wait()
+			self.rofi.close()
 
 	
 	def trigger_displayer(self, prompt: str, msg: str):
 
 		self.rofi.updateTheme(display_rasi)
 
-		return self.rofi.displayNoBlock(
-			prompt,
-			msg,
-			[]
+		return self.rofi.display(
+			mode= RofiShell.Mode.dmenu,
+			prompt=prompt,
+			mesg=msg,
 		)
 
 
 if __name__ == "__main__":
-	c = WifiMenu()
+	c = Wifi()
 	c.launch()
