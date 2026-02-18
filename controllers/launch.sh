@@ -17,11 +17,12 @@ active=$(< $active_file)
 
 if [ "$active" = "$current" ]; then
     echo "Launched rofi controller already open, closing it."
+	: > $active_file
     exit 0
 fi
 
 
-echo "Launching controller" \'$1\'
+echo "Launching controller:" $1
 echo $current > $active_file
 
 
@@ -55,6 +56,7 @@ case $1 in
 	;;
 	*)
 		notify-send "Unknown controller!" $1
+		echo "Unknown controller!" $1
 	;;
 esac
 
