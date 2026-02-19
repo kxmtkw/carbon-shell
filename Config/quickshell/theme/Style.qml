@@ -14,7 +14,7 @@ Singleton
 
 	property real roundLesser:        dpi(40);
 	property real roundLess:          dpi(80);
-	property real round:              dpi(160);
+	property real round:              dpi(140);
 	property real roundMore:          dpi(260);
 
 
