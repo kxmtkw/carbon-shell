@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # Util to increase/decrease the brightness smoothly
 
@@ -18,7 +18,7 @@ max_steps=40
 
 
 display_help() {
-    echo "Usage: [increase/decrease/set] value\n"
+    echo "Usage: [option] value"
     echo "  increase x : increase by x percentage"
     echo "  decrease x : decrease by x percentage"
     echo "  set x      : set to x percentage"
@@ -26,21 +26,22 @@ display_help() {
     echo "  restore    : restore the last saved brighteness"
 }
 
-check_if_value_passed() {
-    if [[ -z "$2" ]]; then
-        echo "No value provided."
-        exit 1
-    fi
-}
-
 if [[ -z "$1" ]]; then
     display_help
     exit 2
 fi
 
+
 mode="$1"
 amount="$2"
-echo "$amount"
+
+check_if_value_passed() {
+    if [[ "$amount" = "" ]]; then
+        echo "No value provided."
+        exit 1
+    fi
+}
+
 
 current_brightness=$(brightnessctl g)
 max_brightness=$(brightnessctl m)
