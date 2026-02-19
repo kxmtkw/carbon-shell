@@ -1,4 +1,8 @@
 
+# PATH
+export PATH="$PATH:$HOME/.local/bin:$HOME/.carbon/.venv/bin"
+
+# Carbon
 source ~/.carbon/env
 
 # ENV vars
