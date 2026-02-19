@@ -1,9 +1,11 @@
 
 ## Todo
 
-#### Notification
+#### Notification (DONE)
 
 Either configure dunst or build your own notification daemon. The latter is only needed if i want actions in my notifs which are'nt supported by dunst.
+
+> Dunst added for now, i think it would suffice
 
 #### Power Management
 
@@ -87,3 +89,8 @@ Runner needs more modes:
 - Search(?): Search the web
 - Custom(!): Built-in runner commands (these should also be with $PATH entries)
 - History(%): Last executed commands (thes should also be with $PATH entries)
+
+#### Utils
+
+Add utils/ and add stuff like brightness.
+- Install them to ~/.carbon/bin or ~/.carbon/.venv/bin
