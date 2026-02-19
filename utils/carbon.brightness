@@ -1,0 +1,111 @@
+#!/bin/sh
+
+# Util to increase/decrease the brightness smoothly
+
+# Argument types
+# increase x - increase by x percentage
+# decrease x - decrease by x percentage
+# set x      - set to x percentage
+
+
+# Configuration
+
+steps_delay=0.02
+# delay between each step
+min_steps=10
+max_steps=40
+# so we don't increase the already high inefficiency
+
+
+display_help() {
+    echo "Usage: [increase/decrease/set] value\n"
+    echo "  increase x : increase by x percentage"
+    echo "  decrease x : decrease by x percentage"
+    echo "  set x      : set to x percentage"
+    echo "  save       : save the current brightness"
+    echo "  restore    : restore the last saved brighteness"
+}
+
+check_if_value_passed() {
+    if [[ -z "$2" ]]; then
+        echo "No value provided."
+        exit 1
+    fi
+}
+
+if [[ -z "$1" ]]; then
+    display_help
+    exit 2
+fi
+
+mode="$1"
+amount="$2"
+echo "$amount"
+
+current_brightness=$(brightnessctl g)
+max_brightness=$(brightnessctl m)
+
+current_percentage=$(( current_brightness * 100 / max_brightness ))
+
+target=0
+
+
+case "$1" in
+    increase)
+        check_if_value_passed
+        target=$(( current_percentage + amount ))
+        ;;
+    decrease)
+        check_if_value_passed
+        target=$(( current_percentage - amount ))
+        ;;
+    set)
+        check_if_value_passed
+        target=$(( amount ))
+        ;;
+    save)
+        echo "$current_percentage" > /tmp/carbon_last_brightness
+        exit 0
+        ;;
+    restore)
+        target=$(< /tmp/carbon_last_brightness)
+
+        if (( target == current_percentage )); then
+            exit 0
+        fi
+        ;;
+    --help)
+        display_help
+        exit 0
+        ;;
+    *)
+        echo "Can't read the usage?"
+        exit 1
+        ;;
+esac
+
+
+# Clamp target
+(( target < 0 )) && target=0
+(( target > 100 )) && target=100
+
+diff=$(( target - current_percentage ))
+abs_diff=${diff#-}
+
+
+step_count=$abs_diff
+
+(( step_count < min_steps )) && step_count=$min_steps
+(( step_count > max_steps )) && step_count=$max_steps
+
+
+step_size=$(awk "BEGIN {print $diff / $step_count}")
+
+for ((i=1; i<=step_count; i++)); do
+
+    val=$(awk "BEGIN {print $current_percentage + $step_size * $i}")
+    brightnessctl set "${val}%"
+    sleep "$steps_delay"
+done
+
+brightnessctl set "${target}%"
