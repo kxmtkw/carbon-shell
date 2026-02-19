@@ -1,6 +1,6 @@
 
 # PATH
-export PATH="$PATH:$HOME/.local/bin:$HOME/.carbon/.venv/bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/.carbon/bin"
 
 # Carbon
 source ~/.carbon/env

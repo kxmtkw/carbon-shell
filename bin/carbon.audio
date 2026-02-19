@@ -1,0 +1,58 @@
+#!/usr/bin/env sh
+
+# Util to control the audio
+
+display_help() {
+    echo "Usage: [option] value"
+    echo "  increase x    : increase by x percentage"
+    echo "  decrease x    : decrease by x percentage"
+    echo "  set x         : set to x percentage"
+    echo "  toggle-mute   : toggle mute"
+    echo "  toggle-mic    : toggle input"
+}
+
+if [[ -z "$1" ]]; then
+    display_help
+    exit 2
+fi
+
+
+mode="$1"
+amount="$2"
+
+check_if_value_passed() {
+    if [[ "$amount" = "" ]]; then
+        echo "No value provided."
+        exit 1
+    fi
+}
+
+
+case "$1" in
+    increase)
+        check_if_value_passed
+        wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ $amount%+
+        ;;
+    decrease)
+        check_if_value_passed
+        wpctl set-volume @DEFAULT_AUDIO_SINK@ $amount%-
+        ;;
+    set)
+        check_if_value_passed
+        wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ $amount
+        ;;
+    toggle-mute)
+        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+        ;;
+    toggle-mic)
+        wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+        ;;
+    --help)
+        display_help
+        exit 0
+        ;;
+    *)
+        echo "Can't read the usage?"
+        exit 1
+        ;;
+esac
