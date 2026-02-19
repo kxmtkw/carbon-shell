@@ -16,7 +16,7 @@ class PlayerController:
 
     def __init__(self) -> None:
         self.rofi = RofiShell(main_rasi)
-        self.current_title: str = ""
+        self.current_title: str = None
 
 
     def launch(self):
@@ -24,6 +24,8 @@ class PlayerController:
         while True:
         
             self.status = self.is_update_needed()
+
+            print(self.status)
 
             if self.status == "NoPlayers":
                 self.trigger_display(" ", "No Players Found.")
@@ -103,6 +105,7 @@ class PlayerController:
         if seleted == self.options[0]:
             RofiShell.Run("playerctl play-pause")
             self.get_info()
+            time.sleep(0.1)
         elif seleted == self.options[1]:
             RofiShell.Run("playerctl next")
             while self.is_update_needed() != "Updates":
