@@ -42,25 +42,25 @@ case $1 in
 		rofi -show window -theme ~/.config/rofi/windows.rasi
 	;;
 	"power")
-		$CARBONPY ~/.carbon/controllers/impl/power.py
+		$CARBONPY ~/.carbon/controllers/power.py
 	;;
 	"battery") 
-		$CARBONPY ~/.carbon/controllers/impl/battery.py
+		$CARBONPY ~/.carbon/controllers/battery.py
 	;;
 	"screenshot") 
-		$CARBONPY ~/.carbon/controllers/impl/screenshot.py
+		$CARBONPY ~/.carbon/controllers/screenshot.py
 	;;
 	"wifi") 
-		$CARBONPY ~/.carbon/controllers/impl/wifi.py
+		$CARBONPY ~/.carbon/controllers/wifi.py
 	;;
 	"run") 
-		$CARBONPY ~/.carbon/controllers/impl/run.py
+		$CARBONPY ~/.carbon/controllers/run.py
 	;;
 	"clipboard") 
 		cliphist list | rofi -dmenu -theme ~/.config/rofi/clipboard.rasi -p 'Clipboard' | cliphist decode | wl-copy
 	;;
 	"player") 
-		$CARBONPY ~/.carbon/controllers/impl/player.py
+		$CARBONPY ~/.carbon/controllers/player.py
 	;;
 	*)
 		notify-send "Unknown controller!" $1
