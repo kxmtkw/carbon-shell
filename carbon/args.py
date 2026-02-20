@@ -4,7 +4,6 @@ def buildParser() -> argparse.ArgumentParser:
 	
 	parser = argparse.ArgumentParser(
 		prog="carbon",
-		description="Carbon Shell — because theming your system is apparently a personality trait.",
 		formatter_class=argparse.RawTextHelpFormatter
 	)
 
