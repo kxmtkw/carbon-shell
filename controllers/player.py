@@ -34,7 +34,7 @@ class PlayerController:
                 pass
 
             elif self.status == "Updates":
-                self.get_info()
+                self.update_info()
                 self.trigger_main(self.name, self.options)
 
             # listen for rofi if it returned
@@ -77,7 +77,7 @@ class PlayerController:
         return "Updates"
 
 
-    def get_info(self):
+    def update_info(self):
 
         self.title = RofiShell.Run("playerctl metadata xesam:title")
         self.artist = RofiShell.Run("playerctl metadata xesam:artist")
@@ -104,18 +104,27 @@ class PlayerController:
         
         if seleted == self.options[0]:
             RofiShell.Run("playerctl play-pause")
-            self.get_info()
+            self.update_info()
             time.sleep(0.1)
+
         elif seleted == self.options[1]:
             RofiShell.Run("playerctl next")
+            self.trigger_display(" ", "Changing :P")
             while self.is_update_needed() != "Updates":
+                time.sleep(0.1)
                 continue
-            self.get_info()
+            self.update_info()
+            self.rofi.close()
+
         elif seleted == self.options[2]:
             RofiShell.Run("playerctl previous")
+            self.trigger_display(" ", "Changing :P")
             while self.is_update_needed() != "Updates":
+                time.sleep(0.1)
                 continue
-            self.get_info()
+            self.update_info()
+            self.rofi.close()
+
         elif seleted == self.options[3]:
             RofiShell.Run("playerctl stop")
         
