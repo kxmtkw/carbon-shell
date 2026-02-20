@@ -19,7 +19,7 @@ window
     anchor:                      southwest;
     fullscreen:                  false;
     width:                       500px;
-    height:                      600px;
+    height:                      550px;
     x-offset:                    0px;
     y-offset:                    0px;
 
