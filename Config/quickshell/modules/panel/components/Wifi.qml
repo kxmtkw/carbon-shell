@@ -23,7 +23,7 @@ WrapperRectangle
 	{
 		id: power_menu
 		running: false
-		command: ["sh", "-c", "~/.carbon/controllers/launch.sh wifi"]
+		command: ["sh", "-c", "carbon.controller wifi"]
 	}
 
 	MouseArea
