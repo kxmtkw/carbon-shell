@@ -1,107 +1,120 @@
 from pathlib import Path
 import subprocess, shlex
-import os, time
+import os
 
 from lib.rofi import RofiShell
 
 
-end = 0
-start = time.perf_counter()
-
-def timed():
-	global end
-	global start
-	end = time.perf_counter()
-	print(end - start)
-	start = end 
-
 class RunPrompt():
 	
+
 	def __init__(self):
 		self.rofi = RofiShell("~/.config/rofi/run/main.rasi")
+		self.options: list[str] = self.load_entries()
 
-		self.prompt = "Run ::"
-		self.mesg = ""
+
+	def load_entries(self) -> list[str]:
+
+		print("Loading entries for run...")
+
+		options = []
+		options.extend(self.get_binaries())
 		
+		print("All entries loaded.")
+
+		return options
+
+
+	def get_binaries(self) -> list[str]:
+
 		PATH = os.environ.get("PATH")
 
 		if not PATH:
-			self.show_error("No $PATH env var found!")
+			self.show_error("$PATH not defined! Cannot parse system binaries.")
 			exit(1)
-		else:
-			dirs = [Path(s) for s in PATH.split(":")]
-			dirs.reverse()
 
-		self.options = []
-		self.history = set(self.load_history())
+		dirs = [Path(s) for s in PATH.split(":")]
+		dirs.reverse()
 
-		
+		binaries = []
+
 		for d in dirs:
 			
 			if not d.exists(): continue
 			if not d.is_dir(): continue
 
 			for binary in d.iterdir():
-				if binary.name in self.history:
-					self.history.remove(binary.name)
-					
-				self.options.append(f"  {binary.name}")
+				binaries.append(binary.name)
 
-		self.options.extend([f"  {item}" for item in self.history])
+		binaries.sort()
+
+		print("Loaded binaries.")
+
+		return binaries
 
 
-	def load_history(self) -> list[str]:
+	def get_history(self) -> list[str]:
+		pass 
 
-		history_file = Path("~/.carbon/cache/run_history.txt").expanduser()
+	
+	def show_error(self, msg: str):
 
-		if not history_file.exists(): return []
+		self.rofi.updateTheme("~/.config/rofi/run/error.rasi")
 
-		with open(history_file, "r") as file:
-			history = file.read()
+		self.rofi.display(
+			mode= RofiShell.Mode.dmenu,
+			prompt=msg
+		)
 
-		return history.splitlines()
-		 
-
-	def add_to_history(self, cmd: str):
-
-		if cmd in self.history:
-			return
-		
-		history_file = Path("~/.carbon/cache/run_history.txt").expanduser()
-
-		if not history_file.exists():
-			history_file.touch()
-
-		with open(history_file, "a") as file:
-			file.write(cmd+"\n")
+		self.rofi.wait()
 
 
 	def launch(self):
 
-		selected: str = self.rofi.display(
-			self.prompt,
-			self.mesg,
-			self.options
+		self.rofi.display(
+			mode= RofiShell.Mode.dmenu,
+			prompt="Run ::",
+			options=self.options
 		)
+		
+		selected = self.rofi.wait()
 
-		if not selected: return
+		if not selected: exit()
+
+		print(f"Selected: {selected}")
 
 		self.parse(selected)
 
-
+	
 	def parse(self, selected: str):
 		
-		cmd = selected.encode("ascii", "ignore").decode()
-		self.exec(cmd)
+		cmd = selected.strip()
 
-		
-	def exec(self, cmd: str):
+		mod = selected[0]
+		modded_cmd = selected[1:]
+
+		match mod:
+			case "$":
+				self.execute_shell(modded_cmd)
+				return
+			
+
+		self.execute_subprocess(cmd)
+
+
+	def execute_subprocess(self, cmd: str):
+
 		try:
-			subprocess.run(
-				cmd,
+			cmd_list = shlex.split(cmd)
+		except ValueError as e:
+			self.show_error(f"Syntax Error: {e}")
+			return
+
+		try:
+			subprocess.Popen(
+				cmd_list,
 				stdin=subprocess.PIPE,
-				stdout=subprocess.PIPE,
-				shell=True
+				stdout=subprocess.PIPE
 			)
 		except FileNotFoundError:
 			self.show_error(f"Command not found: {cmd}")
@@ -110,21 +123,17 @@ class RunPrompt():
 			self.show_error("Insufficient Permissions!")
 			return
 
-		self.add_to_history(cmd)
 
-	def show_error(self, msg: str):
+	def execute_shell(self, cmd: str):
 
-		self.rofi.updateTheme("~/.config/rofi/run/error.rasi")
-
-		self.rofi.display(
-			msg,
-			"",
-			[]
+		subprocess.Popen(
+			cmd,
+			stdin=subprocess.PIPE,
+			stdout=subprocess.PIPE,
+			shell=True
 		)
 
 
 if __name__ == "__main__":
-	timed()
 	c = RunPrompt()
-	timed()
 	c.launch()
