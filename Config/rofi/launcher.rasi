@@ -18,6 +18,15 @@ configuration
     drun-categories: "";
 	drun-match-fields: "name,generic,exec,categories,keywords";
 	drun-display-format: "{name}  -  <span weight='regular' size='small'>{comment}</span>";
+    drun-show-actions: false;
+	drun-url-launcher: "xdg-open";
+	drun-use-desktop-cache: true;
+	drun-reload-desktop-cache: true;
+    
+	drun {
+		parse-user:   true;
+		parse-system: true;
+    }
 
     drun {
 		parse-user:   true;
