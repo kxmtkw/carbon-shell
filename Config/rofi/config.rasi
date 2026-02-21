@@ -21,17 +21,6 @@ configuration {
 	parse-hosts: true;
 	parse-known-hosts: true;
 
-	drun-categories: "";
-	drun-match-fields: "name,generic,exec,categories,keywords";
-	drun-display-format: "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
-	drun-show-actions: false;
-	drun-url-launcher: "xdg-open";
-	drun-use-desktop-cache: false;
-	drun-reload-desktop-cache: false;
-	drun {
-		parse-user:   true;
-		parse-system: true;
-    }
 
 	run-command: "{cmd}";
 	run-list-command: "";
@@ -70,7 +59,7 @@ configuration {
 	/*---------- Misc setting ----------*/
 	terminal: "rofi-sensible-terminal";
 	font: "Mono 12";
-	sort: false;
+	sort: true;
 	threads: 0;
 	click-to-exit: true;
 /*	ignored-prefixes: "";*/

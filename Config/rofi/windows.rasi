@@ -7,7 +7,7 @@ configuration
     window-match-fields: "title,class,role,name,desktop";
 	window-command: "wmctrl -i -R {window}";
 	window-format: "{c}  ::  {t:50}";
-	window-thumbnail: false;
+	window-thumbnail: true;
 
     hover-select: true;
     me-select-entry: "";
