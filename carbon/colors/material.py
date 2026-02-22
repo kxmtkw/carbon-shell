@@ -25,10 +25,10 @@ class MaterialColors:
 
 
     class Variant:
-        ash      = (0.1, material.Variant.VIBRANT)
-        coal     = (0.2, material.Variant.MONOCHROME)
-        graphite = (0.2, material.Variant.TONALSPOT)
-        diamond  = (0.6, material.Variant.VIBRANT)
+        ash      = material.Variant.TONALSPOT
+        coal     = material.Variant.MONOCHROME
+        graphite = material.Variant.TONALSPOT
+        diamond  = material.Variant.FRUITSALAD
 
 
     def __init__(self):
@@ -43,12 +43,12 @@ class MaterialColors:
         
 
 
-    def generate_from_image(self, image: str, variant: tuple):
+    def generate_from_image(self, image: str, contrast: float, variant: str):
 
         if not Path(image).exists():
             CarbonError(f"Image not found: {image}").halt()
 
-        theme = material.theme_from_image(Image.open(image), variant[0], variant[1])
+        theme = material.theme_from_image(Image.open(image), contrast, variant)
 
         self.darkScheme = theme.schemes.dark
         self.lightScheme = theme.schemes.light
@@ -57,9 +57,9 @@ class MaterialColors:
         self.lightMapping = self.make_mapping(self.lightScheme)
 
 
-    def generate_from_color(self, color: str, variant: tuple):
+    def generate_from_color(self, color: str, contrast: float, variant: tuple):
 
-        theme = material.theme_from_color(color, variant[0], variant[1])
+        theme = material.theme_from_color(color, contrast, variant)
 
         self.darkScheme = theme.schemes.dark
         self.lightScheme = theme.schemes.light
