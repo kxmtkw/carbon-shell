@@ -16,10 +16,10 @@ def main():
             print("Uninstall unsupported")
 
         case "colorify":
-            colorify(args.theme, args.variant, args.image, args.hex)
+            colorify(args.theme, args.variant, args.image, args.hex, args.contrast)
 
         case "switch":
             switch_theme(args.theme)
 
         case "wall":
-            set_wallpaper(args.theme, args.variant, args.image)
+            set_wallpaper(args.theme, args.variant, args.image, args.contrast)

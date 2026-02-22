@@ -19,6 +19,7 @@ def buildParser() -> argparse.ArgumentParser:
 	source_group = colorify.add_mutually_exclusive_group(required=True)
 	source_group.add_argument("--img", dest="image", help="Source image")
 	source_group.add_argument("--hex", dest="hex", help="Source hex color")
+	source_group.add_argument("--contrast", dest="contrast", help="Theme contrast", type=float)
 	colorify.add_argument(
 		"variant",
 		choices=["ash", "coal", "graphite", "diamond"],
@@ -36,6 +37,7 @@ def buildParser() -> argparse.ArgumentParser:
 	)
 	wall.add_argument("image", help="Path to Image.")
 	wall.add_argument("theme", choices=["dark", "light"], help="Theme mode")
+	wall.add_argument("--contrast", dest="contrast", help="Theme contrast", type=float)
 	wall.add_argument(
 		"variant",
 		choices=["ash", "coal", "graphite", "diamond"],

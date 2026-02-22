@@ -73,10 +73,12 @@ def colorify(
     variant: str,
     img: str | None = None,
     hex: str | None = None,
+    contrast: float | None = None,
     ):
 
-    theme_variant: tuple[float, str]
-
+    if contrast is None:
+        contrast = 0.25
+        
     match variant:
         case "ash":
             theme_variant = MaterialColors.Variant.ash
@@ -90,9 +92,9 @@ def colorify(
             theme_variant = MaterialColors.Variant.graphite
 
     colors = MaterialColors()
-
+    
     if img:
-        colors.generate_from_image(img, theme_variant)
+        colors.generate_from_image(img, contrast, theme_variant)
 
         if theme == "light":
             update_colors(colors.lightMapping)
@@ -102,7 +104,7 @@ def colorify(
             CarbonError().throw("Invalid theme!").halt()
 
     elif hex:
-        colors.generate_from_color(hex, theme_variant)
+        colors.generate_from_color(hex, contrast, theme_variant)
 
         if theme == "light":
             update_colors(colors.lightMapping)
@@ -155,7 +157,8 @@ def switch_theme(color: Literal["dark", "light"]):
 def set_wallpaper(
     theme: Literal["dark", "light"],
     variant: str,
-    img: str 
+    img: str,
+    contrast: float | None
     ):
 
     img_path = Path(img).expanduser()
@@ -168,4 +171,4 @@ def set_wallpaper(
     if output.returncode != 0:
         CarbonError(f"Failed to change wallpaper :: {output.stderr}").halt()
 
-    colorify(theme, variant, img)
+    colorify(theme, variant, img, None, contrast)
