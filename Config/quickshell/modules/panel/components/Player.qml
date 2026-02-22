@@ -47,6 +47,29 @@ WrapperRectangle {
 			font.family:    Theme.Font.mainFont
 			font.pixelSize: Theme.Style.dpi(300)
 			color:          Theme.Color._surfaceVariant
+
+
+			ColorAnimation on color {
+				id: music_playing_animation
+				from: panelPlayerIcon.color
+				to: Theme.Color._primary
+				duration: 500 
+			}
+
+			ColorAnimation on color {
+				id: music_paused_animation
+				from: panelPlayerIcon.color
+				to: Theme.Color._tertiary
+				duration: 500
+			}
+
+			ColorAnimation on color {
+				id: music_stopped_animation
+				from: panelPlayerIcon.color
+				to: Theme.Color._surfaceVariant
+				duration: 500 
+			}
+
 		}
 
 
@@ -65,6 +88,7 @@ WrapperRectangle {
 	}
 
 
+
     Process {
         id: icon_updater
         command: ["sh", "-c", "playerctl status"]
@@ -74,13 +98,13 @@ WrapperRectangle {
                 var out = text.trim()
 				
                 if (out == "Playing") {
-                    panelPlayerIcon.color = Theme.Color._primary
+                    music_playing_animation.running = true
                 }
                 else if (out == "Paused") {
-                    panelPlayerIcon.color = Theme.Color._tertiary
+                    music_paused_animation.running = true
                 }
                 else {
-                    panelPlayerIcon.color = Theme.Color._surfaceVariant
+                    music_stopped_animation.running = true
                 }
             }
         }
