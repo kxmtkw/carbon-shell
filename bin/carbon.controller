@@ -5,7 +5,7 @@
 display_help() {
     echo "Usage: [name]"
     echo Supporter controllers:
-	echo launcher windows power battery screenshot wifi run clipboard player
+	echo launcher windows power battery screenshot wifi run clipboard player theme
 }
 
 if [[ -z $1 ]]; then
@@ -61,6 +61,9 @@ case $1 in
 	;;
 	"player") 
 		$CARBONPY ~/.carbon/controllers/player.py
+	;;
+	"theme") 
+		$CARBONPY ~/.carbon/controllers/theme.py
 	;;
 	*)
 		notify-send "Unknown controller!" $1
