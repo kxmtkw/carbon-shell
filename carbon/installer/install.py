@@ -59,11 +59,15 @@ def installCarbon():
     cache.mkdir(exist_ok=True)
     Color.Print(f"Created cache :: {cache}", Color.green)
 
+    carbon_path = Path("~/.carbon").expanduser()
+
     for name, details  in settings.get().items():
 
         item_settings = SettingsLoader(details)
 
-        link(Path(item_settings.get("src")), Path(item_settings.get("dest")))
+        src = carbon_path.joinpath(item_settings.get("src"))
+        dest = Path(item_settings.get("dest")).expanduser()
+        link(src, dest)
 
         if name == "hypr":
             subprocess.run("hyprctl reload", shell=True, capture_output=True)
