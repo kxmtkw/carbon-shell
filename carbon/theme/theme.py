@@ -71,22 +71,20 @@ def update_colors(colors: dict[str, str]):
 
 
 
-
 class Theme:
 
+    ## update the wallpaper state in carbon.state
 
-    def __init__(self):
-        pass
-
+    output = subprocess.run("swww query | grep -oP '(?<=image: ).*'", shell=True, capture_output=True, text=True)
+    CarbonState.set("theme_wallpaper", output.stdout.strip())
 
     @classmethod
     def change_color_theme(
         cls,
         theme: Literal["dark", "light"],
         variant: str,
+        img: str,
         *,
-        img: str | None = None,
-        hex: str | None = None,
         contrast: float | None = None,
         ):
 
@@ -107,23 +105,14 @@ class Theme:
 
         colors = MaterialColors()
         
-        if img:
-            colors.generate_from_image(img, contrast, theme_variant)
+        colors.generate_from_image(img, contrast, theme_variant)
 
-            if theme == "light":
-                update_colors(colors.lightMapping)
-            elif theme == "dark":
-                update_colors(colors.darkMapping)
-            else:
-                CarbonError().throw("Invalid theme!").halt()
-
-        elif hex:
-            colors.generate_from_color(hex, contrast, theme_variant)
-
-            if theme == "light":
-                update_colors(colors.lightMapping)
-            else:
-                update_colors(colors.darkMapping)
+        if theme == "light":
+            update_colors(colors.lightMapping)
+        elif theme == "dark":
+            update_colors(colors.darkMapping)
+        else:
+            CarbonError().throw("Invalid theme!").halt()
 
 
         cache = Path("~/.carbon/cache").expanduser()
@@ -138,9 +127,9 @@ class Theme:
             json.dump(colors.lightMapping, file, indent=4)
 
 
-        CarbonState.set("theme_type", "hex" if hex else "img")
-        CarbonState.set("theme_seed", hex if hex else img)
-        CarbonState.set("theme_contrast", contrast)        
+        CarbonState.set("theme_wallpaper", str(img))
+        CarbonState.set("theme_contrast", contrast)
+        CarbonState.set("theme_variant", variant)           
 
 
     @classmethod
