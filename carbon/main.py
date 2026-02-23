@@ -1,7 +1,7 @@
 from carbon.args import parseArgs
 
 from carbon.installer import installCarbon
-from carbon.colors import colorify, set_wallpaper, switch_theme
+from carbon.theme import Theme
 
 def main():
 
@@ -15,11 +15,15 @@ def main():
         case "uninstall":
             print("Uninstall unsupported")
 
-        case "colorify":
-            colorify(args.theme, args.variant, args.image, args.hex, args.contrast)
+        case "update-theme":
+            Theme.change_color_theme(args.theme, args.variant, img=args.image, hex=args.hex, contrast=args.contrast)
 
-        case "switch":
-            switch_theme(args.theme)
+        case "switch-mode":
+            Theme.switch_theme_mode(args.mode)
 
-        case "wall":
-            set_wallpaper(args.theme, args.variant, args.image, args.contrast)
+        case "update-wallpaper":
+            Theme.set_wallpaper(args.image)
+
+        case "update-wallpaper-theme":
+            Theme.set_wallpaper(args.image)
+            Theme.change_color_theme(args.theme, args.variant, img=args.image, contrast=args.contrast)

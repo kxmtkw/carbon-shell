@@ -13,26 +13,33 @@ def buildParser() -> argparse.ArgumentParser:
 	subparsers.add_parser("install", help="Install Carbon")
 	subparsers.add_parser("uninstall", help="Uninstall Carbon")
 
-	# colorify
-	colorify = subparsers.add_parser("colorify", help="Set color theme")
-	colorify.add_argument("theme", choices=["dark", "light"], help="Theme mode")
-	source_group = colorify.add_mutually_exclusive_group(required=True)
+	# themeupdater
+	themeupdater = subparsers.add_parser("update-theme", help="Set color theme")
+	themeupdater.add_argument("theme", choices=["dark", "light"], help="Theme mode")
+	source_group = themeupdater.add_mutually_exclusive_group(required=True)
 	source_group.add_argument("--img", dest="image", help="Source image")
 	source_group.add_argument("--hex", dest="hex", help="Source hex color")
-	source_group.add_argument("--contrast", dest="contrast", help="Theme contrast", type=float)
-	colorify.add_argument(
+	themeupdater.add_argument("--contrast", dest="contrast", help="Theme contrast", type=float)
+	themeupdater.add_argument(
 		"variant",
 		choices=["ash", "coal", "graphite", "diamond"],
 		help="Theme variant"
 	)
 
 	# switch
-	theme =subparsers.add_parser("switch", help="Switch between light and dark mode")
-	theme.add_argument("theme", choices=["light", "dark"])
+	mode =subparsers.add_parser("switch-mode", help="Switch between light and dark mode")
+	mode.add_argument("mode", choices=["light", "dark"])
+
+	# wall no colors
+	wallc = subparsers.add_parser(
+		"update-wallpaper",
+		help="Set wallpaper (via swww)"
+	)
+	wallc.add_argument("image", help="Path to Image.")
 
 	# wall
 	wall = subparsers.add_parser(
-		"wall",
+		"update-wallpaper-theme",
 		help="Set wallpaper (via swww) and change the color theme"
 	)
 	wall.add_argument("image", help="Path to Image.")
@@ -43,7 +50,6 @@ def buildParser() -> argparse.ArgumentParser:
 		choices=["ash", "coal", "graphite", "diamond"],
 		help="Theme variant"
 	)
-	wall.add_argument("--cache", action="store_true")
 
 	return parser
 
