@@ -21,6 +21,7 @@ class SettingsLoader():
         with open(self.filepath, "rb") as file:
             self.settings = tomllib.load(file)
 
+
     def get(self, path: str | None = None):
 
         if not path:

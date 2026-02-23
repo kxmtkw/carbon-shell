@@ -3,10 +3,8 @@ from pathlib import Path
 import json
 import shutil
 
-from carbon.helpers import Color, CarbonError, prompt
-from carbon.settings import SettingsLoader
+from carbon.helpers import Color, CarbonError, prompt, SettingsLoader
 
-from carbon.colors import colorify
 
 settings = SettingsLoader("~/.carbon/settings/configs.toml")
 
@@ -60,8 +58,6 @@ def installCarbon():
     cache = Path("~/.carbon/cache").expanduser()
     cache.mkdir(exist_ok=True)
     Color.Print(f"Created cache :: {cache}", Color.green)
-
-    colorify('dark', "graphite", None, "#84d0d9") # default theme, will move this later
 
     for name, details  in settings.get().items():
 

@@ -1,1 +1,0 @@
-from .color import colorify, set_wallpaper, switch_theme

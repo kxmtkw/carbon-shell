@@ -1,15 +1,3 @@
-from typing import Self
-
-
-class CarbonError():
-
-    def __init__(self, msg: str) -> None:
-        self.msg = msg 
-        Color.Print("[Error]", Color.red)
-        print(msg)
-        
-    def halt(self):
-        exit()
 
 
 class Color:
@@ -39,19 +27,3 @@ class Color:
         print(f"{color}{msg}{Color.reset}")
 
 
-def prompt(msg: str, options: list[str]) -> str:
-
-    print(msg)
-    print(f"Choose from: {tuple(options)}")
-   
-
-    for i in range(3):
-        chosen = input(">> ").lower()
-
-        if chosen not in options:
-            print("Invalid option!")
-            continue
-
-        return chosen 
-    
-    CarbonError("Too many retries").halt()
