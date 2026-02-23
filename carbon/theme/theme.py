@@ -11,14 +11,17 @@ from . import configs
 from carbon.state import CarbonState
 
 settings = SettingsLoader("~/.carbon/settings/colors.toml")
+carbon_path = Path("~/.carbon").expanduser()
 
 def write_theme(filepath: str, theme: str):
-    with open(filepath, "w") as file:
+    abspath = carbon_path.joinpath(filepath)
+    with open(abspath, "w") as file:
         file.write(theme)
 
 
 def write_dunst_theme(dunstrc: str, theme: str):
-    with open(dunstrc, "r") as file:
+    abspath = carbon_path.joinpath(dunstrc)
+    with open(abspath, "r") as file:
         contents = file.read()
 
     breakpoint = "CARBON_BREAK_POINT"
@@ -27,7 +30,7 @@ def write_dunst_theme(dunstrc: str, theme: str):
 
     updated = f"{parts[0]}{breakpoint}\n{theme}"
 
-    with open(dunstrc, "w") as file:
+    with open(abspath, "w") as file:
         file.write(updated)
     
 
