@@ -27,7 +27,7 @@ This would be a little more complicated to make than the wifi one since i need t
 
 I want a single config file for the whole of carbon. And moreover i want the shell to be configured from a settings menu (maybe a gui with qt even or just winging it with rofi). I should be ble to configure themes, bar position, defualt terminals, workspace count etc
 
-#### Theming
+#### Theming (DONE)
 
 Central menu for theming carbon
 
@@ -73,7 +73,7 @@ Maybe add a small rofi calculator?
 
 A small pacman wrapper for basic tasks like: see all packages, all user packages, update everything, install a new package, uninstall a package and stuff like that.
 
-#### A sudo runner?
+#### A sudo runner? (CANCELLED)
 
 no, build a askpass
 
@@ -90,7 +90,12 @@ Runner needs more modes:
 - Custom(!): Built-in runner commands (these should also be with $PATH entries)
 - History(%): Last executed commands (thes should also be with $PATH entries)
 
-#### Utils
+#### Utils (DONE)
 
 Add utils/ and add stuff like brightness.
 - Install them to ~/.carbon/bin or ~/.carbon/.venv/bin
+
+#### Redesign the shell
+
+All controllers need to be redesigned.
+The bar needs to be redesigned.
