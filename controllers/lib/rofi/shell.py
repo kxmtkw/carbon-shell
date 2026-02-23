@@ -132,4 +132,9 @@ class RofiShell:
     def markUrgent(cls, option: str) -> str:
         urgent = "\x00urgent\x1ftrue"
         return f"{option}{urgent}"
+    
+    @classmethod
+    def markWithIcon(cls, option: str, icon: str) -> str:
+        icon_option = f"{option}\x00icon\x1f{icon}"
+        return icon_option
 
