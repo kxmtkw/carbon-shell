@@ -5,10 +5,14 @@ from pathlib import Path
 import sys, time
 from lib.rofi import RofiShell
 
+
+main_rasi = "~/.config/rofi/themer/main.rasi"
+wallpaper_rasi = "~/.config/rofi/themer/wallpaper.rasi"
+
 class ThemePicker():
 	
 	def __init__(self):
-		self.rofi = RofiShell("~/.config/rofi/screenshot.rasi")
+		self.rofi = RofiShell(main_rasi)
 
 		self.image_dir = Path("~/Images").expanduser()
 
@@ -19,11 +23,16 @@ class ThemePicker():
 
 
 	def open_main_options(self):
+		
+		self.rofi.updateTheme(main_rasi)
+
+		current_mode = CarbonState.get("theme_mode", "light", valid_types=(str))
+		is_dark_mode = False if current_mode == "light" else True
 
 		options: list[str] = [
-			"Toggle mode",
-			"Change wallpaper",
-			"Update theme",
+			"  Toggle light mode" if is_dark_mode else "  Toggle dark mode",
+			"󰟾  Change wallpaper",
+			"  Update theme",
 		]
 
 		self.rofi.display(
@@ -37,9 +46,7 @@ class ThemePicker():
 		
 
 		if selected == options[0]:
-			current_mode = CarbonState.get("theme_mode", "light", valid_types=(str))
-			toggled_mode = "dark" if current_mode == "light" else "light"
-			Theme.switch_theme_mode(toggled_mode)
+			Theme.switch_theme_mode("light" if is_dark_mode else "dark")
 
 		elif selected == options[1]:
 			self.open_wallpaper_options()
@@ -50,6 +57,7 @@ class ThemePicker():
 
 	def open_wallpaper_options(self):
 
+		self.rofi.updateTheme(wallpaper_rasi)
 		options = self.get_images()
 
 		self.rofi.display(
@@ -106,9 +114,9 @@ class ThemePicker():
 		images = []
 		for item in self.image_dir.iterdir():
 			if item.is_file():
-				images.append(item.name)
-		
-		images.sort()
+				option = RofiShell.markWithIcon(item.name, item.absolute())
+				images.append(option)
+		print(images)
 		return images
 
 
