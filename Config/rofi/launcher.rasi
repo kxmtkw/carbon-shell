@@ -13,35 +13,21 @@ configuration
     kb-move-char-forward: "";
     kb-mode-next: "Right";
     kb-mode-previous: "Left";
-    kb-cancel: ["MousePrimary", "Escape"];
+    kb-cancel: ["Escape"];
 
     drun-categories: "";
 	drun-match-fields: "name,generic,exec,categories,keywords";
-	drun-display-format: "{name}  -  <span weight='regular' size='small'>{comment}</span>";
+	drun-display-format: "{name}  -->  <span weight='regular' size='small'>{comment}</span>";
     drun-show-actions: false;
 	drun-url-launcher: "xdg-open";
 	drun-use-desktop-cache: true;
 	drun-reload-desktop-cache: true;
     
-	drun {
-		parse-user:   true;
-		parse-system: true;
-    }
 
     drun {
 		parse-user:   true;
 		parse-system: true;
     }
-
-    filebrowser {
-        directory: "~";
-        directories-first: true;
-        sorting-method: "name";
-    }
-
-    run-command: "{cmd}";
-	run-list-command: "";
-	run-shell-command: "{terminal} -e {cmd}";
 }
 
 @import "theme/color.rasi"
@@ -49,21 +35,21 @@ configuration
 @import "theme/fonts.rasi"
 
 window
- {
+{
     transparency:                "real";
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
     width:                       880px;
-    height:                      770px;
+    height:                      724px;
     x-offset:                    0px;
     y-offset:                    0px;
 
     enabled:                     true;
-    margin:                      10px;
+    margin:                      0px;
     border:                      @themeBorderWidth;
     border-color:                @surfaceContainerHighest;
-    border-radius:               @themeBorderRadius;
+    border-radius:               calc(880/32);
     cursor:                      "default";
     background-color:            @backgroundTransparentxAA;
 }
@@ -81,11 +67,11 @@ mainbox
 
 inputbar {
     enabled:                     true;
-    margin:                      60px 50px;
+    margin:                      50px 40px;
     padding:                     10px 30px;
     background-color:            @background;
     text-color:                  @onSurface;
-    border-radius:               @themeBorderRadius;
+    border-radius:               16px;
     orientation:                 horizontal;
     children:                    [ "prompt", "entry", "dummy"];
 }
@@ -104,7 +90,7 @@ entry {
     expand:                      false;
     width:                       620px;
     padding:                     12px 16px;
-    border-radius:               @themeBorderRadius;
+    border-radius:               16px;
     background-color:            inherit;
     text-color:                  inherit;
     cursor:                      text;
