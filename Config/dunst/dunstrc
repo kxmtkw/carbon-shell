@@ -7,12 +7,12 @@ follow = keyboard
 
 ### Geometry ###
 
-width = (400, 600)
+width = 600
 height = (100, 400)
 
 origin = top-right
 
-offset = (10, 10)
+offset = (24, 24)
 scale = 0
 
 ## Style ##
@@ -23,12 +23,12 @@ separator_color = frame
 
 gap_size = 6
 
-padding = 12
-horizontal_padding = 12
+padding = 28
+horizontal_padding = 28
 
 font = Monospace 11
 
-corner_radius = 10
+corner_radius = 20
 
 ## Behavior ## 
 
@@ -49,7 +49,7 @@ line_height = 0
 
 markup = full
 
-format = "<b>%s</b>\n%b"
+format = "<i><b>%s</b></i>\n\n%b"
 
 # Possible values are "left", "center" and "right".
 alignment = center
@@ -150,16 +150,16 @@ max_icon_size = 128
 
 # NOTE: written by carbon shell
 [urgency_low]
-background = "#131318"
-foreground = "#e9e5ed"
-frame_color = "#232228"
+background = "#0f1416"
+foreground = "#e8edf0"
+frame_color = "#343a3c"
 
 [urgency_normal]
-background = "#131318"
-foreground = "#e9e5ed"
-frame_color = "#c6c4dd"
+background = "#0f1416"
+foreground = "#e8edf0"
+frame_color = "#343a3c"
 
 [urgency_critical]
-background = "#131318"
-foreground = "#e9e5ed"
-frame_color = "#c1c1ff"
+background = "#0f1416"
+foreground = "#e8edf0"
+frame_color = "#86d1ea"

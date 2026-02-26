@@ -27,8 +27,15 @@ class Wifi:
 
 	def launch(self):
 		while not self.closed:
-			self.show_main_menu()
-
+			try:
+				self.show_main_menu()
+			except Exception as e:
+				self.trigger_displayer(
+				" ",
+				f"Error: \"{e}\"!"
+				)
+				self.rofi.wait()
+				exit()
 	
 	def make_wifi_entry(self, id: int, net: WifiNetwork) -> str:
 		icon = "󰤥"

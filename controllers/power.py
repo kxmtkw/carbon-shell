@@ -1,6 +1,6 @@
 from lib.rofi import RofiShell
 import time
-
+"#292929aa"
 class PowerMenu():
 	
 	def __init__(self):
@@ -26,7 +26,7 @@ class PowerMenu():
 			options = self.options
 		)
 		selected: str = self.rofi.wait()
-
+		
 		if not selected: return
 		self.exec(selected.strip())
 

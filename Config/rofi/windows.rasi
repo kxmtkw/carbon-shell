@@ -42,8 +42,8 @@ window
     margin:                      0;
     padding:                     0;
     border:                      @themeBorderWidth;
-    border-color:                @outline;
-    border-radius:               @themeBorderRadius;
+    border-color:                @surfaceContainerHighest;
+    border-radius:               calc(760/28);
     cursor:                      "default";
     background-color:            transparent;
 }
@@ -91,7 +91,7 @@ element {
     margin:                      0px;
     padding:                     15px;
     border:                      0px;
-    border-radius:               @themeBorderRadius;
+    border-radius:               calc(16);
     background-color:            @background;
     text-color:                  @onSurface;
     orientation:                 horizontal;

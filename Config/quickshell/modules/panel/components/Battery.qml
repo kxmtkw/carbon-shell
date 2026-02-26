@@ -12,38 +12,44 @@ import qs.theme as Theme
 
 
 
-WrapperRectangle {
+WrapperRectangle 
+{
+    id: panel_battery
+
 	Layout.fillWidth:       true
-	Layout.preferredHeight: Theme.Style.dpi(440)
 	Layout.alignment:       Qt.AlignHCenter
+    implicitHeight: 28
+    color: Theme.Color._background
 
-	margin: Theme.Style.dpi(70)
-	color:  Theme.Color._background
-	radius: Theme.Style.round
+	radius: Theme.Style.getMaterialRadius(width, height, "small")
 
 
-	Process {
-		id: power_menu
-		running: false
-		command: ["sh", "-c", "carbon.controller battery"]
-	}
+    Process 
+    {
+        id: power_menu
+        running: false
+        command: ["sh", "-c", "carbon.controller battery"]
+    }
 
-	MouseArea {
-		Layout.fillHeight: true
+	MouseArea 
+    {
+
+        Layout.fillHeight: true
 		Layout.fillWidth:  true
-
+        
 		hoverEnabled: true
 
-		Text {
-			id:               panelBatteryIcon
-			anchors.centerIn: parent
-			
-			text: " "
+        Text 
+        {
+            id:               panel_battery_icon
+            anchors.centerIn: parent
+            
+            text: " "
 
-			font.family:    Theme.Font.mainFont
-			font.pixelSize: Theme.Style.dpi(300)
-			color:          Theme.Color._onSurface
-		}
+            font.family:    "Iosevka"
+            font.pixelSize: 20
+            color:          Theme.Color._onSurface
+        }
 
 
 		onClicked: {
@@ -51,13 +57,13 @@ WrapperRectangle {
 		}
 		
 		onEntered: {
-			parent.color = Theme.Color._surfaceContainerLow
+			parent.color = Theme.Color._surfaceContainer
 		}
 
 		onExited: {
 			parent.color = Theme.Color._background
 		}
-
+        	
 
 		Timer {
 			id: update_timer
@@ -74,21 +80,20 @@ WrapperRectangle {
 
 			if (!UPower.onBattery) {
 
-				panelBatteryIcon.text = ""
-				panelBatteryIcon.font.pixelSize = Theme.Style.dpi(300)
+				panel_battery_icon.text = ""
 
 				if (value >= 98) {
-					panelBatteryIcon.color = Theme.Color._primary
+					panel_battery_icon.color = Theme.Color._primary
 				}
 				else {
-					panelBatteryIcon.color = Theme.Color._secondary
+					panel_battery_icon.color = Theme.Color._secondary
 				}
 				
 				return
 			}
 
 			var sym
-			panelBatteryIcon.color = Theme.Color._onSurface
+			panel_battery_icon.color = Theme.Color._onSurface
 
 			if (value >= 95) {
 				sym = "󰁹";
@@ -116,19 +121,21 @@ WrapperRectangle {
 			}
 			else if (value >= 15) {
 				sym = "󰁻";
-				panelBatteryIcon.color = Theme.Color._error
+				panel_battery_icon.color = Theme.Color._error
 			}
 			else if (value >= 5) {
 				sym = "󰁺";
-				panelBatteryIcon.color = Theme.Color._error
+				panel_battery_icon.color = Theme.Color._error
 			}
 			else {
 				sym = "󰂎";
-				panelBatteryIcon.color = Theme.Color._error
+				panel_battery_icon.color = Theme.Color._error
 			}
 
-			panelBatteryIcon.text = sym
+			panel_battery_icon.text = sym
 		}
 
 	}
+
+    
 }

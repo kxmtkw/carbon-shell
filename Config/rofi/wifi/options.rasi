@@ -16,7 +16,7 @@ mainbox
 
 inputbar {
     padding:                     15px;
-    border-radius:               0px;
+    border-radius:               16px;
     background-color:            @background;
     text-color:                  @onSurface;
     children:                    [ "dummy", "prompt", "dummy"];
@@ -35,7 +35,7 @@ message {
     enabled:                     true;
     margin:                      20px 30px;
     padding:                     20px;
-    border-radius:               @themeBorderRadius;
+    border-radius:               16px;
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }
