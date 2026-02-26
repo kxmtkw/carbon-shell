@@ -1,4 +1,5 @@
 import Quickshell
+import Quickshell.Io
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Layouts
@@ -7,26 +8,35 @@ import qs.theme as Theme
 
 WrapperRectangle
 {
-	Layout.fillWidth: true
-	Layout.alignment: Qt.AlignCenter 
-	margin: Theme.Style.dpi(80)
-	
-	color:  Theme.Color._surfaceContainer
-	radius: Theme.Style.roundLess
+    id: panel_clock
 
-	SystemClock {
-		id: sysclock
-		precision: SystemClock.Minutes
-	}
+	Layout.fillWidth: true
 	
-	Text {
-		id:    panelClockText
+    margin: 16
+	color:  Theme.Color._surfaceContainer
+	radius: Theme.Style.getMaterialRadius(width, height, "small")
+
+
+	Process
+    {
+		id: panel_clock_proc
+		command: ["date", "+%I%n%M%n%p"]
+		running: true
+		stdout: StdioCollector {
+            onStreamFinished: { panel_clock_text.text = text.trim() }
+		}
+	}
+
+	
+	Text 
+    {
+		id:    panel_clock_text
 		color: Theme.Color._onSurface
-		text:  Qt.formatDateTime(sysclock.date, "hh\nmm\nAP")
+		text:  ""
 
 		horizontalAlignment: Text.AlignHCenter
 
-		font.family:    Theme.Font.fontMain
-		font.pixelSize: Theme.Style.dpi(250)
+		font.family:    "Iosevka"
+		font.pixelSize: 16
 	}
 }

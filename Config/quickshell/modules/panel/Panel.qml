@@ -7,54 +7,53 @@ import QtQuick.Layouts
 import qs.theme as Theme
 import qs.modules.panel.components
 
-PanelWindow {
+PanelWindow 
+{
 
 	id: panel
 
-	anchors {
+	anchors 
+    {
 		top: true
-		left: true
 		bottom: true
+		left: true
 	}		
 
-	margins {
-		right: 	Theme.Style.dpi(0)
-		left: 	Theme.Style.dpi(120)
-		top: 	Theme.Style.dpi(120)
-		bottom: Theme.Style.dpi(120)
+	margins 
+    {
+		right: 	0
+		left: 	10
+		top: 	10
+		bottom: 10
 	}
 
-	implicitWidth: Theme.Style.dpi(740)
+	implicitWidth: 48
 	color:		   Theme.Color._invisible
 	
 
-	WrapperRectangle {	
+	WrapperRectangle 
+    {	
 		anchors.fill: parent
 		color:  Theme.Color._background
-		radius: Theme.Style.round
+		radius: Theme.Style.getMaterialRadius(width, height, "large")
 
-		margin:       Theme.Style.dpi(140)
-		topMargin:    Theme.Style.dpi(220)
-		bottomMargin: Theme.Style.dpi(220)
+		margin:       10
+		topMargin:    24
+		bottomMargin: 24
 
-		ColumnLayout {
-			spacing:         Theme.Style.dpi(180)
-			
-			Arch{}
+		ColumnLayout 
+        {
+			spacing:         16
+
 			Workspaces{}
-			Player{}
-				
 			Item {Layout.fillHeight: true}
-			
-			ColumnLayout {	
-				spacing: Theme.Style.dpi(40)
 
+			ColumnLayout
+			{
 				Battery{}
-				Wifi{}
 			}
 
 			Clock{}
-			Power{}
 		}
 	}
 }

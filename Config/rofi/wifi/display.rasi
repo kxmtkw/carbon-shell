@@ -38,7 +38,7 @@ message {
     enabled:                     true;
     margin:                      20px 30px;
     padding:                     20px 40px;
-    border-radius:               10px;
+    border-radius:               20px;
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }

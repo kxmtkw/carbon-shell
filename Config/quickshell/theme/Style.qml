@@ -1,37 +1,27 @@
-
 pragma Singleton
 
 import QtQuick
-import QtQuick.Window
 import Quickshell
 
 Singleton 
 {
-	function dpi(num) 
-	{
-		return num * (Screen.pixelDensity / 96);
-	}
+	function getMaterialRadius(width, height, shapeSetting) 
+    {
+        const shorter = Math.min(width, height)
 
-	property real roundLesser:        dpi(40);
-	property real roundLess:          dpi(80);
-	property real round:              dpi(140);
-	property real roundMore:          dpi(260);
+        switch (shapeSetting) 
+        {
+            case "none":        return 0
+            case "extra-small": return Math.min(4, shorter / 2)
+            case "small":       return Math.min(8, shorter / 2)
+            case "medium":      return Math.min(12, shorter / 2)
+            case "large":       return Math.min(16, shorter / 2)
+            case "extra-large": return Math.min(28, shorter / 2)
+            case "full":        return shorter / 2
+            default:
+                console.warn("Unknown shape setting:", shapeSetting)
+                return 0
+        }
 
-
-	function brighten(color, factor) 
-	{
-		var r = color.r * 255
-		var g = color.g * 255
-		var b = color.b * 255
-
-		r = Math.min(255, r + (255 - r) * factor)
-		g = Math.min(255, g + (255 - g) * factor)
-		b = Math.min(255, b + (255 - b) * factor)
-
-		return Qt.rgba(r / 255, g / 255, b / 255, color.a)
-	}
-
-
-
+    }
 }
-

@@ -11,34 +11,40 @@ WrapperRectangle
 {
 	Layout.fillWidth: true
 	Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-
-	margin:       Theme.Style.dpi(70)
-	topMargin:    Theme.Style.dpi(200)
-	bottomMargin: Theme.Style.dpi(200)
+	
+	margin: 0
 
 	color:  Theme.Color._surfaceContainer
-	radius: Theme.Style.roundLess
-
+	radius: Theme.Style.getMaterialRadius(width, height, "medium")
 	
-	
-	ColumnLayout {
+	ColumnLayout 
+	{
 		anchors.centerIn: parent
-		spacing: Theme.Style.dpi(140)
+		spacing: 0
 
-		Repeater {
+		Repeater 
+		{
 			model: Hyprland.workspaces
 
 			delegate:
 
-			Rectangle {
+			Rectangle 
+			{
+				Layout.fillWidth: true
 				Layout.alignment: Qt.AlignHCenter
 
-				width:  Theme.Style.dpi(240)
-				height: Theme.Style.dpi(240)
+				width:  16
+				height: 28
 				
-				radius: Theme.Style.roundLesser
-				color:  modelData.focused ? Theme.Color._tertiaryContainer : Theme.Color._background
+				radius: Theme.Style.getMaterialRadius(width, height, "small")
+				color:  modelData.focused ? Theme.Color._secondaryContainer : Theme.Color._surfaceContainer
 
+				Text
+				{
+					anchors.centerIn: parent
+					color: modelData.focused ? Theme.Color._onSecondaryContainer : Theme.Color._surfaceContainer
+					text: modelData.id
+				}
 
 				MouseArea
 				{

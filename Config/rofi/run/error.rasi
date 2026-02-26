@@ -29,7 +29,7 @@ window
     enabled:                     true;
     margin:                      10px;
     border:                      @themeBorderWidth;
-    border-color:                @outline;
+    border-color:                @surfaceContainerHighest;
     border-radius:               @themeBorderRadius;
     cursor:                      "default";
     background-color:            @backgroundTransparentxAA;

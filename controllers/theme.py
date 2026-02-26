@@ -6,8 +6,7 @@ import sys, time
 from lib.rofi import RofiShell
 
 
-main_rasi = "~/.config/rofi/themer/main.rasi"
-wallpaper_rasi = "~/.config/rofi/themer/wallpaper.rasi"
+main_rasi = "~/.config/rofi/themer.rasi"
 
 class ThemePicker():
 	
@@ -57,7 +56,6 @@ class ThemePicker():
 
 	def open_wallpaper_options(self):
 
-		self.rofi.updateTheme(wallpaper_rasi)
 		options = self.get_images()
 
 		self.rofi.display(

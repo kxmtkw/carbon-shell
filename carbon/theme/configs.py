@@ -175,7 +175,7 @@ def update_kitty(s: dict[str, str]):
 
 
 def update_hypr(s: dict[str, str]):
-	outline = s["outline"][1:]
+	outline = s["surfaceVariant"][1:]
 
 	base = (
 		"# NOTE: written by carbon shell\n"
@@ -202,12 +202,12 @@ def update_dunst(s: dict[str, str]):
 [urgency_low]
 background = "{s['background']}"
 foreground = "{s['onSurface']}"
-frame_color = "{s['surfaceContainer']}"
+frame_color = "{s['surfaceContainerHighest']}"
 
 [urgency_normal]
 background = "{s['background']}"
 foreground = "{s['onSurface']}"
-frame_color = "{s['secondary']}"
+frame_color = "{s['surfaceContainerHighest']}"
 
 [urgency_critical]
 background = "{s['background']}"

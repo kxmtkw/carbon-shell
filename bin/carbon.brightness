@@ -50,7 +50,6 @@ current_percentage=$(( current_brightness * 100 / max_brightness ))
 
 target=0
 
-
 case "$1" in
     increase)
         check_if_value_passed
