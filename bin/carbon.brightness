@@ -10,12 +10,13 @@
 
 # Configuration
 
-steps_delay=0.02
+steps_delay=0.01
 # delay between each step
 min_steps=10
 max_steps=40
 # so we don't increase the already high inefficiency
-
+lower_limit=10
+# lower limit of the brightness
 
 display_help() {
     echo "Usage: [option] value"
@@ -86,8 +87,10 @@ esac
 
 
 # Clamp target
-(( target < 0 )) && target=0
+(( target < $lower_limit )) && target=10
 (( target > 100 )) && target=100
+
+
 
 diff=$(( target - current_percentage ))
 abs_diff=${diff#-}
@@ -101,8 +104,10 @@ step_count=$abs_diff
 
 step_size=$(awk "BEGIN {print $diff / $step_count}")
 
-for ((i=1; i<=step_count; i++)); do
+# Updating bar, we do it here so the bar updates by the time the brightness reaches target
+quickshell ipc call brightness update "$target"
 
+for ((i=1; i<=step_count; i++)); do
     val=$(awk "BEGIN {print $current_percentage + $step_size * $i}")
     brightnessctl set "${val}%"
     sleep "$steps_delay"

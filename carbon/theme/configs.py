@@ -1,3 +1,4 @@
+import json
 
 def update_kde(s: dict[str, str]):
 
@@ -232,23 +233,7 @@ def update_rofi(s: dict[str, str]):
 
 
 def update_quickshell(s: dict[str, str]) -> str:
-	base = """
-// NOTE: written by carbon shell
-pragma Singleton
-
-import QtQuick
-import Quickshell
-
-Singleton 
-{
-	property color _invisible					 : "#00000000"\n
-"""
-
-	for name, val in s.items():
-		base += f"  property color _{name:<30}: \"{val}\"\n"
-
-	base += "\n}"
-
+	base = json.dumps(s)
 	return base
 
    
