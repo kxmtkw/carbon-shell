@@ -27,6 +27,14 @@ WrapperRectangle
 		}
 	}
 
+	Timer
+	{
+		id: panel_clock_updater
+		interval: 1000
+		running: true
+		repeat: true
+		onTriggered: {panel_clock_proc.running = true}
+	}
 	
 	Text 
     {
