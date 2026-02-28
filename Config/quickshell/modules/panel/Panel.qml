@@ -46,10 +46,20 @@ PanelWindow
 			spacing:         16
 
 			Workspaces{}
+			
+			ColumnLayout
+			{
+				spacing: 10
+				
+				Brightness{}
+				Audio{}
+			}
+			
+
 			Item {Layout.fillHeight: true}
 
 			ColumnLayout
-			{
+			{	
 				Battery{}
 			}
 
