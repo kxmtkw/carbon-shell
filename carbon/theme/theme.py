@@ -1,4 +1,5 @@
 import subprocess
+import time
 from typing import Literal
 from pathlib import Path
 import json
@@ -64,13 +65,12 @@ def update_colors(colors: dict[str, str]):
                 print(f"Error :: {type}")
                 continue
         
-
         print(f"Updated :: {type}")
 
 
     for cmd in settings.get("commands"):
         print(f"Running cmd: {cmd}")
-        subprocess.run(cmd, shell=True, capture_output=True)
+        out = subprocess.run(cmd, shell=True, capture_output=True)
 
 
 

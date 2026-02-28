@@ -6,7 +6,7 @@ __pycache__
 build/
 
 # Color files
-Color.qml
+color.json
 color.conf
 color.rasi
 color.toml
