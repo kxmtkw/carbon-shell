@@ -19,10 +19,16 @@ class PowerMenu():
 
 
 	def launch(self):
+
+		uptime_msg = self.rofi.Run("uptime -p").strip().capitalize()
+
+		if uptime_msg.count(",") == 2:
+			uptime_msg = "".join(uptime_msg.split(",")[0:2])
+
 		self.rofi.display(
 			mode = RofiShell.Mode.dmenu,
 			prompt = self.rofi.Run("echo \"$(whoami)@$(hostnamectl | awk -F': ' '/Static hostname/ {print $2}')\"").strip(),
-			mesg = self.rofi.Run("uptime -p").strip().capitalize(),
+			mesg = uptime_msg,
 			options = self.options
 		)
 		selected: str = self.rofi.wait()
