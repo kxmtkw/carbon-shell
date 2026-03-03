@@ -9,7 +9,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 
 import qs.theme as Theme
-import qs.modules.panel as Panel
+import qs.state
 
 WrapperRectangle
 {
@@ -91,24 +91,64 @@ WrapperRectangle
                     anchors.bottom: parent.bottom
                     color: panel_audio.is_muted ? Theme.Color._secondaryContainer : Theme.Color._secondary
                 }
+
+                MouseArea
+                {
+                    anchors.fill: parent
+                    onPressed: panel_audio.setByPosition(mouseY, height)
+                    onPositionChanged: {
+                        if (pressed) {
+                            panel_audio.setByPosition(mouseY, height)
+                        }
+                    }
+                }
             }
         }
 
-        MouseArea 
+        WrapperRectangle
         {
             implicitHeight: 28
-            hoverEnabled: true
+            Layout.fillWidth: true
             Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
-            
-            Text 
-            {
-                id: panel_audio_icon
-                anchors.centerIn: parent
+            color: Theme.Color._background
+            radius: Theme.Style.getMaterialRadius(width, height, "small")
 
-                text: is_muted ? "" : ""
-                font.family: "Iosevka"
-                font.pixelSize: 20
-                color: panel_audio.is_highlighted ? Theme.Color._secondary : Theme.Color._onSurface
+            MouseArea
+            {
+                anchors.fill: parent
+                hoverEnabled: true
+                
+
+                Text 
+                {
+                    id: panel_audio_icon
+                    anchors.centerIn: parent
+
+                    text: is_muted ? "" : ""
+                    font.family: "Iosevka"
+                    font.pixelSize: 18
+                    color: panel_audio.is_highlighted ? Theme.Color._secondary : Theme.Color._onSurface
+                }
+
+                onClicked: {
+                    if (ShellState.activeSlider === "audio" && panel_audio_bar.opacity > 0) {
+                        ShellState.activeSlider = ""
+                        hideBar()
+                        panel_audio_hider.stop()
+                    } else {
+                        ShellState.activeSlider = "audio"
+                        showBar()
+                        panel_audio_hider.restart()
+                    }
+                }
+
+                onEntered: {
+                    parent.color = Theme.Color._surfaceContainer
+                }
+
+                onExited: {
+                    parent.color = Theme.Color._background
+                }
             }
         }
     }
@@ -118,7 +158,7 @@ WrapperRectangle
         target: "audio"
 
         function update(amount: double): void {
-            Panel.PanelState.activeSlider = "audio"
+            ShellState.activeSlider = "audio"
             showBar()
             panel_audio_bar.value = amount
             panel_audio_hider.restart()
@@ -132,8 +172,8 @@ WrapperRectangle
         running: false
         onTriggered: {
             hideBar()
-            if (Panel.PanelState.activeSlider === "audio") {
-                Panel.PanelState.activeSlider = ""
+            if (ShellState.activeSlider === "audio") {
+                ShellState.activeSlider = ""
             }
         }
     }
@@ -151,9 +191,9 @@ WrapperRectangle
     }
 
     Connections {
-        target: Panel.PanelState
+        target: ShellState
         function onActiveSliderChanged() {
-            if (Panel.PanelState.activeSlider !== "audio") {
+            if (ShellState.activeSlider !== "audio" && ShellState.activeSlider !== "") {
                 hideBar()
                 panel_audio_hider.stop()
             }
@@ -185,5 +225,30 @@ WrapperRectangle
         running: true
         repeat: true
         onTriggered: panel_audio_mute_process.running = true
+    }
+
+    Process
+    {
+        id: panel_audio_set_process
+        running: false
+        command: []
+    }
+
+    function setByPosition(y: real, totalHeight: real): void {
+        var ratio = 1 - (y / totalHeight)
+        if (ratio < 0) ratio = 0
+        if (ratio > 1) ratio = 1
+
+        panel_audio_bar.value = ratio
+        panel_audio_set_process.command = ["carbon.audio", "set", ratio.toFixed(2)]
+        panel_audio_set_process.running = true
+
+        ShellState.activeSlider = "audio"
+        showBar()
+        panel_audio_hider.restart()
+    }
+
+    function pollMutedState(): void {
+        panel_audio_mute_process.running = true
     }
 }

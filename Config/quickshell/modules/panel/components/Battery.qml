@@ -23,21 +23,13 @@ WrapperRectangle
 
 	radius: Theme.Style.getMaterialRadius(width, height, "small")
 
-
-    Process 
-    {
-        id: power_menu
-        running: false
-        command: ["sh", "-c", "carbon.controller battery"]
-    }
-
 	MouseArea 
     {
 
         Layout.fillHeight: true
 		Layout.fillWidth:  true
         
-		hoverEnabled: true
+		hoverEnabled: false
 
         Text 
         {
@@ -57,85 +49,83 @@ WrapperRectangle
 		}
 		
 		onEntered: {
-			parent.color = Theme.Color._surfaceContainer
+			parent.color = Theme.Color._background
 		}
 
 		onExited: {
 			parent.color = Theme.Color._background
 		}
-        	
-
-		Timer {
-			id: update_timer
-			interval: 250
-			running: true
-			repeat: true
-			onTriggered: {
-				parent.setSymbol()
-			}
-		}
-
-		function setSymbol() {
-			var value = UPower.displayDevice.percentage * 100;
-
-			if (!UPower.onBattery) {
-
-				panel_battery_icon.text = ""
-
-				if (value >= 98) {
-					panel_battery_icon.color = Theme.Color._primary
-				}
-				else {
-					panel_battery_icon.color = Theme.Color._secondary
-				}
-				
-				return
-			}
-
-			var sym
-			panel_battery_icon.color = Theme.Color._onSurface
-
-			if (value >= 95) {
-				sym = "󰁹";
-			} 
-			else if (value >= 85) {
-				sym = "󰂂";
-			}
-			else if (value >= 75) {
-				sym = "󰂁";
-			}
-			else if (value >= 65) {
-				sym = "󰂀";
-			}
-			else if (value >= 55) {
-				sym = "󰁿";
-			}
-			else if (value >= 45) {
-				sym = "󰁾";
-			}
-			else if (value >= 35) {
-				sym = "󰁽";
-			}
-			else if (value >= 25) {
-				sym = "󰁼";
-			}
-			else if (value >= 15) {
-				sym = "󰁻";
-				panel_battery_icon.color = Theme.Color._error
-			}
-			else if (value >= 5) {
-				sym = "󰁺";
-				panel_battery_icon.color = Theme.Color._error
-			}
-			else {
-				sym = "󰂎";
-				panel_battery_icon.color = Theme.Color._error
-			}
-
-			panel_battery_icon.text = sym
-		}
 
 	}
 
-    
+	Timer {
+		id: update_timer
+		interval: 250
+		running: true
+		repeat: true
+		onTriggered: {
+			parent.setSymbol()
+		}
+	}
+
+	function setSymbol() {
+		var value = UPower.displayDevice.percentage * 100;
+
+		if (!UPower.onBattery) {
+
+			panel_battery_icon.text = ""
+
+			if (value >= 98) {
+				panel_battery_icon.color = Theme.Color._primary
+			}
+			else {
+				panel_battery_icon.color = Theme.Color._secondary
+			}
+			
+			return
+		}
+
+		var sym
+		panel_battery_icon.color = Theme.Color._onSurface
+
+		if (value >= 95) {
+			sym = "󰁹";
+		} 
+		else if (value >= 85) {
+			sym = "󰂂";
+		}
+		else if (value >= 75) {
+			sym = "󰂁";
+		}
+		else if (value >= 65) {
+			sym = "󰂀";
+		}
+		else if (value >= 55) {
+			sym = "󰁿";
+		}
+		else if (value >= 45) {
+			sym = "󰁾";
+		}
+		else if (value >= 35) {
+			sym = "󰁽";
+		}
+		else if (value >= 25) {
+			sym = "󰁼";
+		}
+		else if (value >= 15) {
+			sym = "󰁻";
+			panel_battery_icon.color = Theme.Color._error
+		}
+		else if (value >= 5) {
+			sym = "󰁺";
+			panel_battery_icon.color = Theme.Color._error
+		}
+		else {
+			sym = "󰂎";
+			panel_battery_icon.color = Theme.Color._error
+		}
+
+		panel_battery_icon.text = sym
+	}
+
 }

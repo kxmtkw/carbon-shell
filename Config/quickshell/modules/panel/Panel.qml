@@ -55,7 +55,6 @@ PanelWindow
 				Audio{}
 			}
 			
-
 			Item {Layout.fillHeight: true}
 
 			ColumnLayout
