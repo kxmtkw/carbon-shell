@@ -9,7 +9,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 
 import qs.theme as Theme
-import qs.modules.panel as Panel
+import qs.state
 
 WrapperRectangle
 {
@@ -92,6 +92,17 @@ WrapperRectangle
                     anchors.bottom: parent.bottom
                     color: Theme.Color._primary
                 }
+
+                MouseArea
+                {
+                    anchors.fill: parent
+                    onPressed: panel_brightness.setByPosition(mouseY, height)
+                    onPositionChanged: {
+                        if (pressed) {
+                            panel_brightness.setByPosition(mouseY, height)
+                        }
+                    }
+                }
             }
         }
 
@@ -99,14 +110,16 @@ WrapperRectangle
         WrapperRectangle
         {
             implicitHeight: 28
+            Layout.fillWidth: true
             Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
-            color: Theme.Color._surfaceContainer
+            color: Theme.Color._background
+            radius: Theme.Style.getMaterialRadius(width, height, "small")
+
 
             MouseArea 
             {
-                
+                anchors.fill: parent
                 hoverEnabled: true
-                Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
                 
                 Text 
                 {
@@ -121,7 +134,17 @@ WrapperRectangle
                 }
 
                 onClicked: {
-                
+                    if (ShellState.activeSlider === "brightness" && panel_brightness_bar.opacity > 0) {
+                        ShellState.activeSlider = ""
+                        ShellState.activeSliderChanged("")
+                        hideBar()
+                        panel_brightness_hider.stop()
+                    } else {
+                        ShellState.activeSlider = "brightness"
+                        ShellState.activeSliderChanged("brightness")
+                        showBar()
+                        panel_brightness_hider.restart()
+                    }
                 }
                 
                 onEntered: {
@@ -141,7 +164,8 @@ WrapperRectangle
         target: "brightness"
 
         function update(amount: int): void { 
-            Panel.PanelState.activeSlider = "brightness"
+            ShellState.activeSlider = "brightness"
+            ShellState.activeSliderChanged("brightness")
             showBar()
             panel_brightness_bar.value = amount
             panel_brightness_hider.restart()
@@ -155,8 +179,9 @@ WrapperRectangle
         running: false
         onTriggered: {
             hideBar()
-            if (Panel.PanelState.activeSlider === "brightness") {
-                Panel.PanelState.activeSlider = ""
+            if (ShellState.activeSlider === "brightness") {
+                ShellState.activeSlider = ""
+                ShellState.activeSliderChanged("")
             }
         }
     }
@@ -174,13 +199,42 @@ WrapperRectangle
     }
 
     Connections {
-        target: Panel.PanelState
+        target: ShellState
         function onActiveSliderChanged() {
-            if (Panel.PanelState.activeSlider !== "brightness") {
+            if (ShellState.activeSlider !== "brightness" && ShellState.activeSlider !== "") {
                 hideBar()
                 panel_brightness_hider.stop()
             }
         }
+    }
+
+    Process
+    {
+        id: panel_brightness_set_process
+        running: false
+        command: []
+    }
+
+    function setByPosition(y: real, totalHeight: real): void {
+        var ratio = 1 - (y / totalHeight)
+        if (ratio < 0) ratio = 0
+        if (ratio > 1) ratio = 1
+
+        var target = Math.round(ratio * 100)
+
+        if (target <= 10) {
+            target = 10
+        }
+        
+        panel_brightness_bar.value = target
+
+        console.log(target)
+        panel_brightness_set_process.command = ["carbon.brightness", "set", target.toString()]
+        panel_brightness_set_process.running = true
+
+        ShellState.activeSlider = "brightness"
+        ShellState.activeSliderChanged("brightness")
+        panel_brightness_hider.restart()
     }
 
 }

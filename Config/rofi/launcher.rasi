@@ -17,7 +17,7 @@ configuration
 
     drun-categories: "";
 	drun-match-fields: "name,generic,exec,categories,keywords";
-	drun-display-format: "{name}  -->  <span weight='regular' size='small'>{comment}</span>";
+	drun-display-format: "{name}";
     drun-show-actions: false;
 	drun-url-launcher: "xdg-open";
 	drun-use-desktop-cache: true;
@@ -41,7 +41,7 @@ window
     anchor:                      center;
     fullscreen:                  false;
     width:                       880px;
-    height:                      724px;
+    height:                      710px;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -49,9 +49,9 @@ window
     margin:                      0px;
     border:                      @themeBorderWidth;
     border-color:                @surfaceContainerHighest;
-    border-radius:               calc(880/32);
+    border-radius:               calc(880/28);
     cursor:                      "default";
-    background-color:            @backgroundTransparentxAA;
+    background-color:            @background;
 }
 
 mainbox 
@@ -67,7 +67,7 @@ mainbox
 
 inputbar {
     enabled:                     true;
-    margin:                      50px 40px;
+    margin:                      20px 10px;
     padding:                     10px 30px;
     background-color:            @background;
     text-color:                  @onSurface;
@@ -112,7 +112,7 @@ dummy {
 listbox 
 {
     spacing:                     10px;
-    padding:                     30px 30px;
+    padding:                     10px 30px;
     background-color:            @background;
     orientation:                 horizontal;
     children:                    [ "listview" ];

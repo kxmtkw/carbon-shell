@@ -47,7 +47,7 @@ Improve that
 
 Cache themes generated from wallpapers
 
-#### OSDs
+#### OSDs (DONE)
 
 OSDs for brightness, sound and mic
 
@@ -95,7 +95,7 @@ Runner needs more modes:
 Add utils/ and add stuff like brightness.
 - Install them to ~/.carbon/bin or ~/.carbon/.venv/bin
 
-#### Redesign the shell
+#### Redesign the shell (ONGOING)
 
 All controllers need to be redesigned.
 The bar needs to be redesigned.

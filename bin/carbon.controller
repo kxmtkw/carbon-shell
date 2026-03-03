@@ -5,7 +5,7 @@
 display_help() {
     echo "Usage: [name]"
     echo Supporter controllers:
-	echo launcher windows power battery screenshot wifi run clipboard player theme
+	echo launcher windows power screenshot wifi run clipboard player theme
 }
 
 if [[ -z $1 ]]; then
@@ -43,9 +43,6 @@ case $1 in
 	;;
 	"power")
 		$CARBONPY ~/.carbon/controllers/power.py
-	;;
-	"battery") 
-		$CARBONPY ~/.carbon/controllers/battery.py
 	;;
 	"screenshot") 
 		$CARBONPY ~/.carbon/controllers/screenshot.py

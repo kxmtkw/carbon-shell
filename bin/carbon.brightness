@@ -23,6 +23,7 @@ display_help() {
     echo "  increase x : increase by x percentage"
     echo "  decrease x : decrease by x percentage"
     echo "  set x      : set to x percentage"
+    echo "  get        : get the current percentage value"
     echo "  save       : save the current brightness"
     echo "  restore    : restore the last saved brighteness"
 }

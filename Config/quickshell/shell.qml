@@ -8,4 +8,3 @@ ShellRoot
 {
     Panel{}
 }
-
