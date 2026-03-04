@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+# visual start of the shell
+
+sleep 1
+notify-send "Hello, World!" "logged in as $USER"
+
+sleep 1
+carbon.brightness set 100
+
+sleep 2
+carbon.audio set 100

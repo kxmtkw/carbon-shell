@@ -1,0 +1,11 @@
+* {
+    fontTextSmall:                   "IosevkaTerm Nerd Font 12";
+    fontText:                        "IosevkaTerm Nerd Font 14";
+    fontTextBig:                     "IosevkaTerm Nerd Font 15";
+    fontTextBigger:                  "IosevkaTerm Nerd Font 20";
+    fontTextBiggest:                 "IosevkaTerm Nerd Font 26";
+    fontTextLarge:                   "IosevkaTerm Nerd Font 36";
+    fontTextHuge:                    "IosevkaTerm Nerd Font 96";
+
+    font: @fontText;
+}

@@ -2,14 +2,14 @@ from pathlib import Path
 import subprocess, shlex
 import os
 
-from lib.rofi import RofiShell
+from carbon.rofi import RofiShell
 import simpleeval
 
 class RunPrompt():
 	
 
 	def __init__(self):
-		self.rofi = RofiShell("~/.config/rofi/run/main.rasi")
+		self.rofi = RofiShell("~/.carbon/shell/rofi/run/main.rasi")
 
 		self.hist_file: Path = Path("~/.carbon/cache/run_history.txt").expanduser()
 
@@ -112,7 +112,7 @@ class RunPrompt():
 	
 	def show_error(self, msg: str):
 
-		self.rofi.updateTheme("~/.config/rofi/run/error.rasi")
+		self.rofi.updateTheme("~/.carbon/shell/rofi/run/error.rasi")
 
 		self.rofi.display(
 			mode= RofiShell.Mode.dmenu,

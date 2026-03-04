@@ -3,10 +3,10 @@ from carbon.theme import Theme
 
 from pathlib import Path
 import sys, time
-from lib.rofi import RofiShell
+from carbon.rofi import RofiShell
 
 
-main_rasi = "~/.config/rofi/themer.rasi"
+main_rasi = "~/.carbon/shell/rofi/themer.rasi"
 
 class ThemePicker():
 	
@@ -32,6 +32,7 @@ class ThemePicker():
 			"  Toggle light mode" if is_dark_mode else "  Toggle dark mode",
 			"󰟾  Change wallpaper",
 			"  Update theme",
+			"󰆖  Change contrast"
 		]
 
 		self.rofi.display(
@@ -52,6 +53,9 @@ class ThemePicker():
 
 		elif selected == options[2]:
 			self.open_update_theme_options()
+
+		elif selected == options[3]:
+			self.open_contrast_options()
 
 
 	def open_wallpaper_options(self):
@@ -80,16 +84,44 @@ class ThemePicker():
 
 	def open_update_theme_options(self):
 
+		variant = CarbonState.get("theme_variant", "graphite", valid_types=(str))
+
 		options = [
-			"Ash",
-			"Coal",
-			"Graphite",
-			"Diamond"
+			"[1] Ash",
+			"[2] Coal",
+			"[3] Graphite",
+			"[4] Diamond"
 		]
 		
 		self.rofi.display(
 			mode= RofiShell.Mode.dmenu,
-			prompt="Change Theme",
+			prompt=f"Change Theme ({variant.capitalize()})",
+			options= options
+		)
+
+		selected: str = self.rofi.wait()
+		if not selected: exit()
+
+		selected = selected.split("]")[-1].strip().lower()
+
+		mode = CarbonState.get("theme_mode", "dark", valid_types=(str))
+		contrast = CarbonState.get("theme_contrast", 0.25, valid_types=(float, int))
+		image = CarbonState.get("theme_wallpaper", valid_types=(str))
+
+		image_path = Path(image)
+		if image_path.exists():
+			Theme.set_wallpaper(image)
+			Theme.change_color_theme(mode, selected.lower(), image, contrast=contrast)
+
+
+	def open_contrast_options(self):
+		
+		contrast = CarbonState.get("theme_contrast", 0.25, valid_types=(float, int))
+		options = [str(x/4) for x in range(1, 17)]
+		
+		self.rofi.display(
+			mode= RofiShell.Mode.dmenu,
+			prompt=f"Change Contrast ({contrast})",
 			options= options
 		)
 
@@ -98,13 +130,12 @@ class ThemePicker():
 
 		mode = CarbonState.get("theme_mode", "dark", valid_types=(str))
 		variant = CarbonState.get("theme_variant", "graphite", valid_types=(str))
-		contrast = CarbonState.get("theme_contrast", 0.25, valid_types=(float, int))
 		image = CarbonState.get("theme_wallpaper", valid_types=(str))
 
 		image_path = Path(image)
 		if image_path.exists():
 			Theme.set_wallpaper(image)
-			Theme.change_color_theme(mode, selected.lower(), image, contrast=contrast)
+			Theme.change_color_theme(mode, variant, image, contrast=float(selected))
 
 
 	def get_images(self) -> list[str]:

@@ -1,12 +1,12 @@
 import time
 
-from lib.rofi import RofiShell
-from lib.networker.wifi import WifiManager, WifiError, WifiNetwork
+from carbon.rofi import RofiShell
+from carbon.networker.wifi import WifiManager, WifiError, WifiNetwork
 
-main_rasi = "~/.config/rofi/wifi/main.rasi"
-options_rasi = "~/.config/rofi/wifi/options.rasi"
-display_rasi = "~/.config/rofi/wifi/display.rasi"
-password_rasi = "~/.config/rofi/wifi/password.rasi"
+main_rasi = "~/.carbon/shell/rofi/wifi/main.rasi"
+options_rasi = "~/.carbon/shell/rofi/wifi/options.rasi"
+display_rasi = "~/.carbon/shell/rofi/wifi/display.rasi"
+password_rasi = "~/.carbon/shell/rofi/wifi/password.rasi"
 
 
 class Wifi:

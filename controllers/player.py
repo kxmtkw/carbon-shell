@@ -1,6 +1,6 @@
 import subprocess
 from typing import Literal
-from lib.rofi import RofiShell
+from carbon.rofi import RofiShell
 import time
 
 # TODO fix this up, its so messy.
@@ -8,8 +8,8 @@ import time
 no_players_mesg = "No players found"
 playing_mesg = "Playing"
 
-main_rasi = "~/.config/rofi/player/main.rasi"
-display_rasi = "~/.config/rofi/player/display.rasi"
+main_rasi = "~/.carbon/shell/rofi/player/main.rasi"
+display_rasi = "~/.carbon/shell/rofi/player/display.rasi"
 
 
 class PlayerController:

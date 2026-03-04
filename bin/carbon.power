@@ -1,0 +1,48 @@
+#!/usr/bin/env sh
+
+# Direct power actions utility.
+
+display_help() {
+    echo "Usage: carbon.power [option]"
+    echo "Supported options:"
+    echo "  shutdown reboot lock suspend hibernate logout bios"
+}
+
+if [ -z "$1" ]; then
+    display_help
+    exit 2
+fi
+
+case "$1" in
+    "shutdown")
+        exec systemctl poweroff
+        ;;
+    "reboot")
+        exec systemctl reboot
+        ;;
+    "lock")
+        exec hyprlock
+        ;;
+    "suspend")
+        exec hyprlock &
+        sleep 1
+        exec systemctl suspend
+        ;;
+    "hibernate")
+        exec hyprlock &
+        sleep 1
+        exec systemctl hibernate
+        ;;
+    "logout")
+        exec hyprctl dispatch exit
+        ;;
+    "bios")
+        exec systemctl reboot --firmware-setup
+        ;;
+    *)
+        notify-send "Unknown option" "$1"
+        echo "Unknown option: $1"
+        display_help
+        exit 1
+        ;;
+esac
