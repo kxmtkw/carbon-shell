@@ -1,12 +1,12 @@
 from pathlib import Path
 import sys, time
 
-from lib.rofi import RofiShell
+from carbon.rofi import RofiShell
 
 class ScreenshotMenu():
 	
 	def __init__(self):
-		self.rofi = RofiShell("~/.config/rofi/screenshot.rasi")
+		self.rofi = RofiShell("~/.carbon/shell/rofi/screenshot.rasi")
 
 		self.prompt = "Screenshot"
 		self.mesg = ""

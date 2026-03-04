@@ -1,0 +1,145 @@
+
+configuration 
+{
+    show-icons:                 false;
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "!MousePrimary"; 
+    kb-cancel: ["MousePrimary", "Escape"];
+}
+
+@import "theme/color.rasi"
+@import "theme/fonts.rasi"
+@import "theme/style.rasi"
+
+
+* {
+    font: @fontTextBig;
+}
+
+
+window 
+{    
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       600px;
+    height:                      480px;
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    /* properties for all widgets */
+    enabled:                     true;
+    margin:                      0;
+    padding:                     0;
+    border:                      @themeBorderWidth;
+    border-color:                @surfaceContainerHighest;
+    border-radius:               calc(720/24);
+    cursor:                      "default";
+    background-color:            transparent;
+}
+
+mainbox 
+{
+    enabled:                     true;
+    spacing:                     0;
+    margin:                      0px;
+    border:                      0px solid;
+    border-radius:               0%;
+    background-color:            @backgroundTransparentxAA;
+    vertical-align:              0.5;
+    orientation:                 vertical;
+    children:                    [ "listview" ];
+}
+
+imagebox {
+    spacing:                     0px;
+    padding:                     30px 30px;
+    background-color:            transparent;
+    children:                    [ "inputbar", "dummy", "message" ];
+}
+
+inputbar {
+    padding:                     15px;
+    border-radius:               16px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    children:                    [ "dummy", "prompt", "dummy"];
+}
+
+dummy {
+    background-color:            transparent;
+}
+
+prompt {
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+
+message {
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     15px;
+    border-radius:               16px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+}
+
+textbox {
+    background-color:            inherit;
+    text-color:                  inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+}
+
+
+listview 
+{
+    enabled:                     true;
+    columns:                     1;
+    lines:                       10;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                false;
+    fixed-columns:               false;
+    
+    spacing:                     4px;
+    margin:                      0%;
+    padding:                     42px 40px;
+    border:                      0px solid;
+    border-radius:               0px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    vertical-align:              0.5;
+    cursor:                      "default";
+}
+
+element 
+{
+    enabled:                     true;
+    spacing:                     0px;
+    margin:                      0px;
+    padding:                     14px 20px;
+    border:                      0px solid;
+    border-radius:               calc(16);
+    background-color:            @background;
+    text-color:                  @onSurface;
+    cursor:                      pointer;
+}
+element-text 
+{
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0;
+}
+element selected.normal 
+{
+    background-color:            var(surfaceContainer);
+    text-color:                  var(onSurface);
+}

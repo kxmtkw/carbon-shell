@@ -1,17 +1,17 @@
-from lib.rofi import RofiShell
+from carbon.rofi import RofiShell
 import time
 "#292929aa"
 class PowerMenu():
 	
 	def __init__(self):
-		self.rofi = RofiShell("~/.config/rofi/power.rasi")
-		self.confirmation = RofiShell("~/.config/rofi/confirmation.rasi")
+		self.rofi = RofiShell("~/.carbon/shell/rofi/power.rasi")
+		self.confirmation = RofiShell("~/.carbon/shell/rofi/confirmation.rasi")
 
 		self.options: list[str] = [
 		"  Shutdown",
 		"  Reboot",
 		"  Lock",
-		"  Sleep",
+		"  Suspend",
 		"  Hibernate",
 		"󰍃  Logout",
 		"  BIOS" 
@@ -52,24 +52,24 @@ class PowerMenu():
 	def exec(self, selected: str):
 		
 		options = self.options
+		time.sleep(0.25) #rofi closes
+
 
 		if selected == options[0]:
-			cmd = "systemctl poweroff"
+			cmd = "carbon.power shutdown"
 		elif selected == options[1]:
-			cmd = "systemctl reboot"
+			cmd = "carbon.power reboot"
 		elif selected == options[2]:
-			time.sleep(0.25) #rofi closes
-			cmd = "hyprlock"
-			self.rofi.Run(cmd)
-			return
+			cmd = "carbon.power lock"
+			return self.rofi.Run(cmd) #no need to confirm locking
 		elif selected == options[3]:
-			cmd = "systemctl suspend"
+			cmd = "carbon.power suspend"
 		elif selected == options[4]:
-			cmd = "systemctl hibernate"
+			cmd = "carbon.power hibernate"
 		elif selected == options[5]:
-			cmd = "hyprland dispatch exit"
+			cmd = "carbon.power logout"
 		else:
-			cmd = "systemctl reboot --firmware-setup"
+			cmd = "carbon.power bios"
 
 		if not self.confirm(): return
 		time.sleep(0.25) #rofi closes

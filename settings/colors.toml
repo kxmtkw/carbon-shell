@@ -1,17 +1,14 @@
 
 commands = [
     "plasma-apply-colorscheme BreezeDark && plasma-apply-colorscheme Carbon",
-    "killall dunst",
     "hyprctl reload",
-    "quickshell ipc call theme update"
+    "quickshell --config ~/.carbon/shell/quickshell ipc call theme update"
 ]
 
 [colorfiles]
-hypr      = "Config/hypr/color.conf"
-qml       = "Config/quickshell/theme/color.json"
-rofi      = "Config/rofi/theme/color.rasi"
-kitty     = "Config/kitty/color.conf"
-alacritty = "Config/alacritty/color.toml"
-kde       = "Config/kde/Carbon.colors"
+json      = "~/.carbon/shell/quickshell/theme/color.json"
+rofi      = "~/.carbon/shell/rofi/theme/color.rasi"
 
-dunst     = "Config/dunst/dunstrc"
+kitty     = "~/.dotfiles/kitty/color.conf"
+alacritty = "~/.dotfiles/alacritty/color.toml"
+kde       = "~/.dotfiles/kde/Carbon.colors"

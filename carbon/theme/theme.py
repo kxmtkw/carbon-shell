@@ -1,77 +1,13 @@
-import subprocess
-import time
-from typing import Literal
-from pathlib import Path
 import json
+import subprocess
+from pathlib import Path
+from typing import Literal
 
-from carbon.helpers import Color, CarbonError
-from carbon.helpers.settings import SettingsLoader
-from .material import MaterialColors
-from . import configs  
-
+from carbon.helpers import CarbonError
 from carbon.state import CarbonState
 
-settings = SettingsLoader("~/.carbon/settings/colors.toml")
-carbon_path = Path("~/.carbon").expanduser()
-
-def write_theme(filepath: str, theme: str):
-    abspath = carbon_path.joinpath(filepath)
-    with open(abspath, "w") as file:
-        file.write(theme)
-
-
-def write_dunst_theme(dunstrc: str, theme: str):
-    abspath = carbon_path.joinpath(dunstrc)
-    with open(abspath, "r") as file:
-        contents = file.read()
-
-    breakpoint = "CARBON_BREAK_POINT"
-
-    parts = contents.split(breakpoint)
-
-    updated = f"{parts[0]}{breakpoint}\n{theme}"
-
-    with open(abspath, "w") as file:
-        file.write(updated)
-    
-
-def update_colors(colors: dict[str, str]):
-
-    for type, filepath in settings.get("colorfiles").items():
-        
-        match type:
-            case "hypr":
-                string = configs.update_hypr(colors)
-                write_theme(filepath, string)
-            case "qml":
-                string = configs.update_quickshell(colors)
-                write_theme(filepath, string)
-            case "kitty":
-                string = configs.update_kitty(colors)
-                write_theme(filepath, string)
-            case "rofi":
-                string = configs.update_rofi(colors)  
-                write_theme(filepath, string)  
-            case "alacritty":
-                string = configs.update_alacritty(colors)
-                write_theme(filepath, string)   
-            case "kde":
-                string = configs.update_kde(colors) 
-                write_theme(filepath, string)
-            case "dunst":
-                string = configs.update_dunst(colors)
-                write_dunst_theme(filepath, string)
-            case _:
-                print(f"Error :: {type}")
-                continue
-        
-        print(f"Updated :: {type}")
-
-
-    for cmd in settings.get("commands"):
-        print(f"Running cmd: {cmd}")
-        out = subprocess.run(cmd, shell=True, capture_output=True)
-
+from .material import MaterialColors
+from .update import update_colors
 
 
 class Theme:
