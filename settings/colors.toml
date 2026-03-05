@@ -2,13 +2,14 @@
 commands = [
     "plasma-apply-colorscheme BreezeDark && plasma-apply-colorscheme Carbon",
     "hyprctl reload",
-    "quickshell --config ~/.carbon/shell/quickshell ipc call theme update"
+    "quickshell --config ~/.carbon/shell/quickshell ipc call theme update",
 ]
 
 [colorfiles]
 json      = "~/.carbon/shell/quickshell/theme/color.json"
 rofi      = "~/.carbon/shell/rofi/theme/color.rasi"
 
+hypr      = "~/.dotfiles/hypr/color.conf"
 kitty     = "~/.dotfiles/kitty/color.conf"
 alacritty = "~/.dotfiles/alacritty/color.toml"
 kde       = "~/.dotfiles/kde/Carbon.colors"
