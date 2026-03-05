@@ -1,11 +1,7 @@
+@import "config.rasi"
 
 configuration 
 {
-    show-icons:                 false;
-    hover-select: true;
-    me-select-entry: "";
-    me-accept-entry: "!MousePrimary"; 
-    kb-cancel: ["MousePrimary", "Escape"];
 }
 
 @import "theme/color.rasi"
@@ -50,7 +46,7 @@ mainbox
 }
 
 inputbar {
-    padding:                     20px 10px;
+    padding:                     24px 10px 10px 10px;
     border-radius:               0px;
     background-color:            @background;
     text-color:                  @onSurface;
@@ -78,9 +74,9 @@ listview
     fixed-height:                false;
     fixed-columns:               false;
     
-    spacing:                     10px;
+    spacing:                     8px;
     margin:                      0%;
-    padding:                     25px 40px;
+    padding:                     26px 40px;
     border:                      0px solid;
     border-radius:               0px;
     background-color:            @background;

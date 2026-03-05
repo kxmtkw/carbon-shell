@@ -1,18 +1,7 @@
+@import "../config.rasi"
 
 configuration 
 {
-	modi:                       "";
-    show-icons:                 true;
-	icon-theme: "Papirus";
-
-    hover-select: true;
-    me-select-entry: "";
-    me-accept-entry: "!MousePrimary"; 
-    kb-move-char-back: "";
-    kb-move-char-forward: "";
-    kb-mode-next: "Right";
-    kb-mode-previous: "Left";
-    kb-cancel: ["MousePrimary", "Escape"];
 }
 
 @import "../theme/color.rasi"

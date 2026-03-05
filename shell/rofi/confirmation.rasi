@@ -1,11 +1,8 @@
+@import "config.rasi"
 
 configuration 
 {
-    show-icons:                 false;
-    hover-select: true;
-    me-select-entry: "";
-    me-accept-entry: "!MousePrimary"; 
-    kb-cancel: ["MousePrimary", "Escape"];
+    show-icons: false;
 }
 
 @import "theme/color.rasi"
@@ -87,7 +84,7 @@ listview
     
     spacing:                     10px;
     margin:                      0%;
-    padding:                     10px;
+    padding:                     10px 20px;
     border:                      0px solid;
     border-radius:               0px;
     background-color:            transparent;
@@ -104,7 +101,7 @@ element
     margin:                      0px;
     padding:                     14px 20px;
     border:                      0px solid;
-    border-radius:               14px;
+    border-radius:               20px;
     background-color:            @background;
     text-color:                  @onSurface;
     cursor:                      pointer;
