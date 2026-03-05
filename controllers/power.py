@@ -8,13 +8,12 @@ class PowerMenu():
 		self.confirmation = RofiShell("~/.carbon/shell/rofi/confirmation.rasi")
 
 		self.options: list[str] = [
+		"  Lock",
 		"  Shutdown",
 		"  Reboot",
-		"  Lock",
 		"  Suspend",
 		"  Hibernate",
 		"󰍃  Logout",
-		"  BIOS" 
 		]
 
 
@@ -56,12 +55,12 @@ class PowerMenu():
 
 
 		if selected == options[0]:
-			cmd = "carbon.power shutdown"
-		elif selected == options[1]:
-			cmd = "carbon.power reboot"
-		elif selected == options[2]:
 			cmd = "carbon.power lock"
 			return self.rofi.Run(cmd) #no need to confirm locking
+		elif selected == options[1]:
+			cmd = "carbon.power shutdown"
+		elif selected == options[2]:
+			cmd = "carbon.power reboot"
 		elif selected == options[3]:
 			cmd = "carbon.power suspend"
 		elif selected == options[4]:
@@ -69,7 +68,7 @@ class PowerMenu():
 		elif selected == options[5]:
 			cmd = "carbon.power logout"
 		else:
-			cmd = "carbon.power bios"
+			return
 
 		if not self.confirm(): return
 		time.sleep(0.25) #rofi closes
