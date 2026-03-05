@@ -106,7 +106,7 @@ step_count=$abs_diff
 step_size=$(awk "BEGIN {print $diff / $step_count}")
 
 # Updating bar, we do it here so the bar updates by the time the brightness reaches target
-quickshell ipc call brightness update "$target"
+quickshell --config ~/.carbon/shell/quickshell ipc call brightness update "$target"
 
 for ((i=1; i<=step_count; i++)); do
     val=$(awk "BEGIN {print $current_percentage + $step_size * $i}")
