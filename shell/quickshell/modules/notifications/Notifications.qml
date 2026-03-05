@@ -26,19 +26,30 @@ PanelWindow {
 
     property var items: []
 
+    function resolveSource(value) {
+        if (typeof value !== "string" || value.length === 0) return ""
+        if (
+            value.startsWith("/") ||
+            value.startsWith("file:/") ||
+            value.startsWith("qrc:/") ||
+            value.startsWith("http://") ||
+            value.startsWith("https://")
+        ) {
+            return value
+        }
+        return Quickshell.iconPath(value, "image-missing")
+    }
+
     function removeNotification(notification) {
         const next = []
         for (const n of root.items) {
-            if (n !== notification) {
-                next.push(n)
-            }
+            if (n !== notification) next.push(n)
         }
         root.items = next
     }
 
     NotificationServer {
         id: notifServer
-
         keepOnReload: false
         actionsSupported: true
         bodyHyperlinksSupported: true
@@ -65,19 +76,24 @@ PanelWindow {
 
             Rectangle {
                 id: card
-
                 required property var modelData
                 readonly property var notif: modelData
-                readonly property bool hasImage: !!notif.image
-                readonly property bool hasAppIcon: !!notif.appIcon
-                readonly property bool critical: notif.urgency === NotificationUrgency.Critical
+                readonly property bool critical: notif && notif.urgency === NotificationUrgency.Critical
+                readonly property string imageSource: root.resolveSource(notif ? notif.image : "")
+                readonly property string iconName: {
+                    if (!notif) return ""
+                    if (typeof notif.icon === "string" && notif.icon.length > 0) return notif.icon
+                    if (typeof notif.appIcon === "string" && notif.appIcon.length > 0) return notif.appIcon
+                    return ""
+                }
+                readonly property string iconSource: root.resolveSource(iconName)
 
-                radius: Theme.Style.getMaterialRadius(width, height, "medium")
-                color: critical ? Theme.Color._errorContainer : Theme.Color._surfaceContainer
-                border.width: 1
-                border.color: Theme.Color._outlineVariant
                 Layout.fillWidth: true
-                implicitHeight: content.implicitHeight + 20
+                implicitHeight: bodyColumn.implicitHeight + 20
+                color: critical ? Theme.Color._errorContainer : Theme.Color._background
+                radius: Theme.Style.getMaterialRadius(width, height, "medium")
+                border.width: 2
+                border.color: Theme.Color._surfaceContainerHigh
 
                 Connections {
                     target: notif
@@ -87,113 +103,138 @@ PanelWindow {
                 }
 
                 Timer {
-                    id: expireTimer
-                    running: !notif.resident
-                    interval: notif.expireTimeout > 0 ? notif.expireTimeout : 5000
+                    running: notif && !notif.resident
+                    interval: notif && notif.expireTimeout > 0 ? notif.expireTimeout : 5000
                     onTriggered: notif.dismiss()
                 }
 
                 MouseArea {
                     anchors.fill: parent
-                    acceptedButtons: Qt.LeftButton | Qt.RightButton
-                    hoverEnabled: true
+                    acceptedButtons: Qt.RightButton
                     onClicked: event => {
-                        if (event.button === Qt.RightButton) {
-                            notif.dismiss()
-                        }
+                        if (event.button === Qt.RightButton) notif.dismiss()
                     }
                 }
 
-                ColumnLayout {
-                    id: content
-                    anchors.fill: parent
+                Column {
+                    id: bodyColumn
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.top: parent.top
                     anchors.margins: 10
                     spacing: 8
 
-                    RowLayout {
-                        spacing: 10
-                        Layout.fillWidth: true
+                    Row {
+                        width: parent.width
+                        spacing: 12
 
-                        Item {
-                            id: iconSlot
-                            implicitWidth: 36
-                            implicitHeight: 36
+                        Rectangle {
+                            id: iconBox
+                            width: 64
+                            height: 64
+                            radius: Theme.Style.getMaterialRadius(width, height, "small")
+                            color: critical ? Theme.Color._error : Theme.Color._surfaceContainer
+                            clip: true
 
                             Image {
+                                id: notifImage
                                 anchors.fill: parent
-                                fillMode: Image.PreserveAspectFit
-                                visible: card.hasImage
-                                source: card.hasImage ? notif.image : ""
+                                source: card.imageSource
+                                visible: card.imageSource.length > 0 && status !== Image.Error
                                 asynchronous: true
                                 cache: false
                             }
 
                             Image {
-                                anchors.fill: parent
+                                id: notifIcon
+                                anchors.centerIn: parent
+                                width: 40
+                                height: 40
                                 fillMode: Image.PreserveAspectFit
-                                visible: !card.hasImage && card.hasAppIcon
-                                source: !card.hasImage && card.hasAppIcon ? Quickshell.iconPath(notif.appIcon) : ""
+                                source: !notifImage.visible ? card.iconSource : ""
+                                visible: !notifImage.visible && card.iconSource.length > 0 && status !== Image.Error
                                 asynchronous: true
                             }
 
                             Text {
                                 anchors.centerIn: parent
-                                visible: !card.hasImage && !card.hasAppIcon
-                                text: ""
+                                visible: !notifImage.visible && !notifIcon.visible
+                                text: critical ? "⚠" : "🔔"
+                                color: critical ? Theme.Color._onError : Theme.Color._onSurface
                                 font.family: "Iosevka"
-                                font.pixelSize: 20
-                                color: Theme.Color._onSurface
+                                font.pixelSize: 22
                             }
                         }
 
-                        ColumnLayout {
-                            Layout.fillWidth: true
-                            spacing: 2
+                        Column {
+                            width: parent.width - iconBox.width - closeWrap.width - 20
+                            spacing: 5
+                            Layout.alignment: Layout.AlignVCenter  
+                            Layout.fillHeight: true
 
                             Text {
-                                Layout.fillWidth: true
-                                text: notif.appName || "Notification"
+                                width: parent.width
+                                text: notif ? (notif.appName || "Notification") : "Notification"
                                 color: Theme.Color._onSurfaceVariant
                                 font.family: "Iosevka"
-                                font.pixelSize: 12
+                                font.pixelSize: 14
                                 elide: Text.ElideRight
                             }
 
                             Text {
-                                Layout.fillWidth: true
-                                text: notif.summary || ""
-                                color: Theme.Color._onSurface
+                                width: parent.width
+                                text: notif ? (notif.summary || "") : ""
+                                color: critical ? Theme.Color._onErrorContainer : Theme.Color._onSurface
                                 font.family: "Iosevka"
-                                font.pixelSize: 14
+                                font.pixelSize: 16
                                 font.bold: true
                                 wrapMode: Text.Wrap
                             }
                         }
 
-                        Button {
-                            text: "×"
-                            onClicked: notif.dismiss()
+                        Rectangle {
+                            id: closeWrap
+                            width: 28
+                            height: 28
+                            radius: Theme.Style.getMaterialRadius(width, height, "small")
+                            color: Theme.Color._invisible
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "✕"
+                                color: Theme.Color._onSurface
+                                font.family: "Iosevka"
+                                font.pixelSize: 14
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onClicked: notif.dismiss()
+                                onEntered: parent.color = Theme.Color._surfaceContainer
+                                onExited: parent.color = Theme.Color._background
+                            }
                         }
                     }
 
                     Text {
-                        Layout.fillWidth: true
-                        visible: !!notif.body
-                        text: notif.body || ""
+                        width: parent.width
+                        visible: notif && !!notif.body
+                        text: notif ? (notif.body || "") : ""
                         textFormat: Text.RichText
-                        color: Theme.Color._onSurface
+                        color: critical ? Theme.Color._onErrorContainer : Theme.Color._onSurface
                         font.family: "Iosevka"
                         font.pixelSize: 13
                         wrapMode: Text.Wrap
                     }
 
-                    RowLayout {
-                        Layout.fillWidth: true
+                    Row {
+                        width: parent.width
                         spacing: 6
-                        visible: notif.actions && notif.actions.length > 0
+                        visible: notif && notif.actions && notif.actions.length > 0
 
                         Repeater {
-                            model: notif.actions || []
+                            model: notif && notif.actions ? notif.actions : []
 
                             Button {
                                 required property var modelData

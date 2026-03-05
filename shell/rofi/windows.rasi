@@ -1,21 +1,16 @@
+@import "config.rasi"
 
 configuration 
 {
     modi:                       "window";
-    show-icons:                 true;
 
     window-match-fields: "title,class,role,name,desktop";
 	window-command: "wmctrl -i -R {window}";
 	window-format: "{c}  ::  {t:50}";
 	window-thumbnail: true;
 
-    hover-select: true;
-    me-select-entry: "";
-    me-accept-entry: "!MousePrimary"; 
-    kb-remove-char-back: "";
     kb-element-next: "Tab";
-    kb-element-prev: "Alt+Tab";
-    kb-cancel: ["MousePrimary", "Escape", "BackSpace"];
+    kb-element-prev: "Alt+Tab";    
 }
 
 @import "theme/color.rasi"

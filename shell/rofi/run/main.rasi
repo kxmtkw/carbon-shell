@@ -1,15 +1,9 @@
+@import "../config.rasi"
 
 configuration 
 {
 	modi:                       "drun";
     display-run:               ">>> ";
-    show-icons:                 true;
-	icon-theme: "Papirus";
-
-    hover-select: true;
-    me-select-entry: "";
-    me-accept-entry: "!MousePrimary"; 
-    kb-cancel: ["MousePrimary", "Escape"];
 }
 
 @import "../theme/color.rasi"
