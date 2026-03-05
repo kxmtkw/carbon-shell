@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 
 # Util to launch the different carbon controllers
-
 display_help() {
     echo "Usage: [name]"
     echo Supporter controllers:
@@ -13,10 +12,7 @@ if [[ -z $1 ]]; then
 	exit 2
 fi
 
-# end all current rofi instances
-pkill rofi
-
-echo "CARBONPY: "$CARBONPY
+pkill rofi >/dev/null 2>&1
 
 active_file=/tmp/carbon_active_controller
 
@@ -24,7 +20,7 @@ current="$1"
 active=$(< $active_file)
 
 if [ "$active" = "$current" ]; then
-    echo "Launched rofi controller already open, closing it."
+    echo "Launched rofi controller already open, closing it."	
 	: > $active_file
     exit 0
 fi
@@ -33,13 +29,12 @@ fi
 echo "Launching controller:" $1
 echo $current > $active_file
 
-
 case $1 in
 	"launcher")
 		rofi -show drun -theme ~/.carbon/shell/rofi/launcher.rasi 
 	;;
 	"windows")
-		rofi -show window -theme ~/.carbon/shell/rofi/windows.rasi 
+		rofi -show window -theme ~/.carbon/shell/rofi/windows.rasi
 	;;
 	"power")
 		$CARBONPY ~/.carbon/controllers/power.py
@@ -67,6 +62,5 @@ case $1 in
 		echo "Unknown controller!" $1
 	;;
 esac
-
 
 : > $active_file

@@ -34,21 +34,21 @@ case "$1" in
         wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ $amount%+
 
         current=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2}')
-        quickshell ipc call audio update "$current"
+        quickshell --config ~/.carbon/shell/quickshell ipc call audio update "$current"
         ;;
     decrease)
         check_if_value_passed
         wpctl set-volume @DEFAULT_AUDIO_SINK@ $amount%-
 
         current=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2}')
-        quickshell ipc call audio update "$current"
+        quickshell --config ~/.carbon/shell/quickshell ipc call audio update "$current"
         ;;
     set)
         check_if_value_passed
         wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ $amount
 
         current=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2}')
-        quickshell ipc call audio update "$current"
+        quickshell --config ~/.carbon/shell/quickshell ipc call audio update "$current"
         ;;
     toggle-mute)
         wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
