@@ -1,7 +1,7 @@
 
 ## Todo
 
-#### Notification (DONE)
+#### Notification (ONGOING)
 
 Either configure dunst or build your own notification daemon. The latter is only needed if i want actions in my notifs which are'nt supported by dunst.
 
@@ -35,7 +35,7 @@ Central menu for theming carbon
 
 Probably need something that can handle both. Nevermind, let the user themselves handle the login manager for now.
 
-#### Fastfetch (ONGOING)
+#### Fastfetch (DONE)
 
 Maybe have a default fastfetch config or something
 
@@ -95,7 +95,11 @@ Runner needs more modes:
 Add utils/ and add stuff like brightness.
 - Install them to ~/.carbon/bin or ~/.carbon/.venv/bin
 
-#### Redesign the shell (ONGOING)
+#### Redesign the shell (DONE)
 
 All controllers need to be redesigned.
 The bar needs to be redesigned.
+
+#### Mounted device manager?
+
+#### 
