@@ -15,28 +15,81 @@ WrapperRectangle
 {
     id: panel_brightness
 
-    Layout.fillWidth:       true
-	Layout.alignment:       Qt.AlignHCenter
+    Layout.fillWidth:       false
+    Layout.preferredWidth:  28 + panel_brightness.sliderWidth + (panel_brightness.sliderWidth > 0 ? 8 : 0)
+    Layout.preferredHeight: 28
+	Layout.alignment:       Qt.AlignVCenter
     margin: 0
 
     color: Theme.Color._invisible
 
-	radius: Theme.Style.getMaterialRadius(width, height, "small")
+    radius: Theme.Style.getMaterialRadius(width, height, "small")
 
     property bool is_highlighted: false
+    property real sliderWidth: 0
 
-    ColumnLayout
+    Behavior on sliderWidth {
+        NumberAnimation {
+            duration: 220
+            easing.type: Easing.InOutQuad
+        }
+    }
+
+    RowLayout
     {
-        spacing: panel_brightness_bar.implicitHeight > 0 || panel_brightness_bar.opacity > 0 ? 10 : 0
+        anchors.centerIn: parent
+        spacing: panel_brightness.sliderWidth > 0 ? 8 : 0
 
-        
-        Behavior on spacing {
-            NumberAnimation
+
+        WrapperRectangle
+        {
+            implicitWidth: 28
+            implicitHeight: 28
+            Layout.fillWidth: false
+            Layout.alignment: Qt.AlignHCenter
+            color: Theme.Color._invisible
+            radius: Theme.Style.getMaterialRadius(width, height, "small")
+
+
+            MouseArea 
             {
-                duration: 100;
-                easing.type: Easing.Linear
+                anchors.fill: parent
+                hoverEnabled: true
+                
+                Text 
+                {
+                    id: panel_brightness_icon
+                    anchors.centerIn: parent
+
+                    text: ""
+                    font.family: "Iosevka"
+                    font.pixelSize: 20
+                    color: panel_brightness.is_highlighted ? Theme.Color._primary : Theme.Color._onSurface
+                    rotation: 0
+                }
+
+                onClicked: {
+                    if (ShellState.activeSlider === "brightness" && panel_brightness_bar.opacity > 0) {
+                        ShellState.activeSlider = ""
+                        hideBar()
+                        panel_brightness_hider.stop()
+                    } else {
+                        ShellState.activeSlider = "brightness"
+                        showBar()
+                        panel_brightness_hider.restart()
+                    }
+                }
+                
+                onEntered: {
+                    parent.color = Theme.Color._surfaceContainer
+                }
+
+                onExited: {
+                    parent.color = Theme.Color._invisible
+                }
             }
         }
+     
         
         ProgressBar 
         {
@@ -45,20 +98,11 @@ WrapperRectangle
             to: 100
             value: 0
             Layout.alignment: Qt.AlignHCenter
-            implicitWidth: 10
-            implicitHeight: 0
+            Layout.preferredWidth: panel_brightness.sliderWidth
+            implicitHeight: 10
             opacity: 0
             topPadding: 0
             bottomPadding: 0
-
-
-            Behavior on implicitHeight {
-                NumberAnimation 
-                { 
-                    duration: 250; 
-                    easing.type: Easing.In
-                }
-            }
 
             Behavior on opacity
             {
@@ -87,76 +131,25 @@ WrapperRectangle
                 Rectangle 
                 {
                     radius: 10
-                    width: parent.width
-                    height: parent.height * panel_brightness_bar.visualPosition
-                    anchors.bottom: parent.bottom
+                    width: parent.width * panel_brightness_bar.visualPosition
+                    height: parent.height
+                    anchors.left: parent.left
                     color: Theme.Color._primary
                 }
 
                 MouseArea
                 {
                     anchors.fill: parent
-                    onPressed: panel_brightness.setByPosition(mouseY, height)
+                    onPressed: panel_brightness.setByPosition(mouseX, width)
                     onPositionChanged: {
                         if (pressed) {
-                            panel_brightness.setByPosition(mouseY, height)
+                            panel_brightness.setByPosition(mouseX, width)
                         }
                     }
                 }
             }
         }
-
-
-        WrapperRectangle
-        {
-            implicitHeight: 28
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
-            color: Theme.Color._invisible
-            radius: Theme.Style.getMaterialRadius(width, height, "small")
-
-
-            MouseArea 
-            {
-                anchors.fill: parent
-                hoverEnabled: true
-                
-                Text 
-                {
-                    id: panel_brightness_icon
-                    anchors.centerIn: parent
-
-                    text: ""
-                    font.family: "Iosevka"
-                    font.pixelSize: 20
-                    color: panel_brightness.is_highlighted ? Theme.Color._primary : Theme.Color._onSurface
-                    rotation: 0
-                }
-
-                onClicked: {
-                    if (ShellState.activeSlider === "brightness" && panel_brightness_bar.opacity > 0) {
-                        ShellState.activeSlider = ""
-                        ShellState.activeSliderChanged("")
-                        hideBar()
-                        panel_brightness_hider.stop()
-                    } else {
-                        ShellState.activeSlider = "brightness"
-                        ShellState.activeSliderChanged("brightness")
-                        showBar()
-                        panel_brightness_hider.restart()
-                    }
-                }
-                
-                onEntered: {
-                    parent.color = Theme.Color._surfaceContainer
-                }
-
-                onExited: {
-                    parent.color = Theme.Color._background
-                }
-            }
-        }
-       
+  
     }
 
     IpcHandler
@@ -165,7 +158,6 @@ WrapperRectangle
 
         function update(amount: int): void { 
             ShellState.activeSlider = "brightness"
-            ShellState.activeSliderChanged("brightness")
             showBar()
             panel_brightness_bar.value = amount
             panel_brightness_hider.restart()
@@ -181,20 +173,19 @@ WrapperRectangle
             hideBar()
             if (ShellState.activeSlider === "brightness") {
                 ShellState.activeSlider = ""
-                ShellState.activeSliderChanged("")
             }
         }
     }
 
     function hideBar(): void {
         panel_brightness.is_highlighted = false
-        panel_brightness_bar.implicitHeight = 0
+        panel_brightness.sliderWidth = 0
         panel_brightness_bar.opacity = 0
     }
 
     function showBar(): void {
         panel_brightness.is_highlighted = true
-        panel_brightness_bar.implicitHeight = 140
+        panel_brightness.sliderWidth = 132
         panel_brightness_bar.opacity = 1
     }
 
@@ -215,8 +206,12 @@ WrapperRectangle
         command: []
     }
 
-    function setByPosition(y: real, totalHeight: real): void {
-        var ratio = 1 - (y / totalHeight)
+    function setByPosition(x: real, totalWidth: real): void {
+        if (totalWidth <= 0) {
+            return
+        }
+
+        var ratio = x / totalWidth
         if (ratio < 0) ratio = 0
         if (ratio > 1) ratio = 1
 
@@ -233,7 +228,6 @@ WrapperRectangle
         panel_brightness_set_process.running = true
 
         ShellState.activeSlider = "brightness"
-        ShellState.activeSliderChanged("brightness")
         panel_brightness_hider.restart()
     }
 

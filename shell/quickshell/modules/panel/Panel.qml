@@ -14,20 +14,20 @@ PanelWindow
 
 	anchors 
     {
-		top: true
+		right: true
 		bottom: true
 		left: true
 	}		
 
 	margins 
     {
-		right: 	0
+		right: 	10
 		left: 	10
-		top: 	10
-		bottom: 10
+		top: 	0
+		bottom: 5
 	}
 
-	implicitWidth: 48
+	implicitHeight: 48
 	color:		   Theme.Color._invisible
 	
 
@@ -38,29 +38,18 @@ PanelWindow
 		radius: Theme.Style.getMaterialRadius(width, height, "large")
 
 		margin:       10
-		topMargin:    24
-		bottomMargin: 24
+		leftMargin:   14
+		rightMargin:  14
 
-		ColumnLayout 
+		RowLayout 
         {
-			spacing:         16
+			spacing:         10
 
 			Workspaces{}
-			
-			ColumnLayout
-			{
-				spacing: 10
-				
-				Brightness{}
-				Audio{}
-			}
-			
-			Item {Layout.fillHeight: true}
-
-			ColumnLayout
-			{	
-				Battery{}
-			}
+			Brightness{}
+			Audio{}
+			Item {Layout.fillWidth: true}
+			Battery{}
 
 			Clock{}
 			Power{}

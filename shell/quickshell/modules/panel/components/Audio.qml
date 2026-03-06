@@ -15,101 +15,38 @@ WrapperRectangle
 {
     id: panel_audio
 
-    Layout.fillWidth:       true
-	Layout.alignment:       Qt.AlignHCenter
+    Layout.fillWidth:       false
+    Layout.preferredWidth:  28 + panel_audio.sliderWidth + (panel_audio.sliderWidth > 0 ? 8 : 0)
+    Layout.preferredHeight: 28
+	Layout.alignment:       Qt.AlignVCenter
     margin: 0
 
     color: Theme.Color._invisible
 
-	radius: Theme.Style.getMaterialRadius(width, height, "small")
+    radius: Theme.Style.getMaterialRadius(width, height, "small")
 
     property bool is_muted: false
     property bool is_highlighted: false
+    property real sliderWidth: 0
 
-    ColumnLayout
+    Behavior on sliderWidth {
+        NumberAnimation {
+            duration: 220
+            easing.type: Easing.InOutQuad
+        }
+    }
+
+    RowLayout
     {
-        spacing: panel_audio_bar.implicitHeight > 0 || panel_audio_bar.opacity > 0 ? 10 : 0
-
-        Behavior on spacing {
-            NumberAnimation
-            {
-                duration: 100;
-                easing.type: Easing.Linear
-            }
-        }
+        anchors.centerIn: parent
+        spacing: panel_audio.sliderWidth > 0 ? 8 : 0
         
-        ProgressBar 
-        {
-            id: panel_audio_bar
-            from: 0
-            to: 1
-            value: 0
-            Layout.alignment: Qt.AlignHCenter
-            implicitWidth: 10
-            implicitHeight: 0
-            opacity: 0
-            topPadding: 0
-            bottomPadding: 0
-
-            Behavior on implicitHeight {
-                NumberAnimation 
-                { 
-                    duration: 250;
-                    easing.type: Easing.In
-                }
-            }
-
-            Behavior on opacity
-            {
-                NumberAnimation 
-                {
-                    duration: 250
-                    easing.type: Easing.In
-                }
-            }
-
-            Behavior on value 
-            {
-                NumberAnimation 
-                {
-                    duration: 200
-                    easing.type: Easing.InOut
-                }
-            }
-
-            
-            contentItem: Rectangle 
-            {
-                color: Theme.Color._surfaceContainerHigh
-                radius: 10
-
-                Rectangle 
-                {
-                    radius: 10
-                    width: parent.width
-                    height: parent.height * panel_audio_bar.visualPosition
-                    anchors.bottom: parent.bottom
-                    color: panel_audio.is_muted ? Theme.Color._secondaryContainer : Theme.Color._secondary
-                }
-
-                MouseArea
-                {
-                    anchors.fill: parent
-                    onPressed: panel_audio.setByPosition(mouseY, height)
-                    onPositionChanged: {
-                        if (pressed) {
-                            panel_audio.setByPosition(mouseY, height)
-                        }
-                    }
-                }
-            }
-        }
-
         WrapperRectangle
         {
+            implicitWidth: 28
             implicitHeight: 28
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
+            Layout.fillWidth: false
+            Layout.alignment: Qt.AlignHCenter
             color:  true ? Theme.Color._invisible : Theme.Color._invisible
             radius: Theme.Style.getMaterialRadius(width, height, "small")
 
@@ -147,10 +84,70 @@ WrapperRectangle
                 }
 
                 onExited: {
-                    parent.color = Theme.Color._background
+                    parent.color = Theme.Color._invisible
                 }
             }
         }
+        
+        ProgressBar 
+        {
+            id: panel_audio_bar
+            from: 0
+            to: 1
+            value: 0
+            Layout.alignment: Qt.AlignHCenter
+            Layout.preferredWidth: panel_audio.sliderWidth
+            implicitHeight: 10
+            opacity: 0
+            topPadding: 0
+            bottomPadding: 0
+
+            Behavior on opacity
+            {
+                NumberAnimation 
+                {
+                    duration: 250
+                    easing.type: Easing.In
+                }
+            }
+
+            Behavior on value 
+            {
+                NumberAnimation 
+                {
+                    duration: 200
+                    easing.type: Easing.InOut
+                }
+            }
+
+            
+            contentItem: Rectangle 
+            {
+                color: Theme.Color._surfaceContainerHigh
+                radius: 10
+
+                Rectangle 
+                {
+                    radius: 10
+                    width: parent.width * panel_audio_bar.visualPosition
+                    height: parent.height
+                    anchors.left: parent.left
+                    color: panel_audio.is_muted ? Theme.Color._secondaryContainer : Theme.Color._secondary
+                }
+
+                MouseArea
+                {
+                    anchors.fill: parent
+                    onPressed: panel_audio.setByPosition(mouseX, width)
+                    onPositionChanged: {
+                        if (pressed) {
+                            panel_audio.setByPosition(mouseX, width)
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     IpcHandler
@@ -180,13 +177,13 @@ WrapperRectangle
 
     function showBar(): void {
         panel_audio.is_highlighted = true
-        panel_audio_bar.implicitHeight = 140
+        panel_audio.sliderWidth = 132
         panel_audio_bar.opacity = 1
     }
 
     function hideBar(): void {
         panel_audio.is_highlighted = false
-        panel_audio_bar.implicitHeight = 0
+        panel_audio.sliderWidth = 0
         panel_audio_bar.opacity = 0
     }
 
@@ -234,8 +231,12 @@ WrapperRectangle
         command: []
     }
 
-    function setByPosition(y: real, totalHeight: real): void {
-        var ratio = 1 - (y / totalHeight)
+    function setByPosition(x: real, totalWidth: real): void {
+        if (totalWidth <= 0) {
+            return
+        }
+
+        var ratio = x / totalWidth
         if (ratio < 0) ratio = 0
         if (ratio > 1) ratio = 1
 

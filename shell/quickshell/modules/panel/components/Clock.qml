@@ -10,17 +10,20 @@ WrapperRectangle
 {
     id: panel_clock
 
-	Layout.fillWidth: true
+	Layout.fillHeight: true
+	Layout.preferredHeight: 28
+	Layout.alignment: Qt.AlignVCenter
+	implicitWidth: 96
 	
-    margin: 16
-	color:  Theme.Color._surfaceContainer
+    margin: 8
+	color:  Theme.Color._primaryContainer
 	radius: Theme.Style.getMaterialRadius(width, height, "small")
 
 
 	Process
     {
 		id: panel_clock_proc
-		command: ["date", "+%I%n%M%n%p"]
+		command: ["date", "+%I:%M %p"]
 		running: true
 		stdout: StdioCollector {
             onStreamFinished: { panel_clock_text.text = text.trim() }
@@ -39,12 +42,14 @@ WrapperRectangle
 	Text 
     {
 		id:    panel_clock_text
-		color: Theme.Color._onSurface
+		anchors.centerIn: parent
+		color: Theme.Color._onprimaryContainer
 		text:  ""
 
 		horizontalAlignment: Text.AlignHCenter
+		verticalAlignment: Text.AlignVCenter
 
 		font.family:    "Iosevka"
-		font.pixelSize: 16
+		font.pixelSize: 18
 	}
 }
