@@ -10,8 +10,8 @@ import qs.theme as Theme
 WrapperRectangle
 {
 	id: panel_workspaces
-	Layout.fillWidth: true
-	Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+	Layout.fillHeight: true
+	Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
 	
 	margin: 0
 
@@ -28,7 +28,7 @@ WrapperRectangle
 		}
 	}
 
-	ColumnLayout 
+	RowLayout 
 	{
 		anchors.centerIn: parent
 		spacing: 0
@@ -41,20 +41,19 @@ WrapperRectangle
 
 			Rectangle 
 			{
-				Layout.fillWidth: true
-				Layout.alignment: Qt.AlignHCenter
+				Layout.alignment: Qt.AlignVCenter
 
-				width:  16
-				height: 28
+				width:  28
+				height: 24
 				
 				radius: Theme.Style.getMaterialRadius(width, height, "small")
-				color:  modelData.focused ? Theme.Color._tertiaryContainer : Theme.Color._surfaceContainer
+				color:  modelData.active ? Theme.Color._tertiaryContainer : Theme.Color._invisible
 
 				
 				Text
 				{
 					anchors.centerIn: parent
-					color: modelData.focused ? Theme.Color._onTertiaryContainer : Theme.Color._surfaceContainer
+					color: modelData.active ? Theme.Color._onTertiaryContainer : Theme.Color._invisible
 					text: modelData.id
 				}
 

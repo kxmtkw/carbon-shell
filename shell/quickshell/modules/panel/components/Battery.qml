@@ -16,20 +16,20 @@ WrapperRectangle
 {
     id: panel_battery
 
-	Layout.fillWidth:       true
-	Layout.alignment:       Qt.AlignHCenter
+	Layout.fillWidth:       false
+	Layout.preferredWidth:  28
+	Layout.preferredHeight: 28
+	Layout.alignment:       Qt.AlignVCenter
     implicitHeight: 28
-    color: true ? Theme.Color._invisible : Theme.Color._invisible
+    color: Theme.Color._invisible
 
 	radius: Theme.Style.getMaterialRadius(width, height, "small")
 
 	MouseArea 
     {
-		
-        Layout.fillHeight: true
-		Layout.fillWidth:  true
+		anchors.fill: parent
         
-		hoverEnabled: false
+		hoverEnabled: true
 
         Text 
         {
@@ -49,11 +49,11 @@ WrapperRectangle
 		}
 		
 		onEntered: {
-			parent.color = Theme.Color._background
+			parent.color = Theme.Color._surfaceContainer
 		}
 
 		onExited: {
-			parent.color = Theme.Color._background
+			parent.color = Theme.Color._invisible
 		}
 
 	}
