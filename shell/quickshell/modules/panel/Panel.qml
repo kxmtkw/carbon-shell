@@ -21,10 +21,10 @@ PanelWindow
 
 	margins 
     {
-		right: 	10
-		left: 	10
+		right: 	8
+		left: 	8
 		top: 	0
-		bottom: 5
+		bottom: 8
 	}
 
 	implicitHeight: 48
@@ -45,11 +45,25 @@ PanelWindow
         {
 			spacing:         10
 
+			Launcher{}
+
 			Workspaces{}
-			Brightness{}
-			Audio{}
+
+			RowLayout
+			{
+				spacing: 5
+				Brightness{}
+				Audio{}
+			}
+			
 			Item {Layout.fillWidth: true}
-			Battery{}
+
+			RowLayout
+			{
+				spacing: 5
+				Wifi{}
+				Battery{}
+			}
 
 			Clock{}
 			Power{}

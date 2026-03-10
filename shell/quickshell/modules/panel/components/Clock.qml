@@ -43,13 +43,13 @@ WrapperRectangle
     {
 		id:    panel_clock_text
 		anchors.centerIn: parent
-		color: Theme.Color._onprimaryContainer
+		color: Theme.Color._surface
 		text:  ""
 
 		horizontalAlignment: Text.AlignHCenter
 		verticalAlignment: Text.AlignVCenter
 
 		font.family:    "Iosevka"
-		font.pixelSize: 18
+		font.pixelSize: 19
 	}
 }

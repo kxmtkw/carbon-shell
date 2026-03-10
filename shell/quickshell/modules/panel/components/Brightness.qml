@@ -117,7 +117,7 @@ WrapperRectangle
             {
                 NumberAnimation 
                 {
-                    duration: 200
+                    duration: 150
                     easing.type: Easing.InOut
                 }
             }
