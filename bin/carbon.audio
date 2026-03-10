@@ -65,3 +65,5 @@ case "$1" in
         exit 1
         ;;
 esac
+
+sleep 0.5
