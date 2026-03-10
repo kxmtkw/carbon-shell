@@ -7,13 +7,14 @@ from carbon.rofi import RofiShell
 
 
 main_rasi = "~/.carbon/shell/rofi/themer.rasi"
+wallpaper_rasi = "~/.carbon/shell/rofi/wallpaper.rasi"
 
 class ThemePicker():
 	
 	def __init__(self):
 		self.rofi = RofiShell(main_rasi)
 
-		self.image_dir = Path("~/Images").expanduser()
+		self.image_dir = Path("~/Images/Wallpapers").expanduser()
 
 
 	def launch(self):
@@ -62,6 +63,8 @@ class ThemePicker():
 
 		options = self.get_images()
 
+		self.rofi.updateTheme(wallpaper_rasi)
+
 		self.rofi.display(
 			mode= RofiShell.Mode.dmenu,
 			prompt="Set Wallpaper",
@@ -80,6 +83,8 @@ class ThemePicker():
 		if image.exists():
 			Theme.set_wallpaper(image)
 			Theme.change_color_theme(mode, variant, img=image, contrast=contrast)
+
+		self.rofi.updateTheme(main_rasi)
 
 
 	def open_update_theme_options(self):
