@@ -16,13 +16,13 @@ configuration
 @import "../theme/fonts.rasi"
 
 window
- {
+{
     transparency:                "real";
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       32%;
-    height:                      24%;
+    width:                       600px;
+    height:                      260px;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -30,7 +30,7 @@ window
     margin:                      10px;
     border:                      @themeBorderWidth;
     border-color:                @surfaceContainerHighest;
-    border-radius:               @themeBorderRadius;
+    border-radius:               calc(600/28);
     cursor:                      "default";
     background-color:            @backgroundTransparentxAA;
 }

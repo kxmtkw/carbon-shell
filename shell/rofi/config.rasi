@@ -16,7 +16,7 @@ configuration {
 	normalize-match: false;
 
 	matching: "fuzzy";
-	tokenize: false;
+	tokenize: true;
 
 	disable-history: false;
 	sorting-method: "fzf";
@@ -26,6 +26,7 @@ configuration {
 	
 	show-icons: true;
 	icon-theme: "Papirus-Dark";
+	markup: "pango";
 	
 	terminal: "rofi-sensible-terminal";
 	font: "Mono 12";
