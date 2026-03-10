@@ -72,7 +72,7 @@ entry {
     background-color:            inherit;
     text-color:                  @onSurface;
     cursor:                      text;
-    placeholder:                 "Search...";
+    placeholder:                 "   Search...";
     placeholder-color:           inherit;
     vertical-align:              0.5;
     horizontal-align:            0;

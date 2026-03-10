@@ -4,7 +4,7 @@ configuration
 {
 	modi:                       "drun";
 
-	display-drun:               "";
+	display-drun:               " ";
 
     drun-categories: "";
 	drun-match-fields: "name,generic,exec,categories,keywords";
@@ -57,7 +57,7 @@ mainbox
 
 inputbar {
     enabled:                     true;
-    margin:                      20px 10px;
+    margin:                      10px 10px;
     padding:                     12px 30px;
     background-color:            @background;
     text-color:                  @onSurface;
