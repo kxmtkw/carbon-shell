@@ -13,7 +13,6 @@ WrapperRectangle
 	Layout.fillHeight: true
 	Layout.preferredHeight: 28
 	Layout.alignment: Qt.AlignVCenter
-	implicitWidth: 96
 	
     margin: 8
 	color:  Theme.Color._primaryContainer
@@ -51,5 +50,6 @@ WrapperRectangle
 
 		font.family:    "Iosevka"
 		font.pixelSize: 19
+		font.weight:    Font.Medium
 	}
 }

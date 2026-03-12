@@ -16,7 +16,7 @@ WrapperRectangle
 	margin: 0
 
 	color:  Theme.Color._surfaceContainer
-	radius: Theme.Style.getMaterialRadius(width, height, "medium")
+	radius: Theme.Style.getMaterialRadius(width, height, "small")
 	
 
 	Behavior on height
@@ -44,7 +44,7 @@ WrapperRectangle
 				Layout.alignment: Qt.AlignVCenter
 
 				width:  28
-				height: 24
+				height: 26
 				
 				radius: Theme.Style.getMaterialRadius(width, height, "small")
 				color:  modelData.active ? Theme.Color._tertiaryContainer : Theme.Color._invisible
