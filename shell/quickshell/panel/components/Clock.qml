@@ -56,7 +56,7 @@ WrapperRectangle
 	Process
     {
 		id: panel_clock_proc_with_date
-		command: ["date", "+%I:%M %p | %d %b | %a"]
+		command: ["date", "+%I:%M %p | %a | %d %b "]
 		running: true
 		stdout: StdioCollector {
             onStreamFinished: { panel_clock_text.text = text.trim() }
@@ -108,7 +108,7 @@ WrapperRectangle
 		{
 			anchors.fill: parent
 
-			onClicked: {
+			onReleased: {
 				panel_clock.showingDate = !panel_clock.showingDate
 
 				if (panel_clock.showingDate) {
