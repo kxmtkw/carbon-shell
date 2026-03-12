@@ -13,25 +13,31 @@ WrapperRectangle
 	Layout.fillHeight: true
 	Layout.alignment: Qt.AlignVCenter | Qt.AlignLeft
 	
-	margin: 0
+
+	property real workspacesWidth: panel_workspaces_row.implicitWidth
+	Layout.preferredWidth: workspacesWidth
 
 	color:  Theme.Color._surfaceContainer
 	radius: Theme.Style.getMaterialRadius(width, height, "small")
 	
 
-	Behavior on height
+	Behavior on workspacesWidth
 	{
 		NumberAnimation 
 		{
-			duration: 250
+			duration: 100
 			easing.type: Easing.InOut
 		}
 	}
 
 	RowLayout 
 	{
-		anchors.centerIn: parent
+		id: panel_workspaces_row
 		spacing: 0
+
+		onImplicitWidthChanged: {
+			panel_workspaces.workspacesWidth = implicitWidth
+		}
 
 		Repeater 
 		{
@@ -42,13 +48,12 @@ WrapperRectangle
 			Rectangle 
 			{
 				Layout.alignment: Qt.AlignVCenter
-
+			
 				width:  28
 				height: 26
 				
 				radius: Theme.Style.getMaterialRadius(width, height, "small")
 				color:  modelData.active ? Theme.Color._tertiaryContainer : Theme.Color._invisible
-
 				
 				Text
 				{

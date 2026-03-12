@@ -48,13 +48,6 @@ PanelWindow
 			Launcher{}
 
 			Workspaces{}
-
-			RowLayout
-			{
-				spacing: 5
-				Brightness{}
-				Audio{}
-			}
 			
 			Item {Layout.fillWidth: true}
 

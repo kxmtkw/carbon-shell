@@ -17,10 +17,9 @@ WrapperRectangle
     id: panel_launcher
 
 	Layout.fillWidth:       false
-	Layout.preferredWidth:  28
-	Layout.preferredHeight: 28
+	Layout.preferredWidth:  30
+	Layout.preferredHeight: 30
 	Layout.alignment:       Qt.AlignVCenter
-    implicitHeight: 28
     color: Theme.Color._invisible
 
 	radius: Theme.Style.getMaterialRadius(width, height, "small")
