@@ -7,14 +7,21 @@ Carbon Shell is a UI shell for linux designed to be highly functional and effici
 
 First install dependancies.
 
+The shell is designed for hyprland so you first need these dependancies:
+
 ```bash
 hyprland \
 hyprsunset \
 hyprshot \
+hyprpolkitagent
+```
+
+Then these dependancies for the shell.
+
+```bash
 swww \ 
 quickshell \
 rofi \ 
-fastfetch \
 plasma-workspace # for switching kde themes, optional if you don't use kde apps
 ```
 
@@ -34,6 +41,8 @@ What this script would do:
 + Install all python dependancies
 + Finally run `carbon install` to install the shell.
 
-> The shell is still barebones, Soon a better and quicker way to install will be implemented.
+Finally, add `source ~/.carbon/env` in your shell environment to run the shell. 
+Start the shell using `carbon.start`.
 
+> The shell is still barebones, Soon a better and quicker way to install will be implemented.
 
