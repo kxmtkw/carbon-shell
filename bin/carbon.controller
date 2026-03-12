@@ -12,22 +12,37 @@ if [[ -z $1 ]]; then
 	exit 2
 fi
 
-pkill rofi >/dev/null 2>&1
 
 active_file=/tmp/carbon_active_controller
 
 current="$1"
 active=$(< $active_file)
 
+
 if [ "$active" = "$current" ]; then
-    echo "Launched rofi controller already open, closing it."	
+
+    echo "Launched rofi controller already open, closing it."
+	pkill rofi >/dev/null 2>&1
+
 	: > $active_file
     exit 0
+
+elif [ -n "$active" ]; then
+
+	echo "Another rofi controller is open, waiting for it to close."
+	pkill rofi >/dev/null 2>&1
+	
+	while [ -n "$active" ]; do
+		sleep 0.05
+		active=$(< $active_file)
+	done	
+
 fi
 
 
 echo "Launching controller:" $1
 echo $current > $active_file
+
 
 case $1 in
 	"launcher")
