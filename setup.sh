@@ -6,7 +6,7 @@ python3 -m venv .venv
 source ./.venv/bin/activate
 
 echo " :: Installing dependancies :: " 
-pip install .
+pip install . > /dev/null 2>&1
 
 echo ">> Carbon Shell setup complete!"
 

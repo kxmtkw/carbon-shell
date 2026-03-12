@@ -1,6 +1,4 @@
 #!/bin/sh
 
-# CARBON envs. Don't Touch these please.
-export PATH="$PATH:$HOME/.local/bin:$HOME/.carbon/bin"
-
+export PATH="$PATH:$HOME/.carbon/bin"
 export CARBONPY="$HOME/.carbon/.venv/bin/python3"
