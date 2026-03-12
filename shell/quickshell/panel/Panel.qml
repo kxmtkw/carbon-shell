@@ -5,7 +5,7 @@ import QtQuick
 import QtQuick.Layouts
 
 import qs.theme as Theme
-import qs.modules.panel.components
+import qs.panel.components
 
 PanelWindow 
 {

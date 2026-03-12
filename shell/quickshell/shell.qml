@@ -2,8 +2,8 @@
 import Quickshell
 import QtQuick
 
-import qs.modules.panel
-import qs.modules.notifications
+import qs.panel
+import qs.notifications
 
 ShellRoot
 {
