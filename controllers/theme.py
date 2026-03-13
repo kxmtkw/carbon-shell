@@ -1,4 +1,4 @@
-from carbon.state import CarbonState
+from carbon.config import CarbonConfig
 from carbon.theme import Theme
 
 from pathlib import Path
@@ -26,7 +26,7 @@ class ThemePicker():
 		
 		self.rofi.updateTheme(main_rasi)
 
-		current_mode = CarbonState.get("theme_mode", "light", valid_types=(str))
+		current_mode = CarbonConfig.get("theme_mode", "light", valid_types=(str))
 		is_dark_mode = False if current_mode == "light" else True
 
 		options: list[str] = [
@@ -76,9 +76,9 @@ class ThemePicker():
 
 		image = self.image_dir.joinpath(selected)
 
-		mode = CarbonState.get("theme_mode", "dark", valid_types=(str))
-		variant = CarbonState.get("theme_variant", "graphite", valid_types=(str))
-		contrast = CarbonState.get("theme_contrast", 0.25, valid_types=(float, int))
+		mode = CarbonConfig.get("theme_mode", "dark", valid_types=(str))
+		variant = CarbonConfig.get("theme_variant", "graphite", valid_types=(str))
+		contrast = CarbonConfig.get("theme_contrast", 0.25, valid_types=(float, int))
 
 		if image.exists():
 			Theme.set_wallpaper(image)
@@ -89,7 +89,7 @@ class ThemePicker():
 
 	def open_update_theme_options(self):
 
-		variant = CarbonState.get("theme_variant", "graphite", valid_types=(str))
+		variant = CarbonConfig.get("theme_variant", "graphite", valid_types=(str))
 
 		options = [
 			"[1] Ash",
@@ -109,9 +109,9 @@ class ThemePicker():
 
 		selected = selected.split("]")[-1].strip().lower()
 
-		mode = CarbonState.get("theme_mode", "dark", valid_types=(str))
-		contrast = CarbonState.get("theme_contrast", 0.25, valid_types=(float, int))
-		image = CarbonState.get("theme_wallpaper", valid_types=(str))
+		mode = CarbonConfig.get("theme_mode", "dark", valid_types=(str))
+		contrast = CarbonConfig.get("theme_contrast", 0.25, valid_types=(float, int))
+		image = CarbonConfig.get("theme_wallpaper", valid_types=(str))
 
 		image_path = Path(image)
 		if image_path.exists():
@@ -121,7 +121,7 @@ class ThemePicker():
 
 	def open_contrast_options(self):
 		
-		contrast = CarbonState.get("theme_contrast", 0.25, valid_types=(float, int))
+		contrast = CarbonConfig.get("theme_contrast", 0.25, valid_types=(float, int))
 		options = [str(x/4) for x in range(1, 17)]
 		
 		self.rofi.display(
@@ -133,9 +133,9 @@ class ThemePicker():
 		selected: str = self.rofi.wait()
 		if not selected: exit()
 
-		mode = CarbonState.get("theme_mode", "dark", valid_types=(str))
-		variant = CarbonState.get("theme_variant", "graphite", valid_types=(str))
-		image = CarbonState.get("theme_wallpaper", valid_types=(str))
+		mode = CarbonConfig.get("theme_mode", "dark", valid_types=(str))
+		variant = CarbonConfig.get("theme_variant", "graphite", valid_types=(str))
+		image = CarbonConfig.get("theme_wallpaper", valid_types=(str))
 
 		image_path = Path(image)
 		if image_path.exists():

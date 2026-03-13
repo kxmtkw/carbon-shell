@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Literal
 
 from carbon.helpers import CarbonError
-from carbon.state import CarbonState
+from carbon.config import CarbonConfig
 
 from .material import MaterialColors
 from .update import update_colors
@@ -15,7 +15,7 @@ class Theme:
     ## update the wallpaper state in carbon.state
 
     output = subprocess.run("swww query | grep -oP '(?<=image: ).*'", shell=True, capture_output=True, text=True)
-    CarbonState.set("theme_wallpaper", output.stdout.strip())
+    CarbonConfig.set("theme_wallpaper", output.stdout.strip())
 
     @classmethod
     def change_color_theme(
@@ -66,9 +66,9 @@ class Theme:
             json.dump(colors.lightMapping, file, indent=4)
 
 
-        CarbonState.set("theme_wallpaper", str(img))
-        CarbonState.set("theme_contrast", contrast)
-        CarbonState.set("theme_variant", variant)           
+        CarbonConfig.set("theme_wallpaper", str(img))
+        CarbonConfig.set("theme_contrast", contrast)
+        CarbonConfig.set("theme_variant", variant)           
 
 
     @classmethod
@@ -80,7 +80,7 @@ class Theme:
             CarbonError(f"Cache dir not found :: {cache}.\nSomething is really really wrong. Cannot switch without cached themes.").halt()
 
 
-        if CarbonState.get("theme_mode", str) == color:
+        if CarbonConfig.get("theme_mode", str) == color:
             print("Mode already active.")
             exit()
 
@@ -109,7 +109,7 @@ class Theme:
             update_colors(mapping)
 
 
-        CarbonState.set("theme_mode", color)
+        CarbonConfig.set("theme_mode", color)
 
 
     @classmethod
