@@ -46,7 +46,7 @@ echo $current > $active_file
 
 case $1 in
 	"launcher")
-		rofi -show drun -theme ~/.carbon/shell/rofi/launcher.rasi 
+		rofi -show drun -theme ~/.carbon/shell/rofi/launcher.rasi -window-title "carbon"
 	;;
 	"windows")
 		rofi -show window -theme ~/.carbon/shell/rofi/windows.rasi
