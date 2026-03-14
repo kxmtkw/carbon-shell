@@ -1,0 +1,7 @@
+theme_wallpaper = "/home/haseeb/Images/Wallpapers/wall.png"
+theme_mode = "dark"
+theme_variant = "coal"
+theme_contrast = 0.25
+
+[user]
+terminal = "alacritty"

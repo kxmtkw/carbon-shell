@@ -1,16 +1,18 @@
-whiteboard.txt
+
+
+# dev stuff
 .vscode/**
 .venv/**
 __pycache__
 **.egg-info/
 build/
 
-# Color files
+# carbon specific
+cache/
+settings/
+
+# color files
+
 color.json
 color.conf
 color.rasi
-color.toml
-Carbon.colors
-
-# Carbon specific
-cache/
