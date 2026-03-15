@@ -12,7 +12,10 @@ cache/
 settings/
 
 # color files
-
 color.json
 color.conf
 color.rasi
+
+# hyprland
+override.conf
+hyprviz.**
