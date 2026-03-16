@@ -10,6 +10,8 @@ pip install . > /dev/null 2>&1
 
 echo " :: Linking hyprland " 
 ln -s -i ~/.carbon/hypr ~/.config/hypr
+touch ~/.carbon/hypr/hyprviz.conf
+touch ~/.carbon/hypr/override.conf
 
 echo " :: Copying shell configuration "
 mkdir settings
