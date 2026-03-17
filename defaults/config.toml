@@ -1,7 +1,26 @@
-theme_wallpaper = "/home/haseeb/Images/Wallpapers/wall.png"
-theme_mode = "dark"
-theme_variant = "coal"
-theme_contrast = 0.25
 
 [user]
-terminal = "alacritty"
+
+# default terminal
+terminal = "alacritty" 
+
+[theme]
+
+# Profile Picture. 
+face = "~/.carbon/assets/default_face.jpg"
+
+# Applied wallpaper. ~ supported.
+wallpaper = "~/.carbon/assets/default_wallpaper.jpg"
+
+# Theme mode. 
+# Valid values: dark, light
+mode = "light"
+
+# Theme variants. 
+# Valid values: ash, coal, graphite, diamond
+variant = "graphite"
+
+# Theme contrast
+contrast = 0.5
+
+

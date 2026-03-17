@@ -24,7 +24,7 @@ class ConfigUpdater:
         Theme.set_wallpaper(wallpaper)
         Theme.change_color_theme(mode, variant, wallpaper, contrast=contrast)
 
-        face = self.config.get("theme.face", ConfigDefaults.wallpaper, valid_types=(str,))
+        face = self.config.get("theme.face", ConfigDefaults.face, valid_types=(str,))
 
         if Path(face).expanduser().exists():
             run(f"cp {face} ~/.carbon/user/face")
