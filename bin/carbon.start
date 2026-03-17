@@ -10,8 +10,8 @@ sleep 2
 notify-send "Hello, World!" "logged in as $USER"
 
 sleep 3
-carbon.brightness set 100
+carbon.brightness set 100 > /dev/null
 
 sleep 2
-carbon.audio set 100
+carbon.audio set 100 > /dev/null
 

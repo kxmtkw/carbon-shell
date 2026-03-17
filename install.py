@@ -99,7 +99,7 @@ run("mkdir settings")
 run("cp -i ~/.carbon/defaults/config.toml ~/.carbon/settings/config.toml")
 run("cp -i ~/.carbon/defaults/colors.toml ~/.carbon/settings/colors.toml")
 
-run("carbon.start")
+run("carbon.start > /dev/null")
 
 run("hyprctl reload")
 
