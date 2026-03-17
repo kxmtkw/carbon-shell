@@ -7,16 +7,16 @@ The shell has a `Material You` inspired design and uses its theming scheme.
 
 ## Previews
 
-![](/previews/launcher.png)
+![](/assets/launcher.png)
 
 
-![](/previews/lightmode.png)
+![](/assets/lightmode.png)
 
 
-![](/previews/wallpaper.png)
+![](/assets/wallpaper.png)
 
 
-![](/previews/lockscreen.png)
+![](/assets/lockscreen.png)
 
 
 ## Installation

@@ -43,8 +43,8 @@ def update_colors(colors: dict[str, str]) -> None:
                 print(f"Error :: {type}")
                 continue
 
-        print(f"Updated :: {filepath}")
+        print(f"Updated :: {type}")
 
+    print(f":: Running post theme commands")
     for cmd in settings.get("commands"):
-        print(f"Running cmd: {cmd}")
         subprocess.run(cmd, shell=True, capture_output=True)

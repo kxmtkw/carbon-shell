@@ -23,7 +23,7 @@ class Color:
     bright_white   = "\033[97m"
 
     @classmethod
-    def Print(cls, msg: str, color: str):
-        print(f"{color}{msg}{Color.reset}")
+    def Print(cls, msg: str, color: str, *, end="\n"):
+        print(f"{color}{msg}{Color.reset}", end=end)
 
 

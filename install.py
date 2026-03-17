@@ -90,6 +90,7 @@ run("touch ~/.carbon/hypr/override.conf")
 
 Color.Print(":: Moving settings...", Color.blue)
 
+run("mkdir user")
 run("mkdir settings")
 run("cp -i ~/.carbon/defaults/config.toml ~/.carbon/settings/config.toml")
 run("cp -i ~/.carbon/defaults/colors.toml ~/.carbon/settings/colors.toml")

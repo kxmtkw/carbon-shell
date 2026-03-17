@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+$CARBONPY -m carbon.config
