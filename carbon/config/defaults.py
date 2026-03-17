@@ -6,3 +6,5 @@ class ConfigDefaults:
     mode = "light"
     variant = "graphite"
     contrast = 0.5
+
+    face = "~/.carbon/assets/default_face.jpg"
