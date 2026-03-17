@@ -84,16 +84,23 @@ run("source ./.venv/bin/activate && pip install . ")
 
 Color.Print(":: Linking hyprland...", Color.blue)
 
-run("ln -s -i ~/.carbon/hypr ~/.config/hypr")
+run("ln -s -i ~/.carbon/hypr ~/.config")
 run("touch ~/.carbon/hypr/hyprviz.conf")
 run("touch ~/.carbon/hypr/override.conf")
 
+run("hyprctl reload")
+
 Color.Print(":: Moving settings...", Color.blue)
 
+run("mkdir cache")
 run("mkdir user")
 run("mkdir settings")
+
 run("cp -i ~/.carbon/defaults/config.toml ~/.carbon/settings/config.toml")
 run("cp -i ~/.carbon/defaults/colors.toml ~/.carbon/settings/colors.toml")
 
+run("carbon.start")
+
+run("hyprctl reload")
 
 Color.Print(" :: Carbon shell installed!", Color.green)
