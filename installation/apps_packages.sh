@@ -1,0 +1,31 @@
+
+sudo pacman -S \
+    alacritty \          
+    ark \                
+    calindori \          
+    clang \              
+    dolphin \            
+    dolphin-plugins \    
+    filelight \          
+    gwenview \           
+    haruna \             
+    hyprviz \            
+    isoimagewriter \     
+    kamoso \             
+    kcalc \              
+    kclock \             
+    kconfig \            
+    kconfig5 \           
+    kcoreaddons \        
+    kde-cli-tools \      
+    ktorrent \           
+    nm-connection-editor \ 
+    nwg-look \           
+    okular \             
+    partitionmanager \   
+    plasma-systemmonitor \ 
+    plasma-workspace \   
+    qt5-imageformats \   
+    qt5-multimedia \     
+    qt5-svg \            
+    qt6-languageserver \ 
