@@ -25,51 +25,56 @@ WrapperRectangle
 	{
 		NumberAnimation 
 		{
-			duration: 100
+			duration: 240
 			easing.type: Easing.InOut
 		}
 	}
 
-	RowLayout 
+	RowLayout
 	{
-		id: panel_workspaces_row
-		spacing: 0
-
-		onImplicitWidthChanged: {
-			panel_workspaces.workspacesWidth = implicitWidth
-		}
-
-		Repeater 
+		spacing: 10
+		RowLayout 
 		{
-			model: Hyprland.workspaces
+			id: panel_workspaces_row
+			spacing: 0
 
-			delegate:
-
-			Rectangle 
-			{
-				Layout.alignment: Qt.AlignVCenter
-			
-				width:  28
-				height: 26
-				
-				radius: Theme.Style.getMaterialRadius(width, height, "small")
-				color:  modelData.active ? Theme.Color._tertiaryContainer : Theme.Color._invisible
-				
-				Text
-				{
-					anchors.centerIn: parent
-					color: modelData.active ? Theme.Color._onTertiaryContainer : Theme.Color._invisible
-					text: modelData.id
-				}
-
-				MouseArea
-				{
-					anchors.fill: parent
-					hoverEnabled: true
-					onClicked:   {modelData.activate()}
-				}
+			onImplicitWidthChanged: {
+				panel_workspaces.workspacesWidth = implicitWidth
 			}
-			
+
+			Repeater 
+			{
+				model: Hyprland.workspaces
+
+				delegate:
+
+				Rectangle 
+				{
+					Layout.alignment: Qt.AlignVCenter
+				
+					width:  28
+					height: 26
+					
+					radius: Theme.Style.getMaterialRadius(width, height, "small")
+					color:  modelData.focused ? Theme.Color._tertiaryContainer : Theme.Color._invisible
+					
+					Text
+					{
+						anchors.centerIn: parent
+						color: modelData.focused ? Theme.Color._onTertiaryContainer : Theme.Color._invisible
+						text: modelData.name
+					}
+
+					MouseArea
+					{
+						anchors.fill: parent
+						hoverEnabled: true
+						onClicked:   {modelData.activate()}
+					}
+				}
+				
+			}
 		}
+
 	}
 }
