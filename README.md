@@ -1,48 +1,42 @@
 
 # Carbon Shell
 
-Carbon Shell is a UI shell for linux designed to be highly functional and efficient. It uses quickshell and rofi to achieve this.
+Carbon Shell is a UI shell for linux designed to be highly functional and efficient. The shell is specifically built for the `Hyprland` WM.
+
+The shell has a `Material You` inspired design and uses its theming scheme.
+
+## Previews
+
+![](/previews/launcher.png)
+
+
+![](/previews/lightmode.png)
+
+
+![](/previews/wallpaper.png)
+
+
+![](/previews/lockscreen.png)
+
 
 ## Installation
-
-First install dependancies.
-
-The shell is designed for hyprland so you first need these dependancies:
-
-```bash
-hyprland \
-hyprsunset \
-hyprshot \
-hyprpolkitagent
-```
-
-Then these dependancies for the shell.
-
-```bash
-swww \ 
-quickshell \
-rofi \ 
-plasma-workspace # for switching kde themes, optional if you don't use kde apps
-```
-
-Other than these, the shell also expects `NetworkManager` and it's associated tools like `nmcli` for the wifi controller to work.
 
 Clone the repo at `~/.carbon` and it MUST be cloned exactly at this path for the shell to work.
 
 ``` bash
 git clone git@github.com:kxmtkw/carbon-shell.git ~/.carbon
 cd ~/.carbon
-chmod +x setup.sh
-./setup.sh
+python3 install.py
 ```
 
 What this script would do:
-+ Setup a python venv at `~/.carbon/.venv`
-+ Install all python dependancies
-+ Finally run `carbon install` to install the shell.
++ Install core packages
++ Install pacakages for essential apps (optional)
++ Install the shell
 
-Finally, add `source ~/.carbon/env` in your shell environment to run the shell. 
-Start the shell using `carbon.start`.
+Then just start up hyprland and everything should work.
 
-> The shell is still barebones, Soon a better and quicker way to install will be implemented.
 
+
+## TODO
+Here is a list of planned features/improvements: [todo](/docs/todo.md)
