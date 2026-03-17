@@ -17,7 +17,8 @@ authors = [
 ]
 dependencies = [
     "material-color-utilities",
-    "python-pam"
+    "python-pam",
+    "toml"
 ]
 
 [project.scripts]

@@ -2,6 +2,8 @@
 
 # start of the shell
 
+carbon.reload
+
 quickshell --config ~/.carbon/shell/quickshell &
 
 sleep 2
