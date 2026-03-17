@@ -1,3 +1,2 @@
-from . import config
+from .getter import CarbonConfig
 
-CarbonConfig = config.CarbonConfig()

@@ -14,8 +14,8 @@ class Theme:
 
     ## update the wallpaper state in carbon.state
 
-    output = subprocess.run("swww query | grep -oP '(?<=image: ).*'", shell=True, capture_output=True, text=True)
-    CarbonConfig.set("theme_wallpaper", output.stdout.strip())
+    #output = subprocess.run("swww query | grep -oP '(?<=image: ).*'", shell=True, capture_output=True, text=True)
+    #CarbonConfig.set("theme_wallpaper", output.stdout.strip())
 
     @classmethod
     def change_color_theme(
@@ -44,7 +44,7 @@ class Theme:
 
         colors = MaterialColors()
         
-        colors.generate_from_image(img, contrast, theme_variant)
+        colors.generate_from_image(Path(img).expanduser(), contrast, theme_variant)
 
         if theme == "light":
             update_colors(colors.lightMapping)
@@ -64,11 +64,7 @@ class Theme:
 
         with open(cache.joinpath("lighttheme.json"), "w") as file:
             json.dump(colors.lightMapping, file, indent=4)
-
-
-        CarbonConfig.set("theme_wallpaper", str(img))
-        CarbonConfig.set("theme_contrast", contrast)
-        CarbonConfig.set("theme_variant", variant)           
+      
 
 
     @classmethod
@@ -109,7 +105,6 @@ class Theme:
             update_colors(mapping)
 
 
-        CarbonConfig.set("theme_mode", color)
 
 
     @classmethod

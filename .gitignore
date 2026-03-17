@@ -10,6 +10,7 @@ build/
 # carbon specific
 cache/
 settings/
+user/
 
 # color files
 color.json
