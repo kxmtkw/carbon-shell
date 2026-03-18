@@ -87,6 +87,7 @@ Color.Print(":: Linking hyprland...", Color.blue)
 run("ln -s -i ~/.carbon/hypr ~/.config")
 run("touch ~/.carbon/hypr/hyprviz.conf")
 run("touch ~/.carbon/hypr/override.conf")
+run("mkdir ~/.carbon/hypr/user")
 
 run("hyprctl reload")
 
