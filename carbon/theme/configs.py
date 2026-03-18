@@ -7,9 +7,9 @@ def update_kde(s: dict[str, str]) -> str:
 Color={s["primary"]}
 ColorAmount=1
 ColorEffect=1
-ContrastAmount=0.75
+ContrastAmount=1
 ContrastEffect=1
-IntensityAmount=0.45
+IntensityAmount=1
 IntensityEffect=0
 
 [ColorEffects:Inactive]
@@ -25,20 +25,6 @@ IntensityEffect=0
 
 [Colors:Button]
 BackgroundAlternate={s["primaryContainer"]}
-BackgroundNormal={s["surfaceContainer"]}
-DecorationFocus={s["primary"]}
-DecorationHover={s["primary"]}
-ForegroundActive={s["primary"]}
-ForegroundInactive={s["onSurface"]}
-ForegroundLink={s["tertiary"]}
-ForegroundNegative={s["secondary"]}
-ForegroundNeutral={s["onSurface"]}
-ForegroundNormal={s["onSurface"]}
-ForegroundPositive={s["primary"]}
-ForegroundVisited={s["tertiary"]}
-
-[Colors:Selection]
-BackgroundAlternate={s["surfaceContainerHigh"]}
 BackgroundNormal={s["surfaceContainerHigh"]}
 DecorationFocus={s["primary"]}
 DecorationHover={s["primary"]}
@@ -51,9 +37,23 @@ ForegroundNormal={s["onSurface"]}
 ForegroundPositive={s["primary"]}
 ForegroundVisited={s["tertiary"]}
 
+[Colors:Selection]
+BackgroundAlternate={s["surfaceContainerHighest"]}
+BackgroundNormal={s["surfaceContainerHighest"]}
+DecorationFocus={s["primary"]}
+DecorationHover={s["primary"]}
+ForegroundActive={s["primary"]}
+ForegroundInactive={s["onSurface"]}
+ForegroundLink={s["tertiary"]}
+ForegroundNegative={s["secondary"]}
+ForegroundNeutral={s["onSurface"]}
+ForegroundNormal={s["onSurface"]}
+ForegroundPositive={s["primary"]}
+ForegroundVisited={s["tertiary"]}
+
 [Colors:Tooltip]
-BackgroundAlternate={s["surfaceContainer"]}
-BackgroundNormal={s["background"]}
+BackgroundAlternate={s["surfaceContainerHigh"]}
+BackgroundNormal={s["surfaceContainer"]}
 DecorationFocus={s["primary"]}
 DecorationHover={s["primary"]}
 ForegroundActive={s["primary"]}
@@ -66,8 +66,8 @@ ForegroundPositive={s["primary"]}
 ForegroundVisited={s["tertiary"]}
 
 [Colors:View]
-BackgroundAlternate={s["surfaceContainer"]}
-BackgroundNormal={s["background"]}
+BackgroundAlternate={s["surfaceContainerHigh"]}
+BackgroundNormal={s["surfaceContainer"]}
 DecorationFocus={s["primary"]}
 DecorationHover={s["primary"]}
 ForegroundActive={s["primary"]}
@@ -80,8 +80,8 @@ ForegroundPositive={s["primary"]}
 ForegroundVisited={s["tertiary"]}
 
 [Colors:Window]
-BackgroundAlternate={s["surfaceContainer"]}
-BackgroundNormal={s["background"]}
+BackgroundAlternate={s["surfaceContainerHigh"]}
+BackgroundNormal={s["surfaceContainer"]}
 DecorationFocus={s["primary"]}
 DecorationHover={s["primary"]}
 ForegroundActive={s["primary"]}
@@ -98,7 +98,7 @@ Name=Carbon
 shadeSortColumn=true
 
 [KDE]
-contrast=10
+contrast=20
 """
 
 
