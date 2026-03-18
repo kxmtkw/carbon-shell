@@ -25,7 +25,7 @@ class MaterialColors:
 
 
     class Variant:
-        ash      = material.Variant.VIBRANT
+        ash      = material.Variant.NEUTRAL
         coal     = material.Variant.MONOCHROME
         graphite = material.Variant.TONALSPOT
         diamond  = material.Variant.FRUITSALAD
