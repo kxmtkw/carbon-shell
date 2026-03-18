@@ -4,6 +4,7 @@ from .getter import CarbonConfig
 def main():
     updater = ConfigUpdater(CarbonConfig)
     updater.update()
+    updater.notify()
 
 if __name__ == "__main__":
     main()

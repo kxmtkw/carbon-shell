@@ -49,6 +49,10 @@ class ConfigUpdater:
         with open(user_dir.joinpath("default.conf"), "w") as file:
             file.write(config_str)
 
+
+    def notify(self):
+        run("notify-send -a 'Carbon Shell' 'Config Reloaded'")
+
             
 
         
