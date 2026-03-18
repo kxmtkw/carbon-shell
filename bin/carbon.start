@@ -2,9 +2,9 @@
 
 # start of the shell
 
-carbon.reload
-
 quickshell --config ~/.carbon/shell/quickshell &
+
+carbon.reload --silent
 
 sleep 2
 notify-send "Hello, World!" "logged in as $USER"
