@@ -76,7 +76,7 @@ class Theme:
             CarbonError(f"Cache dir not found :: {cache}.\nSomething is really really wrong. Cannot switch without cached themes.").halt()
 
 
-        if CarbonConfig.get("theme_mode", str) == color:
+        if CarbonConfig.get("theme.mode", str) == color:
             print("Mode already active.")
             exit()
 
@@ -115,7 +115,7 @@ class Theme:
         if not img_path.exists():
             CarbonError(f"File not found :: {img_path}").halt()
 
-        output = subprocess.run(f"swww img {img_path}", shell=True, capture_output=True, text=True)
+        output = subprocess.run(f"swww img --transition-type outer {img_path}", shell=True, capture_output=True, text=True)
         
         if output.returncode != 0:
             CarbonError(f"Failed to change wallpaper :: {output.stderr}").halt()
