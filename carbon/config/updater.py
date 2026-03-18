@@ -13,6 +13,7 @@ class ConfigUpdater:
 
     def update(self):
         self.update_theme()
+        self.update_hyprland_defaults()
 
     def update_theme(self):
         
@@ -30,6 +31,24 @@ class ConfigUpdater:
             run(f"cp {face} ~/.carbon/user/face")
         else:
             CarbonError(f"Face file does not exist: {face}").halt()
+
+    def update_hyprland_defaults(self):
+
+        config_str = ""
+
+        terminal = self.config.get("defaults.terminal", None, valid_types=(str,))
+
+        if terminal:
+            config_str += f"$default_terminal = '{terminal}'\n"
+
+        user_dir = Path("~/.config/hypr/user").expanduser()
+
+        if not user_dir.exists():
+            run("mkdir ~/.config/hypr/user")
+
+        with open(user_dir.joinpath("default.conf"), "w") as file:
+            file.write(config_str)
+
             
 
         

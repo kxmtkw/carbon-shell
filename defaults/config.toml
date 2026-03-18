@@ -1,6 +1,8 @@
 
 [user]
 
+
+[defaults]
 # default terminal
 terminal = "alacritty" 
 
