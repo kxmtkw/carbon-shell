@@ -152,8 +152,11 @@ class ThemePicker():
 
 	def get_images(self) -> list[str]:
 
+		raw_images = list(self.image_dir.iterdir())
+		raw_images.sort()
+
 		images = []
-		for item in self.image_dir.iterdir():
+		for item in raw_images:
 			if item.is_file():
 				option = RofiShell.markWithIcon(item.name, item.absolute())
 				images.append(option)
