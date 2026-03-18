@@ -46,7 +46,7 @@ def prompt(msg: str, options: list[str]) -> str:
 
 # Installation
 
-Color.Print(" >>> Installing Core Packages", Color.blue)
+Color.Print(" >>> Installing Core Packages", Color.magenta)
 
 print("Permission required. Packages will be installed from ./installation/core_packages.sh (for arch)")
 
@@ -55,14 +55,14 @@ chosen = prompt("proceed?", ["y", "n"])
 if chosen == "y":
     Color.Print(":: Proceeding with installation...", Color.blue)
     run("sh ./installation/core_packages.sh")
-    Color.Print(":: Core packages installed!", Color.green)
+    Color.Print(":: Installation finished.", Color.green)
 else:
     Color.Print(":: Installation canceled...", Color.yellow)
 
 
-Color.Print(" >>> Installing App Packages", Color.blue)
+Color.Print(" >>> Installing App Packages", Color.magenta)
 
-print("These include KDE apps and a small part of KDE ecosystem for theming (does not include plasma itself)")
+print("These include KDE apps and other apps like network manager.")
 print("Permission required. Packages will be installed from ./installation/app_packages.sh (for arch)")
 
 chosen = prompt("proceed?", ["y", "n"])
@@ -70,12 +70,12 @@ chosen = prompt("proceed?", ["y", "n"])
 if chosen == "y":
     Color.Print(":: Proceeding with installation...", Color.blue)
     run("sh ./installation/core_packages.sh")
-    Color.Print(":: App packages installed!", Color.green)
+    Color.Print(":: Installation finished.", Color.green)
 else:
     Color.Print(":: Installation canceled...", Color.yellow)
 
 
-Color.Print(" >>> Installing Carbon", Color.blue)
+Color.Print(" >>> Installing Carbon", Color.magenta)
 
 Color.Print(":: Installing python package...", Color.blue)
 
@@ -103,7 +103,9 @@ run("cp -i ~/.carbon/defaults/config.toml ~/.carbon/settings/config.toml")
 run("cp -i ~/.carbon/defaults/colors.toml ~/.carbon/settings/colors.toml")
 
 
-Color.Print(" :: Carbon shell installed!", Color.green)
+Color.Print(":: Starting shell...", Color.blue)
 
 run("carbon.start > /dev/null")
-run("hyprctl reload")
+run("hyprctl reload > /dev/null")
+
+Color.Print(" :: Carbon shell installed!", Color.green)
