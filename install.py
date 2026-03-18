@@ -91,17 +91,19 @@ run("mkdir ~/.carbon/hypr/user")
 
 run("hyprctl reload")
 
-Color.Print(":: Moving settings...", Color.blue)
+Color.Print(":: Finalizing setup...", Color.blue)
 
 run("mkdir cache")
 run("mkdir user")
 run("mkdir settings")
 
+run("mkdir /home/haseeb/.local/share/color-schemes")
+
 run("cp -i ~/.carbon/defaults/config.toml ~/.carbon/settings/config.toml")
 run("cp -i ~/.carbon/defaults/colors.toml ~/.carbon/settings/colors.toml")
 
-run("carbon.start > /dev/null")
-
-run("hyprctl reload")
 
 Color.Print(" :: Carbon shell installed!", Color.green)
+
+run("carbon.start > /dev/null")
+run("hyprctl reload")

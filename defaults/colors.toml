@@ -8,8 +8,9 @@ commands = [
 [colorfiles]
 json      = "~/.carbon/shell/quickshell/theme/color.json"
 rofi      = "~/.carbon/shell/rofi/theme/color.rasi"
+hypr      = "~/.carbon/hypr/color.conf"
 
-hypr      = "~/.dotfiles/hypr/color.conf"
-kitty     = "~/.dotfiles/kitty/color.conf"
-alacritty = "~/.dotfiles/alacritty/color.toml"
-kde       = "~/.dotfiles/kde/Carbon.colors"
+kde       = "~/.local/share/color-schemes/Carbon.colors"
+
+# kitty     = "~/.config/kitty/color.conf"
+# alacritty = "~/.config/alacritty/color.toml"
