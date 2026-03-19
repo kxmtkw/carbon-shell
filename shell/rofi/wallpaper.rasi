@@ -88,9 +88,9 @@ listview
 
 element {
     enabled:                     true;
-    spacing:                     -20px;
+    spacing:                     -10px;
     margin:                      0px;
-    padding:                     -26px 30px;
+    padding:                     -30px 30px;
     border:                      0px;
     border-radius:               calc(16);
     background-color:            @background;
@@ -116,9 +116,11 @@ element-icon {
     cursor:                      inherit;
 }
 element-text {
+    enabled:                     false;
     background-color:            inherit;
     text-color:                  rgba(0,0,0,0);
     cursor:                      inherit;
     vertical-align:              0;
     horizontal-align:            0.5;
+    font:                        "Mono 1";
 }
