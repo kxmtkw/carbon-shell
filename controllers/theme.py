@@ -1,5 +1,6 @@
 from carbon.config import CarbonConfig
 from carbon.theme import Theme
+from carbon.helpers import CarbonError
 
 from pathlib import Path
 import sys, time
@@ -13,8 +14,51 @@ class ThemePicker():
 	
 	def __init__(self):
 		self.rofi = RofiShell(main_rasi)
+		self.wallpapers: list[str] = []
+		self.get_wallpapers()
 
-		self.image_dir = Path("~/Images/Wallpapers").expanduser()
+
+	def get_wallpapers(self):
+		# Getting Wallpaper Source dirs
+		wallpaper_paths: list[Path] = []
+
+		default =  ["~/Pictures", "~/Images"]
+		wallpaper_dirs = CarbonConfig.get("defaults.wallpaperSource", default, valid_types=(str, list))
+
+		# Adding paths
+		if isinstance(wallpaper_dirs, str):
+			wallpaper_paths.append(Path(wallpaper_dirs).expanduser())
+		else:
+			for item in wallpaper_dirs:
+				if not isinstance(item, str): continue
+				wallpaper_paths.append(Path(item).expanduser())
+
+		# Checking paths
+		for item in wallpaper_paths:
+			if not item.exists():
+				CarbonError(f"Wallpaper source directory does not exist: '{item.absolute}' ")
+				continue
+
+			if not item.is_dir():
+				CarbonError(f"Wallpaper source is not a directory: '{item.absolute}' ")
+
+			images = self.get_images(item)
+
+			self.wallpapers.extend(images)
+
+		self.wallpapers.sort()
+
+
+	def get_images(self, directory: Path) -> list[str]:
+
+		images = []
+		
+		for item in directory.iterdir():
+			if item.is_file():
+				option = RofiShell.markWithIcon(item.absolute(), item.absolute())
+				images.append(option)
+
+		return images
 
 
 	def launch(self):
@@ -62,20 +106,21 @@ class ThemePicker():
 
 	def open_wallpaper_options(self):
 
-		options = self.get_images()
+		if len(self.wallpapers) == 0:
+			CarbonError("No wallpapers to show.").halt() # todo: add visual error message insteads
 
 		self.rofi.updateTheme(wallpaper_rasi)
 
 		self.rofi.display(
 			mode= RofiShell.Mode.dmenu,
 			prompt="Set Wallpaper",
-			options= options
+			options= self.wallpapers
 		)
 
 		selected: str = self.rofi.wait()
 		if not selected: exit()
 
-		image = self.image_dir.joinpath(selected)
+		image = Path(selected)
 
 		mode = CarbonConfig.get("theme.mode", "dark", valid_types=(str))
 		variant = CarbonConfig.get("theme.variant", "graphite", valid_types=(str))
@@ -149,19 +194,6 @@ class ThemePicker():
 
 		CarbonConfig.set("theme.contrast", float(selected))
 
-
-	def get_images(self) -> list[str]:
-
-		raw_images = list(self.image_dir.iterdir())
-		raw_images.sort()
-
-		images = []
-		for item in raw_images:
-			if item.is_file():
-				option = RofiShell.markWithIcon(item.name, item.absolute())
-				images.append(option)
-		print(images)
-		return images
 
 
 if __name__ == "__main__":

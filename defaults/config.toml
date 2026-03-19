@@ -6,6 +6,13 @@
 # default terminal
 terminal = "alacritty" 
 
+# Source Directory for wallpapers
+# Can be a single path or a list of paths
+wallpaperSource = [
+    "~/Pictures", "~/Images"
+]
+
+
 [theme]
 
 # Profile Picture. 
