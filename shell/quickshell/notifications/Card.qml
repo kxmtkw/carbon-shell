@@ -12,15 +12,48 @@ WrapperRectangle {
     property var notifData
     property bool notifIsCritical: notifData.urgency === NotificationUrgency.Critical
 
-    signal closed()
 
     Layout.fillWidth: true
-    implicitHeight: content.implicitHeight + 28
+    implicitHeight: content.implicitHeight + 42
     implicitWidth: 600
     color: notifIsCritical ? Theme.Color._primaryContainer : Theme.Color._background
     radius: Theme.Style.getMaterialRadius(width, height, "large")
     border.width: 2
-    border.color: Theme.Color._surfaceContainer
+    border.color: Theme.Color._invisible
+
+
+
+
+    signal closed()
+
+    function remove() {
+        close_timer.running = true
+        card.color = "transparent"
+        card.opacity = 0
+        card.implicitHeight = 0
+        card.color = Theme.Color._invisible
+    }
+
+    Timer {
+        id: close_timer
+        interval: 500
+        running: false
+        onTriggered: {card.closed()}
+    }
+
+    Behavior on implicitHeight {
+        NumberAnimation {
+            duration: 50
+            easing.type: Easing.InOutQuad
+        }
+    }
+
+    Behavior on opacity {
+        NumberAnimation {
+            duration: 100
+            easing.type: Easing.InOutQuad
+        }
+    }
 
     Column {
         id: content
@@ -33,7 +66,7 @@ WrapperRectangle {
             margins: 20
         }
 
-        spacing: 10
+        spacing: 5
 
         RowLayout {
             width: parent.width
@@ -73,8 +106,7 @@ WrapperRectangle {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
                     onClicked: {
-                        card.opacity = 0
-                        card.closed()
+                        card.remove()
                     }
                 }
             }

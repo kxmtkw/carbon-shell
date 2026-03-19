@@ -51,12 +51,8 @@ PanelWindow
     implicitHeight: notification_container.height
     color: Theme.Color._invisible
 
-    function removeNotification(notification) {
-        const next = []
-        for (const n of notifications.active_notifications) {
-            if (n !== notification) next.push(n)
-        }
-        notifications.active_notifications = next
+    function removeNotification(idx) {
+        active_notifications = active_notifications.filter((_, i) => i !== idx)
     }
 
 
@@ -67,13 +63,14 @@ PanelWindow
         
         Repeater
         {   
+            id: notification_container_repeater
             model: notifications.active_notifications
 
             delegate: Card {
                 notifData: modelData
 
                 onClosed: {
-                    notifications.removeNotification(modelData)
+                    notifications.removeNotification(index)
                 }
             }
         }

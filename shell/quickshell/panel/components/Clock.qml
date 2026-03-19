@@ -21,22 +21,13 @@ WrapperRectangle
 	implicitWidth: panel_clock.showingDate ? panel_clock.expanded_width : panel_clock.compressed_width
 	
     margin: 8
-	color: panel_clock.showingDate ? Theme.Color._secondaryContainer : Theme.Color._primaryContainer
+	color: Theme.Color._primaryContainer
 	radius: Theme.Style.getMaterialRadius(width, height, "small")
 
 
 	Behavior on implicitWidth
 	{
 		NumberAnimation 
-		{
-			duration: 200
-			easing.type: Easing.InOut
-		}
-	}
-
-	Behavior on color
-	{
-		ColorAnimation 
 		{
 			duration: 200
 			easing.type: Easing.InOut
