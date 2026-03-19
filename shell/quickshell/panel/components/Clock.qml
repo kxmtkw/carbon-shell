@@ -107,6 +107,7 @@ WrapperRectangle
 		MouseArea
 		{
 			anchors.fill: parent
+			cursorShape: Qt.PointingHandCursor
 
 			onReleased: {
 				panel_clock.showingDate = !panel_clock.showingDate
