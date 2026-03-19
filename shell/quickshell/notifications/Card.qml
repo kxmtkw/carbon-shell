@@ -19,7 +19,8 @@ WrapperRectangle {
     implicitWidth: 600
     color: notifIsCritical ? Theme.Color._primaryContainer : Theme.Color._background
     radius: Theme.Style.getMaterialRadius(width, height, "large")
-    opacity: 100
+    border.width: 2
+    border.color: Theme.Color._surfaceContainer
 
     Column {
         id: content
