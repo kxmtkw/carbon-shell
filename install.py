@@ -46,66 +46,72 @@ def prompt(msg: str, options: list[str]) -> str:
 
 # Installation
 
-Color.Print(" >>> Installing Core Packages", Color.magenta)
+def main():
 
-print("Permission required. Packages will be installed from ./installation/core_packages.sh (for arch)")
+    Color.Print(" >>> Installing Core Packages", Color.magenta)
 
-chosen = prompt("proceed?", ["y", "n"])
+    print("Permission required. Packages will be installed from ./installation/core_packages.sh (for arch)")
 
-if chosen == "y":
     Color.Print(":: Proceeding with installation...", Color.blue)
     run("sh ./installation/core_packages.sh")
     Color.Print(":: Installation finished.", Color.green)
-else:
-    Color.Print(":: Installation canceled...", Color.yellow)
 
 
-Color.Print(" >>> Installing App Packages", Color.magenta)
+    Color.Print(" >>> Installing App Packages", Color.magenta)
 
-print("These include KDE apps and other apps like network manager.")
-print("Permission required. Packages will be installed from ./installation/app_packages.sh (for arch)")
+    print("These include KDE apps and other apps like network manager.")
+    print("Permission required. Packages will be installed from ./installation/app_packages.sh (for arch)")
 
-chosen = prompt("proceed?", ["y", "n"])
+    chosen = prompt("proceed?", ["y", "n"])
 
-if chosen == "y":
-    Color.Print(":: Proceeding with installation...", Color.blue)
-    run("sh ./installation/core_packages.sh")
-    Color.Print(":: Installation finished.", Color.green)
-else:
-    Color.Print(":: Installation canceled...", Color.yellow)
-
-
-Color.Print(" >>> Installing Carbon", Color.magenta)
-
-Color.Print(":: Installing python package...", Color.blue)
-
-run("python3 -m venv .venv")
-run("source ./.venv/bin/activate && pip install . ")
-
-Color.Print(":: Linking hyprland...", Color.blue)
-
-run("ln -s -i ~/.carbon/hypr ~/.config")
-run("touch ~/.carbon/hypr/hyprviz.conf")
-run("touch ~/.carbon/hypr/override.conf")
-run("mkdir ~/.carbon/hypr/user")
-
-run("hyprctl reload")
-
-Color.Print(":: Finalizing setup...", Color.blue)
-
-run("mkdir cache")
-run("mkdir user")
-run("mkdir settings")
-
-run("mkdir /home/haseeb/.local/share/color-schemes")
-
-run("cp -i ~/.carbon/defaults/config.toml ~/.carbon/settings/config.toml")
-run("cp -i ~/.carbon/defaults/colors.toml ~/.carbon/settings/colors.toml")
+    if chosen == "y":
+        Color.Print(":: Proceeding with installation...", Color.blue)
+        run("sh ./installation/core_packages.sh")
+        Color.Print(":: Installation finished.", Color.green)
+    else:
+        Color.Print(":: Installation canceled...", Color.yellow)
 
 
-Color.Print(":: Starting shell...", Color.blue)
+    Color.Print(" >>> Installing Carbon", Color.magenta)
 
-run("carbon.start > /dev/null")
-run("hyprctl reload > /dev/null")
+    Color.Print(":: Installing python package...", Color.blue)
 
-Color.Print(" :: Carbon shell installed!", Color.green)
+    run("python3 -m venv .venv")
+    run("source ./.venv/bin/activate && pip install . ")
+
+    Color.Print(":: Linking hyprland...", Color.blue)
+
+    run("ln -s -i ~/.carbon/hypr ~/.config")
+    run("touch ~/.carbon/hypr/hyprviz.conf")
+    run("touch ~/.carbon/hypr/override.conf")
+    run("mkdir ~/.carbon/hypr/user")
+
+    run("hyprctl reload")
+
+    Color.Print(":: Finalizing setup...", Color.blue)
+
+    run("mkdir cache")
+    run("mkdir user")
+    run("mkdir settings")
+
+    run("mkdir /home/haseeb/.local/share/color-schemes")
+
+    run("cp -i ~/.carbon/defaults/config.toml ~/.carbon/settings/config.toml")
+    run("cp -i ~/.carbon/defaults/colors.toml ~/.carbon/settings/colors.toml")
+
+
+    Color.Print(":: Starting shell...", Color.blue)
+
+    run("carbon.start > /dev/null")
+    run("hyprctl reload > /dev/null")
+
+    Color.Print(" :: Carbon shell installed!", Color.green)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        Color.Print("\n:: Installation aborted by user", Color.red)
+    except Exception as e:
+        Color.Print(f" :: Encountered Error: {e.__class__.__name__} [{str(e)}]", Color.red)

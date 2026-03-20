@@ -6,6 +6,8 @@ import QtQuick.Layouts
 
 import qs.theme as Theme
 
+// TODO: use hyprland ipc instead of polling
+
 WrapperRectangle
 {
     id: panel_activeWindow

@@ -47,8 +47,7 @@ PanelWindow
 
 			Launcher{}
 
-			Workspaces{}
-
+			Workspaces{}	
 			ActiveWindow{}
 			
 			Item {Layout.fillWidth: true}
