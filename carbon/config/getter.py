@@ -69,4 +69,4 @@ class ConfigGetter:
         self._save_config()
         
 
-CarbonConfig = ConfigGetter("~/.carbon/settings/config.toml")
+CarbonConfig = ConfigGetter("~/.carbon/config.toml")

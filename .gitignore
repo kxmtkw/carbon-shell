@@ -8,15 +8,13 @@ __pycache__
 build/
 
 # carbon specific
+config.toml
 cache/
-settings/
 user/
+Config/
 
-# color files
-color.json
-color.conf
-color.rasi
 
 # hyprland
+color.conf
 override.conf
 hyprviz.**
