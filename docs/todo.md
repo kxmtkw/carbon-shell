@@ -27,7 +27,7 @@ The current wifi manager "Just Works", I need it to make it more functional and 
 
 Same as the wifi manager but for bluetooth devices, probably build it using bluetoothctl and have an option to open blueman.
 
-#### Responsive Bar
+#### Responsive Bar (In Progress)
 
 I need to make the bar feel more responsive.
 
@@ -38,6 +38,10 @@ I need to make the bar feel more responsive.
 + Date on the bar too, currently only time is shown. Maybe clicking the clock could "expand" it and reveal the date for some short while. Maybe open the calendar on double click?
 + CPU and RAM and stuff? Could be done but we need to be vary of the space.
 + Wifi and Bluetooth applet displaying their connected SSIDs?
+
+#### System Tray
+
+System Tray
 
 #### Battery Manager
  
@@ -72,11 +76,11 @@ A controller to manage mounted devices.
 
 The current media player works fine but we need to display the album art which would be sick.
 
-#### Carbon State
+#### Carbon State (DONE - implemented using Carbon Config)
 
 A better way to track state of the carbon shell. The current implementation relies on a free json file where any key can be added AND it resides in cache/ which makes it more unserious
 
-#### Carbon Config
+#### Carbon Config (DONE)
 
 A way to configure the shell!
 
@@ -87,9 +91,8 @@ A way to configure the shell!
 + Applet positions (too complex perhaps)
 + Default terminal
 
-Will probably use json for this since toml is hard to "re-edit" using "GUIs".
 
-#### Design
+#### Design (In Progress)
 
 I tried implementing material design and it works for the most part. But some improvements can be here and their especially with rofi.
 
@@ -97,10 +100,23 @@ I tried implementing material design and it works for the most part. But some im
 
 I added theming for KDE/QT apps but GTK apps still need some love. This will be trivial to implement... I hope.
 
-#### Firefox CSS
 
-This could be cool.
+#### Daemon
 
-#### Hyprlock Dep
+Implement a daemon that will:
 
-Use the carbon config to let the user pick any lock.
++ Manage controllers so we don't have to use the file hack we currently use.
++ Hot reload config
++ Manage state
++ Cache themes
++ Do Not Disturb state
++ Screen temp state
+
+#### Better hyprland theming
+
+The current method causes env = PATH to be reloaded again and again causing a long PATH var. The fix is to re send the contents of color.conf using hyprctl instead of using file based theming.
+
+
+#### Better controller configuration
+
+Adding options like position and even multiple variants.
