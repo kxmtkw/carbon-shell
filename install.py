@@ -48,28 +48,36 @@ def prompt(msg: str, options: list[str]) -> str:
 
 def main():
 
-    Color.Print(" >>> Installing Core Packages", Color.magenta)
+    Color.Print(" >>> Starting Installation", Color.magenta)
 
-    print("Permission required. Packages will be installed from ./installation/core_packages.sh (for arch)")
+    print("If you are on arch, this script will install dependancies for you. If not, install your distribution's version of packages.")
 
-    Color.Print(":: Proceeding with installation...", Color.blue)
-    run("sh ./installation/core_packages.sh")
-    Color.Print(":: Installation finished.", Color.green)
-
-
-    Color.Print(" >>> Installing App Packages", Color.magenta)
-
-    print("These include KDE apps and other apps like network manager.")
-    print("Permission required. Packages will be installed from ./installation/app_packages.sh (for arch)")
-
-    chosen = prompt("proceed?", ["y", "n"])
+    chosen = prompt("Are you on arch?", ["y", "n"])
 
     if chosen == "y":
+
+        Color.Print(" >>> Installing Core Packages", Color.magenta)
+
+        print("Permission required. Packages will be installed from ./installation/core_packages.sh (for arch)")
+
         Color.Print(":: Proceeding with installation...", Color.blue)
         run("sh ./installation/core_packages.sh")
         Color.Print(":: Installation finished.", Color.green)
-    else:
-        Color.Print(":: Installation canceled...", Color.yellow)
+
+
+        Color.Print(" >>> Installing App Packages", Color.magenta)
+
+        print("These include KDE apps and other apps like network manager.")
+        print("Permission required. Packages will be installed from ./installation/app_packages.sh (for arch)")
+
+        chosen = prompt("proceed?", ["y", "n"])
+
+        if chosen == "y":
+            Color.Print(":: Proceeding with installation...", Color.blue)
+            run("sh ./installation/core_packages.sh")
+            Color.Print(":: Installation finished.", Color.green)
+        else:
+            Color.Print(":: Installation canceled...", Color.yellow)
 
 
     Color.Print(" >>> Installing Carbon", Color.magenta)

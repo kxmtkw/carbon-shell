@@ -14,5 +14,7 @@ sudo pacman -Sy \
     playerctl \
     quickshell \
     rofi \
-    swww
-
+    swww \
+    qt5-imageformats \
+    qt5-multimedia \
+    qt5-svg \
