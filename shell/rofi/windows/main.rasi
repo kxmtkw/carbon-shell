@@ -1,15 +1,25 @@
-@import "config.rasi"
+@import "../Config/config.rasi"
 
 configuration 
 {
-    scroll-method: 0;
+    modi:                       "window";
+
+    window-match-fields: "title,class,role,name,desktop";
+	window-command: "wmctrl -i -R {window}";
+	window-format: "{c}  ::  {t:50}";
+	window-thumbnail: true;
+
+    kb-element-next: "Tab";
+    kb-element-prev: "Alt+Tab";    
 }
 
-@import "theme/color.rasi"
-@import "theme/fonts.rasi"
-@import "theme/style.rasi"
+@import "../Config/color.rasi"
+@import "../Config/fonts.rasi"
+@import "../Config/style.rasi"
 
-
+* {
+    font:                        @fontTextSmall;
+}
 
 window 
 {    
@@ -17,18 +27,18 @@ window
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       1620px;
-    height:                      400px;
+    width:                       760px;
+    height:                      500px;
     x-offset:                    0px;
     y-offset:                    0px;
 
     /* properties for all widgets */
     enabled:                     true;
-    margin:                      10px;
+    margin:                      0;
     padding:                     0;
     border:                      @themeBorderWidth;
     border-color:                @surfaceContainerHighest;
-    border-radius:               calc(540/20);
+    border-radius:               calc(760/28);
     cursor:                      "default";
     background-color:            transparent;
 }
@@ -42,42 +52,26 @@ mainbox
     border-radius:               0%;
     background-color:            @backgroundTransparentxAA;
     vertical-align:              0.5;
-    orientation:                 vertical;
-    children:                    [ "inputbar", "listview" ];
+    orientation:                 horizontal;
+    children:                    [ "listview" ];
 }
-
-inputbar {
-    padding:                     24px 10px 10px 10px;
-    border-radius:               0px;
-    background-color:            @background;
-    text-color:                  @onSurface;
-    children:                    [ "dummy", "prompt", "dummy"];
-}
-dummy {
-    background-color:            transparent;
-}
-prompt {
-    background-color:            inherit;
-    text-color:                  inherit;
-}
-
 
 listview 
 {
     enabled:                     true;
     columns:                     1;
     lines:                       10;
-    cycle:                       false;
-    dynamic:                     false;
-    scrollbar:                   true;
-    layout:                      horizontal;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
     reverse:                     false;
     fixed-height:                false;
     fixed-columns:               false;
     
-    spacing:                     5px;
+    spacing:                     8px;
     margin:                      0%;
-    padding:                     20px 46px;
+    padding:                     40px 40px;
     border:                      0px solid;
     border-radius:               0px;
     background-color:            @background;
@@ -88,39 +82,41 @@ listview
 
 element {
     enabled:                     true;
-    spacing:                     -10px;
+    spacing:                     10px;
     margin:                      0px;
-    padding:                     -30px 30px;
+    padding:                     15px;
     border:                      0px;
     border-radius:               calc(16);
     background-color:            @background;
     text-color:                  @onSurface;
-    orientation:                 vertical;
+    orientation:                 horizontal;
     cursor:                      pointer;
 }
-element normal.active {
-    background-color:            @surfaceContainer;
-    text-color:                  @onSurface;
+element normal.normal {
+    background-color:            inherit;
+    text-color:                  inherit;
 }
 element selected.normal {
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }
+element normal.active {
+    background-color:            @secondary;
+    text-color:                  @onSecondary;
+}
 element selected.active {
-    background-color:            @surfaceContainerHigh;
-    text-color:                  @onSurface;
+    background-color:            @primary;
+    text-color:                  @onPrimary;
 }
 element-icon {
     background-color:            transparent;
-    size:                        312px;
+    size:                        32px;
     cursor:                      inherit;
 }
 element-text {
-    enabled:                     false;
     background-color:            inherit;
-    text-color:                  rgba(0,0,0,0);
+    text-color:                  inherit;
     cursor:                      inherit;
-    vertical-align:              0;
-    horizontal-align:            0.5;
-    font:                        "Mono 1";
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
 }

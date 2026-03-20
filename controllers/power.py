@@ -1,11 +1,11 @@
 from carbon.rofi import RofiShell
 import time
-"#292929aa"
+
 class PowerMenu():
 	
 	def __init__(self):
-		self.rofi = RofiShell("~/.carbon/shell/rofi/power.rasi")
-		self.confirmation = RofiShell("~/.carbon/shell/rofi/confirmation.rasi")
+		self.rofi = RofiShell("~/.carbon/shell/rofi/power/main.rasi")
+		self.confirmation = RofiShell("~/.carbon/shell/rofi/confirmation/main.rasi")
 
 		self.options: list[str] = [
 		"  Lock",

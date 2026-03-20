@@ -46,10 +46,10 @@ echo $current > $active_file
 
 case $1 in
 	"launcher")
-		rofi -show drun -theme ~/.carbon/shell/rofi/launcher.rasi
+		rofi -show drun -theme ~/.carbon/shell/rofi/launcher/main.rasi
 	;;
 	"windows")
-		rofi -show window -theme ~/.carbon/shell/rofi/windows.rasi
+		rofi -show window -theme ~/.carbon/shell/rofi/windows/main.rasi
 	;;
 	"power")
 		$CARBONPY ~/.carbon/controllers/power.py
@@ -64,7 +64,7 @@ case $1 in
 		$CARBONPY ~/.carbon/controllers/run.py
 	;;
 	"clipboard") 
-		cliphist list | rofi -dmenu -theme ~/.carbon/shell/rofi/clipboard.rasi -p 'Clipboard' | cliphist decode | wl-copy
+		cliphist list | rofi -dmenu -theme ~/.carbon/shell/rofi/clipboard/main.rasi -p 'Clipboard' | cliphist decode | wl-copy
 	;;
 	"player") 
 		$CARBONPY ~/.carbon/controllers/player.py
