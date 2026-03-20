@@ -26,11 +26,13 @@ class Color:
     def Print(cls, msg: str, color: str):
         print(f"{color}{msg}{Color.reset}")
 
-def run(cmd, wait: bool = True):
+def run(cmd, wait: bool = True) -> bool | None:
     if wait:
-        subprocess.run(cmd, shell=True)
+        output = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        return output.returncode == 0
     else:
         subprocess.Popen(cmd, shell=True)
+        return None
 
 def prompt(msg: str, options: list[str]) -> str:
 
@@ -97,7 +99,6 @@ def main():
     run("touch ~/.carbon/hypr/override.conf")
     run("mkdir ~/.carbon/hypr/user")
 
-    run("hyprctl reload > /dev/null")
 
     Color.Print(":: Finalizing setup...", Color.blue)
 
@@ -111,6 +112,7 @@ def main():
 
     Color.Print(":: Starting shell...", Color.blue)
 
+    run("pidof Hyprland && echo 'Hyprland already running!' || start-hyprland")
     run("carbon.start > /dev/null")
     run("hyprctl reload > /dev/null")
 

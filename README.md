@@ -63,7 +63,7 @@ What this script would do:
 + Install packages for essential apps (optional)
 + Install the shell
 
-Then just start up hyprland and everything should work.
+Then just restart hyprland and everything should work.
 
 
 
