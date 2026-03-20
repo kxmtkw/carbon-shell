@@ -6,7 +6,7 @@ from carbon.rofi import RofiShell
 class ScreenshotMenu():
 	
 	def __init__(self):
-		self.rofi = RofiShell("~/.carbon/shell/rofi/screenshot.rasi")
+		self.rofi = RofiShell("~/.carbon/shell/rofi/screenshot/main.rasi")
 
 		self.prompt = "Screenshot"
 		self.mesg = ""

@@ -1,25 +1,14 @@
-@import "config.rasi"
+@import "../Config/config.rasi"
 
 configuration 
 {
-    modi:                       "window";
-
-    window-match-fields: "title,class,role,name,desktop";
-	window-command: "wmctrl -i -R {window}";
-	window-format: "{c}  ::  {t:50}";
-	window-thumbnail: true;
-
-    kb-element-next: "Tab";
-    kb-element-prev: "Alt+Tab";    
 }
 
-@import "theme/color.rasi"
-@import "theme/fonts.rasi"
-@import "theme/style.rasi"
+@import "../Config/color.rasi"
+@import "../Config/fonts.rasi"
+@import "../Config/style.rasi"
 
-* {
-    font:                        @fontTextSmall;
-}
+
 
 window 
 {    
@@ -27,18 +16,18 @@ window
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       760px;
-    height:                      500px;
+    width:                       540px;
+    height:                      420px;
     x-offset:                    0px;
     y-offset:                    0px;
 
     /* properties for all widgets */
     enabled:                     true;
-    margin:                      0;
+    margin:                      10px;
     padding:                     0;
     border:                      @themeBorderWidth;
     border-color:                @surfaceContainerHighest;
-    border-radius:               calc(760/28);
+    border-radius:               calc(540/20);
     cursor:                      "default";
     background-color:            transparent;
 }
@@ -52,9 +41,25 @@ mainbox
     border-radius:               0%;
     background-color:            @backgroundTransparentxAA;
     vertical-align:              0.5;
-    orientation:                 horizontal;
-    children:                    [ "listview" ];
+    orientation:                 vertical;
+    children:                    [ "inputbar", "listview" ];
 }
+
+inputbar {
+    padding:                     24px 10px 10px 10px;
+    border-radius:               0px;
+    background-color:            @background;
+    text-color:                  @onSurface;
+    children:                    [ "dummy", "prompt", "dummy"];
+}
+dummy {
+    background-color:            transparent;
+}
+prompt {
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+
 
 listview 
 {
@@ -69,9 +74,9 @@ listview
     fixed-height:                false;
     fixed-columns:               false;
     
-    spacing:                     8px;
+    spacing:                     10px;
     margin:                      0%;
-    padding:                     40px 40px;
+    padding:                     20px 40px;
     border:                      0px solid;
     border-radius:               0px;
     background-color:            @background;
@@ -92,21 +97,17 @@ element {
     orientation:                 horizontal;
     cursor:                      pointer;
 }
-element normal.normal {
-    background-color:            inherit;
-    text-color:                  inherit;
+element normal.active {
+    background-color:            @surfaceContainer;
+    text-color:                  @onSurface;
 }
 element selected.normal {
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }
-element normal.active {
-    background-color:            @secondary;
-    text-color:                  @onSecondary;
-}
 element selected.active {
-    background-color:            @primary;
-    text-color:                  @onPrimary;
+    background-color:            @surfaceContainerHigh;
+    text-color:                  @onSurface;
 }
 element-icon {
     background-color:            transparent;
@@ -118,5 +119,5 @@ element-text {
     text-color:                  inherit;
     cursor:                      inherit;
     vertical-align:              0.5;
-    horizontal-align:            0.0;
+    horizontal-align:            0;
 }

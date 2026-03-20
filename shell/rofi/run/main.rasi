@@ -1,4 +1,4 @@
-@import "../config.rasi"
+@import "../Config/config.rasi"
 
 configuration 
 {
@@ -6,9 +6,9 @@ configuration
     display-run:               ">>> ";
 }
 
-@import "../theme/color.rasi"
-@import "../theme/style.rasi"
-@import "../theme/fonts.rasi"
+@import "../Config//color.rasi"
+@import "../Config//style.rasi"
+@import "../Config//fonts.rasi"
 
 window
 {

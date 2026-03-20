@@ -6,8 +6,9 @@ commands = [
 ]
 
 [colorfiles]
+rofi      = "~/.carbon/shell/rofi/Config/color.rasi"
+
 json      = "~/.carbon/shell/quickshell/theme/color.json"
-rofi      = "~/.carbon/shell/rofi/theme/color.rasi"
 hypr      = "~/.carbon/hypr/color.conf"
 
 kde       = "~/.local/share/color-schemes/Carbon.colors"

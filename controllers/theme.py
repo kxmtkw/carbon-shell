@@ -7,8 +7,8 @@ import sys, time
 from carbon.rofi import RofiShell
 
 
-main_rasi = "~/.carbon/shell/rofi/themer.rasi"
-wallpaper_rasi = "~/.carbon/shell/rofi/wallpaper.rasi"
+main_rasi = "~/.carbon/shell/rofi/theme/main.rasi"
+wallpaper_rasi = "~/.carbon/shell/rofi/theme/wallpaper.rasi"
 
 class ThemePicker():
 	

@@ -1,13 +1,13 @@
-@import "../config.rasi"
+@import "../Config/config.rasi"
 
 configuration 
 {
     show-icons:                 false;
 }
 
-@import "../theme/color.rasi"
-@import "../theme/fonts.rasi"
-@import "../theme/style.rasi"
+@import "../Config/color.rasi"
+@import "../Config/fonts.rasi"
+@import "../Config/style.rasi"
 
 
 * {
