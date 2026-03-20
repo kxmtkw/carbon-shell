@@ -32,4 +32,13 @@ variant = "graphite"
 # Theme contrast
 contrast = 0.5
 
+# Font
+font = "Iosevka"
+
+
+[colorfiles]
+
+hypr      = "~/.carbon/hypr/color.conf"
+kitty     = "~/.config/kitty/color.conf"
+alacritty = "~/.config/alacritty/color.toml"
 

@@ -1,26 +1,31 @@
 import subprocess
 from pathlib import Path
 
-from carbon.helpers.settings import SettingsLoader
+from carbon.config.getter import CarbonConfig
 
 from . import configs
 
-settings = SettingsLoader("~/.carbon/settings/colors.toml")
 carbon_path = Path("~/.carbon").expanduser()
 
 
 def write_theme(filepath: str, theme: str) -> None:
-    abspath = carbon_path.joinpath(filepath)
+    abspath = Path(filepath).expanduser()
 
     if not abspath.parent.exists():
         abspath.parent.mkdir(511, True, True)
-        
+
     with open(abspath, "w") as file:
         file.write(theme)
 
 
 def update_colors(colors: dict[str, str]) -> None:
-    for type, filepath in settings.get("colorfiles").items():
+
+    colorfiles = CarbonConfig.get("colorfiles", {}, valid_types=dict)
+    colorfiles["rofi"] = "~/.carbon/shell/rofi/Config/color.rasi"
+    colorfiles["json"] = "~/.carbon/shell/quickshell/Config/color.json"
+    colorfiles["kde"]  = "~/.local/share/color-schemes/Carbon.colors"
+
+    for type, filepath in colorfiles.items():
 
         filepath = Path(filepath).expanduser()
 
@@ -50,5 +55,12 @@ def update_colors(colors: dict[str, str]) -> None:
         print(f"Updated :: {type}")
 
     print(f":: Running post theme commands")
-    for cmd in settings.get("commands"):
+
+    commands = [
+        "plasma-apply-colorscheme BreezeDark && plasma-apply-colorscheme Carbon",
+        "hyprctl reload",
+        "quickshell --config ~/.carbon/shell/quickshell ipc call theme update",
+    ]
+
+    for cmd in commands:
         subprocess.run(cmd, shell=True, capture_output=True)
