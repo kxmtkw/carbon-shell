@@ -11,6 +11,10 @@ carbon_path = Path("~/.carbon").expanduser()
 
 def write_theme(filepath: str, theme: str) -> None:
     abspath = carbon_path.joinpath(filepath)
+
+    if not abspath.parent.exists():
+        abspath.parent.mkdir(511, True, True)
+        
     with open(abspath, "w") as file:
         file.write(theme)
 
