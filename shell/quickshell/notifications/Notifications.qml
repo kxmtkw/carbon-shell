@@ -5,7 +5,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
-import qs.theme as Theme
+import qs.Config as Theme
 
 
 PanelWindow 
