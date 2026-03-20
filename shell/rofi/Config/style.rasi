@@ -1,3 +1,10 @@
 * {
-    
+    themeBorderWidth: 0px;
+    themeBorderRadius: 12px;
+    themeRadiusNone: 0;
+    themeRadiusExtraSmall: 4;
+    themeRadiusSmall: 8;
+    themeRadiusMedium: 12;
+    themeRadiusLarge: 16;
+    themeRadiusExtraLarge: 28;
 }
