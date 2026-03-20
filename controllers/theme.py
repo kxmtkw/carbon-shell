@@ -129,6 +129,7 @@ class ThemePicker():
 		if image.exists():
 			Theme.set_wallpaper(image)
 			Theme.change_color_theme(mode, variant, img=image, contrast=contrast)
+			time.sleep(2) # wait for wallpaper animation to end
 
 		self.rofi.updateTheme(main_rasi)
 
