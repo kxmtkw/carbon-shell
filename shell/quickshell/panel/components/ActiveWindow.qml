@@ -32,6 +32,8 @@ WrapperRectangle
 		stdout: StdioCollector {
             onStreamFinished: { 
                 panel_activeWindow.activeWindowClass = text.split(":;:;")[0]
+                panel_activeWindow.activeWindowClass = panel_activeWindow.activeWindowClass.split(".").slice(-1)[0]
+                
                 panel_activeWindow.activeWindowTitle = text.split(":;:;")[1]
             }
 		}
