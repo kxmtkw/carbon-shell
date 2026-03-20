@@ -44,12 +44,10 @@ The shell includes:
 
 ## Installation
 
-Clone the repo at `~/.carbon` and it MUST be cloned exactly at this path for the shell to work.
+The shell can be installed by using this one-line:
 
-``` bash
-git clone https://github.com/kxmtkw/carbon-shell.git ~/.carbon
-cd ~/.carbon
-python3 install.py
+```bash
+curl -fsSL https://raw.githubusercontent.com/kxmtkw/carbon-shell/main/install.sh | bash
 ```
 
 What this script would do:
@@ -59,6 +57,16 @@ What this script would do:
 
 Then just start up hyprland and everything should work.
 
+
+### Manual
+
+Clone the repo at `~/.carbon` and it MUST be cloned exactly at this path for the shell to work.
+
+``` bash
+git clone https://github.com/kxmtkw/carbon-shell.git ~/.carbon
+cd ~/.carbon
+python3 install.py
+```
 
 
 ## TODO
