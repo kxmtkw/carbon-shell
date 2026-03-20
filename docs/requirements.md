@@ -35,25 +35,27 @@ These packages are for the essential desktop apps. These inlcude the bare minimu
 
 These apps include:
 
-- Terminal (alacritty)
-- Archive Manager (ark)
-- Calendar (calindori)
-- File Manager (dolphin)
-- Disk Usage Analyzer (filelight)
-- Image Viewer (gwenview)
-- Media Player (haruna)
-- Hyprland Settings (hyprviz)
-- ISO Image Writer (isoimagewriter)
-- Camera (kamoso)
-- Calculator (kcalc)
-- Clock (kclock)
-- Torrent Client (ktorrent)
-- Network Manager GUI (nm-connection-editor)
-- GTK Appearance Settings (nwg-look)
-- Document Viewer (okular)
-- Partition Manager (partitionmanager)
-- System Monitor (plasma-systemmonitor)
+- `Terminal` alacritty
+- `Archive Manager` ark
+- `Calendar` calindori
+- `File Manager` dolphin
+- `Disk Usage Analyzer` filelight
+- `Image Viewer` gwenview
+- `Media Player` haruna
+- `Hyprland Settings` hyprviz
+- `ISO Image Writer` isoimagewriter
+- `Camera` kamoso
+- `Calculator` kcalc
+- `Clock` kclock
+- `Torrent Client` ktorrent
+- `Network Manager GUI` nm-connection-editor
+- `GTK Appearance Settings` nwg-look
+- `Document Viewer` okular
+- `Partition Manager` partitionmanager
+- `System Monitor` plasma-systemmonitor
 
+
+Needed packages: 
 
 ```bash
 alacritty \
