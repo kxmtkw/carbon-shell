@@ -7,11 +7,11 @@ commands = [
 
 [colorfiles]
 rofi      = "~/.carbon/shell/rofi/Config/color.rasi"
+json      = "~/.carbon/shell/quickshell/Config/color.json"
+kde       = "~/.local/share/color-schemes/Carbon.colors"
 
-json      = "~/.carbon/shell/quickshell/theme/color.json"
 hypr      = "~/.carbon/hypr/color.conf"
 
-kde       = "~/.local/share/color-schemes/Carbon.colors"
 
 # kitty     = "~/.config/kitty/color.conf"
 # alacritty = "~/.config/alacritty/color.toml"

@@ -22,7 +22,7 @@ Singleton {
                 _colors = parsed
             }
         } catch (e) {
-            console.error("Failed to load theme/color.json:", e)
+            console.error("Failed to load Config/color.json:", e)
         }
     }
 

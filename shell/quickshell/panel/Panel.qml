@@ -4,7 +4,7 @@ import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
 
-import qs.theme as Theme
+import qs.Config as Theme
 import qs.panel.components
 
 PanelWindow 

@@ -4,7 +4,7 @@ import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 
-import qs.theme as Theme
+import qs.Config as Theme
 
 
 WrapperRectangle
