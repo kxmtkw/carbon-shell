@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 mkdir ~/.carbon
 git clone https://github.com/kxmtkw/carbon-shell.git ~/.carbon
 cd ~/.carbon
