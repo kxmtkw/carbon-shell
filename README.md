@@ -44,11 +44,19 @@ The shell includes:
 
 ## Installation
 
-The shell can be installed by using this one-line:
+### Dependancies
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/kxmtkw/carbon-shell/main/install.sh | bash
+If on `Arch Linux`, the installation script will handle all the packages. If you're on some other distribution or want to manually install packages, see [requirements](docs/requirements.md).
+
+The shell can be installed by using this command:
+
+``` bash
+git clone https://github.com/kxmtkw/carbon-shell.git ~/.carbon
+cd ~/.carbon
+python3 install.py
 ```
+
+> The shell must be cloned at '~/.carbon' for it to work.
 
 What this script would do:
 + Install core packages
@@ -57,16 +65,6 @@ What this script would do:
 
 Then just start up hyprland and everything should work.
 
-
-### Manual
-
-Clone the repo at `~/.carbon` and it MUST be cloned exactly at this path for the shell to work.
-
-``` bash
-git clone https://github.com/kxmtkw/carbon-shell.git ~/.carbon
-cd ~/.carbon
-python3 install.py
-```
 
 
 ## TODO
