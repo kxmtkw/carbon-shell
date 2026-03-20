@@ -26,8 +26,11 @@ class Color:
     def Print(cls, msg: str, color: str):
         print(f"{color}{msg}{Color.reset}")
 
-def run(cmd):
-    subprocess.run(cmd, shell=True)
+def run(cmd, wait: bool = True):
+    if wait:
+        subprocess.run(cmd, shell=True)
+    else:
+        subprocess.Popen(cmd, shell=True)
 
 def prompt(msg: str, options: list[str]) -> str:
 
@@ -94,24 +97,22 @@ def main():
     run("touch ~/.carbon/hypr/override.conf")
     run("mkdir ~/.carbon/hypr/user")
 
-    run("hyprctl reload")
+    run("hyprctl reload > /dev/null", wait=False)
 
     Color.Print(":: Finalizing setup...", Color.blue)
 
     run("mkdir cache")
     run("mkdir user")
-    run("mkdir settings")
 
     run("mkdir /home/haseeb/.local/share/color-schemes")
 
-    run("cp -i ~/.carbon/defaults/config.toml ~/.carbon/settings/config.toml")
-    run("cp -i ~/.carbon/defaults/colors.toml ~/.carbon/settings/colors.toml")
+    run("cp -i ~/.carbon/defaults/config.toml ~/.carbon/config.toml")
 
 
     Color.Print(":: Starting shell...", Color.blue)
 
-    run("carbon.start > /dev/null")
-    run("hyprctl reload > /dev/null")
+    run("carbon.start > /dev/null", wait=False)
+    run("hyprctl reload > /dev/null", wait=False)
 
     Color.Print(" :: Carbon shell installed!", Color.green)
 
