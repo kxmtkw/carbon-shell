@@ -97,7 +97,7 @@ def main():
     run("touch ~/.carbon/hypr/override.conf")
     run("mkdir ~/.carbon/hypr/user")
 
-    run("hyprctl reload > /dev/null", wait=False)
+    run("hyprctl reload > /dev/null")
 
     Color.Print(":: Finalizing setup...", Color.blue)
 
@@ -111,8 +111,8 @@ def main():
 
     Color.Print(":: Starting shell...", Color.blue)
 
-    run("carbon.start > /dev/null", wait=False)
-    run("hyprctl reload > /dev/null", wait=False)
+    run("carbon.start > /dev/null")
+    run("hyprctl reload > /dev/null")
 
     Color.Print(" :: Carbon shell installed!", Color.green)
 
