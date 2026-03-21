@@ -21,11 +21,15 @@ def write_theme(filepath: str, theme: str) -> None:
 def update_colors(colors: dict[str, str]) -> None:
 
     colorfiles = CarbonConfig.get("colorfiles", {}, valid_types=dict)
-    colorfiles["rofi"] = "~/.carbon/shell/rofi/Config/color.rasi"
-    colorfiles["json"] = "~/.carbon/shell/quickshell/Config/color.json"
-    colorfiles["kde"]  = "~/.local/share/color-schemes/Carbon.colors"
 
-    for type, filepath in colorfiles.items():
+    shellfiles = {}
+    shellfiles["rofi"] = "~/.carbon/shell/rofi/Config/color.rasi"
+    shellfiles["json"] = "~/.carbon/shell/quickshell/Config/color.json"
+    shellfiles["kde"]  = "~/.local/share/color-schemes/Carbon.colors"
+
+    shellfiles.update(colorfiles)
+
+    for type, filepath in shellfiles.items():
 
         filepath = Path(filepath).expanduser()
 

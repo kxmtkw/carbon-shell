@@ -115,7 +115,7 @@ class Theme:
         if not img_path.exists():
             CarbonError(f"File not found :: {img_path}").halt()
 
-        output = subprocess.run(f"swww img --transition-type outer {img_path}", shell=True, capture_output=True, text=True)
+        output = subprocess.run(["swww", "img", "--transition-type", "outer", img_path],capture_output=True, text=True)
         
         if output.returncode != 0:
             CarbonError(f"Failed to change wallpaper :: {output.stderr}").halt()
