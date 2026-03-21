@@ -62,6 +62,7 @@ class RofiShell:
                 [
                     "rofi",
                     "-dmenu",
+                    "-markup-rows",
                     "-password" if password else "",
                     "-p", prompt,
                     "-mesg", mesg,
