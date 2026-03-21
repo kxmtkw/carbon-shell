@@ -5,7 +5,7 @@ import Quickshell
 import Quickshell.Io
 
 Singleton {
-    id: themeColor
+    id: color
 
     property var _colors: ({})
 
@@ -40,14 +40,14 @@ Singleton {
         id: apply_timer
         interval: 25
         repeat: false
-        onTriggered: themeColor._applyFromFile()
+        onTriggered: color._applyFromFile()
     }
 
     IpcHandler {
         target: "theme"
 
         function update(): void {
-            themeColor.reloadFromJson()
+            color.reloadFromJson()
         }
     }
 
