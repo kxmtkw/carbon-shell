@@ -32,6 +32,11 @@ class ConfigUpdater:
         else:
             CarbonError(f"Face file does not exist: {face}").halt()
 
+
+        font = self.config.get("theme.font", ConfigDefaults.font, valid_types=(str,))
+        Theme.set_font(font)
+
+
     def update_hyprland_defaults(self):
 
         config_str = ""

@@ -3,7 +3,7 @@ from pathlib import Path
 
 from carbon.config.getter import CarbonConfig
 
-from . import configs
+from .configs import color, font
 
 carbon_path = Path("~/.carbon").expanduser()
 
@@ -35,22 +35,22 @@ def update_colors(colors: dict[str, str]) -> None:
 
         match type:
             case "hypr":
-                string = configs.update_hypr(colors)
+                string = color.update_hypr(colors)
                 write_theme(filepath, string)
             case "json":
-                string = configs.update_json(colors)
+                string = color.update_json(colors)
                 write_theme(filepath, string)
             case "kitty":
-                string = configs.update_kitty(colors)
+                string = color.update_kitty(colors)
                 write_theme(filepath, string)
             case "rofi":
-                string = configs.update_rofi(colors)
+                string = color.update_rofi(colors)
                 write_theme(filepath, string)
             case "alacritty":
-                string = configs.update_alacritty(colors)
+                string = color.update_alacritty(colors)
                 write_theme(filepath, string)
             case "kde":
-                string = configs.update_kde(colors)
+                string = color.update_kde(colors)
                 write_theme(filepath, string)
             case _:
                 print(f"Error :: {type}")
@@ -68,3 +68,14 @@ def update_colors(colors: dict[str, str]) -> None:
 
     for cmd in commands:
         subprocess.run(cmd, shell=True, capture_output=True)
+
+
+def update_font(font_name: str):
+
+    rofi = "~/.carbon/shell/rofi/Config/fonts.rasi"
+
+    string = font.update_rofi(font_name)
+    write_theme(rofi, string)
+
+   # shellfiles["json"] = "~/.carbon/shell/quickshell/Config/color.json"
+   # shellfiles["kde"]  = "~/.local/share/color-schemes/Carbon.colors"

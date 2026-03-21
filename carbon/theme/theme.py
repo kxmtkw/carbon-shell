@@ -7,7 +7,7 @@ from carbon.helpers import CarbonError
 from carbon.config import CarbonConfig
 
 from .material import MaterialColors
-from .update import update_colors
+from .update import update_colors, update_font
 
 
 class Theme:
@@ -105,8 +105,6 @@ class Theme:
             update_colors(mapping)
 
 
-
-
     @classmethod
     def set_wallpaper(cls, img: str):
 
@@ -119,3 +117,11 @@ class Theme:
         
         if output.returncode != 0:
             CarbonError(f"Failed to change wallpaper :: {output.stderr}").halt()
+
+
+    @classmethod
+    def set_font(cls, font: str):
+        
+        update_font(font)
+        
+    
