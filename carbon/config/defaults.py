@@ -8,3 +8,5 @@ class ConfigDefaults:
     contrast = 0.5
 
     face = "~/.carbon/assets/default_face.jpg"
+    
+    font = "Iosevka"

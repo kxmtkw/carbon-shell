@@ -33,7 +33,7 @@ variant = "graphite"
 contrast = 0.5
 
 # Font
-font = "Iosevka"
+font = "NotoSans"
 
 
 [colorfiles]
