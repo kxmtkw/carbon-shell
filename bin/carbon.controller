@@ -58,7 +58,7 @@ case $1 in
 		$CARBONPY ~/.carbon/controllers/screenshot.py
 	;;
 	"wifi") 
-		$CARBONPY ~/.carbon/controllers/wifi.py
+		$CARBONPY ~/.carbon/controllers/networker/main.py
 	;;
 	"run") 
 		$CARBONPY ~/.carbon/controllers/run.py
