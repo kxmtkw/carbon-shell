@@ -2,9 +2,14 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
+import Quickshell.Io
 
 Singleton 
 {
+    id: style
+
+    property string font
+
 	function getMaterialRadius(width, height, shapeSetting) 
     {
         const shorter = Math.min(width, height)
@@ -23,5 +28,15 @@ Singleton
                 return 0
         }
 
+    }
+
+
+    IpcHandler {
+        target: "style"
+
+        function update_font(font_name: string): void {
+            style.font = font_name
+            console.log(font_name)
+        }
     }
 }

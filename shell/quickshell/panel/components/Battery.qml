@@ -39,7 +39,7 @@ WrapperRectangle
             
             text: " "
 
-            font.family:    "Iosevka"
+            font.family:    Theme.Style.font
             font.pixelSize: 20
             color:          Theme.Color._onSurface
         }

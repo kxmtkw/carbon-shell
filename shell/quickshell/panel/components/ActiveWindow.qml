@@ -79,7 +79,7 @@ WrapperRectangle
 		horizontalAlignment: Text.AlignLeft
 		verticalAlignment: Text.AlignVCenter
 
-		font.family:    "Iosevka"
+		font.family:    Theme.Style.font
 		font.pixelSize: 16
 		font.weight:    Font.Medium
 

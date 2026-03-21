@@ -5,9 +5,6 @@ from carbon.config.getter import CarbonConfig
 
 from .configs import color, font
 
-carbon_path = Path("~/.carbon").expanduser()
-
-
 def write_theme(filepath: str, theme: str) -> None:
     abspath = Path(filepath).expanduser()
 
@@ -76,6 +73,19 @@ def update_font(font_name: str):
 
     string = font.update_rofi(font_name)
     write_theme(rofi, string)
+
+    quickshell_cmd = [
+        "quickshell",
+        "--config",
+        str(Path("~/.carbon/shell/quickshell").expanduser()),
+        "ipc",
+        "call",
+        "style",
+        "update_font",
+        font_name,
+    ]
+
+    subprocess.run(quickshell_cmd)
 
    # shellfiles["json"] = "~/.carbon/shell/quickshell/Config/color.json"
    # shellfiles["kde"]  = "~/.local/share/color-schemes/Carbon.colors"
