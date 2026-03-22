@@ -131,19 +131,19 @@ class Networker:
 
         radio = nmcli.radio.all()
         if radio.wifi and radio.wifi_hw:
-            on_status = "On"
+            on_status = "on"
         elif radio.wifi and not radio.wifi_hw:
-            on_status = "On (Hardware: Off)"
+            on_status = "on (Hardware: off)"
         elif not radio.wifi and radio.wifi_hw:
-            on_status = "Off"
+            on_status = "off"
         else:
-            on_status = "Off (Hardware: Off)"
+            on_status = "off (Hardware: off)"
         device = backend.get_device(self.wifi_device)
 
         mesg = f"""\
-Radio    :: {on_status}
-Device   :: {self.wifi_device}
-Status   :: {device.state.capitalize()}"""
+Radio     {on_status}
+Device    {self.wifi_device}
+Status    {device.state.capitalize()}"""
         
         options = [
             f">>>  {Icons.wifi}   Toggle Wifi",
@@ -199,11 +199,11 @@ Status   :: {device.state.capitalize()}"""
 
         title = "Wifi Network"
         details = f"""\
-SSID      :: {network.ssid}
-BSSID     :: {network.bssid}
-Security  :: {network.security}
-Signal    :: {network.signal}%
-Rate      :: {network.rate}MiB/s"""
+SSID       {network.ssid}
+BSSID      {network.bssid}
+Security   {network.security}
+Signal     {network.signal}%
+Rate       {network.rate}MiB/s"""
         
         options = [
             f"{Icons.return_sign}   Return",
