@@ -22,7 +22,7 @@ class Networker:
     def show_main_menu(self):
         
         title = "Networker"
-        mesg = ""
+        mesg = f"Device Name: {nmcli.general.get_hostname()}"
         options = [
             "List Devices",
             "Configure Wifi",
@@ -91,7 +91,12 @@ class Networker:
         self.rofi.updateTheme("~/.carbon/shell/rofi/wifi/main.rasi")
         
         title = "Wifi"
-        mesg = f"Device: {self.wifi_device}"
+
+        radio = nmcli.radio.all()
+        on_status = "On" if radio.wifi and radio.wifi_hw else "On (Hardware: Off)" if radio.wifi else "Off (Hardware: Off)"
+        device = backend.get_device(self.wifi_device)
+
+        mesg = f"Toggled: {on_status}\nStatus: {device.state.capitalize()}\nDevice:{self.wifi_device} "
         options = [
             ">> Toggle Wifi",
             ">> Rescan",
@@ -143,7 +148,13 @@ class Networker:
         network = backend.get_network(self.selected_network)
 
         title = "Wifi Network"
-        mesg = network.ssid
+        details = f"""
+SSID:       {network.ssid}\n
+BSSID:      {network.bssid}\n
+Security:   {network.security}\n
+Signal:     {network.signal}%\n
+Rate:       {network.rate}MiB/s
+"""
         options = [
             "Return",
             "Disconnect" if network.in_use else "Connect",
@@ -153,7 +164,7 @@ class Networker:
         self.rofi.display(
             mode=RofiShell.Mode.dmenu,
             prompt=title,
-            mesg=mesg,
+            mesg=details,
             options=options
         )
 

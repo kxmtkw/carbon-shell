@@ -40,6 +40,7 @@ def list_devices() -> list[str]:
 
     cache["list_devices"] = formatted_devices
 
+
     return formatted_devices
 
 
@@ -62,6 +63,15 @@ def list_wifi_devices() -> list[str]:
     cache["list_wifi_devices"] = formatted_devices
 
     return formatted_devices
+
+
+def get_device(name: str) -> nmcli.data.device.Device:
+
+    devices =  nmcli.device()
+
+    for dev in devices:
+        if dev.device == name:
+            return dev
 
 
 def get_default_wifi_device() -> str:
