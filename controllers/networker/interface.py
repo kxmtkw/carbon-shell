@@ -58,7 +58,7 @@ class Networker:
         self.rofi.updateTheme(info_menu_rasi)
         
         title = "Networker"
-        mesg = f"Device Name  :: {nmcli.general.get_hostname()}"
+        mesg = f"Device name:  {nmcli.general.get_hostname()}"
         options = [
             f"{Icons.devices}   List Devices",
             f"{Icons.wifi}   Configure Wifi",
