@@ -1,11 +1,33 @@
 from carbon.rofi import RofiShell
-import nmcli, subprocess
+from carbon.config import CarbonConfig
+
+import nmcli, subprocess, json
+from icons import Icons
 
 nmcli.disable_use_sudo()
 
 cache = {}
+cache_file = CarbonConfig.CachePath.joinpath("networker_cache.json")
+
+def load_cache():
+    if not cache_file.exists():
+        return
+    
+    with open(cache_file) as file:
+        global cache
+        try:
+            cache = json.load(file)
+        except json.JSONDecodeError:
+            pass 
+
+def dump_cache():
+    global cache
+
+    with open(cache_file, "w") as file:
+        json.dump(cache, file, skipkeys=True, ensure_ascii=False, indent=4)
 
 
+load_cache()
 
 class Errors:
 
@@ -35,7 +57,7 @@ def list_devices() -> list[str]:
     max_type_len = max(len(d.device_type) for d in devices)
 
     for device in devices:
-        formatted = f"<b>{device.device:<{max_name_len}}</b>  :: {device.device_type:<{max_type_len}}  {device.state}"
+        formatted = f"{Icons.devices}   <b>{device.device:<{max_name_len}}</b>  :: {device.device_type:<{max_type_len}}  {device.state}"
         formatted_devices.append(formatted)
 
     cache["list_devices"] = formatted_devices
@@ -57,7 +79,7 @@ def list_wifi_devices() -> list[str]:
 
     for device in devices:
         if device.device_type != "wifi": continue
-        formatted = f"<b>{device.device:<{max_name_len}}</b>  :: {device.device_type:<{max_type_len}}  {device.state}<span alpha='1'>|{device.device}|</span>"
+        formatted = f"{Icons.devices}   <b>{device.device:<{max_name_len}}</b>  :: {device.device_type:<{max_type_len}}  {device.state}<span alpha='1'>|{device.device}|</span>"
         formatted_devices.append(formatted)
 
     cache["list_wifi_devices"] = formatted_devices
@@ -213,3 +235,7 @@ def get_id_from_formatted(formatted: str) -> str:
         raise Errors.InternalError("Not Formatted by backend")
     
     return parts[-2]
+
+
+def launch_nn_connection_editor():
+    subprocess.Popen(["nm-connection-editor"])
