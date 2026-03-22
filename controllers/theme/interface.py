@@ -51,7 +51,8 @@ class ThemeManager:
 			f"{Icons.color}  Select color",
 			f"{Icons.variant}  Update variant",
 			f"{Icons.source}  Update theme source",
-			f"{Icons.contrast}  Change contrast"
+			f"{Icons.contrast}  Change contrast",
+			f"{Icons.face}  Change profile picture",
 		]
 
 		self.rofi.display(
@@ -81,8 +82,11 @@ class ThemeManager:
 		elif selected == options[4]:
 			self.current = self.show_source_menu
 
+		elif selected == options[5]:
+			self.current = self.show_source_menu
+
 		else:
-			self.current = self.show_contrast_menu
+			self.current = self.show_face_menu
 
 
 	def show_wallpaper_menu(self):
@@ -101,7 +105,8 @@ class ThemeManager:
 		)
 
 		selected: str = self.rofi.wait()
-		if not selected: exit()
+		self.current = self.show_main_menu 
+		if not selected: return
 
 		image = Path(selected)
 		Theme.set_wallpaper(image)
@@ -119,7 +124,6 @@ class ThemeManager:
 
 		CarbonConfig.set("theme.wallpaper", str(image))
 
-		self.current = self.show_main_menu
 
 
 	def show_color_menu(self):
@@ -137,9 +141,9 @@ class ThemeManager:
 
 		entered = self.rofi.wait().strip()
 
-		if not entered: exit()
-		
 		self.current = self.show_main_menu 
+		if not entered: return
+
 
 		if entered == current_color: return
 
@@ -158,8 +162,6 @@ class ThemeManager:
 			Theme.change_color_theme(mode, variant, hex=entered, contrast=contrast)
 
 		CarbonConfig.set("theme.hex", entered)
-
-		self.current = self.show_main_menu
 
 
 	def show_source_menu(self):
@@ -186,11 +188,11 @@ class ThemeManager:
 		selected: str = self.rofi.wait()
 
 
-		if not selected: exit()
+		self.current = self.show_main_menu 
+		if not selected: return
 
 		source = selected.split(" ")[-1]
 		
-		self.current = self.show_main_menu
 		if source == current_source: return
 
 		mode = CarbonConfig.get("theme.mode", ConfigDefaults.mode, valid_types=(str))
@@ -209,8 +211,7 @@ class ThemeManager:
 
 		CarbonConfig.set("theme.source", source)
 
-		
-
+	
 
 	def show_variant_menu(self):
 
@@ -240,12 +241,12 @@ class ThemeManager:
 		)
 
 		selected: str = self.rofi.wait()
-		if not selected: exit()
 
+		self.current = self.show_main_menu 
+		if not selected: return
 
 		selected = selected.split("]")[-1].strip().lower()
 
-		self.current = self.show_main_menu
 		if selected == variant: return
 
 		source = CarbonConfig.get("theme.source", ConfigDefaults.source, valid_types=(str))
@@ -281,7 +282,8 @@ class ThemeManager:
 
 		entered = self.rofi.wait()
 
-		if not entered: exit()
+		self.current = self.show_main_menu 
+		if not entered: return
 
 		if not is_valid_number(entered):
 			self.current = self.show_main_menu 
@@ -290,8 +292,6 @@ class ThemeManager:
 		contrast = float(entered)
 
 		self.current = self.show_main_menu
-
-		if contrast == current_contrast: return
 
 		source = CarbonConfig.get("theme.source", ConfigDefaults.source, valid_types=(str))
 		mode = CarbonConfig.get("theme.mode", ConfigDefaults.mode, valid_types=(str))
@@ -309,4 +309,38 @@ class ThemeManager:
 
 		CarbonConfig.set("theme.contrast", contrast)
 
-	
+
+
+
+	def show_face_menu(self):
+
+		current_face = CarbonConfig.get("theme.face", ConfigDefaults.hex, valid_types=(str))
+		current_face = Path(current_face).expanduser()
+
+
+		self.rofi.updateTheme(entry_rasi)
+
+		
+		self.rofi.display(
+			mode= RofiShell.Mode.dmenu,
+			prompt=f"Profile Picture",
+			mesg=f"Enter a filepath\n(current:{current_face})"
+		)
+
+		entered = self.rofi.wait().strip()
+
+		self.current = self.show_main_menu 
+		if not entered: return
+		
+		path = Path(entered).expanduser()
+
+
+		if not path.exists():
+			return
+
+		if current_face.exists() and path == current_face: return
+		Theme.set_face(path)
+
+		CarbonConfig.set("theme.face", entered)
+
+
