@@ -138,5 +138,14 @@ class Theme:
     def set_font(cls, font: str):
         
         update_font(font)
+
+    
+    @classmethod
+    def set_face(cls, path: str):
+
+        if Path(path).expanduser().exists():
+            subprocess.run(f"cp {path} ~/.carbon/user/face", shell=True, capture_output=True)
+        else:
+            CarbonError(f"Face file does not exist: {path}").halt()
         
     

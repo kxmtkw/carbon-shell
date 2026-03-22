@@ -35,11 +35,7 @@ class ConfigUpdater:
 
         face = self.config.get("theme.face", ConfigDefaults.face, valid_types=(str,))
 
-        if Path(face).expanduser().exists():
-            run(f"cp {face} ~/.carbon/user/face")
-        else:
-            CarbonError(f"Face file does not exist: {face}").halt()
-
+        Theme.set_face(face)
 
         font = self.config.get("theme.font", ConfigDefaults.font, valid_types=(str,))
         Theme.set_font(font)
