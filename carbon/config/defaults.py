@@ -13,3 +13,5 @@ class ConfigDefaults:
     face = "~/.carbon/assets/default_face.jpg"
     
     font = "Iosevka"
+
+    wallpaperSource = ["~/Pictures", "~/Images"]

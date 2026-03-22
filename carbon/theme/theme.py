@@ -10,6 +10,17 @@ from .material import MaterialColors
 from .update import update_colors, update_font
 
 
+valid_chars = set("0123456789abcdefABCDEF")
+def is_valid_hex(hex_string: str) -> bool:
+    
+    if not hex_string.startswith("#"):
+        return False
+    
+    h = hex_string.lstrip("#")
+
+    return len(h) in (3, 6) and all(c in valid_chars for c in h)
+
+
 class Theme:
 
     ## update the wallpaper state in carbon.state
@@ -45,6 +56,7 @@ class Theme:
         if img:
             colors.generate_from_image(Path(img).expanduser(), contrast, theme_variant)
         elif hex:
+            if not is_valid_hex(hex): CarbonError(f"Invalid hex value: {hex}").halt()
             colors.generate_from_color(hex, contrast, theme_variant)
         else:
             raise CarbonError("Either hex or img is needed to make theme.").halt()
