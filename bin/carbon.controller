@@ -70,7 +70,7 @@ case $1 in
 		$CARBONPY ~/.carbon/controllers/player.py
 	;;
 	"theme") 
-		$CARBONPY ~/.carbon/controllers/theme.py
+		$CARBONPY ~/.carbon/controllers/theme/main.py
 	;;
 	*)
 		notify-send "Unknown controller!" $1

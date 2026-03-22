@@ -98,17 +98,35 @@ element {
     orientation:                 vertical;
     cursor:                      pointer;
 }
-element normal.active {
+element normal.normal 
+{
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+element alternate.normal 
+{
+    background-color:            inherit;
+    text-color:                  inherit;
+}
+element selected.normal
+{
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }
-element selected.normal {
-    background-color:            @surfaceContainer;
-    text-color:                  @onSurface;
+element normal.active
+{
+    background-color:            @secondary;
+    text-color:                  @onSecondary;
 }
-element selected.active {
-    background-color:            @surfaceContainerHigh;
-    text-color:                  @onSurface;
+element alternate.active
+{
+    background-color:            @secondary;
+    text-color:                  @onSecondary;
+}
+element selected.active 
+{
+    background-color:            @primary;
+    text-color:                  @onPrimary;
 }
 element-icon {
     background-color:            transparent;
@@ -118,7 +136,7 @@ element-icon {
 element-text {
     enabled:                     false;
     background-color:            inherit;
-    text-color:                  rgba(0,0,0,0);
+    text-color:                  rgba(180, 110, 110, 0);
     cursor:                      inherit;
     vertical-align:              0;
     horizontal-align:            0.5;

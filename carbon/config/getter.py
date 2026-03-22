@@ -69,6 +69,10 @@ class ConfigGetter:
         self._save_config()
 
 
+    def reload(self):
+        self._load_config()
+
+
     @property
     def CachePath(self) -> Path:
         cache = Path("~/.carbon/cache").expanduser()
