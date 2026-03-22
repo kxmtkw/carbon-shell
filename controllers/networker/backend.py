@@ -143,7 +143,7 @@ def list_networks(device: str | None = None, rescan: bool = False) -> list[str]:
         else:
             icon = "󰤯"
 
-        formatted = f"{icon}   {net.ssid}<span alpha='1'>|{net.bssid}|</span>"
+        formatted = f"{icon}   <i>{net.ssid}</i><span alpha='1'>|{net.bssid}|</span>"
 
         if net.in_use:
             formatted_networks.insert(0, RofiShell.markActive(formatted))
