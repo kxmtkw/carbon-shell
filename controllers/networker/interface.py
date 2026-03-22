@@ -58,7 +58,7 @@ class Networker:
         self.rofi.updateTheme(info_menu_rasi)
         
         title = "Networker"
-        mesg = f"Device Name: {nmcli.general.get_hostname()}"
+        mesg = f"Device Name  :: {nmcli.general.get_hostname()}"
         options = [
             f"{Icons.devices}   List Devices",
             f"{Icons.wifi}   Configure Wifi",
@@ -130,10 +130,21 @@ class Networker:
         title = "Wifi"
 
         radio = nmcli.radio.all()
-        on_status = "On" if radio.wifi and radio.wifi_hw else "On (Hardware: Off)" if radio.wifi else "Off (Hardware: Off)"
+        if radio.wifi and radio.wifi_hw:
+            on_status = "On"
+        elif radio.wifi and not radio.wifi_hw:
+            on_status = "On (Hardware: Off)"
+        elif not radio.wifi and radio.wifi_hw:
+            on_status = "Off"
+        else:
+            on_status = "Off (Hardware: Off)"
         device = backend.get_device(self.wifi_device)
 
-        mesg = f"Toggled: {on_status}\nStatus: {device.state.capitalize()}\nDevice:{self.wifi_device} "
+        mesg = f"""\
+Radio    :: {on_status}
+Device   :: {self.wifi_device}
+Status   :: {device.state.capitalize()}"""
+        
         options = [
             f">>>  {Icons.wifi}   Toggle Wifi",
             f">>>  {Icons.rescan}   Rescan",
@@ -187,13 +198,13 @@ class Networker:
         network = backend.get_network(self.selected_network)
 
         title = "Wifi Network"
-        details = f"""
-SSID:       {network.ssid}
-BSSID:      {network.bssid}
-Security:   {network.security}
-Signal:     {network.signal}%
-Rate:       {network.rate}MiB/s
-"""
+        details = f"""\
+SSID      :: {network.ssid}
+BSSID     :: {network.bssid}
+Security  :: {network.security}
+Signal    :: {network.signal}%
+Rate      :: {network.rate}MiB/s"""
+        
         options = [
             f"{Icons.return_sign}   Return",
             f"{Icons.connection}   " + ("Disconnect" if network.in_use else "Connect"),
@@ -243,13 +254,11 @@ Rate:       {network.rate}MiB/s
         self.rofi.updateTheme(normal_menu_rasi)
 
         title = "Wifi Devices"
-        mesg = ""
         options = backend.list_wifi_devices()
 
         self.rofi.display(
             mode=RofiShell.Mode.dmenu,
             prompt=title,
-            mesg=mesg,
             options=options
         )
 
@@ -270,12 +279,13 @@ Rate:       {network.rate}MiB/s
         network = backend.get_network(self.selected_network)
 
         title = "Password Required"
-        mesg = ""
+        mesg = f"Enter password for '{network.ssid}'"
 
         self.rofi.display(
             mode=RofiShell.Mode.dmenu,
             prompt=title,
             mesg=mesg,
+            password=True
         )
 
         selected = self.rofi.wait()
