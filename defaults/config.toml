@@ -18,8 +18,15 @@ wallpaperSource = [
 # Profile Picture. 
 face = "~/.carbon/assets/default_face.jpg"
 
+# Theme color source
+# Valid values: wallpaper, hex
+source = "wallpaper"
+
 # Applied wallpaper. ~ supported.
 wallpaper = "~/.carbon/assets/default_wallpaper.jpg"
+
+# Color for when source is "hex"
+hex = "#397cc4"
 
 # Theme mode. 
 # Valid values: dark, light
