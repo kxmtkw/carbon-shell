@@ -67,6 +67,19 @@ class ConfigGetter:
 
         sub_config[parts[-1]] = val
         self._save_config()
+
+
+    @property
+    def CachePath(self) -> Path:
+        cache = Path("~/.carbon/cache").expanduser()
+        if not cache.exists():
+            cache.mkdir()
+        return cache
+
+
+    @property
+    def ConfigPath(self) -> Path:
+        return self._config_path
         
 
 CarbonConfig = ConfigGetter("~/.carbon/config.toml")
