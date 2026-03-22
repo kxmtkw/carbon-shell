@@ -83,7 +83,7 @@ class ThemeManager:
 			self.current = self.show_source_menu
 
 		elif selected == options[5]:
-			self.current = self.show_source_menu
+			self.current = self.show_contrast_menu
 
 		else:
 			self.current = self.show_face_menu
