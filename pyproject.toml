@@ -17,8 +17,9 @@ authors = [
 ]
 dependencies = [
     "material-color-utilities",
-    "python-pam",
-    "toml"
+    "toml",
+    "nmcli",
+    "simpleeval"
 ]
 
 [project.scripts]
