@@ -9,3 +9,4 @@ class Icons:
     variant = ""
     color = ""
     source = "󰜘"
+    face = ""
