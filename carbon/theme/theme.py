@@ -21,14 +21,12 @@ class Theme:
     def change_color_theme(
         cls,
         theme: Literal["dark", "light"],
-        variant: str,
-        img: str,
+        variant: str, 
         *,
-        contrast: float | None = None,
+        img: str | None = None, 
+        hex: str | None = None,
+        contrast: float = 0.25,
         ):
-
-        if contrast is None:
-            contrast = 0.25
 
         match variant:
             case "ash":
@@ -44,8 +42,13 @@ class Theme:
 
         colors = MaterialColors()
         
-        colors.generate_from_image(Path(img).expanduser(), contrast, theme_variant)
-
+        if img:
+            colors.generate_from_image(Path(img).expanduser(), contrast, theme_variant)
+        elif hex:
+            colors.generate_from_color(hex, contrast, theme_variant)
+        else:
+            raise CarbonError("Either hex or img is needed to make theme.").halt()
+        
         if theme == "light":
             update_colors(colors.lightMapping)
         elif theme == "dark":

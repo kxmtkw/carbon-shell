@@ -17,13 +17,21 @@ class ConfigUpdater:
 
     def update_theme(self):
         
+        source = self.config.get("theme.source", ConfigDefaults.wallpaper, valid_types=(str,), valid_values=["wallpaper", "hex"])
+
         wallpaper = self.config.get("theme.wallpaper", ConfigDefaults.wallpaper, valid_types=(str,))
+        hex = self.config.get("theme.hex", ConfigDefaults.hex, valid_types=(str,))
+
         mode = self.config.get("theme.mode", ConfigDefaults.mode, valid_types=(str,), valid_values=("dark", "light"))
         variant = self.config.get("theme.variant", ConfigDefaults.variant, valid_types=(str,), valid_values=("ash", "graphite", "diamond", "coal"))
         contrast = self.config.get("theme.contrast", ConfigDefaults.contrast, valid_types=(float, int))
 
         Theme.set_wallpaper(wallpaper)
-        Theme.change_color_theme(mode, variant, wallpaper, contrast=contrast)
+
+        if source == "wallpaper":
+            Theme.change_color_theme(mode, variant, img=wallpaper, contrast=contrast)
+        else:
+            Theme.change_color_theme(mode, variant, hex=hex, contrast=contrast)
 
         face = self.config.get("theme.face", ConfigDefaults.face, valid_types=(str,))
 
