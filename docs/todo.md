@@ -19,7 +19,7 @@ Runner needs more modes:
 
 Theme manager for stuff like wallpapers, profile pics
 
-#### Wifi Manager
+#### Wifi Manager (DONE)
 
 The current wifi manager "Just Works", I need it to make it more functional and maybe make it a proper wrapper around nmcli
 
@@ -50,8 +50,6 @@ The controller that opens after clicking the battery info. Display basic battery
 #### Better Notifs
 
 The current notifs in quickshell look ugly. Make them more material and modern.
-
-> Should a notification history menu be built? I would have to use rofi for that obviously but I don't see the appeal. The only case I can see where it is useless when i want to implment a way to silence noticactions for a bit but don't want to lose any information. However in that case we just make it so that when "Do not disturb" is turned off, all previous notifications are sent again.
 
 #### Basic Pacman System
 
@@ -101,7 +99,7 @@ I tried implementing material design and it works for the most part. But some im
 I added theming for KDE/QT apps but GTK apps still need some love. This will be trivial to implement... I hope.
 
 
-#### Daemon
+#### Daemon (CANCELLED)
 
 Implement a daemon that will:
 
@@ -115,7 +113,6 @@ Implement a daemon that will:
 #### Better hyprland theming
 
 The current method causes env = PATH to be reloaded again and again causing a long PATH var. The fix is to re send the contents of color.conf using hyprctl instead of using file based theming.
-
 
 #### Better controller configuration
 
