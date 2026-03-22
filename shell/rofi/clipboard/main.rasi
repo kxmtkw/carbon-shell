@@ -72,7 +72,7 @@ entry {
     background-color:            inherit;
     text-color:                  @onSurface;
     cursor:                      text;
-    placeholder:                 "   Search...";
+    placeholder:                 " Search...";
     placeholder-color:           inherit;
     vertical-align:              0.5;
     horizontal-align:            0;
@@ -83,7 +83,7 @@ listview
     enabled:                     true;
     columns:                     1;
     lines:                       10;
-    cycle:                       true;
+    cycle:                       false;
     dynamic:                     true;
     scrollbar:                   false;
     layout:                      vertical;
