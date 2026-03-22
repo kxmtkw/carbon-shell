@@ -112,7 +112,7 @@ listview
     enabled:                     true;
     columns:                     1;
     lines:                       10;
-    cycle:                       true;
+    cycle:                       false;
     dynamic:                     true;
     scrollbar:                   false;
     layout:                      vertical;

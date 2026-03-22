@@ -104,9 +104,13 @@ element normal.active {
     background-color:            @secondary;
     text-color:                  @onSecondary;
 }
+element alternate.active {
+    background-color:            @secondary;
+    text-color:                  @onSecondary;
+}
 element selected.active {
-    background-color:            @primary;
-    text-color:                  @onPrimary;
+    background-color:            @tertiary;
+    text-color:                  @onTertiary;
 }
 element-icon {
     background-color:            transparent;
