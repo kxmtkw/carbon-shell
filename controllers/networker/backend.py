@@ -186,7 +186,7 @@ def toggle_wifi_radio():
 
 def get_network(bssid: str) -> nmcli.data.device.DeviceWifi:
 
-    networks: list[nmcli.data.device.DeviceWifi] = cache.setdefault("list_networks", nmcli.device.wifi())
+    networks: list[nmcli.data.device.DeviceWifi] = nmcli.device.wifi()
 
     for net in networks:
         if net.bssid == bssid:

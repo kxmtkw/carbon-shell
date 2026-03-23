@@ -147,7 +147,7 @@ Status    {device.state.capitalize()}"""
 			f">>>  {Icons.rescan}   Rescan",
 		]
 
-		networks = backend.list_networks(self.wifi_device)
+		networks = backend.list_networks(self.wifi_device, rescan=True)
 
 		options.extend(
 			networks
