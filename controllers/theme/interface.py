@@ -20,10 +20,36 @@ wallpaper_rasi = "~/.carbon/shell/rofi/theme/wallpaper.rasi"
 
 # TODO error handling and displaying what went wrong to the user, for example invalid hex value or contrast not being a number
 
+class Displayer:
+
+	def __init__(self):
+		self.rofi = RofiShell(mesg_rasi)
+
+	def show(self, icon: str, mesg: str):
+
+		try: 
+			self.rofi.close()
+		except RofiShell.Error:
+			pass
+
+		self.rofi.display(
+			mode=RofiShell.Mode.dmenu,
+			prompt=icon,
+			mesg=mesg
+		)
+
+	def wait(self):
+		self.rofi.wait()
+
+	def close(self):
+		self.rofi.close()
+
+
 class ThemeManager:
 
 	def __init__(self):
 		self.rofi = RofiShell(main_rasi)
+		self.displayer = Displayer()
 
 		self.is_running = True
 		self.current = self.show_main_menu
@@ -148,6 +174,8 @@ class ThemeManager:
 		if entered == current_color: return
 
 		if not is_valid_hex(entered):
+			self.displayer.show(f"{Icons.error} ", f"Invalid hex value: {f"{entered[:10]}..." if len(entered) > 10 else entered}")
+			self.displayer.wait()
 			return
 
 		source = CarbonConfig.get("theme.source", ConfigDefaults.source, valid_types=(str))
@@ -286,7 +314,8 @@ class ThemeManager:
 		if not entered: return
 
 		if not is_valid_number(entered):
-			self.current = self.show_main_menu 
+			self.displayer.show(f"{Icons.error} ", f"Invalid number: {f"{entered[:10]}..." if len(entered) > 10 else entered}")
+			self.displayer.wait()
 			return
 		
 		contrast = float(entered)
@@ -334,8 +363,9 @@ class ThemeManager:
 		
 		path = Path(entered).expanduser()
 
-
 		if not path.exists():
+			self.displayer.show(f"{Icons.error} ", f"File not found: {f"{entered[:10]}..." if len(entered) > 10 else entered}")
+			self.displayer.wait()
 			return
 
 		if current_face.exists() and path == current_face: return

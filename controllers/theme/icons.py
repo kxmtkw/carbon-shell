@@ -10,3 +10,4 @@ class Icons:
     color = ""
     source = "󰜘"
     face = ""
+    error = ""
