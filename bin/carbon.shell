@@ -18,7 +18,7 @@ case "$1" in
     start)
         quickshell --config ~/.carbon/shell/quickshell &
         sleep 0.5
-        carbon.reload --silent
+        $CARBONPY -m carbon.config --silent
         sleep 2
         notify-send "Hello, World!" "logged in as $USER"
         ;;
