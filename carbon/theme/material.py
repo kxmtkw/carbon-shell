@@ -27,8 +27,8 @@ class MaterialColors:
     class Variant:
         ash      = material.Variant.NEUTRAL
         coal     = material.Variant.MONOCHROME
-        graphite = material.Variant.TONALSPOT
-        diamond  = material.Variant.FRUITSALAD
+        graphite = material.Variant.CONTENT
+        diamond  = material.Variant.TONALSPOT
 
 
     def __init__(self):
@@ -74,13 +74,13 @@ class MaterialColors:
 
         
         colors = {
-            "red": "#FF2F2F",
-            "blue": "#2D53FF",
-            "yellow": "#FFFF2A",
-            "orange": "#FFB12A",
-            "green": "#29FF29",
-            "cyan": "#3AFFFF",
-            "magenta": "#FF30FF",
+            "red": "#FF0000",
+            "blue": "#002FFF",
+            "yellow": "#FFFF00",
+            "orange": "#FFA200",
+            "green": "#00FF00",
+            "cyan": "#00FFFF",
+            "magenta": "#FF00FF",
             "white" : "#ffffff",
             "black" : "#000000",
         }
@@ -88,7 +88,7 @@ class MaterialColors:
         for name, hex in colors.items():
             rgb = hex_to_rgb(hex)
             
-            new_rgb = lerp_color(rgb, primary, 0.4)
+            new_rgb = lerp_color(rgb, primary, 0.5)
 
             colors[name] = rgb_to_hex(new_rgb)
 
