@@ -35,27 +35,13 @@ class PowerMenu():
 		if not selected: return
 		self.exec(selected.strip())
 
-
-	def confirm(self) -> bool:
-		self.confirmation.display(
-			mode = RofiShell.Mode.dmenu,
-			mesg="Are you sure?",
-			options=["  No", "  Yes"]
-		)
-		selected = self.confirmation.wait()
-
-		if (selected.strip() == "  Yes"): return True
-		return False
-
-
 	def exec(self, selected: str):
 		
 		options = self.options
-		time.sleep(0.25) #rofi closes
-
 
 		if selected == options[0]:
 			cmd = "carbon.power lock"
+			time.sleep(0.25)
 			return self.rofi.Run(cmd) #no need to confirm locking
 		elif selected == options[1]:
 			cmd = "carbon.power shutdown"
@@ -69,10 +55,17 @@ class PowerMenu():
 			cmd = "carbon.power logout"
 		else:
 			return
-
-		if not self.confirm(): return
-		time.sleep(0.25) #rofi closes
 		
+		self.confirmation.display(
+			mode = RofiShell.Mode.dmenu,
+			mesg="Are you sure?",
+			options=["  No", "  Yes"]
+		)
+
+		selected = self.confirmation.wait()
+		if (selected.strip() != "  Yes"): return
+
+		time.sleep(0.25) #rofi closes
 		self.rofi.Run(cmd)
 
 
