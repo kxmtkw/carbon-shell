@@ -1,4 +1,6 @@
 from pathlib import Path
+import subprocess
+
 from carbon.config import CarbonConfig
 from carbon.config.defaults import ConfigDefaults
 from carbon.helpers import CarbonError
@@ -76,3 +78,25 @@ def is_valid_number(num_string: str) -> bool:
         return True
     except ValueError:
         return False
+    
+
+# todo: add cache system
+def get_fonts() -> list[str]:
+
+    output = subprocess.run("fc-list --format='%{family[0]}\n' | sort | uniq", shell=True, capture_output=True, text=True)
+
+    fonts = []
+    if output.returncode != 0: return fonts
+
+    for item in output.stdout.splitlines():
+        font_entry = f"<span font='{item}'>{item}</span>"
+        fonts.append(font_entry)
+
+    return fonts
+
+
+def extract_font_from_rofi(selected: str) -> str:
+
+    part = selected.split(">")[1].split("<")[0]
+
+    return part.title()

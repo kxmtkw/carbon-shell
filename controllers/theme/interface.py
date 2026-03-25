@@ -11,7 +11,7 @@ from icons import Icons
 from pathlib import Path
 import time
 
-from utils import get_wallpapers, is_valid_hex, is_valid_number
+from utils import get_wallpapers, is_valid_hex, is_valid_number, get_fonts, extract_font_from_rofi
 
 main_rasi = "~/.carbon/shell/rofi/theme/main.rasi"
 entry_rasi = "~/.carbon/shell/rofi/theme/entry.rasi"
@@ -79,6 +79,7 @@ class ThemeManager:
 			f"{Icons.source}  Update theme source",
 			f"{Icons.contrast}  Change contrast",
 			f"{Icons.face}  Change profile picture",
+			f"{Icons.fonts}  Change Font"
 		]
 
 		self.rofi.display(
@@ -111,8 +112,11 @@ class ThemeManager:
 		elif selected == options[5]:
 			self.current = self.show_contrast_menu
 
-		else:
+		elif selected == options[6]:
 			self.current = self.show_face_menu
+
+		else: 
+			self.current = self.show_font_menu
 
 
 	def show_wallpaper_menu(self):
@@ -374,3 +378,26 @@ class ThemeManager:
 		CarbonConfig.set("theme.face", entered)
 
 
+		
+
+	def show_font_menu(self):
+
+		options = get_fonts()
+
+		self.rofi.display(
+			mode= RofiShell.Mode.dmenu,
+			prompt=f"Fonts",
+			options= options
+		)
+
+		selected: str = self.rofi.wait()
+
+		self.current = self.show_main_menu 
+		if not selected: return
+
+		selected = selected.split("]")[-1].strip().lower()
+
+		font = extract_font_from_rofi(selected)
+		Theme.set_font(font)
+
+		CarbonConfig.set("theme.font", font)
