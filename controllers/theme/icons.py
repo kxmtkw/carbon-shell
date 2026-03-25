@@ -11,3 +11,4 @@ class Icons:
     source = "󰜘"
     face = ""
     error = ""
+    fonts = ""
