@@ -99,8 +99,8 @@ class MaterialColors:
     def make_mapping(self, s: material.DynamicScheme) -> dict[str, str]:
         scheme = {
             "background": s.background,
-            "backgroundTransparentxAA": f"{s.background}40",
-            "backgroundTransparentAAx": f"#40{s.background.removeprefix('#')}",
+            "backgroundTransparentxAA": f"{s.background}7e",
+            "backgroundTransparentAAx": f"#7e{s.background.removeprefix('#')}",
             "surface": s.surface,
             "surfaceDim": s.surface_dim,
             "surfaceBright": s.surface_bright,
