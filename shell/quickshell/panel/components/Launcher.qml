@@ -44,10 +44,10 @@ WrapperRectangle
             id:               panel_launcher_icon
             anchors.centerIn: parent
             
-            text: "󰣇"
+            text: "󰌽"
 
             font.family:    Theme.Style.font
-            font.pixelSize: 26
+            font.pixelSize: 22
             color:          Theme.Color._onSurface
         }
 
