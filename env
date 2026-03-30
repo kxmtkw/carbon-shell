@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+# Carbon Envs
+# This file should be sourced by the user in their shell config
+
+export CARBONPY=$HOME/.carbon/.venv/bin/python3
+export PATH=$PATH:$HOME/.carbon/bin
