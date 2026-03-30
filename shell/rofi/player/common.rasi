@@ -18,8 +18,8 @@ configuration
 window 
 {    
     transparency:                "real";
-    location:                    northwest;
-    anchor:                      northwest;
+    location:                    center;
+    anchor:                      center;
     fullscreen:                  false;
     width:                       500px;
     height:                      400px;
