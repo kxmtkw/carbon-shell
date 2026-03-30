@@ -15,7 +15,7 @@ Runner needs more modes:
 - Custom(@): Built-in runner commands (these should also be with $PATH entries)
 - History(%): Last executed commands (thes should also be with $PATH entries)
 
-#### Better Theme Manager
+#### Better Theme Manager (DONE)
 
 Theme manager for stuff like wallpapers, profile pics
 
