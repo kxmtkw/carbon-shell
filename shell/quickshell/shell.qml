@@ -8,5 +8,4 @@ import qs.notifications
 ShellRoot
 {
     Panel{}
-    Notifications{}
 }
