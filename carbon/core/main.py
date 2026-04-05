@@ -9,7 +9,7 @@ def main():
         core = CarbonCore()
         core.run()
     except KeyboardInterrupt:
-        core.shutdown()
+        print(core.shutdown())
     except Exception as e:
         core.shutdown()
         raise e

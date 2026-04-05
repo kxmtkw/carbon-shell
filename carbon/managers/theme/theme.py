@@ -1,14 +1,18 @@
 from pathlib import Path
 from typing import Any, Literal
+from threading import Lock
 
 from carbon.managers.base import BaseManager
-from carbon.utils import CarbonError, procrun, is_valid_hex
+from carbon.utils import CarbonError, procrun, is_valid_hex, locked
 
 from carbon.state import Defaults
 from .updater import ThemeUpdater
 from .material import MaterialColors
 
+themeLock = Lock()
+
 class ThemeManager(BaseManager):
+
 
 	def __init__(self):
 		self.updater = ThemeUpdater()
@@ -40,7 +44,12 @@ class ThemeManager(BaseManager):
 		return self._handlers
 	
 
+	@locked(themeLock)
 	def setWallpaper(self, *, img: str) -> str:
+		return self._setWallpaper_nolock(img=img)
+	
+
+	def _setWallpaper_nolock(self, *, img: str) -> str:
 
 		path = Path(img).expanduser()
 
@@ -54,8 +63,9 @@ class ThemeManager(BaseManager):
 			return "Wallpaper updated."
 		else:
 			raise CarbonError(f"Failed to change wallpaper: swww failure\n{output}")
-
-
+		
+	
+	@locked(themeLock)
 	def updateTheme(
 			self, 
 			*, 
@@ -95,7 +105,7 @@ class ThemeManager(BaseManager):
 			self.material.generate_from_image(Path(img).expanduser(), contrast, variant_type)
 
 			
-			self.setWallpaper(img=img)
+			self._setWallpaper_nolock(img=img)
 
 		elif source == "hex":
 
@@ -128,6 +138,7 @@ class ThemeManager(BaseManager):
 		return "Theme updated successfully."
 	
 
+	@locked(themeLock)
 	def switchMode(
 			self, 
 			mode: Literal["dark", "light"]
@@ -147,13 +158,21 @@ class ThemeManager(BaseManager):
 		return f"Switched to {mode} mode successfully."
 	
 
+	@locked(themeLock)
 	def toggleMode(self) -> str:
-		new_mode: Literal["light", "dark"] = "dark" if self.current_mode == "light" else "light"
-		return self.switchMode(new_mode)
-	
 
+		if self.current_mode == "light":
+			self.updater.update_colors(self.dark_theme)
+			self.current_mode = "dark"
+		else:
+			self.updater.update_colors(self.light_theme)
+			self.current_mode = "light"
+
+		return f"Switched to {self.current_mode} mode successfully."
+
+
+	@locked(themeLock)
 	def changeFont(self, font: str) -> str:
-		
 		self.updater.update_font(font)
 		self.current_font = font
 		return f"Font changed to {font} successfully."
