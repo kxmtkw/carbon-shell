@@ -277,7 +277,8 @@ class Theme(BaseController):
 			return
 
 		if path == self.themer.current_face: return
-		self.themer.setFace(img=path)
+		
+		self.themer.setFace(img=entered)
 
 
 	def show_font_menu(self):
