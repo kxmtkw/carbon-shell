@@ -97,8 +97,16 @@ def main():
     run("source ./.venv/bin/activate && pip install . ")
 
     Color.Print(":: Linking hyprland...", Color.blue)
+    
+    chosen = prompt("Link hyprland config?", ["y", "n"])
 
-    run("ln -s -i ~/.carbon/hypr ~/.config")
+    if chosen == "y":
+        run("ln -s ~/.carbon/hypr ~/.config")
+    else:
+        Color.Print(":: Linking canceled...Aborting.", Color.yellow)
+        exit(1)
+
+
     run("touch ~/.carbon/hypr/hyprviz.conf")
     run("touch ~/.carbon/hypr/override.conf")
     run("mkdir ~/.carbon/hypr/user")
@@ -123,7 +131,6 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except KeyboardInterrupt:
-        Color.Print("\n:: Installation aborted by user", Color.red)
+    
     except Exception as e:
         Color.Print(f":: Encountered Error: {e.__class__.__name__} [{str(e)}]", Color.red)
