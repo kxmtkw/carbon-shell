@@ -123,7 +123,8 @@ class Theme(BaseController):
 
 		selected: str = self.rofi.wait()
 		self.current = self.show_main_menu 
-		if not selected: self.close()
+		if not selected:
+			return
 
 		self.themer.setWallpaper(img=selected)
 		self.themer.updateTheme(img=selected)
@@ -142,8 +143,8 @@ class Theme(BaseController):
 		entered = self.rofi.wait().strip()
 
 		self.current = self.show_main_menu 
-		if not entered: self.close()
-
+		if not entered: 
+			return
 
 		if entered == self.themer.current_hex: return
 
@@ -176,7 +177,8 @@ class Theme(BaseController):
 
 
 		self.current = self.show_main_menu 
-		if not selected: self.close()
+		if not selected:
+			return
 
 		if selected == options[0]:
 			source = "wallpaper"
@@ -217,7 +219,8 @@ class Theme(BaseController):
 		selected: str = self.rofi.wait()
 
 		self.current = self.show_main_menu 
-		if not selected: self.close()
+		if not selected: 
+			return
 
 		selected = selected.split("]")[-1].strip().lower()
 
