@@ -1,5 +1,5 @@
 
-# Carbon Shell
+# Carbon Shell 
 
 A desktop UI shell designed for `Hyprland` to be functional and pretty!
 
@@ -12,7 +12,6 @@ Some notable features of the shell:
 + `Controllers`: Functional menus for controlling things like wifi, launching apps, power, theming and much more.
 + `Hyprland Config`: Hyprland and its essential tools come preconfigured.
 + `KDE App Support`: Theming of KDE apps is fully supported.
-+ `Configurable`: The shell can configured via a very simple config file. See [configuration](docs/configuration.md).
 
 The shell includes:
 
@@ -23,7 +22,6 @@ The shell includes:
 + Screenshot Util
 + Wifi Menu
 + Theming Menu
-+ Media Player Controller
 + Clipboard Util
 + Essential Desktop Apps (from KDE) (Optional)
 

@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["carbon*"]
+include = ["carbon"]
 
 [project]
 name = "carbon"
-version = "0.1.0"
+version = "1.0.0"
 description = "Carbon Shell"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -21,7 +21,3 @@ dependencies = [
     "nmcli",
     "simpleeval"
 ]
-
-[project.scripts]
-carbon = "carbon.main:main"
-

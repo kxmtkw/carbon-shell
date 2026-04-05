@@ -84,6 +84,10 @@ def main():
         else:
             Color.Print(":: Installation canceled...", Color.yellow)
 
+    else:
+        Color.Print(":: Skipping package installation", Color.yellow)
+        Color.Print(":: Make sure to install the required packages before proceeding. See the github repo or requirements.md", Color.yellow)
+        prompt("Press enter to continue...", [""])
 
     Color.Print(" >>> Installing Carbon", Color.magenta)
 
@@ -105,15 +109,12 @@ def main():
     run("mkdir cache")
     run("mkdir user")
 
-    run("mkdir /home/haseeb/.local/share/color-schemes")
-
-    run("cp -i ~/.carbon/defaults/config.toml ~/.carbon/config.toml")
-
+    run("mkdir -p /home/haseeb/.local/share/color-schemes")
 
     Color.Print(":: Starting shell...", Color.blue)
 
     run("pidof Hyprland && echo 'Hyprland already running!' || start-hyprland")
-    run("carbon.start > /dev/null")
+    run("carbon.shell daemon start")
     run("hyprctl reload > /dev/null")
 
     Color.Print(" :: Carbon shell installed!", Color.green)
@@ -125,4 +126,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         Color.Print("\n:: Installation aborted by user", Color.red)
     except Exception as e:
-        Color.Print(f" :: Encountered Error: {e.__class__.__name__} [{str(e)}]", Color.red)
+        Color.Print(f":: Encountered Error: {e.__class__.__name__} [{str(e)}]", Color.red)

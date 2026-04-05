@@ -22,25 +22,24 @@ The shell includes the following UI components:
 
 ## Theming
 
-The shell can by dynamically themed using the theme utility or the `carbon.theme` CLI.
-Plus, two target apps are also supported which include:
+The shell can by dynamically themed using the theme utility or the `carbon.shell theme` CLI.
 
-+ kitty
-+ alacritty
+Currently, the themed content include:
 
-These apps can be chosen as targets in the config file so that the shell can theme them as well.
++ Lock Screen
++ Panel
++ All Controllers
++ KDE Apps
 
 
 ## Utilities
 
 The shells comes with several utilities:
 
-+ carbon.shell
-+ carbon.theme
-+ carbon.controller
-+ carbon.power
-+ carbon.brightness
-+ carbon.audio
++ `For configuring the shell`: carbon.shell
++ `For basic power commands`: carbon.power
++ `For changing brightness nicely`: carbon.brightness
++ `For changing audio`: carbon.audio
 
 
 ## Essential Apps
