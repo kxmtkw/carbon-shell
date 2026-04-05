@@ -12,9 +12,10 @@ class ThemeUpdater:
 
     def __init__(self):
         self.colorfiles = {}
-        self.colorfiles["rofi"] = "~/.carbon/shell/rofi/Config/color.rasi"
-        self.colorfiles["json"] = "~/.carbon/shell/quickshell/Config/color.json"
-        self.colorfiles["kde"]  = "~/.local/share/color-schemes/Carbon.colors"
+        self.colorfiles["rofi"]  = "~/.carbon/shell/rofi/Config/color.rasi"
+        self.colorfiles["json"]  = "~/.carbon/shell/quickshell/Config/color.json"
+        self.colorfiles["kde"]   = "~/.local/share/color-schemes/Carbon.colors"
+        self.colorfiles["hypr"]  = "~/.carbon/hypr/color.conf"
 
         self.qs = Quickshell()
 
@@ -45,7 +46,6 @@ class ThemeUpdater:
                     writefile(filepath, string)
 
                 case "hypr":
-                    continue
                     string = update_hypr(colors)
                     writefile(filepath, string)
 
