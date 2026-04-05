@@ -56,6 +56,9 @@ def get_parser():
     font_parser = theme_sub.add_parser("set-font")
     font_parser.add_argument("font", help="Font family name")
 
+    font_parser = theme_sub.add_parser("set-face")
+    font_parser.add_argument("img", help="Path to face image")
+
     # ==========================================
     # CONTROLLER COMMANDS
     # Usage: controller [run <name> | close-all]

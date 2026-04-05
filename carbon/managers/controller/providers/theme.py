@@ -255,7 +255,6 @@ class Theme(BaseController):
 
 
 	def show_face_menu(self):
-		return
 
 		self.rofi.updateTheme(self.rasi_entry)
 
@@ -263,7 +262,7 @@ class Theme(BaseController):
 		self.rofi.display(
 			mode= RofiShell.Mode.dmenu,
 			prompt=f"Profile Picture",
-			mesg=f"Enter a filepath\n(current:{current_face})"
+			mesg=f"Enter a filepath\n(current:{self.themer.current_face})"
 		)
 
 		entered = self.rofi.wait().strip()
@@ -274,14 +273,11 @@ class Theme(BaseController):
 		path = Path(entered).expanduser()
 
 		if not path.exists():
-			self.displayer.show(f"{Icons.error} ", f"File not found: {f"{entered[:10]}..." if len(entered) > 10 else entered}")
-			self.displayer.wait()
+			self.display(f"{Icons.error} ", f"File not found: {f"{entered[:10]}..." if len(entered) > 10 else entered}")
 			return
 
-		if current_face.exists() and path == current_face: return
-		Theme.set_face(path)
-
-		CarbonConfig.set("theme.face", entered)
+		if path == self.themer.current_face: return
+		self.themer.setFace(img=path)
 
 
 	def show_font_menu(self):

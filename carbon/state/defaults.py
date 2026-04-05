@@ -8,3 +8,4 @@ class Defaults:
     theme_variant = "graphite"
     theme_contrast = 0.5
     theme_font = "Iosevka"
+    theme_face = "~/.carbon/assets/default_face.jpg"

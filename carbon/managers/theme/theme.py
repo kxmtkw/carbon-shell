@@ -28,13 +28,15 @@ class ThemeManager(BaseManager):
 		self.current_variant = Defaults.theme_variant
 		self.current_contrast = Defaults.theme_contrast
 		self.current_font = Defaults.theme_font
+		self.current_face = Defaults.theme_face
 
 		self._handlers = {
 			"set-wallpaper": self.setWallpaper,
 			"update-theme": self.updateTheme,
 			"switch-mode": self.switchMode,
 			"toggle-mode": self.toggleMode,
-			"change-font": self.changeFont
+			"change-font": self.changeFont,
+			"set-face": self.setFace,
 		}
 
 		super().__init__()
@@ -178,20 +180,32 @@ class ThemeManager(BaseManager):
 		return f"Font changed to {font} successfully."
 	
 
+	@locked(themeLock)
+	def setFace(self, img: str):
+		self.updater.update_face(img)
+		self.current_face = img
+		return f"Face image updated successfully."
+	
+
 	def loadState(self, state: dict[str, Any]):
-		self.current_mode = state.get("current_mode", Defaults.theme_mode)
-		self.current_variant = state.get("current_variant", Defaults.theme_variant)
-		self.current_contrast = state.get("current_contrast", Defaults.theme_contrast)
-		self.current_source = state.get("current_source", Defaults.theme_source)
-		self.current_hex = state.get("current_hex", Defaults.theme_hex)
-		self.current_wallpaper = state.get("current_wallpaper", Defaults.theme_wallpaper)
-		self.current_font = state.get("current_font", Defaults.theme_font)
+
+		# if we use @locked() here, it would prevent the functions below from being called
+		with themeLock:
+			self.current_mode = state.get("current_mode", Defaults.theme_mode)
+			self.current_variant = state.get("current_variant", Defaults.theme_variant)
+			self.current_contrast = state.get("current_contrast", Defaults.theme_contrast)
+			self.current_source = state.get("current_source", Defaults.theme_source)
+			self.current_hex = state.get("current_hex", Defaults.theme_hex)
+			self.current_wallpaper = state.get("current_wallpaper", Defaults.theme_wallpaper)
+			self.current_font = state.get("current_font", Defaults.theme_font)
+			self.current_face = state.get("current_face", Defaults.theme_face)
 
 		self.updateTheme()
 		self.setWallpaper(img=self.current_wallpaper)
 		self.changeFont(font=self.current_font)
+		self.setFace(img=self.current_face)
 
-	
+
 	def saveState(self) -> dict[str, Any]:
 		return {
 			"current_mode": self.current_mode,
@@ -200,5 +214,6 @@ class ThemeManager(BaseManager):
 			"current_source": self.current_source,
 			"current_hex": self.current_hex,
 			"current_wallpaper": self.current_wallpaper,
-			"current_font": self.current_font
+			"current_font": self.current_font,
+			"current_face": self.current_face
 		}

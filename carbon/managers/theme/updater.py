@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from carbon.utils import shellrun, writefile, procrun
+from carbon.utils import shellrun, writefile, procrun, CarbonError
 
 from .colors import *
 from . import fonts
@@ -74,6 +74,17 @@ class ThemeUpdater:
         writefile(rofifile, rofi)
 
         self.qs.updateFont(font)
+
+
+    def update_face(self, path: str):
+
+        if not Path(path).expanduser().exists():
+            raise CarbonError(f"Face image not found: {path}")
+        
+        out = shellrun(f"cp {path} ~/.carbon/user/face")
+
+        if not out[0]:
+            raise CarbonError(f"Failed to update face image. Reason: {out[1]}")
 
 
     def run_post_update(self):
