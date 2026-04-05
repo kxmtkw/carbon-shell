@@ -154,6 +154,14 @@ def handle_theme(args):
 		output = send_request(request)
 		print(output.output)
 
+	elif action == "set-face":
+		request = CommandRequest("theme", "set-face", 
+			{
+				"img": args.img
+			}
+		)
+		output = send_request(request)
+		print(output.output)
 
 def handle_controller(args):
 
