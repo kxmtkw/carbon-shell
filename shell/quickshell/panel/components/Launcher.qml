@@ -29,7 +29,7 @@ WrapperRectangle
     {
         id: panel_launcher_process
         running: false
-        command: ["sh", "-c", "carbon.controller launcher"]
+        command: ["sh", "-c", "carbon.shell controller run launcher"]
     }
 
 	MouseArea 

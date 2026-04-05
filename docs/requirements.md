@@ -73,9 +73,8 @@ kcalc \
 kclock \
 ktorrent \
 nm-connection-editor \
-nwg-look \
 okular \
-partitionmanager
+partitionmanager \
 plasma-systemmonitor
 ```
 
