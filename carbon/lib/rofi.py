@@ -62,7 +62,7 @@ class RofiShell:
                     "-theme", self.rasi,
                 ],
                 stdin=subprocess.PIPE,
-                stdout=subprocess.DEVNULL,
+                stdout=subprocess.PIPE,
                 stderr=subprocess.DEVNULL,
                 text=True
             )
@@ -83,7 +83,7 @@ class RofiShell:
                     "-theme", self.rasi,
                 ],
                 stdin=subprocess.PIPE,
-                stdout=subprocess.DEVNULL,
+                stdout=subprocess.PIPE,
                 stderr=subprocess.DEVNULL,
                 text=True
             )
