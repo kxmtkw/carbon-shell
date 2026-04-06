@@ -4,19 +4,20 @@ from concurrent.futures import ThreadPoolExecutor
 from carbon.ipc.server import Server
 from carbon.ipc.payloads import CommandRequest, CommandOutput
 
-from carbon.utils import CarbonError
+from carbon.utils import CarbonError, logger
 
 from carbon.managers.theme import ThemeManager
 from carbon.managers.controller import ControllerManager
 
 from carbon.state import StateManager
-
 from carbon.lib.quickshell import Quickshell
 
 class CarbonCore:
 
-
     def __init__(self):
+
+        logger.log("core", "Hello World!", logger.Level.info)
+
         self.server = Server(1)
         self.lock = threading.Lock()
         self.thread_pool = ThreadPoolExecutor(5)
@@ -33,7 +34,7 @@ class CarbonCore:
         try:
             self.quickshell.start()
         except Quickshell.Error as e:
-            CarbonError(f"Quickshell could not be started. Reason: {e.msg}").print()
+            logger.log("core", f"Quickshell could not be started. Reason: {e.msg}", logger.Level.warning)
 
 
         self.dispatch_map = {
@@ -56,6 +57,8 @@ class CarbonCore:
 
     
     def shutdown(self) -> str:
+        logger.log("core", "Shutting down.", logger.Level.info)
+
         if not self.is_running: 
             return "This call shouldn't have been possible."
         
@@ -67,20 +70,25 @@ class CarbonCore:
     
 
     def loadState(self):
+        logger.log("core", "Loading state...", logger.Level.info)
         self.state.load()
         self.theme_manager.loadState(self.state.get("theme"))
 
 
     def saveState(self):
+        logger.log("core", "Saving state...", logger.Level.info)
         self.state.update("theme", self.theme_manager.saveState())
         self.state.save()
 
 
     def dispatch(self, id: int, command: CommandRequest):
+        
+        logger.log("core", f"Received dispatch request from id:{id}.", logger.Level.info)
 
         try:
             manager_map = self.dispatch_map[command.manager]
         except KeyError:
+            logger.log("core", f"Unknown manager requested by client(id:{id}): {command.manager}", logger.Level.warning)
             with self.lock:
                 self.server.send(id, CommandOutput(1,f"Unknown manager: {command.manager}"))
                 return
@@ -88,10 +96,12 @@ class CarbonCore:
         try:
             handler = manager_map[command.handler]
         except KeyError:
+            logger.log("core", f"Unknown handler for manager '{command.manager}' requested by client(id:{id}): {command.handler}", logger.Level.warning)
             with self.lock:
                 self.server.send(id, CommandOutput(1, f"Unknown handler for manager '{command.manager}': {command.handler}"))
                 return
 
+        logger.log("core", f"Executing {command.manager}::{command.handler} with arguments: {command.args}", logger.Level.debug)
         self.thread_pool.submit(self.worker, id, handler, command.args)
 
 
@@ -103,9 +113,19 @@ class CarbonCore:
         except CarbonError as e:
             response = e.msg
             code = 1
+            logger.log(
+                "core", 
+                f"Carbon Error while executing {func.__name__} with arguments {args}: {str(e)} ", 
+                logger.Level.debug
+            )
         except Exception as e:
             response = f"{e.__class__.__name__}: {str(e)}"
             code = 1
+            logger.log(
+                "core", 
+                f"Unexpected Error while executing {func.__name__} with arguments {args}: ({e.__class__.__name__}) {str(e)} ", 
+                logger.Level.warning
+            )
 
         output = CommandOutput(code, response)
 

@@ -3,7 +3,7 @@ from threading import Lock
 
 from carbon.managers.base import BaseManager
 from carbon.managers.theme import ThemeManager
-from carbon.utils import CarbonError, procrun, is_valid_hex
+from carbon.utils import CarbonError, procrun, is_valid_hex, logger
 
 from .base import BaseController
 from .providers import (
@@ -55,12 +55,15 @@ class ControllerManager(BaseManager):
     def run(self, *, name: str) -> str:
        
         controller = self.controllers.get(name)
-        print("Launched controller:", name)
-        print("Current controller:", self.current_controller.__class__.__name__ if self.current_controller else None)
         
         if not controller:
             raise CarbonError(f"Controller not found: {name}")
-        
+
+        logger.log(
+            "controller",
+            f"Launching controller: {name}. Previous/Active controller: {self.current_controller.__class__.__name__}",
+            logger.Level.info
+        )
         
         if self.current_controller is controller:
             self.current_controller.close()

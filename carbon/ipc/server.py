@@ -2,7 +2,7 @@ import socket, threading, os, select, json
 from queue import Queue, Empty
 from dataclasses import asdict
 
-from carbon.utils import CarbonError
+from carbon.utils import CarbonError, logger
 
 from .payloads import CommandRequest, CommandOutput
 
@@ -11,6 +11,9 @@ class Server:
 	address = "/tmp/carbon.portal"
 	
 	def __init__(self, timeout: float = 0.5):
+
+		logger.log("server", f"Starting server at {self.address}", logger.Level.info)
+
 		self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 
 		self.clients: dict[int, socket.socket] = {}
@@ -19,7 +22,8 @@ class Server:
 			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 			self.socket.bind(Server.address)
 		except Exception as e:
-			CarbonError(f"Could not start carbon server. Reason: {e.__class__.__name__}::{str(e)}").halt()
+			logger.log("server", f"Could not start carbon server. Reason: {e.__class__.__name__}::{str(e)}", logger.Level.critical)
+			exit(1)
 
 		self.socket.settimeout(timeout)
 		self.socket.listen()
@@ -43,6 +47,8 @@ class Server:
 			id = len(self.clients)
 			self.clients[id] = conn
 
+			logger.log("server", f"Got request! Associated id:{id} with client.", logger.Level.debug)
+
 			buffer = b""
 			while True:
 				chunk = conn.recv(2048)
@@ -53,7 +59,8 @@ class Server:
 			buffer = buffer.decode()
 
 			if "\n" not in buffer: 
-				continue # log here
+				logger.log("server", f"Incomplete payload from client with id:{id}", logger.Level.warning)
+				continue
 
 			part = buffer.splitlines()[0]
 
@@ -71,22 +78,22 @@ class Server:
 		conn = self.clients.get(client_id)
 		
 		if not conn:
-			print(f"Error: No active connection for Client ID {client_id}")
+			logger.log("server", f"Connection not found for client id:{client_id}. Maybe they disconnected.", logger.Level.warning)
 			return
 
 		try:
 			payload = output.serialize().encode('utf-8')
 			conn.sendall(payload)
-			
 		except (BrokenPipeError, ConnectionResetError):
-			print(f"Client {client_id} disconnected before response could be sent.")
+			logger.log("server", f"Connection broken with client id:{client_id}. Maybe they disconnected.", logger.Level.warning)
 		except Exception as e:
-			print(f"Failed to send to Client {client_id}: {e}")
+			logger.log("server", f"Unexpected error occured: {e.__class__.__name__}({str(e)})", logger.Level.warning)
 		finally:
 			self.cleanup_client(client_id)
 
 
 	def cleanup_client(self, client_id: int):
+		logger.log("server", f"Cleaning up client with id:{client_id}.", logger.Level.debug)
 		conn = self.clients.pop(client_id, None)
 		if conn:
 			try:
