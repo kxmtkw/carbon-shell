@@ -37,8 +37,8 @@ message {
     margin:                      5px 30px;
     padding:                     20px 30px;
     border-radius:               24px;
-    background-color:            @primaryContainer;
-    text-color:                  @onPrimaryContainer;
+    background-color:            @secondaryContainer;
+    text-color:                  @onSecondaryContainer;
 }
 
 textbox {

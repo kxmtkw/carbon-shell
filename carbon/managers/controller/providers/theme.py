@@ -251,7 +251,7 @@ class Theme(BaseController):
 		entered = self.rofi.wait()
 
 		self.current = self.show_main_menu 
-		if not entered: self.close()
+		if not entered: return
 
 		if not is_valid_number(entered):
 			self.display(f"{Icons.error} ", f"Invalid number: {f"{entered[:10]}..." if len(entered) > 10 else entered}")
