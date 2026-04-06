@@ -13,7 +13,8 @@ from .providers import (
     Theme,
     Networker,
     Clipboard,
-    Windows
+    Windows,
+    Runner
 )
 
 class ControllerManager(BaseManager):
@@ -31,6 +32,7 @@ class ControllerManager(BaseManager):
         self.networker = Networker()
         self.clipboard = Clipboard()
         self.windows = Windows()
+        self.runner = Runner()
 
         self.controllers = {
             "launcher": self.launcher,
@@ -39,7 +41,8 @@ class ControllerManager(BaseManager):
             "theme": self.theme,
             "networker": self.networker,
             "clipboard": self.clipboard,
-            "windows": self.windows
+            "windows": self.windows,
+            "runner": self.runner
         }
 
         self._handlers = {
@@ -54,7 +57,7 @@ class ControllerManager(BaseManager):
 
     def run(self, *, name: str) -> str:
        
-        controller = self.controllers.get(name)
+        controller: BaseController = self.controllers.get(name)
         
         if not controller:
             raise CarbonError(f"Controller not found: {name}")
@@ -68,10 +71,9 @@ class ControllerManager(BaseManager):
         if self.current_controller is controller:
             self.current_controller.close()
             with self.lock: self.current_controller = None
-            return
+            return "Was already open, closed it."
         
         if self.current_controller:
-            
             self.current_controller.close()
             with self.lock: self.current_controller = None        
         
