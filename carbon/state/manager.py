@@ -26,7 +26,7 @@ class StateManager:
 
     def save(self):
 
-        string = json.dumps(self._state, file, skipkeys=True, indent=4) 
+        string = json.dumps(self._state, skipkeys=True, indent=4) 
                 
         with open(self._state_file, "w") as file:
             file.write(string)

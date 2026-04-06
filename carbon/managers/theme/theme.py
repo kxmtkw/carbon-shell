@@ -3,7 +3,7 @@ from typing import Any, Literal
 from threading import Lock
 
 from carbon.managers.base import BaseManager
-from carbon.utils import CarbonError, procrun, is_valid_hex, locked
+from carbon.utils import CarbonError, procrun, is_valid_hex, locked, logger
 
 from carbon.state import Defaults
 from .updater import ThemeUpdater
@@ -62,6 +62,11 @@ class ThemeManager(BaseManager):
 
 		if success:
 			self.current_wallpaper = img
+			logger.log(
+				"theme",
+				f"Wallpaper updated: {img}",
+				logger.Level.info
+			)
 			return "Wallpaper updated."
 		else:
 			raise CarbonError(f"Failed to change wallpaper: swww failure\n{output}")
@@ -137,6 +142,18 @@ class ThemeManager(BaseManager):
 		self.current_wallpaper = img
 		self.current_hex = hex
 
+		logger.log(
+			"theme",
+			f"Theme updated!",
+			logger.Level.info
+		)
+
+		logger.log(
+			"theme",
+			f"Theme Desc: Mode({mode}) Variant({variant}) Source({source}) Contrast({contrast}) Hex({hex}) Wallpaper({img})",
+			logger.Level.debug
+		)
+
 		return "Theme updated successfully."
 	
 
@@ -157,6 +174,13 @@ class ThemeManager(BaseManager):
 			raise CarbonError(f"Invalid theme mode: {mode}")
 		
 		self.current_mode = mode
+
+		logger.log(
+			"theme",
+			f"Switched to {self.current_mode} mode.",
+			logger.Level.info
+		)
+
 		return f"Switched to {mode} mode successfully."
 	
 
@@ -170,12 +194,23 @@ class ThemeManager(BaseManager):
 			self.updater.update_colors(self.light_theme)
 			self.current_mode = "light"
 
+		logger.log(
+			"theme",
+			f"Switched to {self.current_mode} mode.",
+			logger.Level.info
+		)
+
 		return f"Switched to {self.current_mode} mode successfully."
 
 
 	@locked(themeLock)
 	def changeFont(self, font: str) -> str:
 		self.updater.update_font(font)
+		logger.log(
+			"theme",
+			f"Font updated to {font}.",
+			logger.Level.info
+		)
 		self.current_font = font
 		return f"Font changed to {font} successfully."
 	
@@ -183,7 +218,13 @@ class ThemeManager(BaseManager):
 	@locked(themeLock)
 	def setFace(self, img: str):
 		self.updater.update_face(img)
+		logger.log(
+			"theme",
+			f"Face updated to {img}.",
+			logger.Level.info
+		)
 		self.current_face = img
+		
 		return f"Face image updated successfully."
 	
 
@@ -201,9 +242,17 @@ class ThemeManager(BaseManager):
 			self.current_face = state.get("current_face", Defaults.theme_face)
 
 		self.updateTheme()
-		self.setWallpaper(img=self.current_wallpaper)
 		self.changeFont(font=self.current_font)
 		self.setFace(img=self.current_face)
+
+		if self.current_source != "wallpaper":
+			self.setWallpaper(img=self.current_wallpaper)
+
+		logger.log(
+			"theme",
+			"Loaded theme state.",
+			logger.Level.info
+		)
 
 
 	def saveState(self) -> dict[str, Any]:
