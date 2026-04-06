@@ -136,8 +136,11 @@ class Theme(BaseController):
 			return
 
 		self.themer.setWallpaper(img=selected)
-		self.themer.updateTheme(img=selected)
 
+		if self.themer.current_source == "wallpaper":
+			self.themer.updateTheme(img=selected)
+
+		time.sleep(0.1) # animation finishes
 
 	def show_color_menu(self):
 		

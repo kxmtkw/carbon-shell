@@ -27,7 +27,7 @@ window
     padding:                     0;
     border:                      @themeBorderWidth;
     border-color:                @surfaceContainerHighest;
-    border-radius:               calc(700/28);
+    border-radius:               calc(700/20);
     cursor:                      "default";
     background-color:            transparent;
 }
@@ -73,7 +73,6 @@ entry {
     text-color:                  @onSurface;
     cursor:                      text;
     placeholder:                 " Search...";
-    placeholder-color:           inherit;
     vertical-align:              0.5;
     horizontal-align:            0;
 }
@@ -108,7 +107,7 @@ element {
     margin:                      0px;
     padding:                     15px;
     border:                      0px;
-    border-radius:               @themeBorderRadius;
+    border-radius:               16px;
     background-color:            @background;
     text-color:                  @onSurface;
     orientation:                 horizontal;

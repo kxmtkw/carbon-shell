@@ -30,7 +30,7 @@ class Clipboard(BaseController):
 		if not selected:
 			return
 
-		shellrun(f"echo '{selected}' | cliphist decode | wl-copy")
+		shellrun(f"echo '{selected}' | cliphist decode | wl-copy", wait=False)
 
 	def close(self):
 		try:

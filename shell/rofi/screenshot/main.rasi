@@ -103,8 +103,8 @@ element normal.active {
     text-color:                  @onSurface;
 }
 element selected.normal {
-    background-color:            @primary;
-    text-color:                  @onPrimary;
+    background-color:            @surfaceContainer;
+    text-color:                  @onSurface;
 }
 element selected.active {
     background-color:            @surfaceContainerHigh;
