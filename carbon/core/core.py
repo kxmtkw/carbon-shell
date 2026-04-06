@@ -51,9 +51,9 @@ class CarbonCore:
     def run(self):
 
         while self.is_running:
-            id, command = self.server.listen()
-            if id is None: continue
-            self.dispatch(id, command)
+            payload = self.server.listen()
+            if payload is None: continue
+            self.dispatch(*payload)
 
     
     def shutdown(self) -> str:

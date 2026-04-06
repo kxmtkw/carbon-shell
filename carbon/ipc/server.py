@@ -35,14 +35,14 @@ class Server:
 		os.remove(Server.address)
 
 	
-	def listen(self) -> tuple[int, CommandRequest]:
+	def listen(self) -> tuple[int, CommandRequest] | None:
 	
 		while True:
 
 			try:
 				conn, _ = self.socket.accept()
 			except TimeoutError, OSError:
-				return (None, None)
+				return None
 			
 			id = len(self.clients)
 			self.clients[id] = conn
