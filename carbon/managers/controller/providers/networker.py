@@ -294,6 +294,6 @@ Rate       {network.rate}MiB/s"""
 		except (backend.Errors.AuthFailure, backend.Errors.ConnectionFailure) as e:
 			self.rofi.close()
 			self.display_message_rofi(f"{Icons.error} ", f"Failed to connect to {network.ssid}")
-			time.sleep(2)
+			time.sleep(3)
 			self.rofi.close()
 

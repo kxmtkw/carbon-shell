@@ -12,7 +12,7 @@ mainbox
     margin:                      0px;
     border:                      0px solid;
     border-radius:               0%;
-    padding:                     140px 30px;
+    padding:                     260px 30px;
     background-color:            @background;
     vertical-align:              0.5;
     orientation:                 vertical;
