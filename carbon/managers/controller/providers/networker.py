@@ -1,3 +1,5 @@
+import time
+
 import nmcli
 
 from carbon.managers.controller.base import BaseController
@@ -39,14 +41,13 @@ class Networker(BaseController):
 			pass
 
 
-	def display_message(self, icon: str, mesg: str):
+	def display_message_rofi(self, icon: str, mesg: str):
 		self.rofi.updateTheme(self.rasi_mesg)
 		self.rofi.display(
 			mode=RofiShell.Mode.dmenu,
 			prompt=icon,
 			mesg=mesg
 		)
-		self.rofi.wait()
 		
 
 	def show_main_menu(self):
@@ -222,19 +223,24 @@ Rate       {network.rate}MiB/s"""
 		elif selected == options[1]:
 
 			if network.in_use:
-				self.display_message(f"{Icons.wifi} ", f"Disconnecting {network.ssid}")
+				self.display_message_rofi(f"{Icons.wifi} ", f"Disconnecting {network.ssid}")
 				backend.disconnect_network(network.bssid)
+				self.rofi.close()
 			else:
 				try:
-					self.display_message(f"{Icons.wifi} ", f"Connecting to {network.ssid}")
+					self.display_message_rofi(f"{Icons.wifi} ", f"Connecting to {network.ssid}")
 					backend.connect_network(self.wifi_device, network.bssid)
+					self.rofi.close()
 				except backend.Errors.ConnectionFailure:
+					self.rofi.close()
 					self.current = self.show_password_prompt
 					return
 
 		elif selected == options[2]:
 			backend.forget_network(network.bssid)
 		
+		backend.list_networks(self.wifi_device, True)
+
 		self.current = self.show_wifi_menu
 
 
@@ -280,9 +286,14 @@ Rate       {network.rate}MiB/s"""
 		self.current = self.show_wifi_menu 
 		if not selected: return
 
-		self.display_message(f"{Icons.wifi} ", f"Connecting to {network.ssid}")
+		self.display_message_rofi(f"{Icons.wifi} ", f"Connecting to {network.ssid}")
 		try:
 			backend.connect_network(self.wifi_device, self.selected_network, selected)
+			backend.list_networks(self.wifi_device, True)
+			self.rofi.close()
 		except (backend.Errors.AuthFailure, backend.Errors.ConnectionFailure) as e:
-			self.display_message(f"{Icons.error} ", f"Failed to connect to {network.ssid}")
-				
+			self.rofi.close()
+			self.display_message_rofi(f"{Icons.error} ", f"Failed to connect to {network.ssid}")
+			time.sleep(2)
+			self.rofi.close()
+

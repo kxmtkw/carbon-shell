@@ -1,6 +1,9 @@
 @import "common.rasi"
 
 
+configuration {
+    kb-cancel: [ "Escape" ];
+}
 
 mainbox 
 {
