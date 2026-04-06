@@ -30,7 +30,7 @@ window
     location:                    west;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       640px;
+    width:                       660px;
     height:                      98%;
     x-offset:                    0px;
     y-offset:                    0px;

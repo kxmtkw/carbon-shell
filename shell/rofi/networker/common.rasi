@@ -11,11 +11,11 @@ configuration
 window
  {
     transparency:                "real";
-    location:                    center;
-    anchor:                      center;
+    location:                    east;
+    anchor:                      east;
     fullscreen:                  false;
-    width:                       880px;
-    height:                      770px;
+    width:                       660px;
+    height:                      100%;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -23,7 +23,7 @@ window
     margin:                      10px;
     border:                      @themeBorderWidth;
     border-color:                @surfaceContainerHighest;
-    border-radius:               calc(880/28);
+    border-radius:               calc(660/20);
     cursor:                      "default";
     background-color:            rgba(18, 18, 18, 0.2);
 }

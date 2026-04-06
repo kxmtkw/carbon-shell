@@ -30,7 +30,7 @@ window
     margin:                      10px;
     border:                      @themeBorderWidth;
     border-color:                @surfaceContainerHighest;
-    border-radius:               calc(600/28);
+    border-radius:               calc(600/20);
     cursor:                      "default";
     background-color:            @backgroundTransparentxAA;
 }
@@ -39,7 +39,7 @@ mainbox
 {
     enabled:                     true;
     spacing:                     0;
-    padding:                     1% 2%;
+    padding:                     0% 0%;
     background-color:            @error;
     orientation:                 vertical;
     children:                    [ "dummy", "inputbar", "dummy"];
@@ -48,11 +48,10 @@ mainbox
 
 inputbar {
     enabled:                     true;
-    margin:                      1% 0%;
-    padding:                     1% 2%;
+    margin:                      10px 0px;
+    padding:                     10px 40px 0px 40px;
     background-color:            inherit;
     text-color:                  @onError;
-    border-radius:               @themeBorderRadius;
     orientation:                 horizontal;
     children:                    [ "dummy", "prompt", "dummy"];
 }

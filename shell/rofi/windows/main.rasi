@@ -6,7 +6,7 @@ configuration
 
     window-match-fields: "title,class,role,name,desktop";
 	window-command: "wmctrl -i -R {window}";
-	window-format: "{c}  ::  {t:50}";
+	window-format: " {c}  |  {t:50}";
 	window-thumbnail: true;
 
     kb-element-next: "Tab";
@@ -18,7 +18,7 @@ configuration
 @import "../Config/style.rasi"
 
 * {
-    font:                        @fontTextSmall;
+    font:                        @fontText;
 }
 
 window 
@@ -61,7 +61,7 @@ listview
     enabled:                     true;
     columns:                     1;
     lines:                       10;
-    cycle:                       true;
+    cycle:                       false;
     dynamic:                     true;
     scrollbar:                   false;
     layout:                      vertical;

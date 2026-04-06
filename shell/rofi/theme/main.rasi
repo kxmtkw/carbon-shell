@@ -34,13 +34,13 @@ listview
     enabled:                     true;
     columns:                     1;
     lines:                       10;
-    cycle:                       true;
+    cycle:                       false;
     dynamic:                     true;
     scrollbar:                   false;
     layout:                      vertical;
     reverse:                     false;
     fixed-height:                false;
-    fixed-columns:               false;
+    fixed-columns:               true;
     
     spacing:                     10px;
     margin:                      0%;
