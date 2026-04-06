@@ -58,7 +58,7 @@ class Runner(BaseController):
 
 		self.rofi.display(
 			mode=RofiShell.Mode.dmenu,
-			prompt="Run :: ",
+			prompt="Run ::",
 			options=self.binaries
 		)
 

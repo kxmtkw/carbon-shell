@@ -78,7 +78,7 @@ The current media player works fine but we need to display the album art which w
 
 A better way to track state of the carbon shell. The current implementation relies on a free json file where any key can be added AND it resides in cache/ which makes it more unserious
 
-#### Carbon Config (DONE)
+#### Carbon Config (REMOVED due to Daemon)
 
 A way to configure the shell!
 
@@ -99,7 +99,7 @@ I tried implementing material design and it works for the most part. But some im
 I added theming for KDE/QT apps but GTK apps still need some love. This will be trivial to implement... I hope.
 
 
-#### Daemon (CANCELLED)
+#### Daemon (DONE)
 
 Implement a daemon that will:
 

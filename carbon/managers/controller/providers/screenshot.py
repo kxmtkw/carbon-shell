@@ -42,15 +42,15 @@ class Screenshot(BaseController):
 	def exec(self, option: str):
 
 		time.sleep(0.2) # rofi closes
-		
+
 		if option == self.options[0]:
-			shellrun(f"hyprshot -m active -m output -o {self.save_dir}")
+			shellrun(f"hyprshot -m active -m output -o {self.save_dir}", wait=False)
 
 		elif option == self.options[1]:
-			shellrun(f"hyprshot -m window -o {self.save_dir}")
+			shellrun(f"hyprshot -m window -o {self.save_dir}", wait=False)
 
 		elif option == self.options[2]:
-			shellrun(f"hyprshot -m region -o {self.save_dir}")
+			shellrun(f"hyprshot -m region -o {self.save_dir}", wait=False)
 
 	def close(self):
 		try:

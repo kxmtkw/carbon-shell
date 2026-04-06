@@ -23,6 +23,17 @@ class Theme(BaseController):
 
 		self.wallpapers: list[str] = []
 
+		self.main_options = [
+			f"{Icons.dark}  Toggle dark mode",
+			f"{Icons.wallpaper}  Select wallpaper",
+			f"{Icons.color}  Select color",
+			f"{Icons.variant}  Update variant",
+			f"{Icons.source}  Update theme source",
+			f"{Icons.contrast}  Change contrast",
+			f"{Icons.face}  Change profile picture",
+			f"{Icons.fonts}  Change Font"
+		]
+
 
 	def load_wallpapers(self):
 		self.wallpapers = Utils.get_wallpapers(
@@ -60,17 +71,11 @@ class Theme(BaseController):
 
 		self.rofi.updateTheme(self.rasi_main)
 
-		options = [
-			f"{Icons.light}  Toggle light mode" if self.themer.current_mode == "dark" else f"{Icons.dark}  Toggle dark mode",
-			f"{Icons.wallpaper}  Select wallpaper",
-			f"{Icons.color}  Select color",
-			f"{Icons.variant}  Update variant",
-			f"{Icons.source}  Update theme source",
-			f"{Icons.contrast}  Change contrast",
-			f"{Icons.face}  Change profile picture",
-			f"{Icons.fonts}  Change Font"
-		]
+		self.main_options[0] = f"{Icons.light}  Toggle light mode" if self.themer.current_mode == "dark" else f"{Icons.dark}  Toggle dark mode"
 
+		options = self.main_options.copy()
+		options[0] = RofiShell.markActive(options[0])
+		
 		self.rofi.display(
 			mode=RofiShell.Mode.dmenu,
 			prompt="Theme",
@@ -78,7 +83,9 @@ class Theme(BaseController):
 		)
 
 		selected = self.rofi.wait()
-		
+
+		options = self.main_options
+
 		if not selected: self.close()
 
 		elif selected == options[0]:
@@ -104,6 +111,8 @@ class Theme(BaseController):
 
 		else: 
 			self.current = self.show_font_menu
+
+		
 
 
 	def show_wallpaper_menu(self):
@@ -208,8 +217,7 @@ class Theme(BaseController):
 			options[2] = RofiShell.markActive(options[2])
 		else:
 			options[3] = RofiShell.markActive(options[3])
-		
-	
+			
 		self.rofi.display(
 			mode= RofiShell.Mode.dmenu,
 			prompt=f"Theme Variant",

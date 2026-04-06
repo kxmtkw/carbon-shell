@@ -70,12 +70,12 @@ class ControllerManager(BaseManager):
         
         if self.current_controller is controller:
             self.current_controller.close()
-            with self.lock: self.current_controller = None
+            self.current_controller = None
             return "Was already open, closed it."
         
         if self.current_controller:
             self.current_controller.close()
-            with self.lock: self.current_controller = None        
+            self.current_controller = None        
         
         with self.lock:
             self.current_controller = controller

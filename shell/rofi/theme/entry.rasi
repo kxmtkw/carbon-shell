@@ -31,7 +31,7 @@ prompt {
 message {
     enabled:                     true;
     margin:                      10px 30px;
-    padding:                     10px 20px;
+    padding:                     20px 30px;
     border-radius:               16px;
     background-color:            @secondaryContainer;
     text-color:                  @onSecondary;
