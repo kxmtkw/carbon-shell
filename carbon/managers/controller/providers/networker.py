@@ -20,8 +20,8 @@ class Networker(BaseController):
 		self.is_running: bool = True
 
 		self.current = self.show_wifi_menu
-		self.wifi_device: str | None = backend.get_default_wifi_device()
-		self.selected_network: str | None = None
+		self.wifi_device: str = backend.get_default_wifi_device()
+		self.selected_network: str = ""
 
 		backend.list_networks(None, True)
 

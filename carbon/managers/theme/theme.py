@@ -21,14 +21,14 @@ class ThemeManager(BaseManager):
 		self.dark_theme = {}
 		self.light_theme = {}
 
-		self.current_source = Defaults.theme_source
-		self.current_wallpaper = Defaults.theme_wallpaper
-		self.current_hex = Defaults.theme_hex
-		self.current_mode = Defaults.theme_mode
-		self.current_variant = Defaults.theme_variant
-		self.current_contrast = Defaults.theme_contrast
-		self.current_font = Defaults.theme_font
-		self.current_face = Defaults.theme_face
+		self.current_source: Literal["wallpaper", "hex"] = Defaults.theme_source
+		self.current_wallpaper: str = Defaults.theme_wallpaper
+		self.current_hex: str = Defaults.theme_hex
+		self.current_mode: Literal["dark", "light"] = Defaults.theme_mode
+		self.current_variant:Literal["ash", "coal", "graphite", "diamond"] = Defaults.theme_variant
+		self.current_contrast: float = Defaults.theme_contrast
+		self.current_font: str = Defaults.theme_font
+		self.current_face: str = Defaults.theme_face
 
 		self._handlers = {
 			"set-wallpaper": self.setWallpaper,
@@ -76,12 +76,12 @@ class ThemeManager(BaseManager):
 	def updateTheme(
 			self, 
 			*, 
-			mode: Literal["dark", "light"] = None,
-			variant: Literal["ash", "coal", "graphite", "diamond"] = None,
-			contrast: float = None,
-			source: Literal["wallpaper", "hex"] = None,
-			hex: str = None,
-			img: str = None
+			mode: Literal["dark", "light"] | None  = None,
+			variant: Literal["ash", "coal", "graphite", "diamond"] | None  = None,
+			contrast: float | None  = None,
+			source: Literal["wallpaper", "hex"] | None  = None,
+			hex: str | None = None,
+			img: str| None  = None
 		) -> str:
 		
 		if not mode: mode = self.current_mode
