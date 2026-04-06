@@ -3,24 +3,56 @@ from pathlib import Path
 from .error import CarbonError
 
 
-def shellrun(cmd: str) -> tuple[bool, str]:
+def shellrun(cmd: str, wait: bool = True) -> tuple[bool, str]:
     "Run a shell command."
-    output = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+
+    if wait:
+        output = subprocess.run(
+            cmd, 
+            shell=True, 
+            capture_output=True, 
+            text=True
+        )
+    else:
+        output = subprocess.run(
+            cmd, 
+            shell=True, 
+            text=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+
+    if output is None: return (True, "")
 
     if output.returncode == 0:
         return (True, output.stdout)
     else: 
-        return (False, output.stderr or output.stdout)
+        return (False, output.stdout or output.stderr)
     
 
-def procrun(cmd: list[str]) -> tuple[bool, str]:
-    "Start a process"
-    output = subprocess.run(cmd, capture_output=True, text=True)
+def procrun(cmd: list[str], wait: bool = True) -> tuple[bool, str]:
+    "Run a process"
+
+    if wait:
+        output = subprocess.run(
+            cmd, 
+            capture_output=True, 
+            text=True
+        )
+    else:
+        output = subprocess.run(
+            cmd, 
+            text=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+
+    if output is None: return (True, "")
 
     if output.returncode == 0:
         return (True, output.stdout)
     else: 
-        return (False, output.stderr or output.stdout)
+        return (False, output.stdout or output.stderr)
     
     
 valid_chars = set("0123456789abcdefABCDEF")
