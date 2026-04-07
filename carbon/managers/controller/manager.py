@@ -71,6 +71,11 @@ class ControllerManager(BaseManager):
         if self.current_controller is controller:
             self.current_controller.close()
             self.current_controller = None
+            logger.log(
+                "controller",
+                f"Controller {name} was already opened, so closed it.",
+                logger.Level.debug
+            )
             return "Was already open, closed it."
         
         if self.current_controller:
@@ -87,6 +92,12 @@ class ControllerManager(BaseManager):
                 raise e
             
             self.current_controller = None
+
+        logger.log(
+            "controller",
+            f"Controller {name} was closed.",
+            logger.Level.debug
+        )
 
 
     def close(self) -> str:

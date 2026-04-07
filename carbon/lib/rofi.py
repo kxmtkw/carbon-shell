@@ -77,13 +77,12 @@ class RofiShell:
                 [
                     "rofi",
                     "-show", mode.value,
-                    "-password" if password else "",
                     "-p", prompt,
                     "-mesg", mesg,
                     "-theme", self.rasi,
                 ],
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
+                stdout=subprocess.DEVNULL,
+                stdin=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
                 text=True
             )
