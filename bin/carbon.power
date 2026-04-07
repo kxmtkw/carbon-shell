@@ -13,6 +13,8 @@ if [ -z "$1" ]; then
     exit 2
 fi
 
+carbon.shell daemon save-state > /dev/null
+
 case "$1" in
     "shutdown")
         exec systemctl poweroff
@@ -21,15 +23,15 @@ case "$1" in
         exec systemctl reboot
         ;;
     "lock")
-        exec hyprlock
+        exec hyprlock > /dev/null
         ;;
     "suspend")
-        exec hyprlock &
+        exec hyprlock > /dev/null &
         sleep 1
         exec systemctl suspend
         ;;
     "hibernate")
-        exec hyprlock &
+        exec hyprlock > /dev/null &
         sleep 1
         exec systemctl hibernate
         ;;

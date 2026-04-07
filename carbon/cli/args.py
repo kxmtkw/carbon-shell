@@ -15,7 +15,7 @@ def get_parser():
     # Usage: daemon [start|restart|kill]
     # ==========================================
     daemon_parser = subparsers.add_parser("daemon")
-    daemon_parser.add_argument("action", choices=["start", "restart", "end"], help="Action to perform on the daemon")
+    daemon_parser.add_argument("action", choices=["start", "restart", "end", "save-state", "load-state"], help="Action to perform on the daemon")
 
     # ==========================================
     # THEME COMMANDS
