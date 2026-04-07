@@ -63,7 +63,21 @@ def handle_daemon(args):
 
 		print(out.output)
 		exit(0)
- 
+
+	elif args.action == "load-state":
+
+		request = CommandRequest("daemon", "load-state", {})
+		out = send_request(request)
+		print(out.output)
+
+	elif args.action == "save-state":
+
+		request = CommandRequest("daemon", "save-state", {})
+		out = send_request(request)
+		print(out.output)
+	
+	exit(out.code)
+
 
 def handle_theme(args):
 
@@ -163,6 +177,8 @@ def handle_theme(args):
 		output = send_request(request)
 		print(output.output)
 
+	exit(output.code)
+
 def handle_controller(args):
 
 	action = args.action
@@ -180,6 +196,8 @@ def handle_controller(args):
 		request = CommandRequest("controller", "close-all", {})
 		output = send_request(request)
 		print(output.output)
+
+	exit(output.code)
 
 
 def main():

@@ -39,7 +39,9 @@ class CarbonCore:
 
         self.dispatch_map = {
             "daemon": {
-                "shutdown": self.shutdown
+                "shutdown": self.shutdown,
+                "load-state": self.loadState,
+                "save-state": self.saveState
             },
             "theme": self.theme_manager.handlers(),
             "controller": self.controller_manager.handlers()
@@ -73,12 +75,14 @@ class CarbonCore:
         logger.log("core", "Loading state...", logger.Level.info)
         self.state.load()
         self.theme_manager.loadState(self.state.get("theme"))
+        return "State loaded."
 
 
     def saveState(self):
         logger.log("core", "Saving state...", logger.Level.info)
         self.state.update("theme", self.theme_manager.saveState())
         self.state.save()
+        return "State saved."
 
 
     def dispatch(self, id: int, command: CommandRequest):
