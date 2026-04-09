@@ -69,15 +69,24 @@ class CarbonCore:
 
     
     def shutdown(self) -> str:
-        logger.log("core", "Shutting down.", logger.Level.info)
 
         if not self.is_running: 
             return "This call shouldn't have been possible."
-        
-        self.saveState()
+
+        logger.log(
+			"core",
+			"Killing quickshell.",
+			logger.Level.debug
+		)
+        self.quickshell.kill()
+
         self.server.close()
+        self.saveState()
         self.is_running = False
         self.thread_pool.shutdown(False, cancel_futures=True)
+
+        logger.log("core", "Shutting down.", logger.Level.info)
+
         return "Shutting down."
     
 
