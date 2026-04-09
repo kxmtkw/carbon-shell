@@ -53,7 +53,7 @@ PanelWindow
 		anchors.fill: parent
 		anchors.margins: 8
 		color: Theme.Color._background
-		radius: Theme.Style.getMaterialRadius(width, height, "extra-large")
+		radius: Theme.Style.getMaterialRadius(width, height, "large")
 		border.width: 3
 		border.color: notif.urgency == 2 ? Theme.Color._error : Theme.Color._primary
 
@@ -197,7 +197,7 @@ PanelWindow
 				target: notif_card
 				property: "opacity"
 				to: 0
-				duration: 120
+				duration: 200
 				easing.type: Easing.OutQuad
 			}
 			PropertyAnimation
@@ -226,7 +226,7 @@ PanelWindow
 				target: notif_card
 				property: "opacity"
 				to: 1
-				duration: 160
+				duration: 200
 				easing.type: Easing.OutQuad
 			}
 			PropertyAnimation

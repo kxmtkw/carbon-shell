@@ -4,7 +4,7 @@ configuration
 {
 	modi:                       "drun";
 
-	display-drun:               " ";
+	display-drun:               " ";
 
     drun-categories: "";
 	drun-match-fields: "name,generic,exec,categories,keywords";
@@ -84,7 +84,7 @@ entry {
     background-color:            inherit;
     text-color:                  inherit;
     cursor:                      text;
-    placeholder:                 "Search...";
+    placeholder:                 " Search...";
     vertical-align:              0.5;
     horizontal-align:            0;
 }
