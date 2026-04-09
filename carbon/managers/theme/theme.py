@@ -3,7 +3,7 @@ from typing import Any, Literal
 from threading import Lock
 
 from carbon.managers.base import BaseManager
-from carbon.utils import CarbonError, procrun, is_valid_hex, locked, logger
+from carbon.utils import CarbonError, procrun, isValidHex, locked, logger
 
 from carbon.state import Defaults
 from .updater import ThemeUpdater
@@ -109,16 +109,16 @@ class ThemeManager(BaseManager):
 
 			if not Path(img).expanduser().exists():
 				raise CarbonError(f"Image not found: {img}")
-			self.material.generate_from_image(Path(img).expanduser(), contrast, variant_type)
+			self.material.generateFromImage(Path(img).expanduser(), contrast, variant_type)
 
 			
 			self._setWallpaper_nolock(img=img)
 
 		elif source == "hex":
 
-			if not is_valid_hex(hex): 
+			if not isValidHex(hex): 
 				raise CarbonError(f"Invalid hex value: {hex}")
-			self.material.generate_from_color(hex, contrast, variant_type)
+			self.material.generateFromColor(hex, contrast, variant_type)
 			
 		else:
 			raise CarbonError(f"Invalid theme source: {source}")
@@ -128,9 +128,9 @@ class ThemeManager(BaseManager):
 		self.light_theme = self.material.lightMapping
 
 		if mode == "light":
-			self.updater.update_colors(self.light_theme)
+			self.updater.updateColors(self.light_theme)
 		elif mode == "dark":
-			self.updater.update_colors(self.dark_theme)
+			self.updater.updateColors(self.dark_theme)
 		else:
 			raise CarbonError(f"Invalid theme mode: {mode}")
 		
@@ -167,9 +167,9 @@ class ThemeManager(BaseManager):
 			return f"Already in {mode} mode."
 		
 		if mode == "light":
-			self.updater.update_colors(self.light_theme)
+			self.updater.updateColors(self.light_theme)
 		elif mode == "dark":
-			self.updater.update_colors(self.dark_theme)
+			self.updater.updateColors(self.dark_theme)
 		else:
 			raise CarbonError(f"Invalid theme mode: {mode}")
 		
@@ -188,10 +188,10 @@ class ThemeManager(BaseManager):
 	def toggleMode(self) -> str:
 
 		if self.current_mode == "light":
-			self.updater.update_colors(self.dark_theme)
+			self.updater.updateColors(self.dark_theme)
 			self.current_mode = "dark"
 		else:
-			self.updater.update_colors(self.light_theme)
+			self.updater.updateColors(self.light_theme)
 			self.current_mode = "light"
 
 		logger.log(
@@ -205,7 +205,7 @@ class ThemeManager(BaseManager):
 
 	@locked(themeLock)
 	def changeFont(self, font: str) -> str:
-		self.updater.update_font(font)
+		self.updater.updateFont(font)
 		logger.log(
 			"theme",
 			f"Font updated to {font}.",
@@ -217,7 +217,7 @@ class ThemeManager(BaseManager):
 
 	@locked(themeLock)
 	def setFace(self, img: str):
-		self.updater.update_face(img)
+		self.updater.updateFace(img)
 		logger.log(
 			"theme",
 			f"Face updated to {img}.",

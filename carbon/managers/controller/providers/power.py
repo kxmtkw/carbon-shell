@@ -36,7 +36,7 @@ class Power(BaseController):
 
 		self.rofi.updateTheme(self.main_rasi)
 
-		uptime_msg = self.get_uptime()
+		uptime_msg = self.getUptime()
 		
 		self.rofi.display(
 			mode = RofiShell.Mode.dmenu,
@@ -86,7 +86,7 @@ class Power(BaseController):
 		shellrun(cmd)
 	
 
-	def get_uptime(self) -> str:
+	def getUptime(self) -> str:
 		output = shellrun("uptime -p")
 
 		if not output[0]:

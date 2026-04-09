@@ -100,10 +100,10 @@ class Server:
 		except Exception as e:
 			logger.log("server", f"Unexpected error occured: {e.__class__.__name__}({str(e)})", logger.Level.warning)
 		finally:
-			self.cleanup_client(client_id)
+			self.cleanupClient(client_id)
 
 
-	def cleanup_client(self, client_id: int):
+	def cleanupClient(self, client_id: int):
 		logger.log("server", f"Cleaning up client with id:{client_id}.", logger.Level.debug)
 		conn = self.clients.pop(client_id, None)
 		if conn:

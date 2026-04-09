@@ -19,16 +19,16 @@ class Networker(BaseController):
 
 		self.is_running: bool = True
 
-		self.current = self.show_wifi_menu
-		self.wifi_device: str = backend.get_default_wifi_device()
+		self.current = self.showWifiMenu
+		self.wifi_device: str = backend.getDefaultWifiDevice()
 		self.selected_network: str = ""
 
-		backend.list_networks(None, True)
+		backend.listNetworks(None, True)
 
 		
 	def launch(self):
 		self.is_running = True
-		self.current = self.show_wifi_menu
+		self.current = self.showWifiMenu
 		while self.is_running:
 			self.current()
 
@@ -41,7 +41,7 @@ class Networker(BaseController):
 			pass
 
 
-	def display_message_rofi(self, icon: str, mesg: str):
+	def displayMessageRofi(self, icon: str, mesg: str):
 		self.rofi.updateTheme(self.rasi_mesg)
 		self.rofi.display(
 			mode=RofiShell.Mode.dmenu,
@@ -50,7 +50,7 @@ class Networker(BaseController):
 		)
 		
 
-	def show_main_menu(self):
+	def showMainMenu(self):
 
 		self.rofi.updateTheme(self.rasi_info)
 		
@@ -80,27 +80,27 @@ class Networker(BaseController):
 			self.close()
 
 		elif selected == options[0]:
-			self.current = self.show_device_menu
+			self.current = self.showDeviceMenu
 
 		elif selected == options[1]:
-			self.current = self.show_wifi_menu
+			self.current = self.showWifiMenu
 
 		elif selected == options[2]:
-			self.current = self.show_hotspot_menu
+			self.current = self.showHotspotMenu
 
 		elif selected == options[3]:
-			backend.toggle_all_radio()
+			backend.toggleAllRadio()
 
 		elif selected == options[4]:
-			backend.launch_nn_connection_editor()
+			backend.launchNnConnectionEditor()
 			exit(0)
 			
 
-	def show_device_menu(self):
+	def showDeviceMenu(self):
 		
 		self.rofi.updateTheme(self.rasi_normal)
 
-		options = backend.list_devices()
+		options = backend.listDevices()
 
 		self.rofi.display(
 			mode=RofiShell.Mode.dmenu,
@@ -110,16 +110,16 @@ class Networker(BaseController):
 
 		selected = self.rofi.wait()
 
-		self.current = self.show_main_menu 
+		self.current = self.showMainMenu 
 		if not selected: return
 
 
-	def show_hotspot_menu(self):
+	def showHotspotMenu(self):
 		# todo
-		self.current = self.show_main_menu
+		self.current = self.showMainMenu
 
 
-	def show_wifi_menu(self):
+	def showWifiMenu(self):
 
 		self.rofi.updateTheme(self.rasi_info)
 		
@@ -132,7 +132,7 @@ class Networker(BaseController):
 			on_status = "off"
 		else:
 			on_status = "off (Hardware: off)"
-		device = backend.get_device(self.wifi_device)
+		device = backend.getDevice(self.wifi_device)
 
 		mesg = f"""\
 Radio     {on_status}
@@ -144,7 +144,7 @@ Status    {device.state.capitalize()}"""
 			f">>>  {Icons.rescan}   Rescan",
 		]
 
-		networks = backend.list_networks(self.wifi_device)
+		networks = backend.listNetworks(self.wifi_device)
 
 		options.extend(
 			networks
@@ -168,28 +168,28 @@ Status    {device.state.capitalize()}"""
 			self.close()
 
 		elif selected == options[0]:
-			backend.toggle_wifi_radio()
-			backend.list_networks(self.wifi_device, True)
+			backend.toggleWifiRadio()
+			backend.listNetworks(self.wifi_device, True)
 		
 		elif selected == options[1]:
-			backend.list_networks(self.wifi_device, True)
+			backend.listNetworks(self.wifi_device, True)
 
 		elif selected == options[-2]:
-			self.current = self.show_wifi_device_options
+			self.current = self.showWifiDeviceOptions
 
 		elif selected == options[-1]:
-			self.current = self.show_main_menu
+			self.current = self.showMainMenu
 
 		else:
-			self.selected_network = backend.get_id_from_formatted(selected)
-			self.current = self.show_wifi_network_options
+			self.selected_network = backend.getIdFromFormatted(selected)
+			self.current = self.showWifiNetworkOptions
 
 
-	def show_wifi_network_options(self):
+	def showWifiNetworkOptions(self):
 
 		self.rofi.updateTheme(self.rasi_info)
 		
-		network = backend.get_network(self.selected_network)
+		network = backend.getNetwork(self.selected_network)
 
 		details = f"""\
 SSID       {network.ssid}
@@ -214,41 +214,41 @@ Rate       {network.rate}MiB/s"""
 		selected = self.rofi.wait()
 
 
-		self.current = self.show_wifi_menu
+		self.current = self.showWifiMenu
 		if not selected: return
 
 		elif selected == options[0]:
-			self.current = self.show_wifi_menu
+			self.current = self.showWifiMenu
 		
 		elif selected == options[1]:
 
 			if network.in_use:
-				self.display_message_rofi(f"{Icons.wifi} ", f"Disconnecting {network.ssid}")
-				backend.disconnect_network(network.bssid)
+				self.displayMessageRofi(f"{Icons.wifi} ", f"Disconnecting {network.ssid}")
+				backend.disconnectNetwork(network.bssid)
 				self.rofi.close()
 			else:
 				try:
-					self.display_message_rofi(f"{Icons.wifi} ", f"Connecting to {network.ssid}")
-					backend.connect_network(self.wifi_device, network.bssid)
+					self.displayMessageRofi(f"{Icons.wifi} ", f"Connecting to {network.ssid}")
+					backend.connectNetwork(self.wifi_device, network.bssid)
 					self.rofi.close()
 				except backend.Errors.ConnectionFailure:
 					self.rofi.close()
-					self.current = self.show_password_prompt
+					self.current = self.showPasswordPrompt
 					return
 
 		elif selected == options[2]:
-			backend.forget_network(network.bssid)
+			backend.forgetNetwork(network.bssid)
 		
-		backend.list_networks(self.wifi_device, True)
+		backend.listNetworks(self.wifi_device, True)
 
-		self.current = self.show_wifi_menu
+		self.current = self.showWifiMenu
 
 
-	def show_wifi_device_options(self):
+	def showWifiDeviceOptions(self):
 
 		self.rofi.updateTheme(self.rasi_normal)
 
-		options = backend.list_wifi_devices()
+		options = backend.listWifiDevices()
 
 		self.rofi.display(
 			mode=RofiShell.Mode.dmenu,
@@ -258,19 +258,19 @@ Rate       {network.rate}MiB/s"""
 
 		selected = self.rofi.wait()
 
-		self.current = self.show_wifi_menu
+		self.current = self.showWifiMenu
 		if not selected: return
 
 		else:
-			self.wifi_device = backend.get_id_from_formatted(selected)
-			self.current = self.show_wifi_menu
+			self.wifi_device = backend.getIdFromFormatted(selected)
+			self.current = self.showWifiMenu
 
 
-	def show_password_prompt(self):
+	def showPasswordPrompt(self):
 		
 		self.rofi.updateTheme(self.rasi_password)
 
-		network = backend.get_network(self.selected_network)
+		network = backend.getNetwork(self.selected_network)
 
 		mesg = f"Enter password for '{network.ssid}'"
 
@@ -283,17 +283,17 @@ Rate       {network.rate}MiB/s"""
 
 		selected = self.rofi.wait()
 
-		self.current = self.show_wifi_menu 
+		self.current = self.showWifiMenu 
 		if not selected: return
 
-		self.display_message_rofi(f"{Icons.wifi} ", f"Connecting to {network.ssid}")
+		self.displayMessageRofi(f"{Icons.wifi} ", f"Connecting to {network.ssid}")
 		try:
-			backend.connect_network(self.wifi_device, self.selected_network, selected)
-			backend.list_networks(self.wifi_device, True)
+			backend.connectNetwork(self.wifi_device, self.selected_network, selected)
+			backend.listNetworks(self.wifi_device, True)
 			self.rofi.close()
 		except (backend.Errors.AuthFailure, backend.Errors.ConnectionFailure) as e:
 			self.rofi.close()
-			self.display_message_rofi(f"{Icons.error} ", f"Failed to connect to {network.ssid}")
+			self.displayMessageRofi(f"{Icons.error} ", f"Failed to connect to {network.ssid}")
 			time.sleep(3)
 			self.rofi.close()
 

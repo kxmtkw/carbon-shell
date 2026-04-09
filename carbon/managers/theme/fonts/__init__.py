@@ -1,1 +1,1 @@
-from .rofi import update_rofi
+from .rofi import updateRofi

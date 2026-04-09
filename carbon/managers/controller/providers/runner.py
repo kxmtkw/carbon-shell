@@ -17,10 +17,10 @@ class Runner(BaseController):
 
 		self.binaries: list[str] = []
 
-		self.load_binaries()
+		self.loadBinaries()
 	
 
-	def load_binaries(self) -> set[str]:
+	def loadBinaries(self) -> set[str]:
 
 		path = os.environ["PATH"]
 		directories = path.split(":")
@@ -40,7 +40,7 @@ class Runner(BaseController):
 		self.binaries.sort()
 
 	
-	def display_error(self, msg: str):
+	def displayError(self, msg: str):
 
 		self.rofi.updateTheme(self.rasi_error)
 
@@ -74,7 +74,7 @@ class Runner(BaseController):
 		try:
 			cmd = shlex.split(selected)
 		except ValueError as e:
-			self.display_error(f"Syntax Error: {str(e)}")
+			self.displayError(f"Syntax Error: {str(e)}")
 			return
 		
 		try:
@@ -85,9 +85,9 @@ class Runner(BaseController):
 				stdin=subprocess.DEVNULL
 			)
 		except FileNotFoundError:
-			self.display_error(f"File Not Found: {cmd[0]}")
+			self.displayError(f"File Not Found: {cmd[0]}")
 		except PermissionError:
-			self.display_error(f"Permission Error: {cmd[0]}")
+			self.displayError(f"Permission Error: {cmd[0]}")
 
 			
 	def close(self):

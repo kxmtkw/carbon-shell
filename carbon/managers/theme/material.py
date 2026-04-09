@@ -4,15 +4,15 @@ from PIL import Image
 from pathlib import Path
 
 
-def hex_to_rgb(hex: str) -> tuple[int, int, int]:
+def hexToRgb(hex: str) -> tuple[int, int, int]:
     hex = hex.lstrip('#')
     return tuple(int(hex[i:i+2], 16) for i in (0, 2, 4))
 
-def rgb_to_hex(rgb: tuple[int, int, int]) -> str:
+def rgbToHex(rgb: tuple[int, int, int]) -> str:
     hex = f"#{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}"
     return hex 
 
-def lerp_color(c1, c2, t):
+def lerpColor(c1, c2, t):
     return tuple(
         int(c1[i] + (c2[i] - c1[i]) * t)
         for i in range(3)
@@ -41,31 +41,31 @@ class MaterialColors:
         
 
 
-    def generate_from_image(self, image: str, contrast: float, variant: str):
+    def generateFromImage(self, image: str, contrast: float, variant: str):
 
         theme = material.theme_from_image(Image.open(image), contrast, variant)
 
         self.darkScheme = theme.schemes.dark
         self.lightScheme = theme.schemes.light
 
-        self.darkMapping = self.make_mapping(self.darkScheme)
-        self.lightMapping = self.make_mapping(self.lightScheme)
+        self.darkMapping = self.makeMapping(self.darkScheme)
+        self.lightMapping = self.makeMapping(self.lightScheme)
 
 
-    def generate_from_color(self, color: str, contrast: float, variant: tuple):
+    def generateFromColor(self, color: str, contrast: float, variant: tuple):
 
         theme = material.theme_from_color(color, contrast, variant)
 
         self.darkScheme = theme.schemes.dark
         self.lightScheme = theme.schemes.light
 
-        self.darkMapping = self.make_mapping(self.darkScheme)
-        self.lightMapping = self.make_mapping(self.lightScheme)
+        self.darkMapping = self.makeMapping(self.darkScheme)
+        self.lightMapping = self.makeMapping(self.lightScheme)
 
 
-    def shift_colors(self, s: material.DynamicScheme) -> dict[str, str]:
+    def shiftColors(self, s: material.DynamicScheme) -> dict[str, str]:
 
-        primary = hex_to_rgb(s.primary)
+        primary = hexToRgb(s.primary)
 
         
         colors = {
@@ -81,17 +81,17 @@ class MaterialColors:
         }
 
         for name, hex in colors.items():
-            rgb = hex_to_rgb(hex)
+            rgb = hexToRgb(hex)
             
-            new_rgb = lerp_color(rgb, primary, 0.5)
+            new_rgb = lerpColor(rgb, primary, 0.5)
 
-            colors[name] = rgb_to_hex(new_rgb)
+            colors[name] = rgbToHex(new_rgb)
 
         
         return colors
     
 
-    def make_mapping(self, s: material.DynamicScheme) -> dict[str, str]:
+    def makeMapping(self, s: material.DynamicScheme) -> dict[str, str]:
         scheme = {
             "background": s.background,
             "backgroundTransparentxAA": f"{s.background}7e",
@@ -152,6 +152,6 @@ class MaterialColors:
             "onTertiaryFixedVariant": s.on_tertiary_fixed_variant,
         }
 
-        scheme.update(self.shift_colors(s))
+        scheme.update(self.shiftColors(s))
         
         return scheme

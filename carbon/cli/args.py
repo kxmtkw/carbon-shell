@@ -2,7 +2,7 @@ import argparse
 
 # used AI :p
 
-def get_parser():
+def getParser():
 
     parser = argparse.ArgumentParser(
         prog="carbon.shell", 

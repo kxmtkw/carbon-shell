@@ -1,4 +1,4 @@
 import json
 
-def update_json(s: dict[str, str]) -> str:
+def updateJson(s: dict[str, str]) -> str:
     return json.dumps(s)

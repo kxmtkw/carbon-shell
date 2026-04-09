@@ -1,5 +1,5 @@
 
-def update_rofi(s: dict[str, str]) -> str:
+def updateRofi(s: dict[str, str]) -> str:
     base = """
 // NOTE: written by carbon shell
 * {

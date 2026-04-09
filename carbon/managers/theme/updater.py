@@ -25,7 +25,7 @@ class ThemeUpdater:
         ]
 
 
-    def update_colors(self, colors: dict[str, str]):
+    def updateColors(self, colors: dict[str, str]):
 
         for type, filepath in self.colorfiles.items():
 
@@ -34,19 +34,19 @@ class ThemeUpdater:
             match type:
 
                 case "json":
-                    string = update_json(colors)
+                    string = updateJson(colors)
                     writefile(filepath, string)
 
                 case "kde":
-                    string = update_kde(colors)
+                    string = updateKde(colors)
                     writefile(filepath, string)
 
                 case "rofi":
-                    string = update_rofi(colors)
+                    string = updateRofi(colors)
                     writefile(filepath, string)
 
                 case "hypr":
-                    string = update_hypr(colors)
+                    string = updateHypr(colors)
                     writefile(filepath, string)
 
                 case "kitty":
@@ -63,20 +63,20 @@ class ThemeUpdater:
                     print(f"Error :: {type}")
                     continue
         
-        self.run_post_update()
+        self.runPostUpdate()
 
 
-    def update_font(self, font: str):
+    def updateFont(self, font: str):
 
         rofifile = Path("~/.carbon/shell/rofi/Config/fonts.rasi").expanduser()
 
-        rofi = fonts.update_rofi(font)
+        rofi = fonts.updateRofi(font)
         writefile(rofifile, rofi)
 
         self.qs.updateFont(font)
 
 
-    def update_face(self, path: str):
+    def updateFace(self, path: str):
 
         if not Path(path).expanduser().exists():
             raise CarbonError(f"Face image not found: {path}")
@@ -87,7 +87,7 @@ class ThemeUpdater:
             raise CarbonError(f"Failed to update face image. Reason: {out[1]}")
 
 
-    def run_post_update(self):
+    def runPostUpdate(self):
         for cmd in self.post_update_commands:
             shellrun(cmd)
 

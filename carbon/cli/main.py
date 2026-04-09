@@ -1,13 +1,13 @@
 from carbon.ipc.clients import Client
 from carbon.ipc.payloads import CommandRequest
 
-from .args import get_parser
+from .args import getParser
 
 import subprocess, sys
 from carbon.core.main import main as core_main
 from carbon.utils import CarbonError
 
-def send_request(request: CommandRequest):
+def sendRequest(request: CommandRequest):
 	client = Client()
 	try:
 		return client.send(request)
@@ -17,7 +17,7 @@ def send_request(request: CommandRequest):
 		client.close()
 
 
-def handle_daemon(args):
+def handleDaemon(args):
 
 	if args.action == "start":
 
@@ -35,7 +35,7 @@ def handle_daemon(args):
 	elif args.action == "restart":
 
 		request = CommandRequest("daemon", "shutdown", {})
-		out = send_request(request)
+		out = sendRequest(request)
 
 		if out.code != 0:
 			print("Failed to shutdown daemon:", out.output)
@@ -56,7 +56,7 @@ def handle_daemon(args):
 
 
 		request = CommandRequest("daemon", "shutdown", {})
-		out = send_request(request)
+		out = sendRequest(request)
 		if out.code != 0:
 			print("Failed to shutdown daemon:", out.output)
 			exit(1)
@@ -67,19 +67,19 @@ def handle_daemon(args):
 	elif args.action == "load-state":
 
 		request = CommandRequest("daemon", "load-state", {})
-		out = send_request(request)
+		out = sendRequest(request)
 		print(out.output)
 
 	elif args.action == "save-state":
 
 		request = CommandRequest("daemon", "save-state", {})
-		out = send_request(request)
+		out = sendRequest(request)
 		print(out.output)
 	
 	exit(out.code)
 
 
-def handle_theme(args):
+def handleTheme(args):
 
 	action = args.action
 	
@@ -95,7 +95,7 @@ def handle_theme(args):
 				"hex": args.hex if args.hex else None
 			}
 		)
-		output = send_request(request)
+		output = sendRequest(request)
 		print(output.output)
 		
 
@@ -105,7 +105,7 @@ def handle_theme(args):
 				"variant": args.variant
 			}
 		)
-		output = send_request(request)
+		output = sendRequest(request)
 		print(output.output)
 
 
@@ -115,13 +115,13 @@ def handle_theme(args):
 				"mode": args.mode
 			}
 		)
-		output = send_request(request)
+		output = sendRequest(request)
 		print(output.output)
 		
 
 	elif action == "toggle-mode":
 		request = CommandRequest("theme", "toggle-mode", {})
-		output = send_request(request)
+		output = sendRequest(request)
 		print(output.output)
 		
 
@@ -131,7 +131,7 @@ def handle_theme(args):
 				"contrast": args.contrast
 			}
 		)
-		output = send_request(request)
+		output = sendRequest(request)
 		print(output.output)
 
 		
@@ -145,7 +145,7 @@ def handle_theme(args):
 					"img": args.image
 				}
 			)
-			output = send_request(request)
+			output = sendRequest(request)
 			print(output.output)
 
 		else:
@@ -155,7 +155,7 @@ def handle_theme(args):
 					"img": args.image
 				}
 			)
-			output = send_request(request)
+			output = sendRequest(request)
 			print(output.output)
 
 		
@@ -165,7 +165,7 @@ def handle_theme(args):
 				"font": args.font
 			}
 		)
-		output = send_request(request)
+		output = sendRequest(request)
 		print(output.output)
 
 	elif action == "set-face":
@@ -174,12 +174,12 @@ def handle_theme(args):
 				"img": args.img
 			}
 		)
-		output = send_request(request)
+		output = sendRequest(request)
 		print(output.output)
 
 	exit(output.code)
 
-def handle_controller(args):
+def handleController(args):
 
 	action = args.action
 	
@@ -189,18 +189,18 @@ def handle_controller(args):
 				"name": args.name
 			}
 		)
-		output = send_request(request)
+		output = sendRequest(request)
 		print(output.output)
 
 	elif action == "close-all":
 		request = CommandRequest("controller", "close-all", {})
-		output = send_request(request)
+		output = sendRequest(request)
 		print(output.output)
 
 	exit(output.code)
 
 
-def handle_nightlight(args):
+def handleNightlight(args):
 
 	action = args.action
 
@@ -210,7 +210,7 @@ def handle_nightlight(args):
 				"value": args.value
 			}			   
 		)
-		output = send_request(request)
+		output = sendRequest(request)
 		print(output.output)
 
 	elif action == "set-gamma":
@@ -219,7 +219,7 @@ def handle_nightlight(args):
 				"value": args.value
 			}			   
 		)
-		output = send_request(request)
+		output = sendRequest(request)
 		print(output.output)
 
 	exit(output.code)
@@ -227,18 +227,18 @@ def handle_nightlight(args):
 
 def main():
 
-	args = get_parser().parse_args()
+	args = getParser().parse_args()
 
 	if args.category == "daemon":
-		handle_daemon(args)
+		handleDaemon(args)
 		
 	elif args.category == "theme":
-		handle_theme(args)
+		handleTheme(args)
 		
 	elif args.category == "controller":
-		handle_controller(args)
+		handleController(args)
 
 	elif args.category == "nightlight":
-		handle_nightlight(args)
+		handleNightlight(args)
 
 

@@ -56,7 +56,7 @@ def procrun(cmd: list[str], wait: bool = True) -> tuple[bool, str]:
     
     
 valid_chars = set("0123456789abcdefABCDEF")
-def is_valid_hex(hex_string: str) -> bool:
+def isValidHex(hex_string: str) -> bool:
     "Validated hex formats: #abc #aabbcc"
     if not hex_string.startswith("#"):
         return False
@@ -66,7 +66,7 @@ def is_valid_hex(hex_string: str) -> bool:
     return len(h) in (3, 6) and all(c in valid_chars for c in h)
 
 
-def is_valid_number(num_string: str) -> bool:
+def isValidNumber(num_string: str) -> bool:
     "Checks whether the provided string is valid integar or float"
     try:
         float(num_string)

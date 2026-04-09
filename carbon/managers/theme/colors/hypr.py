@@ -1,5 +1,5 @@
 
-def update_hypr(s: dict[str, str]) -> str:
+def updateHypr(s: dict[str, str]) -> str:
     outline = s["surfaceVariant"][1:]
     
     return f"""# NOTE: written by carbon shell

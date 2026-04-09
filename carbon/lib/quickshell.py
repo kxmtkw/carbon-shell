@@ -73,12 +73,12 @@ class Quickshell:
 			"ipc",
 			"call",
 			"style",
-			"update_font",
+			"updateFont",
 			font
 		)
 
 
-	def send_notification(
+	def sendNotification(
 		self,
 		id: int,
 		replaces_id: int,
