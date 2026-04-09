@@ -15,22 +15,22 @@ steps_delay=0.005
 min_steps=10
 max_steps=40
 # so we don't increase the already high inefficiency
-lower_limit=10
+lower_limit=1
 # lower limit of the brightness
 
 display_help() {
-    echo "Usage: [option] value"
-    echo "  increase x : increase by x percentage"
-    echo "  decrease x : decrease by x percentage"
-    echo "  set x      : set to x percentage"
-    echo "  get        : get the current percentage value"
-    echo "  save       : save the current brightness"
-    echo "  restore    : restore the last saved brighteness"
+	echo "Usage: [option] value"
+	echo "  increase x : increase by x percentage"
+	echo "  decrease x : decrease by x percentage"
+	echo "  set x      : set to x percentage"
+	echo "  get        : get the current percentage value"
+	echo "  save       : save the current brightness"
+	echo "  restore    : restore the last saved brighteness"
 }
 
 if [[ -z "$1" ]]; then
-    display_help
-    exit 2
+	display_help
+	exit 2
 fi
 
 
@@ -38,10 +38,10 @@ mode="$1"
 amount="$2"
 
 check_if_value_passed() {
-    if [[ "$amount" = "" ]]; then
-        echo "No value provided."
-        exit 1
-    fi
+	if [[ "$amount" = "" ]]; then
+		echo "No value provided."
+		exit 1
+	fi
 }
 
 
@@ -53,42 +53,46 @@ current_percentage=$(( current_brightness * 100 / max_brightness ))
 target=0
 
 case "$1" in
-    increase)
-        check_if_value_passed
-        target=$(( current_percentage + amount ))
-        ;;
-    decrease)
-        check_if_value_passed
-        target=$(( current_percentage - amount ))
-        ;;
-    set)
-        check_if_value_passed
-        target=$(( amount ))
-        ;;
-    save)
-        echo "$current_percentage" > /tmp/carbon_last_brightness
-        exit 0
-        ;;
-    restore)
-        target=$(< /tmp/carbon_last_brightness)
+	increase)
+		check_if_value_passed
+		target=$(( current_percentage + amount ))
+		;;
+	decrease)
+		check_if_value_passed
+		target=$(( current_percentage - amount ))
+		;;
+	set)
+		check_if_value_passed
+		target=$(( amount ))
+		;;
+	get)
+		echo $current_percentage
+		exit 0
+		;;
+	save)
+		echo "$current_percentage" > /tmp/carbon_last_brightness
+		exit 0
+		;;
+	restore)
+		target=$(< /tmp/carbon_last_brightness)
 
-        if (( target == current_percentage )); then
-            exit 0
-        fi
-        ;;
-    --help)
-        display_help
-        exit 0
-        ;;
-    *)
-        echo "Can't read the usage?"
-        exit 1
-        ;;
+		if (( target == current_percentage )); then
+			exit 0
+		fi
+		;;
+	--help)
+		display_help
+		exit 0
+		;;
+	*)
+		echo "Can't read the usage?"
+		exit 1
+		;;
 esac
 
 
 # Clamp target
-(( target < $lower_limit )) && target=10
+(( target < $lower_limit )) && target=1
 (( target > 100 )) && target=100
 
 
@@ -105,13 +109,11 @@ step_count=$abs_diff
 
 step_size=$(awk "BEGIN {print $diff / $step_count}")
 
-# Updating bar, we do it here so the bar updates by the time the brightness reaches target
-quickshell --config ~/.carbon/shell/quickshell ipc call brightness update "$target"
 
 for ((i=1; i<=step_count; i++)); do
-    val=$(awk "BEGIN {print $current_percentage + $step_size * $i}")
-    brightnessctl set "${val}%"
-    sleep "$steps_delay"
+	val=$(awk "BEGIN {print $current_percentage + $step_size * $i}")
+	brightnessctl set "${val}%" > /dev/null
+	sleep "$steps_delay"
 done
 
-brightnessctl set "${target}%"
+brightnessctl set "${target}%" > /dev/null

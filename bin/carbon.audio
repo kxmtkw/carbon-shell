@@ -7,6 +7,7 @@ display_help() {
     echo "  increase x    : increase by x percentage"
     echo "  decrease x    : decrease by x percentage"
     echo "  set x         : set to x percentage"
+    echo "  get           : get the current value (0 to 1)"
     echo "  toggle-mute   : toggle mute"
     echo "  toggle-mic    : toggle input"
 }
@@ -50,6 +51,9 @@ case "$1" in
         current=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2}')
         quickshell --config ~/.carbon/shell/quickshell ipc call audio update "$current"
         ;;
+    get)
+        wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{ printf "%s\n", $2 }'
+        ;;
     toggle-mute)
         wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
         ;;
@@ -65,5 +69,3 @@ case "$1" in
         exit 1
         ;;
 esac
-
-sleep 0.5
