@@ -1,5 +1,6 @@
 import subprocess
 from pathlib import Path
+from typing import Literal
 
 class Quickshell:
 	"Class for communicating with the quickshell instance for carbon"
@@ -46,7 +47,8 @@ class Quickshell:
 
 	def _call(self, *args) -> str:
 		try:
-			result = subprocess.run(self.base_cmd + list(args), capture_output=True, text=True, timeout=5)
+			cmd = self.base_cmd + [str(arg) for arg in args]
+			result = subprocess.run(cmd, capture_output=True, text=True, timeout=5)
 			if result.returncode != 0:
 				return ""
 			return result.stdout.strip()
@@ -67,6 +69,34 @@ class Quickshell:
 			"style",
 			"update_font",
 			font
+		)
+
+
+	def send_notification(
+		self,
+		id: int,
+		replaces_id: int,
+		app_name: str,
+		app_icon: str,
+		summary: str,
+		body: str,
+		urgency: Literal[0, 1, 2],
+		image: str,
+		expire_timeout: int
+	):
+		"Send a notification to the quickshell notifier window."
+		self._call(
+			"notif",
+			"show_notification",
+			str(id),
+			str(replaces_id),
+			app_name,
+			app_icon,
+			summary,
+			body,
+			urgency,
+			image,
+			str(expire_timeout)
 		)
 
 
