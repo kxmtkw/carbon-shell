@@ -42,7 +42,6 @@ case "$1" in
         exec systemctl reboot --firmware-setup
         ;;
     *)
-        notify-send "Unknown option" "$1"
         echo "Unknown option: $1"
         display_help
         exit 1
