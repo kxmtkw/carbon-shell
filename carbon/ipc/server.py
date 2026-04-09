@@ -27,16 +27,27 @@ class Server:
 
 		self.socket.settimeout(timeout)
 		self.socket.listen()
+		logger.log(
+			"server",
+			"Server is listening.",
+			logger.Level.info
+		)
 		
 
 	def close(self):
 		self.socket.shutdown(socket.SHUT_WR)
 		self.socket.close()
 		os.remove(Server.address)
+		logger.log(
+			"server",
+			"Successfully closed server socket.",
+			logger.Level.info
+		)
 
 	
 	def listen(self) -> tuple[int, CommandRequest] | None:
-	
+		
+
 		while True:
 
 			try:

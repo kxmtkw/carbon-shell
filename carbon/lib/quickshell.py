@@ -17,8 +17,6 @@ class Quickshell:
 			"quickshell",
 			"--config",
 			Path("~/.carbon/shell/quickshell").expanduser(),
-			"ipc",
-			"call"
 		]
 
 	
@@ -45,6 +43,10 @@ class Quickshell:
 			raise Quickshell.Error(f"Failed to start quickshell. Reason: {e.__class__.__name__}::{str(e)}")
 		
 
+	def kill(self):
+		self._call("kill")
+
+
 	def _call(self, *args) -> str:
 		try:
 			cmd = self.base_cmd + [str(arg) for arg in args]
@@ -59,6 +61,8 @@ class Quickshell:
 	def updateTheme(self):
 		"Ask quickshell to reread the theme json file."
 		self._call(
+			"ipc",
+			"call",
 			"theme",
 			"update"
 		)
@@ -66,6 +70,8 @@ class Quickshell:
 	def updateFont(self, font: str):
 		"Ask quickshell to update the font."
 		self._call(
+			"ipc",
+			"call",
 			"style",
 			"update_font",
 			font
@@ -86,6 +92,8 @@ class Quickshell:
 	):
 		"Send a notification to the quickshell notifier window."
 		self._call(
+			"ipc",
+			"call",
 			"notif",
 			"show_notification",
 			str(id),
