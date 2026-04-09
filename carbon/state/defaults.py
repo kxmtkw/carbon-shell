@@ -9,3 +9,6 @@ class Defaults:
     theme_contrast = 0.5
     theme_font = "Iosevka"
     theme_face = "~/.carbon/assets/default_face.jpg"
+
+    nightlight_temperature = 5800
+    nightlight_gamma = 100

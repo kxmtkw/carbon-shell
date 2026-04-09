@@ -71,4 +71,18 @@ def get_parser():
     
     ctrl_sub.add_parser("close-all")
 
+    # ==========================================
+    # NIGHTLIGHT COMMANDS
+    # Usage: nightlight [set-temperature <val> | set-gamma <val>]
+    # ==========================================
+
+    nightlight_parser = subparsers.add_parser("nightlight")
+    nightlight_sub = nightlight_parser.add_subparsers(dest="action", required=True)
+
+    temp_parser = nightlight_sub.add_parser("set-temperature")
+    temp_parser.add_argument("value", type=int)
+
+    gamma_parser = nightlight_sub.add_parser("set-gamma")
+    gamma_parser.add_argument("value", type=int)
+
     return parser

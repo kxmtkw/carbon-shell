@@ -200,6 +200,31 @@ def handle_controller(args):
 	exit(output.code)
 
 
+def handle_nightlight(args):
+
+	action = args.action
+
+	if action == "set-temperature":
+		request = CommandRequest("nightlight", "set-temperature",
+			{
+				"value": args.value
+			}			   
+		)
+		output = send_request(request)
+		print(output.output)
+
+	elif action == "set-gamma":
+		request = CommandRequest("nightlight", "set-gamma",
+			{
+				"value": args.value
+			}			   
+		)
+		output = send_request(request)
+		print(output.output)
+
+	exit(output.code)
+
+
 def main():
 
 	args = get_parser().parse_args()
@@ -212,5 +237,8 @@ def main():
 		
 	elif args.category == "controller":
 		handle_controller(args)
+
+	elif args.category == "nightlight":
+		handle_nightlight(args)
 
 
