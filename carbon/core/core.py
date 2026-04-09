@@ -6,11 +6,14 @@ from carbon.ipc.payloads import CommandRequest, CommandOutput
 
 from carbon.utils import CarbonError, logger
 
-from carbon.managers.theme import ThemeManager
-from carbon.managers.controller import ControllerManager
-
 from carbon.state import StateManager
 from carbon.lib.quickshell import Quickshell
+
+from carbon.managers.theme import ThemeManager
+from carbon.managers.controller import ControllerManager
+from carbon.managers.notifications import NotificationManager
+
+
 
 class CarbonCore:
 
@@ -27,6 +30,7 @@ class CarbonCore:
 
         self.theme_manager = ThemeManager()
         self.controller_manager = ControllerManager(self.theme_manager)
+        self.notification_manager = NotificationManager()
 
 
         self.quickshell = Quickshell()

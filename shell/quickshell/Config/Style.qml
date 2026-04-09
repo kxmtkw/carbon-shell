@@ -9,6 +9,7 @@ Singleton
     id: style
 
     property string font
+    property string wallpaper
 
 	function getMaterialRadius(width, height, shapeSetting) 
     {
@@ -37,6 +38,11 @@ Singleton
         function update_font(font_name: string): void {
             style.font = font_name
             console.log(font_name)
+        }
+
+        function update_wallpaper(path: string): void {
+            style.wallpaper = path
+            console.log(style.wallpaper)
         }
     }
 }
