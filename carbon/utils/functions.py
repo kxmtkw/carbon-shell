@@ -102,3 +102,15 @@ def prompt(msg: str, options: list[str]) -> str:
         return chosen 
     
     CarbonError("Too many retries").halt()
+
+
+def notify(summary, body="", *, urgency="normal", icon="", timeout=-1, app_name="CarbonShell"):
+    cmd = ["notify-send", "--app-name", app_name, "--urgency", urgency]
+    if icon:
+        cmd += ["--icon", icon]
+    if timeout >= 0:
+        cmd += ["--expire-time", str(timeout)]
+    cmd += [summary]
+    if body:
+        cmd += [body]
+    subprocess.run(cmd)
