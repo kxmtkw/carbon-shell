@@ -30,7 +30,7 @@ Add a system tray to the bar.
 The controller that opens after clicking the battery info. Display basic battery info and different power options and a way to open TLP.
 
 
-#### Better Notifs
+#### Better Notifs (DONE)
 
 Make notifications actually work in quickshell.
 
@@ -76,6 +76,8 @@ The current method causes env = PATH to be reloaded again and again causing a lo
 Adding options like position and even multiple variants.
 
 
-#### Custom Launcher
+#### Custom Launcher (CANCELLED)
 
 Build the shell's own launcher instead of relying on rofi's drun. For some reason, the application rofi -drun launchs lives under the daemon process. That means when daemon ends, all programs that were launched by the rofi launcher also end up closing.
+
+> No need now since i figured out what was wrong. Tho if i want to be able to not show certain apps, then this could be implemented. Also with our daemon, we could lauch the rofi menu even faster since we can cache the applications in memory.
