@@ -38,7 +38,7 @@ PanelWindow
 	}
 
 	implicitWidth: 620
-	implicitHeight: notif_card.implicitHeight + 20
+	implicitHeight: notif_card.implicitHeight + 24
 	height: implicitHeight
 	color: Theme.Color._invisible
 	exclusiveZone: 0
@@ -54,7 +54,7 @@ PanelWindow
 		anchors.margins: 8
 		color: Theme.Color._background
 		radius: Theme.Style.getMaterialRadius(width, height, "extra-large")
-		border.width: 4
+		border.width: 3
 		border.color: notif.urgency == 2 ? Theme.Color._error : Theme.Color._primary
 
 		Column
