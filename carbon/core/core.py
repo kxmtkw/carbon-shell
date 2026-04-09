@@ -12,7 +12,7 @@ from carbon.lib.quickshell import Quickshell
 from carbon.managers.theme import ThemeManager
 from carbon.managers.controller import ControllerManager
 from carbon.managers.notifications import NotificationManager
-
+from carbon.managers.nightlight import NightLightManager
 
 
 class CarbonCore:
@@ -29,8 +29,9 @@ class CarbonCore:
         self.state = StateManager()
 
         self.theme_manager = ThemeManager()
-        self.controller_manager = ControllerManager(self.theme_manager)
         self.notification_manager = NotificationManager()
+        self.nightlight_manager = NightLightManager()
+        self.controller_manager = ControllerManager(self.theme_manager)
 
 
         self.quickshell = Quickshell()
@@ -48,7 +49,8 @@ class CarbonCore:
                 "save-state": self.saveState
             },
             "theme": self.theme_manager.handlers(),
-            "controller": self.controller_manager.handlers()
+            "controller": self.controller_manager.handlers(),
+            "nightlight": self.nightlight_manager.handlers()
         }
 
         self.loadState()
@@ -94,12 +96,14 @@ class CarbonCore:
         logger.log("core", "Loading state...", logger.Level.info)
         self.state.load()
         self.theme_manager.loadState(self.state.get("theme"))
+        self.nightlight_manager.loadState(self.state.get("nightlight"))
         return "State loaded."
 
 
     def saveState(self):
         logger.log("core", "Saving state...", logger.Level.info)
         self.state.update("theme", self.theme_manager.saveState())
+        self.state.update("nightlight", self.nightlight_manager.saveState())
         self.state.save()
         return "State saved."
 
