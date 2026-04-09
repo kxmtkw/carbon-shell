@@ -3,7 +3,7 @@ from threading import Lock
 
 from carbon.managers.base import BaseManager
 from carbon.managers.theme import ThemeManager
-from carbon.utils import CarbonError, procrun, is_valid_hex, logger
+from carbon.utils import CarbonError, procrun, isValidHex, logger
 
 from .base import BaseController
 from .providers import (

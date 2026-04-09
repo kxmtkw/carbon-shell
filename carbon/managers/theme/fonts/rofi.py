@@ -1,5 +1,5 @@
 
-def update_rofi(font: str) -> str:
+def updateRofi(font: str) -> str:
 
     base = f"""
 // NOTE: This file is written by carbon shell

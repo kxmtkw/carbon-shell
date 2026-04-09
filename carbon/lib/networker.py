@@ -36,10 +36,10 @@ class Errors:
 
 
 
-def list_devices() -> list[str]:
+def listDevices() -> list[str]:
 
-    if "list_devices" in cache:
-        return cache["list_devices"]
+    if "listDevices" in cache:
+        return cache["listDevices"]
     
     formatted_devices = []
 
@@ -51,16 +51,16 @@ def list_devices() -> list[str]:
         formatted = f"{Icons.devices}   <b>{device.device:<{max_name_len}}</b>  :: {device.device_type:<{max_type_len}}  {device.state}"
         formatted_devices.append(formatted)
 
-    cache["list_devices"] = formatted_devices
+    cache["listDevices"] = formatted_devices
 
 
     return formatted_devices
 
 
-def list_wifi_devices() -> list[str]:
+def listWifiDevices() -> list[str]:
 
-    if "list_wifi_devices" in cache:
-        return cache["list_wifi_devices"]
+    if "listWifiDevices" in cache:
+        return cache["listWifiDevices"]
     
     formatted_devices = []
 
@@ -73,12 +73,12 @@ def list_wifi_devices() -> list[str]:
         formatted = f"{Icons.devices}   <b>{device.device:<{max_name_len}}</b>  :: {device.device_type:<{max_type_len}}  {device.state}<span alpha='1'>|{device.device}|</span>"
         formatted_devices.append(formatted)
 
-    cache["list_wifi_devices"] = formatted_devices
+    cache["listWifiDevices"] = formatted_devices
 
     return formatted_devices
 
 
-def get_device(name: str) -> nmcli.data.device.Device:
+def getDevice(name: str) -> nmcli.data.device.Device:
 
     devices =  nmcli.device()
 
@@ -87,7 +87,7 @@ def get_device(name: str) -> nmcli.data.device.Device:
             return dev
 
 
-def get_default_wifi_device() -> str:
+def getDefaultWifiDevice() -> str:
     devices = nmcli.device()
 
     for d in devices:
@@ -105,16 +105,16 @@ def get_default_wifi_device() -> str:
     return None
 
 
-def list_networks(device: str | None = None, rescan: bool = False) -> list[str]:
+def listNetworks(device: str | None = None, rescan: bool = False) -> list[str]:
 
     if device is None:
-        device = get_default_wifi_device()
+        device = getDefaultWifiDevice()
 
     if f"list_networks_{device}" in cache and not rescan:
         return cache[f"list_networks_{device}"]
     
     if rescan:
-        rescan_wifi()
+        rescanWifi()
 
     formatted_networks = []
     networks = nmcli.device.wifi(device)
@@ -146,10 +146,10 @@ def list_networks(device: str | None = None, rescan: bool = False) -> list[str]:
     return formatted_networks
 
 
-def rescan_wifi(device: str | None = None):
+def rescanWifi(device: str | None = None):
 
     if device is None:
-        device = get_default_wifi_device()
+        device = getDefaultWifiDevice()
 
     try:
         nmcli.device.wifi_rescan(device)
@@ -157,7 +157,7 @@ def rescan_wifi(device: str | None = None):
         pass
 
 
-def toggle_all_radio():
+def toggleAllRadio():
     radio = nmcli.radio()
 
     if radio.wifi or radio.wwan:
@@ -166,7 +166,7 @@ def toggle_all_radio():
         nmcli.radio.all_on()
 
 
-def toggle_wifi_radio():
+def toggleWifiRadio():
     radio = nmcli.radio.wifi()
 
     if radio:
@@ -175,7 +175,7 @@ def toggle_wifi_radio():
         nmcli.radio.wifi_on()
 
 
-def get_network(bssid: str) -> nmcli.data.device.DeviceWifi:
+def getNetwork(bssid: str) -> nmcli.data.device.DeviceWifi:
 
     networks: list[nmcli.data.device.DeviceWifi] = nmcli.device.wifi()
 
@@ -184,8 +184,8 @@ def get_network(bssid: str) -> nmcli.data.device.DeviceWifi:
             return net
 
     
-def connect_network(device: str, bssid: str, passwd: str | None = None):
-    network = get_network(bssid)
+def connectNetwork(device: str, bssid: str, passwd: str | None = None):
+    network = getNetwork(bssid)
 
     if passwd:
         output = subprocess.run(f"nmcli device wifi connect {network.bssid} password {passwd} ifname {device}", shell=True, capture_output=True, text=True)
@@ -200,8 +200,8 @@ def connect_network(device: str, bssid: str, passwd: str | None = None):
     raise Errors.ConnectionFailure(f"Could not connect to {network.ssid}.", output.stdout)
 
 
-def disconnect_network(bssid: str):
-    network = get_network(bssid)
+def disconnectNetwork(bssid: str):
+    network = getNetwork(bssid)
 
     try:
         nmcli.connection.down(network.ssid)
@@ -209,8 +209,8 @@ def disconnect_network(bssid: str):
         pass
 
 
-def forget_network(bssid: str):
-    network = get_network(bssid)
+def forgetNetwork(bssid: str):
+    network = getNetwork(bssid)
 
     try:
         nmcli.connection.delete(network.ssid)
@@ -218,7 +218,7 @@ def forget_network(bssid: str):
         pass 
 
 
-def get_id_from_formatted(formatted: str) -> str:
+def getIdFromFormatted(formatted: str) -> str:
     "Get id from formatted text from backend"
     parts = formatted.split("|")
 
@@ -228,5 +228,5 @@ def get_id_from_formatted(formatted: str) -> str:
     return parts[-2]
 
 
-def launch_nn_connection_editor():
+def launchNnConnectionEditor():
     subprocess.Popen(["nm-connection-editor"])

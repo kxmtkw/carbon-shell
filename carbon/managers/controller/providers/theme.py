@@ -4,7 +4,7 @@ import time
 from carbon.lib.rofi import RofiShell
 from carbon.managers.controller.base import BaseController
 
-from carbon.utils import CarbonError, is_valid_hex, is_valid_number
+from carbon.utils import CarbonError, isValidHex, isValidNumber
 from carbon.managers.theme import ThemeManager
 
 
@@ -35,15 +35,15 @@ class Theme(BaseController):
 		]
 
 
-	def load_wallpapers(self):
-		self.wallpapers = Utils.get_wallpapers(
+	def loadWallpapers(self):
+		self.wallpapers = Utils.getWallpapers(
 			["~/Pictures/Wallpapers"]
 		)
 
 	
 	def launch(self):
 		self.is_running = True
-		self.current = self.show_main_menu
+		self.current = self.showMainMenu
 
 		while self.is_running:
 			self.current()
@@ -67,7 +67,7 @@ class Theme(BaseController):
 		self.rofi.wait()
 
 
-	def show_main_menu(self):
+	def showMainMenu(self):
 
 		self.rofi.updateTheme(self.rasi_main)
 
@@ -92,34 +92,34 @@ class Theme(BaseController):
 			self.themer.toggleMode()
 
 		elif selected == options[1]:
-			self.current = self.show_wallpaper_menu
+			self.current = self.showWallpaperMenu
 
 		elif selected == options[2]:
-			self.current = self.show_color_menu
+			self.current = self.showColorMenu
 
 		elif selected == options[3]:
-			self.current = self.show_variant_menu
+			self.current = self.showVariantMenu
 
 		elif selected == options[4]:
-			self.current = self.show_source_menu
+			self.current = self.showSourceMenu
 
 		elif selected == options[5]:
-			self.current = self.show_contrast_menu
+			self.current = self.showContrastMenu
 
 		elif selected == options[6]:
-			self.current = self.show_face_menu
+			self.current = self.showFaceMenu
 
 		else: 
-			self.current = self.show_font_menu
+			self.current = self.showFontMenu
 
 		
 
 
-	def show_wallpaper_menu(self):
+	def showWallpaperMenu(self):
 		
 		self.rofi.updateTheme(self.rasi_wallpaper)
 
-		self.load_wallpapers()
+		self.loadWallpapers()
 
 		if len(self.wallpapers) == 0:
 			raise CarbonError("No wallpapers to show.") # todo: add visual error message insteads
@@ -131,7 +131,7 @@ class Theme(BaseController):
 		)
 
 		selected: str = self.rofi.wait()
-		self.current = self.show_main_menu 
+		self.current = self.showMainMenu 
 		if not selected:
 			return
 
@@ -142,7 +142,7 @@ class Theme(BaseController):
 
 		time.sleep(0.6) # animation finishes
 
-	def show_color_menu(self):
+	def showColorMenu(self):
 		
 		self.rofi.updateTheme(self.rasi_entry)
 
@@ -154,20 +154,20 @@ class Theme(BaseController):
 
 		entered = self.rofi.wait().strip()
 
-		self.current = self.show_main_menu 
+		self.current = self.showMainMenu 
 		if not entered: 
 			return
 
 		if entered == self.themer.current_hex: return
 
-		if not is_valid_hex(entered):
+		if not isValidHex(entered):
 			self.display(f"{Icons.error} ", f"Invalid hex value: {f"{entered[:10]}..." if len(entered) > 10 else entered}")
 			return
 
 		self.themer.updateTheme(hex=entered)
 
 
-	def show_source_menu(self):
+	def showSourceMenu(self):
 		
 		options = [
 			f"{Icons.wallpaper}  From wallpaper",
@@ -188,7 +188,7 @@ class Theme(BaseController):
 		selected: str = self.rofi.wait()
 
 
-		self.current = self.show_main_menu 
+		self.current = self.showMainMenu 
 		if not selected:
 			return
 
@@ -202,7 +202,7 @@ class Theme(BaseController):
 		self.themer.updateTheme(source=source)
 
 
-	def show_variant_menu(self):
+	def showVariantMenu(self):
 
 		options = [
 			"[1] Ash",
@@ -229,7 +229,7 @@ class Theme(BaseController):
 
 		selected: str = self.rofi.wait()
 
-		self.current = self.show_main_menu 
+		self.current = self.showMainMenu 
 		if not selected: 
 			return
 
@@ -241,7 +241,7 @@ class Theme(BaseController):
 		
 
 
-	def show_contrast_menu(self):
+	def showContrastMenu(self):
 		
 		self.rofi.updateTheme(self.rasi_entry)
 
@@ -253,10 +253,10 @@ class Theme(BaseController):
 
 		entered = self.rofi.wait()
 
-		self.current = self.show_main_menu 
+		self.current = self.showMainMenu 
 		if not entered: return
 
-		if not is_valid_number(entered):
+		if not isValidNumber(entered):
 			self.display(f"{Icons.error} ", f"Invalid number: {f"{entered[:10]}..." if len(entered) > 10 else entered}")
 			return
 		
@@ -265,7 +265,7 @@ class Theme(BaseController):
 		self.themer.updateTheme(contrast=contrast)
 
 
-	def show_face_menu(self):
+	def showFaceMenu(self):
 
 		self.rofi.updateTheme(self.rasi_entry)
 
@@ -278,7 +278,7 @@ class Theme(BaseController):
 
 		entered = self.rofi.wait().strip()
 
-		self.current = self.show_main_menu 
+		self.current = self.showMainMenu 
 		if not entered: return
 		
 		path = Path(entered).expanduser()
@@ -292,7 +292,7 @@ class Theme(BaseController):
 		self.themer.setFace(img=entered)
 
 
-	def show_font_menu(self):
+	def showFontMenu(self):
 		return
 	
 		options = get_fonts()
@@ -305,7 +305,7 @@ class Theme(BaseController):
 
 		selected: str = self.rofi.wait()
 
-		self.current = self.show_main_menu 
+		self.current = self.showMainMenu 
 		if not selected: self.close()
 
 		selected = selected.split("]")[-1].strip().lower()
@@ -331,7 +331,7 @@ class Icons:
 
 class Utils:
 
-	def get_wallpapers(sources: list[str] | str) -> list[str]:
+	def getWallpapers(sources: list[str] | str) -> list[str]:
 
 		wallpapers: list[str] = []
 
@@ -355,7 +355,7 @@ class Utils:
 			if not item.is_dir():
 				CarbonError(f"Wallpaper source is not a directory: '{item.absolute}' ")
 
-			images = Utils.get_images(item)
+			images = Utils.getImages(item)
 
 			wallpapers.extend(images)
 
@@ -365,7 +365,7 @@ class Utils:
 		return wallpapers
 
 
-	def get_images(directory: Path) -> list[str]:
+	def getImages(directory: Path) -> list[str]:
 
 		images = []
 		

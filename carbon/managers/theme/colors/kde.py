@@ -1,5 +1,5 @@
 
-def update_kde(s: dict[str, str]) -> str:
+def updateKde(s: dict[str, str]) -> str:
     return f"""
 [ColorEffects:Disabled]
 Color = {s["surfaceVariant"]}

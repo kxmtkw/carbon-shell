@@ -65,7 +65,7 @@ class NotificationManager(BaseManager):
     @locked(notificationLock)
     def newNotification(self, notif: Notification):
         
-        self.quickshell.send_notification(
+        self.quickshell.sendNotification(
             notif.id,
             notif.replaces_id,
             notif.app_name,
