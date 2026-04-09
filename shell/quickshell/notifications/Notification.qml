@@ -321,7 +321,7 @@ PanelWindow
 			return 0
 		}
 		if (timeoutValue < 0 || timeoutValue === undefined || timeoutValue === null) {
-			return defaultTimeout
+			return 0
 		}
 		return timeoutValue
 	}

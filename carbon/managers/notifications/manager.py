@@ -85,6 +85,6 @@ class NotificationManager(BaseManager):
 
         logger.log(
             "notifications",
-            f"Notification info for #{notif.id}: ({notif.app_name}) ({notif.app_icon}) ({notif.summary}) ({notif.body if len(notif.body) < 20 else f'{notif.body[:17]}...'}) ({notif.image}) ({notif.urgency})",
+            f"Notification info for #{notif.id}: ({notif.app_name}) ({notif.app_icon}) ({notif.summary}) ({notif.body if len(notif.body) > 20 else f'{notif.body[:17]}...'}) ({notif.image}) ({notif.urgency})",
             logger.Level.debug
         )
