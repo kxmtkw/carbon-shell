@@ -73,7 +73,7 @@ class Quickshell:
 			"ipc",
 			"call",
 			"style",
-			"updateFont",
+			"update_font",
 			font
 		)
 
