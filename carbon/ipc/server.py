@@ -22,7 +22,9 @@ class Server:
 			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 			self.socket.bind(Server.address)
 		except Exception as e:
-			logger.log("server", f"Could not start carbon server. Reason: {e.__class__.__name__}::{str(e)}", logger.Level.critical)
+			msg = f"Could not start carbon server. Reason: {e.__class__.__name__}::{str(e)}"
+			logger.log("server", msg, logger.Level.critical)
+			logger.reportStartupError("server", msg)
 			exit(1)
 
 		self.socket.settimeout(timeout)
