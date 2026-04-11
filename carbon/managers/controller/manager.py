@@ -1,4 +1,5 @@
 
+from dataclasses import dataclass
 from threading import Lock
 
 from carbon.managers.base import BaseManager
@@ -18,6 +19,10 @@ from .providers import (
 )
 
 class ControllerManager(BaseManager):
+
+    @dataclass(init=True, kw_only=True)
+    class State(BaseManager.State):
+        pass
 
     def __init__(self, themer: ThemeManager):
         super().__init__()
@@ -45,14 +50,22 @@ class ControllerManager(BaseManager):
             "runner": self.runner
         }
 
-        self._handlers = {
-            "run": self.run,
-            "close-all": self.close
-        }
+        self.state = self.State()
 
 
     def handlers(self) -> dict[str, callable]:
-        return self._handlers
+        return {
+            "run": self.run,
+            "close": self.close
+        }
+
+
+    def setState(self, state):
+        pass
+
+
+    def getState(self):
+        return self.state
     
 
     def run(self, *, name: str) -> str:
