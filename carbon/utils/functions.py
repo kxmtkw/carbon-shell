@@ -14,7 +14,7 @@ def shellrun(cmd: str, wait: bool = True) -> tuple[bool, str]:
             text=True
         )
     else:
-        output = subprocess.run(
+        output = subprocess.Popen(
             cmd, 
             shell=True, 
             text=True,
@@ -40,7 +40,7 @@ def procrun(cmd: list[str], wait: bool = True) -> tuple[bool, str]:
             text=True
         )
     else:
-        output = subprocess.run(
+        output = subprocess.Popen(
             cmd, 
             text=True,
             stdout=subprocess.DEVNULL,
