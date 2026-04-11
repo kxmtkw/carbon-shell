@@ -43,9 +43,6 @@ class CarbonCore:
             "nightlight": self.nightlight_manager.handlers()
         }
 
-        self.loadState()
-
-
         self.quickshell = Quickshell()
 
         try:
@@ -54,6 +51,8 @@ class CarbonCore:
             logger.log("core", f"Quickshell could not be started. Reason: {e.msg}", logger.Level.warning)
 
         self.server = Server(1)
+
+        self.loadState()
 
         notify(
             "Hello World!",
@@ -98,7 +97,7 @@ class CarbonCore:
 
         # todo fix type error in corrupted state
         # todo automate this
-        
+
         theme = self.state.get("theme")
         if theme is not None:
             self.theme_manager.setState(self.theme_manager.State(**theme))
