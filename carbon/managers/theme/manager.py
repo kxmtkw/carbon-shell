@@ -6,7 +6,6 @@ from dataclasses import dataclass
 from carbon.managers.base import BaseManager
 from carbon.utils import CarbonError, procrun, isValidHex, locked, logger
 
-from carbon.state import Defaults
 from .updater import ThemeUpdater
 from .material import MaterialColors
 
