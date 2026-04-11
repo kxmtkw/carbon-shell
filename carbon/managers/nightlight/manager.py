@@ -5,7 +5,6 @@ from typing import Any
 from carbon.managers.base import BaseManager
 from carbon.utils import shellrun, logger
 
-from carbon.state.defaults import Defaults
 
 
 class NightLightManager(BaseManager):
@@ -19,8 +18,8 @@ class NightLightManager(BaseManager):
     def __init__(self):
         super().__init__()
         self.state = NightLightManager.State(
-            temperature= Defaults.nightlight_temperature,
-            gamma= Defaults.nightlight_gamma
+            temperature=5800,
+            gamma=100
         )
 
     

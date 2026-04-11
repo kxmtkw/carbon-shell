@@ -36,14 +36,14 @@ class ThemeManager(BaseManager):
 		self.light_theme = {}
 
 		self.state = self.State(
-			mode=Defaults.theme_mode,
-			source=Defaults.theme_source,
-			wallpaper=Defaults.theme_wallpaper,
-			hex=Defaults.theme_hex,
-			variant=Defaults.theme_variant,
-			contrast=Defaults.theme_contrast,
-			font=Defaults.theme_font,
-			face=Defaults.theme_face,
+			mode="dark",
+			source="wallpaper",
+			wallpaper="~/.carbon/assets/default_wallpaper.jpg",
+			hex="#82a0c0",
+			variant="graphite",
+			contrast=0.5,
+			font="Iosevka",
+			face="~/.carbon/assets/default_face.jpg"
 		)
 
 		self._handlers = {

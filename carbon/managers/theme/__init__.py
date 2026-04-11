@@ -1,1 +1,1 @@
-from .theme import ThemeManager
+from .manager import ThemeManager
