@@ -1,4 +1,4 @@
-import threading
+import threading, dataclasses
 from concurrent.futures import ThreadPoolExecutor
 
 from carbon.ipc.server import Server
@@ -21,7 +21,6 @@ class CarbonCore:
 
         logger.log("core", "Hello World!", logger.Level.info)
 
-        self.server = Server(1)
         self.lock = threading.Lock()
         self.thread_pool = ThreadPoolExecutor(5)
         self.is_running = True
@@ -32,15 +31,6 @@ class CarbonCore:
         self.notification_manager = NotificationManager()
         self.nightlight_manager = NightLightManager()
         self.controller_manager = ControllerManager(self.theme_manager)
-
-
-        self.quickshell = Quickshell()
-
-        try:
-            self.quickshell.start()
-        except Quickshell.Error as e:
-            logger.log("core", f"Quickshell could not be started. Reason: {e.msg}", logger.Level.warning)
-
 
         self.dispatch_map = {
             "daemon": {
@@ -54,6 +44,16 @@ class CarbonCore:
         }
 
         self.loadState()
+
+
+        self.quickshell = Quickshell()
+
+        try:
+            self.quickshell.start()
+        except Quickshell.Error as e:
+            logger.log("core", f"Quickshell could not be started. Reason: {e.msg}", logger.Level.warning)
+
+        self.server = Server(1)
 
         notify(
             "Hello World!",
@@ -95,15 +95,35 @@ class CarbonCore:
     def loadState(self):
         logger.log("core", "Loading state...", logger.Level.info)
         self.state.load()
-        self.theme_manager.loadState(self.state.get("theme"))
-        self.nightlight_manager.loadState(self.state.get("nightlight"))
+
+        # todo fix type error in corrupted state
+        # todo automate this
+        
+        theme = self.state.get("theme")
+        if theme is not None:
+            self.theme_manager.setState(self.theme_manager.State(**theme))
+
+        nightlight = self.state.get("nightlight")
+        if nightlight is not None:
+            self.nightlight_manager.setState(self.nightlight_manager.State(**nightlight))
+
+            
         return "State loaded."
 
 
     def saveState(self):
         logger.log("core", "Saving state...", logger.Level.info)
-        self.state.update("theme", self.theme_manager.saveState())
-        self.state.update("nightlight", self.nightlight_manager.saveState())
+
+        self.state.update(
+            "theme", 
+            dataclasses.asdict(self.theme_manager.getState())
+        )
+
+        self.state.update(
+            "nightlight", 
+            dataclasses.asdict(self.nightlight_manager.getState())
+        )
+
         self.state.save()
         return "State saved."
 

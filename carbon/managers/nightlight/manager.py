@@ -1,4 +1,5 @@
 
+from dataclasses import dataclass, replace
 from typing import Any
 
 from carbon.managers.base import BaseManager
@@ -9,13 +10,20 @@ from carbon.state.defaults import Defaults
 
 class NightLightManager(BaseManager):
 
+    @dataclass(init=True, kw_only=True)
+    class State(BaseManager.State):
+        temperature: int
+        gamma: int
+
 
     def __init__(self):
         super().__init__()
-        self.current_temperature = Defaults.nightlight_temperature
-        self.current_gamma = Defaults.nightlight_gamma
-    
+        self.state = NightLightManager.State(
+            temperature= Defaults.nightlight_temperature,
+            gamma= Defaults.nightlight_gamma
+        )
 
+    
     def handlers(self):
         return {
             "set-temperature": self.setTemperature,
@@ -23,28 +31,13 @@ class NightLightManager(BaseManager):
         }
     
 
-    def saveState(self) -> dict[str, Any]:
-        return {
-            "temperature": self.current_temperature,
-            "gamma": self.current_gamma,
-        }
+    def getState(self) -> State:
+        return replace(self.state)
     
 
-    def loadState(self, state):
-        self.current_temperature = state.get("temperature", Defaults.nightlight_temperature)
-        self.current_gamma = state.get("gamma", Defaults.nightlight_gamma)
-
-        try:
-            self.setTemperature(int(self.current_temperature))
-            self.setGamma(int(self.current_gamma))
-        except TypeError:
-            logger.log(
-                "nightlight", 
-                "Invalid non-int values passed. Resorting to defaults.",
-                logger.Level.warning
-            )
-            self.setTemperature(Defaults.nightlight_temperature)
-            self.setGamma(Defaults.nightlight_gamma)
+    def setState(self, state: State):
+        self.setTemperature(state.temperature)
+        self.setGamma(state.gamma)
 
 
     def setTemperature(self, value: int) -> str:
@@ -62,7 +55,7 @@ class NightLightManager(BaseManager):
             f"Updated temperature to {value}",
             logger.Level.info
         )
-        self.current_temperature = value
+        self.state.temperature = value
         return "Updated."
 
 
@@ -81,7 +74,7 @@ class NightLightManager(BaseManager):
             f"Updated gamma to {value}",
             logger.Level.info
         )
-        self.current_gamma = value
+        self.state.gamma = value
         return "Updated."
     
 

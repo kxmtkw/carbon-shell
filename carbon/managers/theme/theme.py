@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Any, Literal
 from threading import Lock
+from dataclasses import dataclass
 
 from carbon.managers.base import BaseManager
 from carbon.utils import CarbonError, procrun, isValidHex, locked, logger
@@ -9,9 +10,22 @@ from carbon.state import Defaults
 from .updater import ThemeUpdater
 from .material import MaterialColors
 
+
 themeLock = Lock()
 
+
 class ThemeManager(BaseManager):
+
+	@dataclass(init=True, kw_only=True)
+	class State(BaseManager.State):
+		mode: Literal["dark", "light"]
+		source: Literal["wallpaper", "hex"]
+		wallpaper: str
+		hex: str
+		variant: Literal["ash", "coal", "graphite", "diamond"]
+		contrast: float | int
+		font: str
+		face: str
 
 
 	def __init__(self):
@@ -21,14 +35,16 @@ class ThemeManager(BaseManager):
 		self.dark_theme = {}
 		self.light_theme = {}
 
-		self.current_source: Literal["wallpaper", "hex"] = Defaults.theme_source
-		self.current_wallpaper: str = Defaults.theme_wallpaper
-		self.current_hex: str = Defaults.theme_hex
-		self.current_mode: Literal["dark", "light"] = Defaults.theme_mode
-		self.current_variant:Literal["ash", "coal", "graphite", "diamond"] = Defaults.theme_variant
-		self.current_contrast: float = Defaults.theme_contrast
-		self.current_font: str = Defaults.theme_font
-		self.current_face: str = Defaults.theme_face
+		self.state = self.State(
+			mode=Defaults.theme_mode,
+			source=Defaults.theme_source,
+			wallpaper=Defaults.theme_wallpaper,
+			hex=Defaults.theme_hex,
+			variant=Defaults.theme_variant,
+			contrast=Defaults.theme_contrast,
+			font=Defaults.theme_font,
+			face=Defaults.theme_face,
+		)
 
 		self._handlers = {
 			"set-wallpaper": self.setWallpaper,
@@ -61,7 +77,7 @@ class ThemeManager(BaseManager):
 		success, output = procrun(["swww", "img", "--transition-type", "outer", path])
 
 		if success:
-			self.current_wallpaper = img
+			self.state.wallpaper = img
 			logger.log(
 				"theme",
 				f"Wallpaper updated: {img}",
@@ -84,12 +100,12 @@ class ThemeManager(BaseManager):
 			img: str| None  = None
 		) -> str:
 		
-		if not mode: mode = self.current_mode
-		if not variant: variant = self.current_variant
-		if not contrast: contrast = self.current_contrast
-		if not source: source = self.current_source
-		if not hex: hex = self.current_hex
-		if not img: img = self.current_wallpaper
+		if not mode: mode = self.state.mode
+		if not variant: variant = self.state.variant
+		if not contrast: contrast = self.state.contrast
+		if not source: source = self.state.source
+		if not hex: hex = self.state.hex
+		if not img: img = self.state.wallpaper
 
 		
 		match variant:
@@ -135,12 +151,12 @@ class ThemeManager(BaseManager):
 			raise CarbonError(f"Invalid theme mode: {mode}")
 		
 
-		self.current_mode = mode
-		self.current_variant = variant
-		self.current_contrast = contrast
-		self.current_source = source
-		self.current_wallpaper = img
-		self.current_hex = hex
+		self.state.mode = mode
+		self.state.variant = variant
+		self.state.contrast = contrast
+		self.state.source = source
+		self.state.wallpaper = img
+		self.state.hex = hex
 
 		logger.log(
 			"theme",
@@ -163,7 +179,7 @@ class ThemeManager(BaseManager):
 			mode: Literal["dark", "light"]
 		) -> str:
 
-		if mode == self.current_mode:
+		if mode == self.state.mode:
 			return f"Already in {mode} mode."
 		
 		if mode == "light":
@@ -173,11 +189,11 @@ class ThemeManager(BaseManager):
 		else:
 			raise CarbonError(f"Invalid theme mode: {mode}")
 		
-		self.current_mode = mode
+		self.state.mode = mode
 
 		logger.log(
 			"theme",
-			f"Switched to {self.current_mode} mode.",
+			f"Switched to {self.state.mode} mode.",
 			logger.Level.info
 		)
 
@@ -187,20 +203,20 @@ class ThemeManager(BaseManager):
 	@locked(themeLock)
 	def toggleMode(self) -> str:
 
-		if self.current_mode == "light":
+		if self.state.mode == "light":
 			self.updater.updateColors(self.dark_theme)
-			self.current_mode = "dark"
+			self.state.mode = "dark"
 		else:
 			self.updater.updateColors(self.light_theme)
-			self.current_mode = "light"
+			self.state.mode = "light"
 
 		logger.log(
 			"theme",
-			f"Switched to {self.current_mode} mode.",
+			f"Switched to {self.state.mode} mode.",
 			logger.Level.info
 		)
 
-		return f"Switched to {self.current_mode} mode successfully."
+		return f"Switched to {self.state.mode} mode successfully."
 
 
 	@locked(themeLock)
@@ -211,7 +227,7 @@ class ThemeManager(BaseManager):
 			f"Font updated to {font}.",
 			logger.Level.info
 		)
-		self.current_font = font
+		self.state.font = font
 		return f"Font changed to {font} successfully."
 	
 
@@ -223,46 +239,25 @@ class ThemeManager(BaseManager):
 			f"Face updated to {img}.",
 			logger.Level.info
 		)
-		self.current_face = img
+		self.state.face = img
 		
 		return f"Face image updated successfully."
 	
 
-	def loadState(self, state: dict[str, Any]):
-
-		# if we use @locked() here, it would prevent the functions below from being called
-		with themeLock:
-			self.current_mode = state.get("current_mode", Defaults.theme_mode)
-			self.current_variant = state.get("current_variant", Defaults.theme_variant)
-			self.current_contrast = state.get("current_contrast", Defaults.theme_contrast)
-			self.current_source = state.get("current_source", Defaults.theme_source)
-			self.current_hex = state.get("current_hex", Defaults.theme_hex)
-			self.current_wallpaper = state.get("current_wallpaper", Defaults.theme_wallpaper)
-			self.current_font = state.get("current_font", Defaults.theme_font)
-			self.current_face = state.get("current_face", Defaults.theme_face)
-
-		self.updateTheme()
-		self.changeFont(font=self.current_font)
-		self.setFace(img=self.current_face)
-
-		if self.current_source != "wallpaper":
-			self.setWallpaper(img=self.current_wallpaper)
-
-		logger.log(
-			"theme",
-			"Loaded theme state.",
-			logger.Level.info
+	def setState(self, state: State):
+		self.updateTheme(
+			mode     = state.mode,
+			variant  = state.variant,
+			contrast = state.contrast,
+			source   = state.source,
+			hex      = state.hex,
+			img      = state.wallpaper,
 		)
+		self.changeFont(font = state.font)
+		self.setFace(img     = state.face)
+
+		logger.log("theme", "Loaded theme state.", logger.Level.info)
 
 
-	def saveState(self) -> dict[str, Any]:
-		return {
-			"current_mode": self.current_mode,
-			"current_variant": self.current_variant,
-			"current_contrast": self.current_contrast,
-			"current_source": self.current_source,
-			"current_hex": self.current_hex,
-			"current_wallpaper": self.current_wallpaper,
-			"current_font": self.current_font,
-			"current_face": self.current_face
-		}
+	def getState(self) -> State:
+		return self.state

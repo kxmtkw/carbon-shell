@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+from typing import Any
 
 class StateManager:
 
@@ -20,8 +21,8 @@ class StateManager:
         self._state[key] = state
 
 
-    def get(self, key: str) -> dict:
-        return self._state.setdefault(key, {})
+    def get(self, key: str) -> dict[str, Any] | None:
+        return self._state.setdefault(key, None)
     
 
     def save(self):
