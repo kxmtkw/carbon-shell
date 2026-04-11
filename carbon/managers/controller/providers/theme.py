@@ -13,6 +13,7 @@ class Theme(BaseController):
 
 	def __init__(self, themer: ThemeManager):
 		self.themer = themer
+		self.theme_state: ThemeManager.State = themer.getState()
 
 		self.rasi_main = "~/.carbon/shell/rofi/theme/main.rasi"
 		self.rasi_entry = "~/.carbon/shell/rofi/theme/entry.rasi"
@@ -46,6 +47,7 @@ class Theme(BaseController):
 		self.current = self.showMainMenu
 
 		while self.is_running:
+			self.theme_state = self.themer.getState()
 			self.current()
 
 
@@ -71,7 +73,7 @@ class Theme(BaseController):
 
 		self.rofi.updateTheme(self.rasi_main)
 
-		self.main_options[0] = f"{Icons.light}  Toggle light mode" if self.themer.current_mode == "dark" else f"{Icons.dark}  Toggle dark mode"
+		self.main_options[0] = f"{Icons.light}  Toggle light mode" if self.theme_state.mode == "dark" else f"{Icons.dark}  Toggle dark mode"
 
 		options = self.main_options.copy()
 		options[0] = RofiShell.markActive(options[0])
@@ -137,7 +139,7 @@ class Theme(BaseController):
 
 		self.themer.setWallpaper(img=selected)
 
-		if self.themer.current_source == "wallpaper":
+		if self.theme_state.source == "wallpaper":
 			self.themer.updateTheme(img=selected)
 
 		time.sleep(0.6) # animation finishes
@@ -149,7 +151,7 @@ class Theme(BaseController):
 		self.rofi.display(
 			mode= RofiShell.Mode.dmenu,
 			prompt=f"Theme Color",
-			mesg=f"Enter a hex code (current:{self.themer.current_hex})"
+			mesg=f"Enter a hex code (current:{self.theme_state.hex})"
 		)
 
 		entered = self.rofi.wait().strip()
@@ -158,7 +160,7 @@ class Theme(BaseController):
 		if not entered: 
 			return
 
-		if entered == self.themer.current_hex: return
+		if entered == self.theme_state.hex: return
 
 		if not isValidHex(entered):
 			self.display(f"{Icons.error} ", f"Invalid hex value: {f"{entered[:10]}..." if len(entered) > 10 else entered}")
@@ -174,7 +176,7 @@ class Theme(BaseController):
 			f"{Icons.color}  From color",
 		]
 
-		if self.themer.current_source == "wallpaper":
+		if self.theme_state.source == "wallpaper":
 			options[0] = RofiShell.markActive(options[0])
 		else:
 			options[1] = RofiShell.markActive(options[1])
@@ -197,7 +199,7 @@ class Theme(BaseController):
 		else:
 			source = "hex"		
 			
-		if source == self.themer.current_source: return
+		if source == self.theme_state.source: return
 
 		self.themer.updateTheme(source=source)
 
@@ -211,7 +213,7 @@ class Theme(BaseController):
 			"[4] Diamond"
 		]
 
-		current = self.themer.current_variant
+		current = self.theme_state.variant
 		if current == "ash":
 			options[0] = RofiShell.markActive(options[0])
 		elif current == "coal":
@@ -248,7 +250,7 @@ class Theme(BaseController):
 		self.rofi.display(
 			mode= RofiShell.Mode.dmenu,
 			prompt=f"Theme Color",
-			mesg=f"Enter contrast value (current:{round(self.themer.current_contrast, 2)})"
+			mesg=f"Enter contrast value (current:{round(self.theme_state.contrast, 2)})"
 		)
 
 		entered = self.rofi.wait()
@@ -273,7 +275,7 @@ class Theme(BaseController):
 		self.rofi.display(
 			mode= RofiShell.Mode.dmenu,
 			prompt=f"Profile Picture",
-			mesg=f"Enter a filepath\n(current:{self.themer.current_face})"
+			mesg=f"Enter a filepath\n(current:{self.theme_state.face})"
 		)
 
 		entered = self.rofi.wait().strip()
@@ -287,7 +289,7 @@ class Theme(BaseController):
 			self.display(f"{Icons.error} ", f"File not found: {f"{entered[:10]}..." if len(entered) > 10 else entered}")
 			return
 
-		if path == self.themer.current_face: return
+		if path == self.theme_state.face: return
 		
 		self.themer.setFace(img=entered)
 

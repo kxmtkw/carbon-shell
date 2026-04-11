@@ -1,6 +1,10 @@
 from typing import Dict, Callable, Any
+from dataclasses import dataclass
 
 class BaseManager:
+
+    class State:
+        pass
 
     def __init__(self):
         pass
@@ -8,8 +12,8 @@ class BaseManager:
     def handlers(self) -> Dict[str, Callable]:
         raise NotImplementedError()
     
-    def saveState(self) -> dict[str, Any]:
+    def getState(self) -> State:
         raise NotImplementedError()
     
-    def loadState(self, state: dict[str, Any]):
+    def setState(self, state: State):
         raise NotImplementedError()
