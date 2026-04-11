@@ -1,3 +1,4 @@
+import json
 import threading, dataclasses
 from concurrent.futures import ThreadPoolExecutor
 
@@ -9,6 +10,7 @@ from carbon.utils import CarbonError, logger, notify, shellrun
 from carbon.state import StateManager
 from carbon.lib.quickshell import Quickshell
 
+from carbon.managers.base import BaseManager
 from carbon.managers.theme import ThemeManager
 from carbon.managers.controller import ControllerManager
 from carbon.managers.notifications import NotificationManager
@@ -32,16 +34,27 @@ class CarbonCore:
         self.nightlight_manager = NightLightManager()
         self.controller_manager = ControllerManager(self.theme_manager)
 
+        self.all_managers: list[BaseManager] = [
+            self.theme_manager,
+            self.controller_manager,
+            self.nightlight_manager,
+            self.notification_manager
+        ]
+
         self.dispatch_map = {
             "daemon": {
-                "shutdown": self.shutdown,
+                "end": self.shutdown,
                 "load-state": self.loadState,
-                "save-state": self.saveState
+                "save-state": self.saveState,
+                "get-dispatch-map": self.getDispatchMap
             },
             "theme": self.theme_manager.handlers(),
             "controller": self.controller_manager.handlers(),
-            "nightlight": self.nightlight_manager.handlers()
+            "nightlight": self.nightlight_manager.handlers(),
+            "notifications": self.notification_manager.handlers()
         }
+
+        self.server = Server(1)
 
         self.quickshell = Quickshell()
 
@@ -50,7 +63,6 @@ class CarbonCore:
         except Quickshell.Error as e:
             logger.log("core", f"Quickshell could not be started. Reason: {e.msg}", logger.Level.warning)
 
-        self.server = Server(1)
 
         self.loadState()
 
@@ -59,6 +71,8 @@ class CarbonCore:
             f"Logged in as: {shellrun("whoami")[1]}",
             timeout=8000
         )
+
+        print(self.getDispatchMap())
 
 
     def run(self):
@@ -92,39 +106,58 @@ class CarbonCore:
     
 
     def loadState(self):
-        logger.log("core", "Loading state...", logger.Level.info)
         self.state.load()
 
-        # todo fix type error in corrupted state
-        # todo automate this
+        for manager in self.all_managers:
+            state = self.state.get(manager.__class__.__name__)
+            if state is None: continue
 
-        theme = self.state.get("theme")
-        if theme is not None:
-            self.theme_manager.setState(self.theme_manager.State(**theme))
+            try:
+                manager.setState(manager.State(**state))
+            except TypeError:
+                logger.log(
+                    "core",
+                    f"Corrupted state loaded for manager {manager.__class__.__name__}",
+                    logger.Level.warning
+                )
+                continue
 
-        nightlight = self.state.get("nightlight")
-        if nightlight is not None:
-            self.nightlight_manager.setState(self.nightlight_manager.State(**nightlight))
+            logger.log(
+                "core",
+                f"Loaded for manager {manager.__class__.__name__}",
+                logger.Level.debug
+            )
 
+        logger.log("core", "Loaded state.", logger.Level.info)
             
         return "State loaded."
 
 
     def saveState(self):
-        logger.log("core", "Saving state...", logger.Level.info)
-
-        self.state.update(
-            "theme", 
-            dataclasses.asdict(self.theme_manager.getState())
-        )
-
-        self.state.update(
-            "nightlight", 
-            dataclasses.asdict(self.nightlight_manager.getState())
-        )
+        
+        for manager in self.all_managers:
+            self.state.update(
+                manager.__class__.__name__,
+                dataclasses.asdict(manager.getState())
+            )
 
         self.state.save()
+
+        logger.log("core", "Saved state.", logger.Level.info)
+
         return "State saved."
+    
+    
+    def getDispatchMap(self):
+
+        dispatch_map = {}
+
+        for key, value in self.dispatch_map.items():
+            dispatch_map[key] = list(value.keys())
+
+        string = json.dumps(dispatch_map, indent=4)
+
+        return string
 
 
     def dispatch(self, id: int, command: CommandRequest):
