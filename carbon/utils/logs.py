@@ -5,6 +5,7 @@ from threading import Lock
 
 from .color_print import Color
 from .locked import locked
+from .functions import writefile
 
 
 class _Logger():
@@ -27,9 +28,11 @@ class _Logger():
 		}
 	
 		self.log_file: Path
+		self.startup_error_file: Path
 		self.to_terminal: bool = True
 
 		self.setOutfile("~/.carbon/logs/carbon.log")
+		self.setStartupError("/tmp/carbon_startup_error.txt")
 
 	
 	def disableStdout(self) -> None:
@@ -43,6 +46,14 @@ class _Logger():
 		if not self.log_file.exists():
 			self.log_file.touch()
 				
+	@locked()
+	def setStartupError(self, path: str) -> None:
+		self.startup_error_file = Path(path).expanduser()
+		if not self.startup_error_file.parent.exists():
+			self.startup_error_file.parent.mkdir(parents=True, exist_ok=True)
+		if not self.startup_error_file.exists():
+			self.startup_error_file.touch()
+
 
 	def log(self, sender: str, msg: str, level: Level) -> None:
 		
@@ -69,6 +80,23 @@ class _Logger():
 
 		with open(self.log_file, "a+") as file:
 			file.write(log_str)
+
+
+	def reportStartupError(self, sender: str, msg: str) -> None:
+		"Reserved for only when a startup error needs to be reported."
+		error_str = f"[Error] ({sender}) {msg}\n"
+		writefile(self.startup_error_file, error_str)
+
+	def extractStartupError(self) -> str:
+		
+		if not self.startup_error_file.exists():
+			return "No startup error file found. The error was not reported by the daemon."
+		
+		with open(self.startup_error_file) as file:
+			string = file.read()
+
+		return string
+
 
 
 logger = _Logger()
