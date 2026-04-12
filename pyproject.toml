@@ -19,5 +19,6 @@ dependencies = [
     "material-color-utilities",
     "toml",
     "nmcli",
-    "simpleeval"
+    "simpleeval",
+    "dbus-next"
 ]
