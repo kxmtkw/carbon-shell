@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any, Literal
 from threading import Lock
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from carbon.managers.base import BaseManager
 from carbon.utils import CarbonError, procrun, isValidHex, locked, logger
@@ -45,7 +45,11 @@ class ThemeManager(BaseManager):
 			face="~/.carbon/assets/default_face.jpg"
 		)
 
-		self._handlers = {
+		super().__init__()
+
+
+	def handlers(self) -> dict[str, callable]:
+		return {
 			"set-wallpaper": self.setWallpaper,
 			"update-theme": self.updateTheme,
 			"switch-mode": self.switchMode,
@@ -53,12 +57,28 @@ class ThemeManager(BaseManager):
 			"change-font": self.changeFont,
 			"set-face": self.setFace,
 		}
+	
 
-		super().__init__()
+	def setState(self, state: State):
+		self.updateTheme(
+			mode     = state.mode,
+			variant  = state.variant,
+			contrast = state.contrast,
+			source   = state.source,
+			hex      = state.hex,
+			img      = state.wallpaper,
+		)
+		self.changeFont(font = state.font)
+		self.setFace(img = state.face)
+
+		if self.state.source != "wallpaper":
+			self.setWallpaper(state.wallpaper)
+
+		logger.log("theme", "Loaded theme state.", logger.Level.info)
 
 
-	def handlers(self) -> dict[str, callable]:
-		return self._handlers
+	def getState(self) -> State:
+		return replace(self.state)
 	
 
 	@locked(themeLock)
@@ -241,22 +261,3 @@ class ThemeManager(BaseManager):
 		self.state.face = img
 		
 		return f"Face image updated successfully."
-	
-
-	def setState(self, state: State):
-		self.updateTheme(
-			mode     = state.mode,
-			variant  = state.variant,
-			contrast = state.contrast,
-			source   = state.source,
-			hex      = state.hex,
-			img      = state.wallpaper,
-		)
-		self.changeFont(font = state.font)
-		self.setFace(img     = state.face)
-
-		logger.log("theme", "Loaded theme state.", logger.Level.info)
-
-
-	def getState(self) -> State:
-		return self.state
