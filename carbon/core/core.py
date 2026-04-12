@@ -110,7 +110,9 @@ class CarbonCore:
 
         for manager in self.all_managers:
             state = self.state.get(manager.__class__.__name__)
-            if state is None: continue
+
+            if state is None: 
+                manager.setState(manager.state) # default state
 
             try:
                 manager.setState(manager.State(**state))
