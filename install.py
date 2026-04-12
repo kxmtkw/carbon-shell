@@ -94,7 +94,7 @@ def main():
     Color.Print(":: Installing python package...", Color.blue)
 
     run("python3 -m venv .venv")
-    run("source ./.venv/bin/activate && pip install . ")
+    run("source ./.venv/bin/activate && pip install -e . ")
 
     Color.Print(":: Linking hyprland...", Color.blue)
     
