@@ -25,9 +25,11 @@ class ThemeManager(BaseManager):
 		contrast: float | int
 		font: str
 		face: str
+		wallpaperAnimation: Literal["wipe", "left", "right", "top", "bottom", "outer", "center", "any", "fade", "random"]
 
 
 	def __init__(self):
+
 		self.updater = ThemeUpdater()
 		self.material = MaterialColors()
 
@@ -42,10 +44,12 @@ class ThemeManager(BaseManager):
 			variant="graphite",
 			contrast=0.5,
 			font="Iosevka",
-			face="~/.carbon/assets/default_face.jpg"
+			face="~/.carbon/assets/default_face.jpg",
+			wallpaperAnimation="center"
 		)
 
 		super().__init__()
+
 
 
 	def handlers(self) -> dict[str, callable]:
@@ -56,6 +60,7 @@ class ThemeManager(BaseManager):
 			"toggle-mode": self.toggleMode,
 			"change-font": self.changeFont,
 			"set-face": self.setFace,
+			"set-wallpaper-animation": self.setWallpaperAnimation
 		}
 	
 
@@ -93,7 +98,7 @@ class ThemeManager(BaseManager):
 		if not path.exists():
 			raise CarbonError(f"File not found: {path}") 
 		
-		success, output = procrun(["swww", "img", "--transition-type", "outer", path])
+		success, output = procrun(["swww", "img", "--transition-type", self.state.wallpaperAnimation, path])
 
 		if success:
 			self.state.wallpaper = img
@@ -195,6 +200,7 @@ class ThemeManager(BaseManager):
 	@locked(themeLock)
 	def switchMode(
 			self, 
+			*,
 			mode: Literal["dark", "light"]
 		) -> str:
 
@@ -239,7 +245,7 @@ class ThemeManager(BaseManager):
 
 
 	@locked(themeLock)
-	def changeFont(self, font: str) -> str:
+	def changeFont(self, *, font: str) -> str:
 		self.updater.updateFont(font)
 		logger.log(
 			"theme",
@@ -251,7 +257,7 @@ class ThemeManager(BaseManager):
 	
 
 	@locked(themeLock)
-	def setFace(self, img: str):
+	def setFace(self, *, img: str):
 		self.updater.updateFace(img)
 		logger.log(
 			"theme",
@@ -261,3 +267,23 @@ class ThemeManager(BaseManager):
 		self.state.face = img
 		
 		return f"Face image updated successfully."
+	
+
+	@locked(themeLock)
+	def setWallpaperAnimation(self, *, style: str):
+		
+		if not hasattr(self, "wallpaper_animation_styles"):
+			self.wallpaper_animation_styles = ("wipe", "left", "right", "top", "bottom", "outer", "center", "any", "fade", "random")
+
+		if style not in self.wallpaper_animation_styles:
+			return f"Invalid style. Allowed styles include:\n{self.wallpaper_animation_styles}"
+		
+		self.state.wallpaperAnimation = style
+
+		logger.log(
+			"theme",
+			f"Wallpaper animation updated to {style}.",
+			logger.Level.info
+		)
+
+		return "Wallpaper animation style updated."
