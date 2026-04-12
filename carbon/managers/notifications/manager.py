@@ -7,7 +7,7 @@ from dbus_next.aio import MessageBus
 from dbus_next import Variant
 
 from carbon.managers.base import BaseManager
-from carbon.utils import locked, logger, CarbonError
+from carbon.utils import locked, logger, CarbonError, notify
 
 from carbon.lib.quickshell import Quickshell
 
@@ -52,7 +52,7 @@ class NotificationManager(BaseManager):
     
 
     def setState(self, state: State):
-        self.setDND(state.do_not_disturb)
+        self.setDND(state= "on" if state.do_not_disturb else "off")
     
 
     def startServer(self):
@@ -93,7 +93,7 @@ class NotificationManager(BaseManager):
 
         logger.log(
             "notifications",
-            f"Notification info for #{notif.id}: ({notif.app_name}) ({notif.app_icon}) ({notif.summary}) ({notif.body if len(notif.body) > 20 else f'{notif.body[:17]}...'}) ({notif.image}) ({notif.urgency})",
+            f"Notification info for #{notif.id}: ({notif.app_name}) ({notif.app_icon}) ({notif.summary}) ({notif.body if len(notif.body) < 20 else f'{notif.body[:17]}...'}) ({notif.image}) ({notif.urgency})",
             logger.Level.debug
         )
 
@@ -127,27 +127,27 @@ class NotificationManager(BaseManager):
             )
         
 
-    @locked(notificationLock)
-    def setDND(self, *, state: Literal["on", "off", "toggled"]):
+    def setDND(self, *, state: Literal["on", "off", "toggle"]):
 
-        if state == "on":
-            self.state.do_not_disturb = True
-        elif state == "off":
-            self.state.do_not_disturb = False
-        elif state == "toggle":
-            self.state.do_not_disturb = not self.state.do_not_disturb
-        else:
-            raise CarbonError(f"Invalid state: {state}. Valid values are: on, off, toggle.")
-        
+        match state:
+            case "on":     dnd = True
+            case "off":    dnd = False
+            case "toggle": dnd = not self.state.do_not_disturb
+            case _:        raise CarbonError(f"Invalid state: {state}. Valid: on, off, toggle.")
+
+        if dnd == self.state.do_not_disturb:
+            return
+
+        msg     = "DND on. Notifications will now be hidden." if dnd else "DND off. Queued notifications will now be shown."
+        summary = "DND on" if dnd else "DND off"
+
+        logger.log("notifications", msg, logger.Level.info)
+
         if self.state.do_not_disturb:
-            msg = "DND now on. Notifications will be hidden until it is turned on."
+            self.state.do_not_disturb = dnd
+            self.server.Notify("CarbonShell", 0, "", summary, msg, [], {}, 5000)
         else:
-            msg = "DND now off. Queued Notifications will now be shown."
-
-        logger.log(
-            "notifications",
-            msg,
-            logger.Level.info
-        )
+            self.server.Notify("CarbonShell", 0, "", summary, msg, [], {}, 5000)
+            self.state.do_not_disturb = dnd
 
         return msg
