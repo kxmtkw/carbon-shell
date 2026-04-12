@@ -72,8 +72,6 @@ class CarbonCore:
             timeout=8000
         )
 
-        print(self.getDispatchMap())
-
 
     def run(self):
 

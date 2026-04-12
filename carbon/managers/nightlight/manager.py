@@ -41,6 +41,7 @@ class NightLightManager(BaseManager):
     
 
     def setState(self, state: State):
+        self.toggleNightlight(state.toggled)
         self.setTemperature(state.temperature)
         self.setGamma(state.gamma)
 
