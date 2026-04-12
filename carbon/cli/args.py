@@ -53,7 +53,7 @@ def getParser() -> argparse.ArgumentParser:
 	theme_sub.add_parser("toggle-mode", help="Toggle between dark and light")
 
 	# set-wallpaper
-	sw = theme_sub.add_parser("set-wallpaper", help="Set wallpaper without regenerating theme")
+	sw = theme_sub.add_parser("set-wallpaper", help="Set wallpaper, regenerates theme if theme source is wallpaper.")
 	sw.add_argument("img", metavar="PATH")
 
 	# set-face
@@ -63,6 +63,9 @@ def getParser() -> argparse.ArgumentParser:
 	# set-font
 	sfont = theme_sub.add_parser("set-font", help="Set UI font")
 	sfont.add_argument("font", metavar="NAME")
+
+	sa = theme_sub.add_parser("set-wallpaper-animation", help="Set wallpaper animation style.")
+	sa.add_argument("style", choices=["wipe", "left", "right", "top", "bottom", "outer", "center", "any", "fade", "random"])
 
 	# ── nightlight ────────────────────────────────────────────────────────────
 	nightlight = sub.add_parser("nightlight", help="Control night light / color temperature")

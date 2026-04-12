@@ -7,8 +7,8 @@ class BaseManager:
         pass
 
     def __init__(self):
-        self.state: BaseManager.State
-
+        pass
+    
     def handlers(self) -> Dict[str, Callable]:
         raise NotImplementedError()
     
