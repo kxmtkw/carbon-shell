@@ -38,7 +38,7 @@ class StateManager:
             try:
                 data = json.load(file)
             except json.JSONDecodeError:
-                return
+                data = {}
 
         self._state = data
 
