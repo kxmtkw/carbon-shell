@@ -188,19 +188,17 @@ class Theme(BaseController):
 		)
 
 		selected: str = self.rofi.wait()
-
-
 		self.current = self.showMainMenu 
 		if not selected:
 			return
 
 		if selected == options[0]:
 			source = "wallpaper"
+		elif selected == options[1]:
+			source = "hex"	
 		else:
-			source = "hex"		
+			return # active picked	
 			
-		if source == self.theme_state.source: return
-
 		self.themer.updateTheme(source=source)
 
 
