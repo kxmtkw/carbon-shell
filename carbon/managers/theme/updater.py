@@ -14,6 +14,7 @@ class ThemeUpdater:
         self.colorfiles = {}
         self.colorfiles["rofi"]       = "~/.carbon/shell/rofi/Config/color.rasi"
         self.colorfiles["json"]       = "~/.carbon/shell/quickshell/Config/color.json"
+        self.colorfiles["hypr"]       = "~/.config/hypr/color.conf"
         self.colorfiles["kde"]        = "~/.local/share/color-schemes/Carbon.colors"
         self.colorfiles["alacritty"]  = "~/.config/alacritty/Carbon.toml"
         self.colorfiles["kitty"]      = "~/.config/kitty/Carbon.conf"
