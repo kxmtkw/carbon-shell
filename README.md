@@ -1,53 +1,85 @@
 
 # Carbon Shell 
 
-A desktop UI shell designed for Linux to be pretty and functional.
+A desktop UI shell designed for `Hyrpland` to be pretty and functional.
 
-Some notable features of the shell:
++ Window Manager: `Hyprland`
++ Panel & Notifications: `Quickshell`
++ Controllers/Menus: `Rofi`
 
-+ `Dynamic Theming`: The shell dynamically themes itself and all supported apps when you change your wallpaper.
-+ `Controllers`: Functional menus for controlling things like wifi, launching apps, power, theming and much more.
-+ `Hyprland Config`: Hyprland and its essential tools come preconfigured.
-+ `KDE App Support`: Theming of KDE apps is fully supported.
+### Features
 
-The shell includes:
-
-- Panel
-- Lockscreen
-- Power Menu
-- Launcher
-- Screenshot Util
-- Wifi Menu
-- Theming Menu
-- Clipboard Util
-- Essential Desktop Apps from KDE (Optional)
-- Hypr configuration
-- Complete desktop theming
-- Notifications
-- Nightlight
+`For features, see:` [features](docs/features.md)
 
 
-`For a guide on how to install, see`: [installation](docs/installation.md)
+### Bindings
 
-`For more features:` [features](docs/features.md)
+`For keybinds, see:`  [bindings](docs/bindings.md)
 
-`For keybinds see:`  [bindings](docs/bindings.md)
 
-The shell also comes with a CLI tool.
+### Utilities
+
+The shell also comes with multiple CLI tools.
+
+The main utility is `carbon.shell`. It is used to start up the shell daemon and send commands to it.
 ```sh
 carbon.shell COMMAND ...
 ```
 `For a guide on how to use the tool, see:` [cli](docs/cli.md)
 
-## Previews
+Along with that some other utilies include:
 
-![](/assets/launcher.png)
-
-
-![](/assets/lightmode.png)
-
-
-![](/assets/wallpaper.png)
+```sh
+carbon.brightness # For controlling brightness
+carbon.audio      # For controlling audio
+carbon.power      # For shutting down, rebooting etc...
+```
 
 
-![](/assets/lockscreen.png)
+## Installation
+
+A guide on how to install Carbon Shell.
+
+### Dependancies
+
+If on `Arch Linux`, the installation script will handle all the packages. 
+
+If you're on some other distribution or want to manually install packages, see [requirements](docs/requirements.md).
+
+### Cloning
+
+The shell can be installed by using this command:
+
+``` bash
+git clone https://github.com/kxmtkw/carbon-shell.git ~/.carbon
+cd ~/.carbon
+python3 install.py
+```
+
+> [!IMPORTANT]
+> The shell must be cloned at '~/.carbon' for it to work.
+
+What this script would do:
++ Install core packages
++ Install packages for essential apps (optional)
++ Install the shell
+
+### Environment
+
+Finally, add this line in your shell config. The file should be sourced by all shell instances.
+``` bash
+source ~/.carbon/env
+```
+
+The recomended shell config files are:
+
++ `~/.zshenv` for zsh
++ `~/.bashrc` for bash
++ `~/.config/fish/config.fish` for fish
+
+> [!WARNING]
+> Sourcing unknown sh files is always dangerous, you should take a look inside the env file for reassurance
+
+### Restart
+
+Then just restart hyprland and everything should work.
