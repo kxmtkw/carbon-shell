@@ -2,7 +2,7 @@
 # Carbon Shell
 
 Carbon shell is designed to be a simple and functional desktop shell.
-Though the shell is currently designed for `Hyprland` only and includes a config, It is possible to use this shell with other compositors through some hacks.
+The shell is currently designed for `Hyprland` only.
 
 ### Overview
 
@@ -53,7 +53,7 @@ Many more will be supported later.
 
 ### Themes
 
-Material color theming engine is used. The theme can be derived from the `current wallpaper` or `custom color (in hex)`
+Material color theming engine is used. The theme can be derived from the `current wallpaper` or `custom color` (in hex)
 
 Along with dark/light version of themes, a total of 4 variants exist:
 
@@ -72,6 +72,9 @@ wipe, left, right, top, bottom, outer, center, any, fade, random
 
 Fonts can also be set but currently only default fonts are supported (i.e. non-bold and non-italic) and the icons are a bit weird. It is recommended to use `Iosevka` and `Iosevka Nerd Font`. Fonts are only updated for the shell UI.
 
+### Profile Picture
+
+The profile picture or 'face' can be set using the CLI tool or the theme controller. You can also move your file to `~/.carbon/user/face` manually.
 
 ## Controllers
 
