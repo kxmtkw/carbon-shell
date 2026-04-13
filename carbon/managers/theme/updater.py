@@ -12,10 +12,11 @@ class ThemeUpdater:
 
     def __init__(self):
         self.colorfiles = {}
-        self.colorfiles["rofi"]  = "~/.carbon/shell/rofi/Config/color.rasi"
-        self.colorfiles["json"]  = "~/.carbon/shell/quickshell/Config/color.json"
-        self.colorfiles["kde"]   = "~/.local/share/color-schemes/Carbon.colors"
-        self.colorfiles["hypr"]  = "~/.carbon/hypr/color.conf"
+        self.colorfiles["rofi"]       = "~/.carbon/shell/rofi/Config/color.rasi"
+        self.colorfiles["json"]       = "~/.carbon/shell/quickshell/Config/color.json"
+        self.colorfiles["kde"]        = "~/.local/share/color-schemes/Carbon.colors"
+        self.colorfiles["alacritty"]  = "~/.config/alacritty/Carbon.toml"
+        self.colorfiles["kitty"]      = "~/.config/kitty/Carbon.conf"
 
         self.qs = Quickshell()
 
@@ -50,13 +51,11 @@ class ThemeUpdater:
                     writefile(filepath, string)
 
                 case "kitty":
-                    continue
-                    string = color.update_kitty(colors)
+                    string = updateKitty(colors)
                     writefile(filepath, string)
 
                 case "alacritty":
-                    continue
-                    string = color.update_alacritty(colors)
+                    string = updateAlacritty(colors)
                     writefile(filepath, string)
                 
                 case _:
