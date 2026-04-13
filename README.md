@@ -1,10 +1,7 @@
 
 # Carbon Shell 
 
-A desktop UI shell designed for `Hyprland` to be functional and pretty!
-
-
-## Features
+A desktop UI shell designed for Linux to be pretty and functional.
 
 Some notable features of the shell:
 
@@ -15,66 +12,32 @@ Some notable features of the shell:
 
 The shell includes:
 
-+ Lock Screen
-+ Panel
-+ Power Menu
-+ Launcher
-+ Screenshot Util
-+ Wifi Menu
-+ Theming Menu
-+ Clipboard Util
-+ Essential Desktop Apps (from KDE) (Optional)
+- Panel
+- Lockscreen
+- Power Menu
+- Launcher
+- Screenshot Util
+- Wifi Menu
+- Theming Menu
+- Clipboard Util
+- Essential Desktop Apps from KDE (Optional)
+- Hypr configuration
+- Complete desktop theming
+- Notifications
+- Nightlight
 
-For more features: [features](docs/features.md)
 
-For keybinds see: [bindings](docs/bindings.md)
+`For a guide on how to install, see`: [installation](docs/installation.md)
 
+`For more features:` [features](docs/features.md)
 
-## Installation
+`For keybinds see:`  [bindings](docs/bindings.md)
 
-### Dependancies
-
-If on `Arch Linux`, the installation script will handle all the packages. 
-
-If you're on some other distribution or want to manually install packages, see [requirements](docs/requirements.md).
-
-### Cloning
-
-The shell can be installed by using this command:
-
-``` bash
-git clone https://github.com/kxmtkw/carbon-shell.git ~/.carbon
-cd ~/.carbon
-python3 install.py
+The shell also comes with a CLI tool.
+```sh
+carbon.shell COMMAND ...
 ```
-
-> [!IMPORTANT]
-> The shell must be cloned at '~/.carbon' for it to work.
-
-What this script would do:
-+ Install core packages
-+ Install packages for essential apps (optional)
-+ Install the shell
-
-### Environment
-
-Finally, add this line in your shell config. The file should be sourced by all shell instances.
-``` bash
-source ~/.carbon/env
-```
-
-The recomended shell config files are:
-
-+ `~/.zshenv` for zsh
-+ `~/.bashrc` for bash
-+ `~/.config/fish/config.fish` for fish
-
-
-### Restart
-
-Then just restart hyprland and everything should work.
-You can edit the shell config present at `~/.carbon/config.toml`.
-
+`For a guide on how to use the tool, see:` [cli](docs/cli.md)
 
 ## Previews
 
@@ -88,7 +51,3 @@ You can edit the shell config present at `~/.carbon/config.toml`.
 
 
 ![](/assets/lockscreen.png)
-
-
-## TODO
-Here is a list of planned features/improvements: [todo](/docs/todo.md)
