@@ -1,86 +1,104 @@
 
 # Carbon Shell
 
-Carbon Shell is a UI shell for linux designed to be highly functional and pretty. 
+Carbon shell is designed to be a simple and functional desktop shell.
+Though the shell is currently designed for `Hyprland` only and includes a config, It is possible to use this shell with other compositors through some hacks.
 
-## Shell
+### Overview
 
-The shell includes the following UI components:
+If the features were to be summarized, they would include:
 
-+ Panel
-+ Lock Screen
-+ Launcher
-+ Power Menu
-+ Wifi/Networks Menu
-+ Windows Overview
-+ Run Prompt
-+ Screenshot Utility
-+ Clipboard
-+ Theme Utility
-+ Notifications
+- `Panel`
+- `Lockscreen`
+- `Power Menu`
+- `Launcher`
+- `Screenshot Util`
+- `Wifi Menu`
+- `Theming Menu`
+- `Clipboard Util`
+- `Essential Desktop Apps from KDE` (Optional)
+- `Hypr configuration`
+- `Complete desktop theming`
+- `Notifications`
+- `Nightlight`
+
+## Hyprland
+
+The shell comes with hyprland and its utilities. This includes:
+
++ `Main Config`
++ `Hyprlock Config`
++ `Hyprsunset Config`
++ `Hypridle Config`
+
+
+### Overriding
+
+These files are locked and they shouldn't be modified. If you want to `make changes` to hyprland then:
+
++ `Use hyprviz` This is a GUI tool for hyprland config. It works with the shell.
++ `Create override.conf in ~/.config/hypr` and make your changes there.
 
 
 ## Theming
 
-The shell can by dynamically themed using the theme utility or the `carbon.shell theme` CLI.
+The shell puts theming first. The shell can theme:
 
-Currently, the themed content include:
++ `Main shell UI`
++ `All KDE apps`
++ `alacritty`
++ `kitty`
 
-+ Lock Screen
-+ Panel
-+ All Controllers
-+ KDE Apps
+Many more will be supported later.
 
+### Themes
 
-## Utilities
+Material color theming engine is used. The theme can be derived from the `current wallpaper` or `custom color (in hex)`
 
-The shells comes with several utilities:
+Along with dark/light version of themes, a total of 4 variants exist:
 
-+ `For configuring the shell`: carbon.shell
-+ `For basic power commands`: carbon.power
-+ `For changing brightness nicely`: carbon.brightness
-+ `For changing audio`: carbon.audio
++ `Ash` A desaturated color scheme
++ `Coal` Mono color scheme
++ `Graphite` Closest color scheme to the theme source
++ `Diamond` True material color scheme
 
+### Wallpaper
 
-## Essential Apps
+The wallpaper daemon used is `swww`.
+These animations can be used for swww:
+wipe, left, right, top, bottom, outer, center, any, fade, random
 
-The shell also handles the installation and theming of essential desktop apps.
+### Font
 
-- `Terminal` alacritty
-- `Archive Manager` ark
-- `Calendar` calindori
-- `File Manager` dolphin
-- `Disk Usage Analyzer` filelight
-- `Image Viewer` gwenview
-- `Media Player` haruna
-- `Hyprland Settings` hyprviz
-- `ISO Image Writer` isoimagewriter
-- `Camera` kamoso
-- `Calculator` kcalc
-- `Clock` kclock
-- `Torrent Client` ktorrent
-- `Network Manager GUI` nm-connection-editor
-- `GTK Appearance Settings` nwg-look
-- `Document Viewer` okular
-- `Partition Manager` partitionmanager
-- `System Monitor` plasma-systemmonitor
+Fonts can also be set but currently only default fonts are supported (i.e. non-bold and non-italic) and the icons are a bit weird. It is recommended to use `Iosevka` and `Iosevka Nerd Font`. Fonts are only updated for the shell UI.
 
 
-## Hyprland
+## Controllers
 
-The shell comes with a complete `Hyprland Config` that is automatically linked upon installation.
-The config includes:
-+ Hyprland WM config
-+ Hyprlock config
-+ Hyprsunset config
-+ Hypridle config
-+ Sources for hyprviz
+Controllers are menus with specific functionality.
 
-### Modifications
+### `Launcher`
+App launcher to launch apps...duh
 
-It is recomended to not touch the files that come with the shell as it can later cause issues during updates.
-If you want to make changes, you have two methods.
+### `Networker`
+Controller to manage wifi and devices. 
 
-+ `Create override.conf`: Create a file with this name under ~/.config/hypr and it will be automatically included, you can make all your changes and overrides here.
+### `Runner`
+Controller to run and launch processes.
 
-+ `Use Hyprviz`: Hyprviz, which is a GUI for hyprland config, can also be used to override the main config without touching it.
+### `Power`
+Power menu for functions like shutdown, reboot, lock etc.
+
+### `Theme`
+Controller that provides a GUI to theme the shell.
+
+### `Screenshot`
+For taking a screenshot.
+
+### `Clipboard`
+Stores a history of the last copied items (textual only).
+
+### `Window Overview`
+To view all open windows.
+
+
