@@ -1,3 +1,4 @@
+from pathlib import Path
 import subprocess
 
 class Color:
@@ -26,9 +27,9 @@ class Color:
     def Print(cls, msg: str, color: str):
         print(f"{color}{msg}{Color.reset}")
 
-def run(cmd, wait: bool = True) -> bool | None:
+def run(cmd, wait: bool = True, *, hide_output: bool = True) -> bool | None:
     if wait:
-        output = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+        output = subprocess.run(cmd, shell=True, capture_output=hide_output, text=True)
         return output.returncode == 0
     else:
         subprocess.Popen(cmd, shell=True)
@@ -66,7 +67,7 @@ def main():
         print("Permission required. Packages will be installed from ./installation/core_packages.sh (for arch)")
 
         Color.Print(":: Proceeding with installation...", Color.blue)
-        run("sh ./installation/core_packages.sh")
+        run("sh ./installation/core_packages.sh", hide_output=False)
         Color.Print(":: Installation finished.", Color.green)
 
 
@@ -79,7 +80,7 @@ def main():
 
         if chosen == "y":
             Color.Print(":: Proceeding with installation...", Color.blue)
-            run("sh ./installation/core_packages.sh")
+            run("sh ./installation/app_packages.sh", hide_output=False)
             Color.Print(":: Installation finished.", Color.green)
         else:
             Color.Print(":: Installation canceled...", Color.yellow)
@@ -94,18 +95,19 @@ def main():
     Color.Print(":: Installing python package...", Color.blue)
 
     run("python3 -m venv .venv")
-    run("source ./.venv/bin/activate && pip install -e . ")
+    run("source ./.venv/bin/activate && pip install -e . ", hide_output=False)
 
     Color.Print(":: Linking hyprland...", Color.blue)
-    
-    chosen = prompt("Link hyprland config?", ["y", "n"])
 
-    if chosen == "y":
-        run("ln -s ~/.carbon/hypr ~/.config")
-    else:
-        Color.Print(":: Linking canceled...Aborting.", Color.yellow)
-        exit(1)
+    if Path("~/.config/hypr").expanduser().exists():
+        chosen = prompt("Hyprland config already exists. [S]ave to ~/.config/old_hypr or [O]verwrite? ", ["s", "o"])
 
+        if chosen == "o":
+            run("rm -rf ~/.config/hypr")
+        else:
+            run("mv ~/.config/hypr ~/.config/old_hypr")
+
+    run("ln -s ~/.carbon/hypr ~/.config")
 
     run("touch ~/.carbon/hypr/hyprviz.conf")
     run("touch ~/.carbon/hypr/override.conf")
@@ -122,8 +124,9 @@ def main():
     Color.Print(":: Starting shell...", Color.blue)
 
     run("pidof Hyprland && echo 'Hyprland already running!' || start-hyprland")
-    run("carbon.shell daemon start")
+    run("carbon.shell daemon start", hide_output=False)
     run("hyprctl reload > /dev/null")
+    run("carbon.shell daemon save-state", hide_output=True)
 
     Color.Print(" :: Carbon shell installed!", Color.green)
 
