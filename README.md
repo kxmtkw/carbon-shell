@@ -1,4 +1,6 @@
 
+
+
 # Carbon Shell 
 
 A desktop UI shell designed for `Hyrpland` to be pretty and functional.
@@ -6,6 +8,8 @@ A desktop UI shell designed for `Hyrpland` to be pretty and functional.
 + Window Manager: `Hyprland`
 + Panel & Notifications: `Quickshell`
 + Controllers/Menus: `Rofi`
+
+https://github.com/user-attachments/assets/11d270ad-722d-4eb4-9711-97d661c764bc
 
 ### Features
 
@@ -20,6 +24,9 @@ A desktop UI shell designed for `Hyrpland` to be pretty and functional.
 ### Utilities
 
 The shell also comes with multiple CLI tools.
+
+
+
 
 The main utility is `carbon.shell`. It is used to start up the shell daemon and send commands to it.
 ```sh
