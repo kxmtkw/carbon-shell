@@ -13,7 +13,7 @@ https://github.com/user-attachments/assets/11d270ad-722d-4eb4-9711-97d661c764bc
 
 ### Installation
 
-`For installation, see:` [features](docs/installation.md)
+`For installation, see:` [installation](docs/installation.md)
 
 ### Features
 
