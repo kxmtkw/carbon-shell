@@ -27,7 +27,7 @@ class CarbonCore:
         self.thread_pool = ThreadPoolExecutor(5)
         self.is_running = True
 
-        self.state = StateManager()
+        self.state = StateManager("~/.carbon/user/state.json")
 
         self.theme_manager = ThemeManager()
         self.notification_manager = NotificationManager()
@@ -102,9 +102,12 @@ class CarbonCore:
 
         return "Shutting down."
     
+    def loadState(self) -> str:
+        
+        if not self.state.load():
+            raise CarbonError(f"Corrupted state file. Invalid Json: {self.state.file}")
 
-    def loadState(self):
-        self.state.load()
+        errors = ""
 
         for manager in self.all_managers:
             state = self.state.get(manager.__class__.__name__)
@@ -121,6 +124,14 @@ class CarbonCore:
                     logger.Level.warning
                 )
                 continue
+            except CarbonError as e:
+                logger.log(
+                    "core",
+                    f"Corrupted state loaded for manager {manager.__class__.__name__}: {e.msg}",
+                    logger.Level.warning
+                )
+                errors += e.msg + "\n"
+                continue
 
             logger.log(
                 "core",
@@ -129,8 +140,11 @@ class CarbonCore:
             )
 
         logger.log("core", "Loaded state.", logger.Level.info)
-            
-        return "State loaded."
+        
+        if errors:
+            raise CarbonError(errors.strip())
+        
+        return "State loaded successfully."
 
 
     def saveState(self):
@@ -142,7 +156,7 @@ class CarbonCore:
             )
 
         self.state.save()
-
+        print("called?")
         logger.log("core", "Saved state.", logger.Level.info)
 
         return "State saved."
