@@ -14,6 +14,7 @@ class StateManager:
         if not self._state_file.parent.exists():
             self._state_file.parent.mkdir(511, True, True)
 
+        if not self._state_file.exists():
             with open(self._state_file, "w") as file:
                 json.dump({}, file)
 
