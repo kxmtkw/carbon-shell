@@ -75,6 +75,7 @@ class ThemeManager(BaseManager):
 		)
 		self.changeFont(font = state.font)
 		self.setFace(img = state.face)
+		self.setWallpaperAnimation(style = state.wallpaperAnimation)
 
 		if self.state.source != "wallpaper":
 			self.setWallpaper(state.wallpaper)
@@ -276,7 +277,7 @@ class ThemeManager(BaseManager):
 			self.wallpaper_animation_styles = ("wipe", "left", "right", "top", "bottom", "outer", "center", "any", "fade", "random")
 
 		if style not in self.wallpaper_animation_styles:
-			return f"Invalid style. Allowed styles include:\n{self.wallpaper_animation_styles}"
+			raise CarbonError(f"Invalid style. Allowed styles include:\n{self.wallpaper_animation_styles}")
 		
 		self.state.wallpaperAnimation = style
 
