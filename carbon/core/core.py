@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 from carbon.ipc.server import Server
 from carbon.ipc.payloads import CommandRequest, CommandOutput
 
-from carbon.utils import CarbonError, logger, notify, shellrun
+from carbon.utils import CarbonError, logger, notify, shellrun, locked
 
 from carbon.state import StateManager
 from carbon.lib.quickshell import Quickshell
@@ -156,7 +156,6 @@ class CarbonCore:
             )
 
         self.state.save()
-        print("called?")
         logger.log("core", "Saved state.", logger.Level.info)
 
         return "State saved."
@@ -224,3 +223,4 @@ class CarbonCore:
 
         with self.lock:
             self.server.send(id, output)
+            self.saveState()
