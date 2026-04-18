@@ -29,11 +29,7 @@ class Quickshell:
 
 		try:
 			self._proc = subprocess.Popen(
-				[
-					"quickshell",
-					"--config",
-					Path("~/.carbon/shell/quickshell").expanduser(),
-				], 
+				self.base_cmd, 
 				stdout=subprocess.DEVNULL,
 				stderr=subprocess.DEVNULL,
 				stdin=subprocess.DEVNULL,
@@ -47,16 +43,24 @@ class Quickshell:
 		self._call("kill")
 
 
-	def _call(self, *args) -> str:
-		try:
-			cmd = self.base_cmd + [str(arg) for arg in args]
-			result = subprocess.run(cmd, capture_output=True, text=True, timeout=5)
-			if result.returncode != 0:
-				return ""
-			return result.stdout.strip()
-		except Exception as e:
-			return ""
+	def _call(self, *args) -> None:
+		cmd = self.base_cmd + [str(arg) for arg in args]
+		subprocess.Popen(
+			cmd,
+			stdout=subprocess.DEVNULL,
+			stderr=subprocess.DEVNULL,
+		)
 		
+
+	def setPanelMode(self, mode: Literal["normal", "hidden", "bypass"] = "normal"):
+		"Change Panel modes."
+		self._call(
+			"ipc",
+			"call",
+			"panel",
+			mode
+		)
+
 
 	def updateTheme(self):
 		"Ask quickshell to reread the theme json file."
