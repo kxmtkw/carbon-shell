@@ -5,19 +5,22 @@ def main():
     
     from .core import CarbonCore
 
+    core = CarbonCore()        
+
     try:
-        core = CarbonCore()
+        core.init()
         core.run()
     except KeyboardInterrupt:
-        print(core.shutdown())
+        m = core.shutdown()
+        print(m)
     except Exception as e:
 
-        from carbon.utils import notify
-        notify(
-            "Error!",
+        from carbon.utils import logger
+
+        logger.log(
+            "main",
             f"{e.__class__.__name__}: {str(e)}",
-            urgency="critical",
-            timeout=-1
+            logger.Level.critical
         )
 
         core.shutdown()
