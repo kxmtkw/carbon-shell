@@ -27,16 +27,16 @@ configuration
 window
 {
     transparency:                "real";
-    location:                    west;
+    location:                    southwest;
     anchor:                      center;
     fullscreen:                  false;
     width:                       660px;
-    height:                      98%;
+    height:                      100%;
     x-offset:                    0px;
     y-offset:                    0px;
 
     enabled:                     true;
-    margin:                      0px 0px 0px 5px;
+    margin:                      10px;
     border:                      @themeBorderWidth;
     border-color:                @surfaceContainerHighest;
     border-radius:               calc(640/32);
