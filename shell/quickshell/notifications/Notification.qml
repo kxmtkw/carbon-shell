@@ -26,6 +26,7 @@ PanelWindow
 	property int urgency: 0
 	property string image: ""
 	property int expireTimeout: -1
+	property bool isHovered: false
 
 	anchors
 	{
@@ -55,7 +56,21 @@ PanelWindow
 		color: Theme.Color._background
 		radius: Theme.Style.getMaterialRadius(width, height, "large")
 		border.width: 3
-		border.color: notif.urgency == 2 ? Theme.Color._error : Theme.Color._primary
+		border.color: notif.isHovered
+			? Theme.Color._onPrimary
+			: (notif.urgency == 2 ? Theme.Color._errorContainer : Theme.Color._primaryContainer)
+
+		HoverHandler
+		{
+			onHoveredChanged: {
+				notif.isHovered = hovered
+				if (hovered) {
+					notif._pauseHideTimer()
+				} else {
+					notif._restartHideTimer()
+				}
+			}
+		}
 
 		Column
 		{
@@ -314,6 +329,7 @@ PanelWindow
 		urgency = 0
 		image = ""
 		expireTimeout = -1
+		isHovered = false
 	}
 
 	function _resolveTimeout(timeoutValue) {
@@ -341,10 +357,23 @@ PanelWindow
 
 		const timeout = _resolveTimeout(expireTimeout)
 		if (timeout > 0) {
-			hide_timer.interval = timeout
-			hide_timer.restart()
+			_restartHideTimer()
 		} else {
 			hide_timer.stop()
+		}
+	}
+
+	function _pauseHideTimer() {
+		if (_resolveTimeout(expireTimeout) > 0) {
+			hide_timer.stop()
+		}
+	}
+
+	function _restartHideTimer() {
+		const timeout = _resolveTimeout(expireTimeout)
+		if (timeout > 0 && showing) {
+			hide_timer.interval = timeout
+			hide_timer.restart()
 		}
 	}
 
@@ -357,6 +386,7 @@ PanelWindow
 
 	function _showNext() {
 		if (queue.length === 0) {
+			hide_timer.stop()
 			showing = false
 			_resetContent()
 			return
