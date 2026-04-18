@@ -7,6 +7,13 @@ import qs.notifications
 
 ShellRoot
 {
-    Panel{}
-    Notification{}
+    Panel
+    {
+        id: panel
+    }
+
+    Notification
+    {
+        panelWindow: panel
+    }
 }

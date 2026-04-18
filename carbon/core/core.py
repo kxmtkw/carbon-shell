@@ -72,7 +72,7 @@ class CarbonCore:
         notify(
             "Hello World!",
             f"Logged in as: {shellrun("whoami")[1]}",
-            timeout=8000
+            timeout=5000
         )
 
         while self.is_running:

@@ -1,6 +1,7 @@
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Io
+import Quickshell.Wayland
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
@@ -13,6 +14,7 @@ PanelWindow
 {
 	id: notif
 
+	property var panelWindow: null
 	property var queue: []
 	property bool showing: false
 	property int defaultTimeout: 5000
@@ -27,6 +29,8 @@ PanelWindow
 	property string image: ""
 	property int expireTimeout: -1
 	property bool isHovered: false
+
+	WlrLayershell.layer: WlrLayer.Overlay
 
 	anchors
 	{
@@ -354,6 +358,9 @@ PanelWindow
 		expireTimeout = n.expire_timeout
 
 		showing = true
+		if (panelWindow) {
+			panelWindow.setBypassMode()
+		}
 
 		const timeout = _resolveTimeout(expireTimeout)
 		if (timeout > 0) {
@@ -388,6 +395,9 @@ PanelWindow
 		if (queue.length === 0) {
 			hide_timer.stop()
 			showing = false
+			if (panelWindow) {
+				panelWindow.setNormalMode()
+			}
 			_resetContent()
 			return
 		}
