@@ -23,11 +23,15 @@ class CarbonCore:
 
         logger.log("core", "Hello World!", logger.Level.info)
 
+        self.server = Server(1)
+        self.state = StateManager("~/.carbon/user/state.json")
+
         self.lock = threading.Lock()
         self.thread_pool = ThreadPoolExecutor(5)
         self.is_running = True
 
-        self.state = StateManager("~/.carbon/user/state.json")
+
+    def init(self):
 
         self.theme_manager = ThemeManager()
         self.notification_manager = NotificationManager()
@@ -54,17 +58,16 @@ class CarbonCore:
             "notifications": self.notification_manager.handlers()
         }
 
-        self.server = Server(1)
-
         self.quickshell = Quickshell()
-
         try:
             self.quickshell.start()
         except Quickshell.Error as e:
             logger.log("core", f"Quickshell could not be started. Reason: {e.msg}", logger.Level.warning)
 
-
         self.loadState()
+
+
+    def run(self):
 
         notify(
             "Hello World!",
@@ -72,15 +75,12 @@ class CarbonCore:
             timeout=8000
         )
 
-
-    def run(self):
-
         while self.is_running:
             payload = self.server.listen()
             if payload is None: continue
             self.dispatch(*payload)
 
-    
+
     def shutdown(self) -> str:
 
         if not self.is_running: 
