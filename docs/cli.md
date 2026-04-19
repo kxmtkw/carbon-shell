@@ -95,13 +95,21 @@ carbon.shell theme set-face PATH
 
 Set user face image.
 
-#### `set-font`
+#### `change-font`
 
 ```
-carbon.shell theme set-font NAME
+carbon.shell theme change-font NAME
 ```
 
 Set UI font.
+
+#### `set-contrast`
+
+```
+carbon.shell theme set-contrast FLOAT
+```
+
+Set theme contrast amount.
 
 #### `set-wallpaper-animation`
 
@@ -176,6 +184,9 @@ carbon.shell theme update --hex "#a0c4ff"
 
 # Toggle dark/light
 carbon.shell theme toggle-mode
+
+# Set theme contrast
+carbon.shell theme set-contrast 1.25
 
 # Enable nightlight at 3500K
 carbon.shell nightlight on

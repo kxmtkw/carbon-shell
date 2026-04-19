@@ -27,25 +27,67 @@ https://github.com/user-attachments/assets/11d270ad-722d-4eb4-9711-97d661c764bc
 
 ### Utilities
 
-The shell also comes with multiple CLI tools.
+Along with that some other utilies include:
 
+```bash
+carbon.shell       # For starting and controlling the shell daemon
+carbon.brightness  # For controlling brightness
+carbon.audio       # For controlling audio
+carbon.power       # For shutting down, rebooting etc...
+```
+
+
+### Configuration
+
+The shell is supposed to be configured using the cli tool `carbon.shell`
+.
 The main utility is `carbon.shell`. It is used to start up the shell daemon and send commands to it.
-```sh
+```bash
 carbon.shell COMMAND ...
 ```
 `For a guide on how to use the tool, see:` [cli](docs/cli.md)
 
-Along with that some other utilies include:
+#### Examples
 
-```sh
-carbon.brightness # For controlling brightness
-carbon.audio      # For controlling audio
-carbon.power      # For shutting down, rebooting etc...
+Here is an example script that allows you to focus on your work (or something like that).
+```bash
+carbon.shell theme switch-mode dark
+carbon.shell nightlight on
+carbon.shell nightlight set-temperature 5400
+carbon.shell notifications dnd on
 ```
 
-### Configuration
+Another script to change wallpaper and theme depending upon the time of the day.
+```bash
+while true; do
+    hour=$(date +%H)
 
-The shell is supposed to be configured using the cli `carbon.shell`. But if you prefer normal configuration methods, the shell can be be configured using `~/.carbon/user/state.json`.
+    if (( hour >= 6 && hour < 18 )); then
+        carbon.shell theme switch-mode light
+        carbon.shell theme set-wallpaper ~/Pictures/light.png
+        carbon.shell theme set-contrast 2
+        carbon.shell nightlight off
+    else
+        carbon.shell theme switch-mode dark
+        carbon.shell theme set-wallpaper ~/Pictures/dark.png
+        carbon.shell theme set-contrast 0.1
+        carbon.shell nightlight on
+    fi
+
+    sleep 60
+done
+```
+
+#### File Method
+
+If you prefer to use files as configuration, you can edit the json file in `~/.carbon/user/state.json`.
+
+After editing the file, run:
+```bash
+carbon.shell daemon load-state
+```
+
+Here is an example config:
 
 ```json
 {
@@ -72,8 +114,3 @@ The shell is supposed to be configured using the cli `carbon.shell`. But if you 
 }
 ```
 
-After configuration using `carbon.shell`, run:
-```bash
-carbon.shell daemon save-state
-```
-to regenerate this file.
