@@ -49,7 +49,7 @@ The shell is supposed to be configured using the cli `carbon.shell`. But if you 
 
 ```json
 {
-    "ThemeManager": {
+    "theme": {
         "mode": "dark",
         "source": "wallpaper",
         "wallpaper": "~/.carbon/assets/default_wallpaper.jpg",
@@ -60,13 +60,13 @@ The shell is supposed to be configured using the cli `carbon.shell`. But if you 
         "face": "~/.carbon/assets/default_face.jpg",
         "wallpaperAnimation": "center"
     },
-    "ControllerManager": {},
-    "NightLightManager": {
+    "controller": {},
+    "nightlight": {
         "toggled": true,
-        "temperature": 5800,
+        "temperature": 6000,
         "gamma": 100
     },
-    "NotificationManager": {
+    "notification": {
         "do_not_disturb": false
     }
 }
