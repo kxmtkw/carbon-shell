@@ -28,7 +28,9 @@ class NightLightManager(BaseManager):
             toggled=True
         )
 
-        self.hyprsunset = ProcessManager("hyprsunset")
+        self.hyprsunset = ProcessManager("hyprsunset", only_one=True)
+        self.hyprsunset.start("-g", self.state.gamma, "-t", self.state.temperature)
+
 
     def handlers(self):
         return {
@@ -45,9 +47,9 @@ class NightLightManager(BaseManager):
     
 
     def setState(self, state: State):
+        self.toggleNightlight(state.toggled)
         self.setTemperature(state.temperature)
         self.setGamma(state.gamma)
-        self.toggleNightlight(state.toggled)
 
 
     def toggleNightlight(self, on: bool):
@@ -55,8 +57,8 @@ class NightLightManager(BaseManager):
         self.state.toggled = on
             
         if self.state.toggled:
-            self.hyprsunset.start("-g", self.state.gamma, "-t", self.state.temperature)
-            print("Started")
+            if not self.hyprsunset.poll(0.1):
+                self.hyprsunset.start("-g", self.state.gamma, "-t", self.state.temperature)
             return "Nightlight turned on"
         else:
             self.hyprsunset.kill()
@@ -74,7 +76,7 @@ class NightLightManager(BaseManager):
         success, output = shellrun(f"hyprctl hyprsunset temperature {value}")
 
         if not success:
-            return f"Failed. Reason: {output}"
+            raise CarbonError(f"Failed. Reason: {output}")
         
         logger.log(
             "nightlight",
@@ -96,7 +98,7 @@ class NightLightManager(BaseManager):
         success, output = shellrun(f"hyprctl hyprsunset gamma {value}")
 
         if not success:
-            raise CarbonError(f"Failed. Reason: {output}")
+            raise CarbonError(f"Failed in setGamma. Reason: {output}")
         
         logger.log(
             "nightlight",
