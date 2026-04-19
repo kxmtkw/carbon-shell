@@ -68,13 +68,11 @@ class CarbonCore:
             self.loadState()
         except CarbonError as e:
             Notify(
-                "State not loaded, resetting.",
+                "State not loaded.",
                 e.msg,
                 urgency="critical"
             )
-            self.state.create()
-            self.state.save()
-            
+
 
     def run(self):
 
@@ -103,7 +101,7 @@ class CarbonCore:
         self.quickshell.kill()
 
         self.server.close()
-        self.saveState()
+        self.state.save()
         self.is_running = False
         self.thread_pool.shutdown(False, cancel_futures=True)
 
@@ -113,13 +111,19 @@ class CarbonCore:
     
 
     def loadState(self) -> str:
-        
-        if not self.state.load():
-            raise CarbonError(
-                f"Corrupted state file. Invalid Json: {self.state.file}. Not updating state.",
-            )
 
         errors = ""
+        
+        if not self.state.load():
+            msg = f"Corrupted state file. Invalid Json: {self.state.file}."
+
+            logger.log(
+                "core",
+                msg,
+                logger.Level.warning
+            )  
+            errors += msg
+                
 
         for name, manager in self.all_managers.items():
             state = self.state.get(name)
@@ -139,14 +143,14 @@ class CarbonCore:
             except TypeError:
                 logger.log(
                     "core",
-                    f"Corrupted state loaded for manager {manager.__class__.__name__}",
+                    f"Corrupted state loaded for manager {name}: Does not match state structure",
                     logger.Level.warning
                 )
-                continue
+                errors += f"Corrupted state loaded for manager {name}: Does not match state structure" + "\n"
             except CarbonError as e:
                 logger.log(
                     "core",
-                    f"Corrupted state loaded for manager {manager.__class__.__name__}: {e.msg}",
+                    f"Corrupted state loaded for manager {name}: {e.msg}",
                     logger.Level.warning
                 )
                 errors += e.msg + "\n"

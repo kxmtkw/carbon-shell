@@ -48,8 +48,9 @@ class StateManager:
         
         with open(self._state_file) as file:
             try:
-                self._state  = json.load(file)
+                self._state = json.load(file)
                 return True
             except json.JSONDecodeError:
+                self._state = {}
                 return False
 
