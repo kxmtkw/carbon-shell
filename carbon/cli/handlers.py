@@ -170,6 +170,15 @@ def handle_theme(args: argparse.Namespace):
 			)
 			output = sendRequest(request)
 
+		case "set-contrast":
+			request = CommandRequest(
+				manager, "update-theme",
+				{
+					"contrast": args.contrast				
+				}
+			)
+			output = sendRequest(request)
+
 		case "set-wallpaper-animation":
 			request = CommandRequest(
 				manager, "set-wallpaper-animation",

@@ -64,6 +64,9 @@ def getParser() -> argparse.ArgumentParser:
 	sfont = theme_sub.add_parser("change-font", help="Set UI font")
 	sfont.add_argument("font", metavar="NAME")
 
+	sc = theme_sub.add_parser("set-contrast", help="Set theme contrast amount")
+	sc.add_argument("contrast", type=float, metavar="FLOAT")
+
 	sa = theme_sub.add_parser("set-wallpaper-animation", help="Set wallpaper animation style.")
 	sa.add_argument("style", choices=["wipe", "left", "right", "top", "bottom", "outer", "center", "any", "fade", "random"])
 
