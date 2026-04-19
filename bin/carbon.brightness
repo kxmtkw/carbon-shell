@@ -26,6 +26,7 @@ display_help() {
 	echo "  get        : get the current percentage value"
 	echo "  save       : save the current brightness"
 	echo "  restore    : restore the last saved brighteness"
+	echo "  help       : display this help message"
 }
 
 if [[ -z "$1" ]]; then
@@ -80,12 +81,13 @@ case "$1" in
 			exit 0
 		fi
 		;;
-	--help)
+	help)
 		display_help
 		exit 0
 		;;
 	*)
-		echo "Can't read the usage?"
+		echo "WRONG!"
+		display_help
 		exit 1
 		;;
 esac
