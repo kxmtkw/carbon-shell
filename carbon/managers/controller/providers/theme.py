@@ -137,10 +137,11 @@ class Theme(BaseController):
 		if not selected:
 			return
 
-		self.themer.setWallpaper(img=selected)
 
 		if self.theme_state.source == "wallpaper":
 			self.themer.updateTheme(img=selected)
+		else:
+			self.themer.setWallpaper(img=selected)
 
 		time.sleep(0.6) # animation finishes
 
