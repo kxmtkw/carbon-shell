@@ -20,5 +20,6 @@ dependencies = [
     "toml",
     "nmcli",
     "simpleeval",
-    "dbus-next"
+    "dbus-next",
+    "watchdog"
 ]
