@@ -66,8 +66,6 @@ class ThemeManager(BaseManager):
 
 	def setState(self, state: State):
 
-		self.changeFont(font = state.font)
-		self.setFace(img = state.face)
 		self.setWallpaperAnimation(style = state.wallpaperAnimation)
 
 		self.updateTheme(
@@ -82,6 +80,9 @@ class ThemeManager(BaseManager):
 		if self.state.source != "wallpaper":
 			self.setWallpaper(state.wallpaper)
 
+		self.changeFont(font = state.font)
+		self.setFace(img = state.face)
+		
 		logger.log("theme", "Loaded theme state.", logger.Level.info)
 
 
