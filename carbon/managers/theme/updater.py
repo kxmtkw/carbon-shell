@@ -15,56 +15,37 @@ class ThemeUpdater:
 		self.colorfiles["rofi"]       = "~/.carbon/shell/rofi/Config/color.rasi"
 		self.colorfiles["json"]       = "~/.carbon/shell/quickshell/Config/color.json"
 		self.colorfiles["hypr"]       = "~/.config/hypr/color.conf"
-		self.colorfiles["kde"]        = "~/.local/share/color-schemes/Carbon.colors"
+		self.colorfiles["kde"]        = ("~/.local/share/color-schemes/Carbon.colors", "~/.local/share/color-schemes/CarbonCopy.colors")
 		self.colorfiles["alacritty"]  = "~/.config/alacritty/Carbon.toml"
 		self.colorfiles["kitty"]      = "~/.config/kitty/Carbon.conf"
 
-		self.qs = Quickshell()
+		self.updaters = {
+			"json":      updateJson,
+			"kde":       updateKde,
+			"rofi":      updateRofi,
+			"hypr":      updateHypr,
+			"kitty":     updateKitty,
+			"alacritty": updateAlacritty,
+		}
 
 		self.post_update_commands = [
-			"plasma-apply-colorscheme BreezeDark && plasma-apply-colorscheme Carbon",
+			"plasma-apply-colorscheme CarbonCopy && plasma-apply-colorscheme Carbon",
 			"hyprctl reload"
 		]
 
+		self.qs = Quickshell()
 		self.fonts = self.loadFonts()
 
 
 	def updateColors(self, colors: dict[str, str]):
 
-		for type, filepath in self.colorfiles.items():
+		for type, paths in self.colorfiles.items():
+			handler = self.updaters.get(type)
+			string = handler(colors)
 
-			filepath = Path(filepath).expanduser()
+			for file in ([paths] if isinstance(paths, str) else paths):
+				writefile(Path(file).expanduser(), string)
 
-			match type:
-
-				case "json":
-					string = updateJson(colors)
-					writefile(filepath, string)
-
-				case "kde":
-					string = updateKde(colors)
-					writefile(filepath, string)
-
-				case "rofi":
-					string = updateRofi(colors)
-					writefile(filepath, string)
-
-				case "hypr":
-					string = updateHypr(colors)
-					writefile(filepath, string)
-
-				case "kitty":
-					string = updateKitty(colors)
-					writefile(filepath, string)
-
-				case "alacritty":
-					string = updateAlacritty(colors)
-					writefile(filepath, string)
-				
-				case _:
-					print(f"Error :: {type}")
-					continue
-		
 		self.runPostUpdate()
 
 
