@@ -26,6 +26,8 @@ class ThemeUpdater:
 			"hyprctl reload"
 		]
 
+		self.fonts = self.loadFonts()
+
 
 	def updateColors(self, colors: dict[str, str]):
 
@@ -68,6 +70,9 @@ class ThemeUpdater:
 
 	def updateFont(self, font: str):
 
+		if font not in self.fonts:
+			raise CarbonError(f"Unknown font: {font}.")
+		
 		rofifile = Path("~/.carbon/shell/rofi/Config/fonts.rasi").expanduser()
 
 		rofi = fonts.updateRofi(font)
@@ -110,3 +115,21 @@ class ThemeUpdater:
 			shellrun(cmd)
 
 		self.qs.updateTheme()
+
+
+	def loadFonts(self) -> list[str]:
+
+		success, output = shellrun("fc-list --format='%{family[0]}\n' | sort | uniq")
+
+		if not success: return fonts
+
+		fonts = []
+		for item in output.splitlines():
+			if item.startswith("Noto"): continue
+			fonts.append(item)
+
+		return fonts
+	
+
+	def getFonts(self) -> list[str]:
+		return self.fonts
