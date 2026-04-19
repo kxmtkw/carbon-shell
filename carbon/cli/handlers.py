@@ -161,9 +161,9 @@ def handle_theme(args: argparse.Namespace):
 			)
 			output = sendRequest(request)
 
-		case "set-font":
+		case "change-font":
 			request = CommandRequest(
-				manager, "set-font",
+				manager, "change-font",
 				{
 					"font": args.font
 				}
