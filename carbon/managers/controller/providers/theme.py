@@ -294,9 +294,8 @@ class Theme(BaseController):
 
 
 	def showFontMenu(self):
-		return
 	
-		options = get_fonts()
+		options = self.themer.updater.getFonts()
 
 		self.rofi.display(
 			mode= RofiShell.Mode.dmenu,
@@ -307,14 +306,9 @@ class Theme(BaseController):
 		selected: str = self.rofi.wait()
 
 		self.current = self.showMainMenu 
-		if not selected: self.close()
+		if not selected: return
 
-		selected = selected.split("]")[-1].strip().lower()
-
-		font = extract_font_from_rofi(selected)
-		Theme.set_font(font)
-
-		CarbonConfig.set("theme.font", font)
+		self.themer.changeFont(font=selected)
 
 
 class Icons:
