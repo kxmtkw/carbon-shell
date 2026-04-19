@@ -11,12 +11,18 @@ class StateManager:
         self._state_file = Path(path).expanduser()
         self._is_loading_needed = True
 
+        if not self._state_file.exists():
+            self.create()
+            return
+        
+
+    def create(self):
         if not self._state_file.parent.exists():
             self._state_file.parent.mkdir(511, True, True)
 
-        if not self._state_file.exists():
-            with open(self._state_file, "w") as file:
-                json.dump({}, file)
+        with open(self._state_file, "w") as file:
+            json.dump({}, file)
+
 
     @property
     def file(self) -> Path:
@@ -42,9 +48,8 @@ class StateManager:
         
         with open(self._state_file) as file:
             try:
-                data = json.load(file)
+                self._state  = json.load(file)
+                return True
             except json.JSONDecodeError:
                 return False
 
-        self._state = data
-        return True

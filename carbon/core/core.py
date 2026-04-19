@@ -38,12 +38,12 @@ class CarbonCore:
         self.nightlight_manager = NightLightManager()
         self.controller_manager = ControllerManager(self.theme_manager)
 
-        self.all_managers: list[BaseManager] = [
-            self.theme_manager,
-            self.controller_manager,
-            self.nightlight_manager,
-            self.notification_manager
-        ]
+        self.all_managers = {
+            "theme":self.theme_manager,
+            "controller":self.controller_manager,
+            "nightlight":self.nightlight_manager,
+            "notification":self.notification_manager
+        }
 
         self.dispatch_map = {
             "daemon": {
@@ -64,8 +64,17 @@ class CarbonCore:
         except Quickshell.Error as e:
             logger.log("core", f"Quickshell could not be started. Reason: {e.msg}", logger.Level.warning)
 
-        self.loadState()
-
+        try:
+            self.loadState()
+        except CarbonError as e:
+            Notify(
+                "State not loaded, resetting.",
+                e.msg,
+                urgency="critical"
+            )
+            self.state.create()
+            self.state.save()
+            
 
     def run(self):
 
@@ -102,19 +111,28 @@ class CarbonCore:
 
         return "Shutting down."
     
-    
+
     def loadState(self) -> str:
         
         if not self.state.load():
-            raise CarbonError(f"Corrupted state file. Invalid Json: {self.state.file}")
+            raise CarbonError(
+                f"Corrupted state file. Invalid Json: {self.state.file}. Not updating state.",
+            )
 
         errors = ""
 
-        for manager in self.all_managers:
-            state = self.state.get(manager.__class__.__name__)
+        for name, manager in self.all_managers.items():
+            state = self.state.get(name)
+
+            logger.log(
+                "core",
+                f"Loading state for manager {manager.__class__.__name__}",
+                logger.Level.debug
+            )
 
             if state is None: 
                 manager.setState(manager.state) # default state
+                continue
 
             try:
                 manager.setState(manager.State(**state))
@@ -134,11 +152,6 @@ class CarbonCore:
                 errors += e.msg + "\n"
                 continue
 
-            logger.log(
-                "core",
-                f"Loaded for manager {manager.__class__.__name__}",
-                logger.Level.debug
-            )
 
         logger.log("core", "Loaded state.", logger.Level.info)
         
@@ -150,9 +163,9 @@ class CarbonCore:
 
     def saveState(self):
         
-        for manager in self.all_managers:
+        for name, manager in self.all_managers.items():
             self.state.update(
-                manager.__class__.__name__,
+                name,
                 dataclasses.asdict(manager.getState())
             )
 
