@@ -10,85 +10,103 @@ from carbon.lib.quickshell import Quickshell
 class ThemeUpdater:
 
 
-    def __init__(self):
-        self.colorfiles = {}
-        self.colorfiles["rofi"]       = "~/.carbon/shell/rofi/Config/color.rasi"
-        self.colorfiles["json"]       = "~/.carbon/shell/quickshell/Config/color.json"
-        self.colorfiles["hypr"]       = "~/.config/hypr/color.conf"
-        self.colorfiles["kde"]        = "~/.local/share/color-schemes/Carbon.colors"
-        self.colorfiles["alacritty"]  = "~/.config/alacritty/Carbon.toml"
-        self.colorfiles["kitty"]      = "~/.config/kitty/Carbon.conf"
+	def __init__(self):
+		self.colorfiles = {}
+		self.colorfiles["rofi"]       = "~/.carbon/shell/rofi/Config/color.rasi"
+		self.colorfiles["json"]       = "~/.carbon/shell/quickshell/Config/color.json"
+		self.colorfiles["hypr"]       = "~/.config/hypr/color.conf"
+		self.colorfiles["kde"]        = "~/.local/share/color-schemes/Carbon.colors"
+		self.colorfiles["alacritty"]  = "~/.config/alacritty/Carbon.toml"
+		self.colorfiles["kitty"]      = "~/.config/kitty/Carbon.conf"
 
-        self.qs = Quickshell()
+		self.qs = Quickshell()
 
-        self.post_update_commands = [
-            "plasma-apply-colorscheme BreezeDark && plasma-apply-colorscheme Carbon",
-            "hyprctl reload"
-        ]
-
-
-    def updateColors(self, colors: dict[str, str]):
-
-        for type, filepath in self.colorfiles.items():
-
-            filepath = Path(filepath).expanduser()
-
-            match type:
-
-                case "json":
-                    string = updateJson(colors)
-                    writefile(filepath, string)
-
-                case "kde":
-                    string = updateKde(colors)
-                    writefile(filepath, string)
-
-                case "rofi":
-                    string = updateRofi(colors)
-                    writefile(filepath, string)
-
-                case "hypr":
-                    string = updateHypr(colors)
-                    writefile(filepath, string)
-
-                case "kitty":
-                    string = updateKitty(colors)
-                    writefile(filepath, string)
-
-                case "alacritty":
-                    string = updateAlacritty(colors)
-                    writefile(filepath, string)
-                
-                case _:
-                    print(f"Error :: {type}")
-                    continue
-        
-        self.runPostUpdate()
+		self.post_update_commands = [
+			"plasma-apply-colorscheme BreezeDark && plasma-apply-colorscheme Carbon",
+			"hyprctl reload"
+		]
 
 
-    def updateFont(self, font: str):
+	def updateColors(self, colors: dict[str, str]):
 
-        rofifile = Path("~/.carbon/shell/rofi/Config/fonts.rasi").expanduser()
+		for type, filepath in self.colorfiles.items():
 
-        rofi = fonts.updateRofi(font)
-        writefile(rofifile, rofi)
+			filepath = Path(filepath).expanduser()
 
-        self.qs.updateFont(font)
+			match type:
+
+				case "json":
+					string = updateJson(colors)
+					writefile(filepath, string)
+
+				case "kde":
+					string = updateKde(colors)
+					writefile(filepath, string)
+
+				case "rofi":
+					string = updateRofi(colors)
+					writefile(filepath, string)
+
+				case "hypr":
+					string = updateHypr(colors)
+					writefile(filepath, string)
+
+				case "kitty":
+					string = updateKitty(colors)
+					writefile(filepath, string)
+
+				case "alacritty":
+					string = updateAlacritty(colors)
+					writefile(filepath, string)
+				
+				case _:
+					print(f"Error :: {type}")
+					continue
+		
+		self.runPostUpdate()
 
 
-    def updateFace(self, path: str):
+	def updateFont(self, font: str):
 
-        if not Path(path).expanduser().exists():
-            raise CarbonError(f"Face image not found: {path}")
-        
-        out = shellrun(f"cp {path} ~/.carbon/user/face")
+		rofifile = Path("~/.carbon/shell/rofi/Config/fonts.rasi").expanduser()
 
-        if not out[0]:
-            raise CarbonError(f"Failed to update face image. Reason: {out[1]}")
+		rofi = fonts.updateRofi(font)
+		writefile(rofifile, rofi)
+
+		self.qs.updateFont(font)
 
 
-    def runPostUpdate(self):
-        for cmd in self.post_update_commands:
-            shellrun(cmd)
+	def updateFace(self, path: str):
 
-        self.qs.updateTheme()
+		if not Path(path).expanduser().exists():
+			raise CarbonError(f"Face image not found: {path}")
+		
+		out = shellrun(f"cp {path} ~/.carbon/user/face")
+
+		if not out[0]:
+			raise CarbonError(f"Failed to update face image. Reason: {out[1]}")
+
+
+	def updateWallpaper(self, img: str, animation: str):
+
+		path = Path(img).expanduser()
+
+		if not path.exists():
+			raise CarbonError(f"File not found: {path}") 
+		
+		success, output = procrun(["swww", "img", "--transition-type", animation, path])
+
+		if not success:
+			raise CarbonError(f"Failed to change wallpaper: swww failure\n{output}")
+			
+		out = shellrun(f"cp {path} ~/.carbon/user/wall")		
+
+		if not out[0]:
+			raise CarbonError(f"Failed to update wallpaper image. Reason: {out[1]}")
+
+
+	def runPostUpdate(self):
+		for cmd in self.post_update_commands:
+			shellrun(cmd)
+
+		self.qs.updateTheme()
