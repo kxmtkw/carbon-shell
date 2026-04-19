@@ -3,9 +3,15 @@
 # Direct power actions utility.
 
 display_help() {
-    echo "Usage: carbon.power [option]"
-    echo "Supported options:"
-    echo "  shutdown reboot lock suspend hibernate logout bios"
+    echo "Usage: [option]"
+    echo "  lock          : lock session (needs hyprlock)"
+    echo "  shutdown      : poweroff the system"
+    echo "  reboot        : restart the system"
+    echo "  suspend       : causes the system to sleep/suspend"
+    echo "  hibernate     : causes the system to hibernate"
+    echo "  logout        : logout user"
+    echo "  bios          : restart and enter bios"
+    echo "  help          : display this help message"
 }
 
 if [ -z "$1" ]; then
@@ -42,7 +48,7 @@ case "$1" in
         exec systemctl reboot --firmware-setup
         ;;
     *)
-        echo "Unknown option: $1"
+        echo "WRONG!"
         display_help
         exit 1
         ;;

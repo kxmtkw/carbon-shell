@@ -10,6 +10,7 @@ display_help() {
     echo "  get           : get the current value (0 to 1)"
     echo "  toggle-mute   : toggle mute"
     echo "  toggle-mic    : toggle input"
+    echo "  help          : display this help message"
 }
 
 if [[ -z "$1" ]]; then
@@ -60,12 +61,13 @@ case "$1" in
     toggle-mic)
         wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
         ;;
-    --help)
+    help)
         display_help
         exit 0
         ;;
     *)
-        echo "Can't read the usage?"
+        echo "WRONG!"
+        display
         exit 1
         ;;
 esac
