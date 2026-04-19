@@ -61,7 +61,7 @@ def getParser() -> argparse.ArgumentParser:
 	sf.add_argument("img", metavar="PATH")
 
 	# set-font
-	sfont = theme_sub.add_parser("set-font", help="Set UI font")
+	sfont = theme_sub.add_parser("change-font", help="Set UI font")
 	sfont.add_argument("font", metavar="NAME")
 
 	sa = theme_sub.add_parser("set-wallpaper-animation", help="Set wallpaper animation style.")
