@@ -65,6 +65,11 @@ class ThemeManager(BaseManager):
 	
 
 	def setState(self, state: State):
+
+		self.changeFont(font = state.font)
+		self.setFace(img = state.face)
+		self.setWallpaperAnimation(style = state.wallpaperAnimation)
+
 		self.updateTheme(
 			mode     = state.mode,
 			variant  = state.variant,
@@ -73,9 +78,6 @@ class ThemeManager(BaseManager):
 			hex      = state.hex,
 			img      = state.wallpaper,
 		)
-		self.changeFont(font = state.font)
-		self.setFace(img = state.face)
-		self.setWallpaperAnimation(style = state.wallpaperAnimation)
 
 		if self.state.source != "wallpaper":
 			self.setWallpaper(state.wallpaper)
@@ -93,25 +95,15 @@ class ThemeManager(BaseManager):
 	
 
 	def _setWallpaper_nolock(self, *, img: str) -> str:
-
-		path = Path(img).expanduser()
-
-		if not path.exists():
-			raise CarbonError(f"File not found: {path}") 
-		
-		success, output = procrun(["swww", "img", "--transition-type", self.state.wallpaperAnimation, path])
-
-		if success:
-			self.state.wallpaper = img
-			logger.log(
+		self.updater.updateWallpaper(img, self.state.wallpaperAnimation)
+		self.state.wallpaper = img
+		logger.log(
 				"theme",
 				f"Wallpaper updated: {img}",
 				logger.Level.info
 			)
-			return "Wallpaper updated."
-		else:
-			raise CarbonError(f"Failed to change wallpaper: swww failure\n{output}")
-		
+		return "Wallpaper updated."
+	
 	
 	@locked(themeLock)
 	def updateTheme(
