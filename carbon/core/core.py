@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 from carbon.ipc.server import Server
 from carbon.ipc.payloads import CommandRequest, CommandOutput
 
-from carbon.utils import CarbonError, logger, notify, shellrun, locked
+from carbon.utils import CarbonError, logger, Notify, shellrun, locked
 
 from carbon.state import StateManager
 from carbon.lib.quickshell import Quickshell
@@ -69,7 +69,7 @@ class CarbonCore:
 
     def run(self):
 
-        notify(
+        Notify(
             "Hello World!",
             f"Logged in as: {shellrun("whoami")[1]}",
             timeout=5000
@@ -101,6 +101,7 @@ class CarbonCore:
         logger.log("core", "Shutting down.", logger.Level.info)
 
         return "Shutting down."
+    
     
     def loadState(self) -> str:
         

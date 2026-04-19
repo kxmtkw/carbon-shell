@@ -2,7 +2,7 @@ from pathlib import Path
 import json
 from typing import Any, Callable
 
-from carbon.utils import FileWatcher, notify
+from carbon.utils import FileWatcher
 
 class StateManager:
 
