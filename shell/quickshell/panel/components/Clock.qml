@@ -47,7 +47,7 @@ WrapperRectangle
 	Process
     {
 		id: panel_clock_proc_with_date
-		command: ["date", "+%I:%M %p | %a | %d %b "]
+		command: ["date", "+%I:%M %p - %d %b - %a"]
 		running: true
 		stdout: StdioCollector {
             onStreamFinished: { panel_clock_text.text = text.trim() }
