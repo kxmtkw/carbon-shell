@@ -64,6 +64,10 @@ class ControllerManager(BaseManager):
         }
 
 
+    def end(self):
+        pass
+
+
     def setState(self, state):
         pass
 

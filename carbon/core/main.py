@@ -1,14 +1,27 @@
-
-
+    
 
 def main():
     
     from .core import CarbonCore
 
-    core = CarbonCore()        
+    try:
+        core = CarbonCore()   
+        core.init() 
+    except Exception as e:
+        from carbon.utils import logger
+        logger.log(
+            "main",
+            f"{e.__class__.__name__}: {str(e)}",
+            logger.Level.critical
+        )
+        logger.reportStartupError(
+            "main",
+            f"{e.__class__.__name__}: {str(e)}"
+        )
+        raise e
+
 
     try:
-        core.init()
         core.run()
     except KeyboardInterrupt:
         m = core.shutdown()

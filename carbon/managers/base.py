@@ -11,6 +11,9 @@ class BaseManager:
     
     def handlers(self) -> Dict[str, Callable]:
         raise NotImplementedError()
+
+    def end(self):
+        raise NotImplementedError()
     
     def getState(self) -> State:
         raise NotImplementedError()

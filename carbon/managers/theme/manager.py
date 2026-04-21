@@ -62,6 +62,10 @@ class ThemeManager(BaseManager):
 			"set-face": self.setFace,
 			"set-wallpaper-animation": self.setWallpaperAnimation
 		}
+
+
+	def end(self):
+		pass
 	
 
 	def setState(self, state: State):

@@ -19,7 +19,6 @@ class IdleManager(BaseManager):
         )
 
         self.hypridle = ProcessManager("hypridle", only_one=True)
-        self.hypridle.start()
 
 
     def handlers(self):
@@ -28,6 +27,10 @@ class IdleManager(BaseManager):
             "off": lambda: self.toggleIdle(False),
             "toggle": lambda: self.toggleIdle(not self.state.toggled),
         }
+
+
+    def end(self):
+        self.toggleIdle(False)
 
 
     def getState(self) -> State:
@@ -64,6 +67,6 @@ class IdleManager(BaseManager):
 
         if changed:
             Notify("Idle toggled", msg)
-
-        logger.log("idle", msg, logger.Level.info if changed else logger.Level.debug)
+            logger.log("idle", msg, logger.Level.info)
+            
         return msg
