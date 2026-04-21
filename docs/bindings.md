@@ -6,7 +6,7 @@
 |---------|--------|
 | `Super + F9` | Exit Hyprland |
 | `Super + F12` | Reboot |
-| `Super + F1` | Lock session |
+| `Super + L` | Lock session |
 | `Super + T` | Open terminal (Alacritty) |
 
 
