@@ -1,7 +1,7 @@
 from dataclasses import dataclass, replace
 
 from carbon.managers.base import BaseManager
-from carbon.utils import ProcessManager
+from carbon.utils import ProcessManager, Notify, logger
 
 
 class IdleManager(BaseManager):
@@ -43,9 +43,27 @@ class IdleManager(BaseManager):
         self.state.toggled = on
 
         if self.state.toggled:
-            if self.hypridle.poll(0.1):
+
+            if not self.hypridle.poll(0.1):
                 self.hypridle.start()
-            return "Idle manager turned on"
+                msg = "Idle manager turned on."
+                changed = True
+            else:
+                msg = "Idle manager already on."
+                changed = False
+
         else:
-            self.hypridle.kill()
-            return "Idle manager turned off"
+
+            if self.hypridle.poll(0.1):
+                self.hypridle.kill()
+                msg = "Idle manager turned off."
+                changed = True
+            else:
+                msg = "Idle manager already off."
+                changed = False
+
+        if changed:
+            Notify("Idle toggled", msg)
+
+        logger.log("idle", msg, logger.Level.info if changed else logger.Level.debug)
+        return msg
