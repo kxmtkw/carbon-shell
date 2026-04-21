@@ -23,29 +23,30 @@ carbon.shell daemon save-state > /dev/null
 
 case "$1" in
     "shutdown")
-        exec systemctl poweroff
+        systemctl poweroff
         ;;
     "reboot")
-        exec systemctl reboot
+        systemctl reboot
         ;;
     "lock")
-        exec hyprlock > /dev/null
+        pidof hyprlock || hyprlock > /dev/null
+        notify-send -t 5000 "Welcome back, $(whoami)!" "Session unlocked."
         ;;
     "suspend")
-        exec hyprlock > /dev/null &
+        carbon.power lock &
         sleep 1
-        exec systemctl suspend
+        systemctl suspend
         ;;
     "hibernate")
-        exec hyprlock > /dev/null &
+        carbon.power lock &
         sleep 1
-        exec systemctl hibernate
+        systemctl hibernate
         ;;
     "logout")
-        exec hyprctl dispatch exit
+        hyprctl dispatch exit
         ;;
     "bios")
-        exec systemctl reboot --firmware-setup
+        systemctl reboot --firmware-setup
         ;;
     *)
         echo "WRONG!"
