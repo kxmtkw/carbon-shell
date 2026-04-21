@@ -33,6 +33,13 @@ class CarbonCore:
 
 
     def init(self):
+        
+        self.quickshell = Quickshell()
+        try:
+            self.quickshell.start()
+        except Quickshell.Error as e:
+            logger.log("core", f"Quickshell could not be started. Reason: {e.msg}", logger.Level.warning)
+
 
         self.theme_manager = ThemeManager()
         self.notification_manager = NotificationManager()
@@ -62,12 +69,13 @@ class CarbonCore:
             "notifications": self.notification_manager.handlers()
         }
 
-        self.quickshell = Quickshell()
-        try:
-            self.quickshell.start()
-        except Quickshell.Error as e:
-            logger.log("core", f"Quickshell could not be started. Reason: {e.msg}", logger.Level.warning)
 
+        Notify(
+            "Hello World!",
+            f"Logged in as: {shellrun("whoami")[1].strip()}",
+            timeout=5000
+        )
+        
         try:
             self.loadState()
         except CarbonError as e:
@@ -79,12 +87,6 @@ class CarbonCore:
 
 
     def run(self):
-
-        Notify(
-            "Hello World!",
-            f"Logged in as: {shellrun("whoami")[1]}",
-            timeout=5000
-        )
 
         while self.is_running:
             payload = self.server.listen()
