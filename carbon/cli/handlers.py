@@ -243,6 +243,38 @@ def handle_nightlight(args: argparse.Namespace):
 	exit(output.code)
 
 
+def handle_idle(args: argparse.Namespace):
+	manager = "idle"
+	match args.idle_cmd:
+
+		case "on":
+			request = CommandRequest(
+				manager, "on",
+				{
+				}
+			)
+			output = sendRequest(request)
+
+		case "off":
+			request = CommandRequest(
+				manager, "off",
+				{
+				}
+			)
+			output = sendRequest(request)
+
+		case "toggle":
+			request = CommandRequest(
+				manager, "toggle",
+				{
+				}
+			)
+			output = sendRequest(request)
+
+	print(output.output)
+	exit(output.code)
+
+
 def handle_notifications(args: argparse.Namespace):
 	manager = "notifications"
 	match args.notif_cmd:
