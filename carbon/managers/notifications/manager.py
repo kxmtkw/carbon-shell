@@ -45,6 +45,10 @@ class NotificationManager(BaseManager):
 		return {
 			"dnd": self.setDND
 		}
+
+
+	def end(self):
+		pass
 	
 
 	def getState(self) -> dict[str, Any]:

@@ -29,8 +29,7 @@ class NightLightManager(BaseManager):
         )
 
         self.hyprsunset = ProcessManager("hyprsunset", only_one=True)
-        self.hyprsunset.start("-g", self.state.gamma, "-t", self.state.temperature)
-
+        
 
     def handlers(self):
         return {
@@ -40,6 +39,10 @@ class NightLightManager(BaseManager):
             "set-temperature": self.setTemperature,
             "set-gamma": self.setGamma
         }
+
+
+    def end(self):
+        self.toggleNightlight(False)
     
 
     def getState(self) -> State:
@@ -48,6 +51,7 @@ class NightLightManager(BaseManager):
 
     def setState(self, state: State):
         self.toggleNightlight(state.toggled)
+        time.sleep(0.1)
         self.setTemperature(state.temperature)
         self.setGamma(state.gamma)
 
@@ -59,9 +63,23 @@ class NightLightManager(BaseManager):
         if self.state.toggled:
             if not self.hyprsunset.poll(0.1):
                 self.hyprsunset.start("-g", self.state.gamma, "-t", self.state.temperature)
+                logger.log(
+                    "nightlight",
+                    f"Turned on",
+                    logger.Level.info
+                )
+
             return "Nightlight turned on"
+        
         else:
-            self.hyprsunset.kill()
+            if self.hyprsunset.poll(0.1):
+                self.hyprsunset.kill()
+                logger.log(
+                    "nightlight",
+                    f"Turned off",
+                    logger.Level.info
+                )
+            
             return "Nightlight turned off"
 
 
@@ -107,4 +125,3 @@ class NightLightManager(BaseManager):
         )
         self.state.gamma = value
         return "Updated gamma."
-

@@ -106,6 +106,9 @@ class CarbonCore:
 		)
         self.quickshell.kill()
 
+        for manager in self.all_managers.values():
+            manager.end()
+
         self.server.close()
         self.state.save()
         self.is_running = False
