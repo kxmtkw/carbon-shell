@@ -85,6 +85,15 @@ def getParser() -> argparse.ArgumentParser:
 	sg = nl_sub.add_parser("set-gamma", help="Set gamma value")
 	sg.add_argument("value", type=float, metavar="GAMMA")
 
+	# ── idle ──────────────────────────────────────────────────────────────────
+	idle = sub.add_parser("idle", help="Control the idle manager")
+	idle_sub = idle.add_subparsers(dest="idle_cmd", metavar="ACTION")
+	idle_sub.required = True
+
+	idle_sub.add_parser("on", help="Enable the idle manager")
+	idle_sub.add_parser("off", help="Disable the idle manager")
+	idle_sub.add_parser("toggle", help="Toggle the idle manager")
+
 	# ── notifications ─────────────────────────────────────────────────────────
 	notif = sub.add_parser("notifications", help="Control notifications")
 	notif_sub = notif.add_subparsers(dest="notif_cmd", metavar="ACTION")

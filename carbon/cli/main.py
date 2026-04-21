@@ -3,6 +3,7 @@ from .handlers import (
 	handle_daemon,
 	handle_theme,
 	handle_nightlight,
+	handle_idle,
 	handle_notifications,
 	handle_controller,
 )
@@ -19,6 +20,8 @@ def main():
 			handle_theme(args)
 		case "nightlight":
 			handle_nightlight(args)
+		case "idle":
+			handle_idle(args)
 		case "notifications":
 			handle_notifications(args)
 		case "controller":

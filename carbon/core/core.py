@@ -15,6 +15,7 @@ from carbon.managers.theme import ThemeManager
 from carbon.managers.controller import ControllerManager
 from carbon.managers.notifications import NotificationManager
 from carbon.managers.nightlight import NightLightManager
+from carbon.managers.idle import IdleManager
 
 
 class CarbonCore:
@@ -36,12 +37,14 @@ class CarbonCore:
         self.theme_manager = ThemeManager()
         self.notification_manager = NotificationManager()
         self.nightlight_manager = NightLightManager()
+        self.idle_manager = IdleManager()
         self.controller_manager = ControllerManager(self.theme_manager)
 
         self.all_managers = {
             "theme":self.theme_manager,
             "controller":self.controller_manager,
             "nightlight":self.nightlight_manager,
+            "idle":self.idle_manager,
             "notification":self.notification_manager
         }
 
@@ -55,6 +58,7 @@ class CarbonCore:
             "theme": self.theme_manager.handlers(),
             "controller": self.controller_manager.handlers(),
             "nightlight": self.nightlight_manager.handlers(),
+            "idle": self.idle_manager.handlers(),
             "notifications": self.notification_manager.handlers()
         }
 
