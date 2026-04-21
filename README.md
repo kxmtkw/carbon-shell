@@ -55,6 +55,7 @@ carbon.shell theme switch-mode dark
 carbon.shell nightlight on
 carbon.shell nightlight set-temperature 5400
 carbon.shell notifications dnd on
+carbon.shell idle off
 ```
 
 Another script to change wallpaper and theme depending upon the time of the day.
@@ -110,6 +111,9 @@ Here is an example config:
     },
     "notification": {
         "do_not_disturb": false
+    },
+    "idle": {
+        "toggled": true
     }
 }
 ```
