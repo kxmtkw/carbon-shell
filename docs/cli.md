@@ -139,6 +139,22 @@ carbon.shell nightlight ACTION
 
 ---
 
+### `idle`
+
+Control the idle manager.
+
+```
+carbon.shell idle ACTION
+```
+
+| Action | Description |
+|--------|-------------|
+| `on` | Enable the idle manager |
+| `off` | Disable the idle manager |
+| `toggle` | Toggle the idle manager |
+
+---
+
 ### `notifications`
 
 Control notifications.
@@ -191,6 +207,9 @@ carbon.shell theme set-contrast 1.25
 # Enable nightlight at 3500K
 carbon.shell nightlight on
 carbon.shell nightlight set-temperature 3500
+
+# Toggle idle manager
+carbon.shell idle toggle
 
 # Enable DND
 carbon.shell notifications dnd on
