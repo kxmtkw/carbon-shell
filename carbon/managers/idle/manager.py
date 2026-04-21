@@ -49,24 +49,16 @@ class IdleManager(BaseManager):
 
             if not self.hypridle.poll(0.1):
                 self.hypridle.start()
-                msg = "Idle manager turned on."
-                changed = True
-            else:
-                msg = "Idle manager already on."
-                changed = False
+                logger.log("idle", "Idle manager turned on.", logger.Level.info)
+                Notify("Idle", "Idle manager turned on.")
 
+            return "Idle manager turned on."
+            
         else:
 
             if self.hypridle.poll(0.1):
                 self.hypridle.kill()
-                msg = "Idle manager turned off."
-                changed = True
-            else:
-                msg = "Idle manager already off."
-                changed = False
+                logger.log("idle", "Idle manager turned off.", logger.Level.info)
+                Notify("Idle", "Idle manager turned off.")
 
-        if changed:
-            Notify("Idle toggled", msg)
-            logger.log("idle", msg, logger.Level.info)
-            
-        return msg
+            return "Idle manager turned off."
