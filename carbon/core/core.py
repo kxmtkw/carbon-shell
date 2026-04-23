@@ -9,6 +9,7 @@ from carbon.utils import CarbonError, logger, Notify, shellrun, locked
 
 from carbon.state import StateManager
 from carbon.lib.quickshell import Quickshell
+from carbon.lib.dbus import DBus
 
 from carbon.managers.base import BaseManager
 from carbon.managers.theme import ThemeManager
@@ -25,6 +26,7 @@ class CarbonCore:
         logger.log("core", "Hello World!", logger.Level.info)
 
         self.server = Server(1)
+        self.dbus = DBus()
         self.state = StateManager("~/.carbon/user/state.json")
 
         self.lock = threading.Lock()
@@ -68,6 +70,12 @@ class CarbonCore:
             "idle": self.idle_manager.handlers(),
             "notifications": self.notification_manager.handlers()
         }
+
+
+        Notify.setNotificationFunction(self.dbus.notification_server.sendNotification)
+        
+        self.dbus.notification_server.setCallback(self.notification_manager.newNotification)
+        self.dbus.start()
 
 
         Notify(

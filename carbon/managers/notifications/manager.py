@@ -2,15 +2,12 @@ import asyncio
 from dataclasses import dataclass, replace
 from threading import Lock, Thread
 from typing import Any, Callable, Dict, Literal
-from dbus_next.service import ServiceInterface, method, signal
-from dbus_next.aio import MessageBus
-from dbus_next import Variant
 
+from carbon.lib.dbus import NotificationServer
 
 from carbon.lib.quickshell import Quickshell
 from carbon.managers.base import BaseManager
 
-from .server import NotificationServer, Notification
 from carbon.utils import locked, logger, CarbonError, Notify
 
 
@@ -26,20 +23,14 @@ class NotificationManager(BaseManager):
 
 	def __init__(self):
 		super().__init__()
-		self.server: NotificationServer
-		self.notifications: list[Notification] = []
-
-		self.daemon_thread = Thread(target=self.startServer, daemon=True)
-		self.daemon_thread.start()
+		self.notifications: list[NotificationServer.Notification] = []
 
 		self.quickshell = Quickshell()
 
 		self.state = NotificationManager.State(
 			do_not_disturb=False
-		)
+		)		
 
-		Notify.setNotificationFunction(self.sendNotification)
-		
 
 	def handlers(self) -> Dict[str, Callable]:
 		return {
@@ -59,33 +50,9 @@ class NotificationManager(BaseManager):
 		self.setDND(state= "on" if state.do_not_disturb else "off")
 	
 
-	def startServer(self):
-
-		# so sorry lol, could'nt find any dbus lib that didnt involve GObject.
-		# just a hack, probably won't fix it.
-		async def _server():
-
-			bus = await MessageBus().connect()
-
-			self.server = NotificationServer(self.newNotification)
-
-			bus.export('/org/freedesktop/Notifications', self.server)
-		
-			await bus.request_name('org.freedesktop.Notifications')
-		
-			logger.log(
-				"notification",
-				"DBUS notification server is now active.",
-				logger.Level.info
-			)
-
-			await bus.wait_for_disconnect()
-		
-		asyncio.run(_server())
-
-
 	@locked(notificationLock)
-	def newNotification(self, notif: Notification):
+	def newNotification(self, notif: NotificationServer.Notification):
+		"Set as callback to carbon.lib.dbus.notification's Notification Server"
 		
 		self.notifications.append(notif)
 
@@ -156,30 +123,3 @@ class NotificationManager(BaseManager):
 
 		return msg
 	
-
-	def sendNotification(
-		self,
-		summary: str, 
-		body: str, 
-		*,
-		timeout: int = 5000,
-		urgency: Literal["low", "normal", "critical"] = "normal"
-		) -> int:
-		"To send notifications to the server from inside the daemon. This will be wired to carbon.utils.notification's Notify later."
-
-		match urgency:
-			case "low": urgency = 0
-			case "normal": urgency = 1
-			case "critical": urgency = 2
-			case _: urgency = 1
-			
-		self.server.Notify(
-			"CarbonShell",
-			0,
-			"",
-			summary,
-			body,
-			[],
-			{"urgency": Variant("y", urgency)},
-			timeout
-		)
