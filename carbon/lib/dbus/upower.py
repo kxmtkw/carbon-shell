@@ -19,6 +19,7 @@ class UPower:
 
 	@dataclass(init=True, frozen=True)
 	class Info:
+		on_ac_only: bool
 		percentage: float
 		status: UPower.Status
 
@@ -72,6 +73,7 @@ class UPower:
 		pct = await self._props.call_get("org.freedesktop.UPower.Device", "Percentage")
 		state = await self._props.call_get("org.freedesktop.UPower.Device", "State")
 		self.info = UPower.Info(
+			on_ac_only=self._ac_system_detected,
 			percentage=pct.value,
 			status=self._state_map.get(state.value, UPower.Status.unknown)
 		)
@@ -89,7 +91,7 @@ class UPower:
 		state = changed["State"].value if "State" in changed else None
 		status = self._state_map.get(state, self.info.status) if state is not None else self.info.status
 
-		self.info = UPower.Info(percentage=pct, status=status)
+		self.info = UPower.Info(on_ac_only=self._ac_system_detected,percentage=pct, status=status)
 
 		if self._callback:
 			self._callback(self.info)
