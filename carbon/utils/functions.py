@@ -102,3 +102,13 @@ def prompt(msg: str, options: list[str]) -> str:
         return chosen 
     
     CarbonError("Too many retries").halt()
+
+
+def clamp(num: int | float, lower: int | float, upper: int | float) -> int | float:
+
+    if num < lower:
+        return lower
+    elif num > upper:
+        return upper
+    else:
+        return num
