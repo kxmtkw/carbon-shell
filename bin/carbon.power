@@ -3,54 +3,62 @@
 # Direct power actions utility.
 
 display_help() {
-    echo "Usage: [option]"
-    echo "  lock          : lock session (needs hyprlock)"
-    echo "  shutdown      : poweroff the system"
-    echo "  reboot        : restart the system"
-    echo "  suspend       : causes the system to sleep/suspend"
-    echo "  hibernate     : causes the system to hibernate"
-    echo "  logout        : logout user"
-    echo "  bios          : restart and enter bios"
-    echo "  help          : display this help message"
+	echo "Usage: [option]"
+	echo "  lock          : lock session (needs hyprlock)"
+	echo "  shutdown      : poweroff the system"
+	echo "  reboot        : restart the system"
+	echo "  suspend       : causes the system to sleep/suspend"
+	echo "  hibernate     : causes the system to hibernate"
+	echo "  logout        : logout user"
+	echo "  bios          : restart and enter bios"
+	echo "  help          : display this help message"
+}
+
+save() {
+	carbon.shell daemon save-state > /dev/null
 }
 
 if [ -z "$1" ]; then
-    display_help
-    exit 2
+	display_help
+	exit 2
 fi
 
-carbon.shell daemon save-state > /dev/null
 
 case "$1" in
-    "shutdown")
-        systemctl poweroff
-        ;;
-    "reboot")
-        systemctl reboot
-        ;;
-    "lock")
-        pidof hyprlock || hyprlock > /dev/null
-        notify-send -t 5000 "Welcome back, $(whoami)!" "Session unlocked."
-        ;;
-    "suspend")
-        carbon.power lock &
-        sleep 1
-        systemctl suspend
-        ;;
-    "hibernate")
-        carbon.power lock &
-        sleep 1
-        systemctl hibernate
-        ;;
-    "logout")
-        hyprctl dispatch exit
-        ;;
-    "bios")
-        systemctl reboot --firmware-setup
-        ;;
-    *)
-        echo "WRONG!"
-        display_help
-        exit 1
-        ;;
+	"shutdown")
+		save
+		systemctl poweroff
+		;;
+	"reboot")
+		save
+		systemctl reboot
+		;;
+	"lock")
+		save
+		pidof hyprlock || hyprlock > /dev/null
+		notify-send -t 5000 "Welcome back, $(whoami)!" "Session unlocked."
+		;;
+	"suspend")
+		carbon.power lock &
+		sleep 1
+		systemctl suspend
+		;;
+	"hibernate")
+		carbon.power lock &
+		sleep 1
+		systemctl hibernate
+		;;
+	"logout")
+		save
+		hyprctl dispatch exit
+		;;
+	"bios")
+		save
+		systemctl reboot --firmware-setup
+		;;
+	*)
+		echo "WRONG!"
+		display_help
+		exit 1
+		;;
 esac
