@@ -13,7 +13,7 @@ configuration
 window 
 {    
     transparency:                "real";
-    location:                    center;
+    location:                    south;
     anchor:                      center;
     fullscreen:                  false;
     width:                       600px;
