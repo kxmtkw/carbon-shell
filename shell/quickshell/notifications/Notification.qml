@@ -34,7 +34,7 @@ PanelWindow
 
 	anchors
 	{
-		bottom: true
+		top: true
 	}
 
 	margins
