@@ -11,6 +11,7 @@ class Launcher(BaseController):
 	
 	def launch(self):
 		self.rofi.display(
+			prompt="Launcher",
 			mode=RofiShell.Mode.drun
 		)
 		self.rofi.wait()

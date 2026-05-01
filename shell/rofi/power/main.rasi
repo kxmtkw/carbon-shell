@@ -22,13 +22,13 @@ window
     anchor:                      center;
     fullscreen:                  false;
     width:                       760px;
-    height:                      460px;
+    height:                      420px;
     x-offset:                    0px;
     y-offset:                    0px;
 
     /* properties for all widgets */
     enabled:                     true;
-    margin:                      0;
+    margin:                      10px;
     padding:                     0;
     border:                      @themeBorderWidth;
     border-color:                @surfaceContainerHighest;
@@ -45,22 +45,14 @@ mainbox
     margin:                      0px;
     border:                      0px solid;
     border-radius:               0%;
-    background-color:            transparent;
+    background-color:            @background;
     vertical-align:              0.5;
-    orientation:                 horizontal;
-    children:                    [ "imagebox", "listview" ];
-}
-
-imagebox {
-    spacing:                     0px;
-    padding:                     30px 40px;
-    background-color:            @backgroundTransparentxAA;
-    children:                    [ "inputbar", "dummy", "message" ];
+    orientation:                 vertical;
+    children:                    [ "inputbar", "message", "listview" ];
 }
 
 inputbar {
-    padding:                     15px;
-    border-radius:               16px;
+    padding:                     25px 15px 15px 15px;
     background-color:            @background;
     text-color:                  @onSurface;
     children:                    [ "dummy", "prompt", "dummy"];
@@ -77,11 +69,11 @@ prompt {
 
 message {
     enabled:                     true;
-    margin:                      0px;
-    padding:                     15px;
-    border-radius:               16px;
-    background-color:            @background;
-    text-color:                  @onSurface;
+    border-radius:               15px;
+    margin:                      10px 40px;
+    padding:                     16px;
+    background-color:            @primaryContainer;
+    text-color:                  @onPrimaryContainer;
 }
 
 textbox {
@@ -95,19 +87,20 @@ textbox {
 listview 
 {
     enabled:                     true;
-    columns:                     1;
-    lines:                       1;
+    columns:                     2;
+    lines:                       2;
     cycle:                       false;
     dynamic:                     true;
     scrollbar:                   false;
     layout:                      vertical;
     reverse:                     false;
     fixed-height:                true;
-    fixed-columns:               false;
+    fixed-columns:               true;
+    fixed-lines:                 true;
     
     spacing:                     10px;
     margin:                      0%;
-    padding:                     32px 40px;
+    padding:                     16px 40px;
     border:                      0px solid;
     border-radius:               0px;
     background-color:            @background;

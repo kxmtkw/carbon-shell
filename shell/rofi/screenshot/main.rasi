@@ -103,12 +103,12 @@ element normal.active {
     text-color:                  @onSurface;
 }
 element selected.normal {
-    background-color:            @surfaceContainer;
-    text-color:                  @onSurface;
+    background-color:            @primaryContainer;
+    text-color:                  @onPrimaryContainer;
 }
 element selected.active {
-    background-color:            @surfaceContainerHigh;
-    text-color:                  @onSurface;
+    background-color:            @primaryContainer;
+    text-color:                  @onPrimaryContainer;
 }
 element-icon {
     background-color:            transparent;
