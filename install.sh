@@ -1,3 +1,3 @@
 mkdir ~/.carbon
 cd ~/.carbon
-python3 ./installation/install.py
+python3 ~/.carbon/installation/install.py
