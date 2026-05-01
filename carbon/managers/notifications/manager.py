@@ -116,9 +116,9 @@ class NotificationManager(BaseManager):
 
 		if self.state.do_not_disturb:
 			self.state.do_not_disturb = dnd
-			self.sendNotification(summary, msg)
+			Notify(summary, msg)
 		else:
-			self.sendNotification(summary, msg)
+			Notify(summary, msg)
 			self.state.do_not_disturb = dnd
 
 		return msg
