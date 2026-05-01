@@ -36,9 +36,9 @@ message {
     enabled:                     true;
     margin:                      5px 30px;
     padding:                     20px 30px;
-    border-radius:               24px;
-    background-color:            @secondaryContainer;
-    text-color:                  @onSecondaryContainer;
+    border-radius:               20px;
+    background-color:            @primaryContainer;
+    text-color:                  @onPrimaryContainer;
 }
 
 textbox {

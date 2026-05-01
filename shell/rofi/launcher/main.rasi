@@ -57,11 +57,11 @@ mainbox
 
 inputbar {
     enabled:                     true;
-    margin:                      10px 10px;
+    margin:                      26px 40px 10px 40px;
     padding:                     12px 30px;
-    background-color:            @background;
-    text-color:                  @onSurface;
-    border-radius:               16px;
+    background-color:            @primaryContainer;
+    text-color:                  @onPrimaryContainer;
+    border-radius:               18px;
     orientation:                 horizontal;
     children:                    [ "prompt", "entry", "dummy"];
 }
@@ -70,7 +70,7 @@ prompt {
     padding:                     0;
     border-radius:               0px;
     background-color:            inherit;
-    text-color:                  @onSurface;
+    text-color:                  inherit;
     vertical-align:              0.5;
     horizontal-align:            0.0;
 }
@@ -79,7 +79,7 @@ entry {
     enabled:                     true;
     expand:                      false;
     width:                       620px;
-    padding:                     12px 16px;
+    padding:                     6px;
     border-radius:               16px;
     background-color:            inherit;
     text-color:                  inherit;
@@ -101,7 +101,7 @@ dummy {
 listbox 
 {
     spacing:                     10px;
-    padding:                     10px 30px 10px 30px;
+    padding:                     14px 30px 10px 30px;
     background-color:            @background;
     orientation:                 horizontal;
     children:                    [ "listview" ];

@@ -101,16 +101,16 @@ element selected.normal {
     text-color:                  @onSurface;
 }
 element normal.active {
-    background-color:            @secondary;
-    text-color:                  @onSecondary;
+    background-color:            @primaryContainer;
+    text-color:                  @onPrimaryContainer;
 }
 element alternate.active {
-    background-color:            @secondary;
-    text-color:                  @onSecondary;
+    background-color:            @primaryContainer;
+    text-color:                  @onPrimaryContainer;
 }
 element selected.active {
-    background-color:            @tertiary;
-    text-color:                  @onTertiary;
+    background-color:            @primary;
+    text-color:                  @onPrimary;
 }
 element-icon {
     background-color:            transparent;
