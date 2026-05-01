@@ -36,7 +36,6 @@ case "$1" in
 	"lock")
 		save
 		pidof hyprlock || hyprlock > /dev/null
-		notify-send -t 5000 "Welcome back, $(whoami)!" "Session unlocked."
 		;;
 	"suspend")
 		carbon.power lock &
