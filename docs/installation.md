@@ -9,18 +9,13 @@ If on `Arch Linux`, the installation script will handle all the packages.
 
 If you're on some other distribution or want to manually install packages, see [requirements](requirements.md).
 
-### Cloning
+### Getting Shell
 
 The shell can be installed by using this command:
 
 ``` bash
-git clone https://github.com/kxmtkw/carbon-shell.git ~/.carbon
-cd ~/.carbon
-python3 install.py
+curl -fsSL https://raw.githubusercontent.com/kxmtkw/carbon-shell/main/install.sh -o /tmp/install.sh && bash /tmp/install.sh
 ```
-
-> [!IMPORTANT]
-> The shell must be cloned at '~/.carbon' for it to work.
 
 What this script would do:
 + Install core packages
