@@ -65,6 +65,7 @@ class CarbonCore:
                 "end": self.shutdown,
                 "load-state": self.loadState,
                 "save-state": self.saveState,
+                "dump-state": self.dumpState,
                 "get-dispatch-map": self.getDispatchMap
             },
             "theme": self.theme_manager.handlers(),
@@ -198,6 +199,17 @@ class CarbonCore:
         logger.log("core", "Saved state.", logger.Level.info)
 
         return "State saved."
+    
+
+    def dumpState(self) -> str:
+        
+        for name, manager in self.all_managers.items():
+            self.state.update(
+                name,
+                dataclasses.asdict(manager.getState())
+            )
+
+        return self.state.dump()
     
     
     def getDispatchMap(self):

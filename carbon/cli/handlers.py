@@ -82,6 +82,16 @@ def handle_daemon(args: argparse.Namespace):
 			print(output.output)
 			exit(output.code)
 
+		case "dump-state":
+			request = CommandRequest(
+				manager, "dump-state",
+				{				
+				}
+			)
+			output = sendRequest(request)
+			print(output.output)
+			exit(output.code)
+
 		case "get-dispatch-map":
 			request = CommandRequest(
 				manager, "get-dispatch-map",

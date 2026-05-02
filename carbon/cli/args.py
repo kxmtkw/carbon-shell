@@ -26,6 +26,7 @@ def getParser() -> argparse.ArgumentParser:
 	daemon_sub.add_parser("end",        help="Ask daemon to shut down")
 	daemon_sub.add_parser("save-state", help="Persist current state to disk")
 	daemon_sub.add_parser("load-state", help="Load state from disk")
+	daemon_sub.add_parser("dump-state", help="Dump current state")
 	daemon_sub.add_parser("get-dispatch-map", help="Get internal dispatch map")
 
 	# ── theme ─────────────────────────────────────────────────────────────────
