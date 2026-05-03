@@ -50,7 +50,6 @@ class IdleManager(BaseManager):
             if not self.hypridle.poll(0.1):
                 self.hypridle.start()
                 logger.log("idle", "Idle manager turned on.", logger.Level.info)
-                Notify("Idle", "Idle manager turned on.")
 
             return "Idle manager turned on."
             
