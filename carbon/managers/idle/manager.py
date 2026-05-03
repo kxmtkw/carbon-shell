@@ -19,6 +19,7 @@ class IdleManager(BaseManager):
         )
 
         self.hypridle = ProcessManager("hypridle", only_one=True)
+        self.hypridle.start()
 
 
     def handlers(self):
