@@ -66,10 +66,21 @@ class Runner(BaseController):
 
 		if not selected: return
 
-		self.exec(selected)
+		self.parse(selected)
 
 
-	def exec(self, selected: str):
+	def parse(self, selected: str):
+		
+		modifier = selected[0]
+
+		match modifier:
+			case "$":
+				self.execShell(selected.removeprefix("$"))
+			case _:
+				self.execProc(selected)
+
+
+	def execProc(self, selected: str):
 
 		try:
 			cmd = shlex.split(selected)
@@ -89,7 +100,18 @@ class Runner(BaseController):
 		except PermissionError:
 			self.displayError(f"Permission Error: {cmd[0]}")
 
-			
+
+	def execShell(self, cmd: str):
+		
+		subprocess.Popen(
+			cmd,
+			shell=True,
+			stdout=subprocess.DEVNULL,
+			stderr=subprocess.DEVNULL,
+			stdin=subprocess.DEVNULL
+		)
+		
+
 	def close(self):
 		try:
 			self.rofi.close()
