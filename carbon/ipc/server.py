@@ -1,3 +1,4 @@
+from pathlib import Path
 import socket, threading, os, select, json
 from queue import Queue, Empty
 from dataclasses import asdict
@@ -18,8 +19,9 @@ class Server:
 
 		self.clients: dict[int, socket.socket] = {}
 
+		self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
 		try:
-			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 			self.socket.bind(Server.address)
 		except Exception as e:
 			msg = f"Could not start carbon server. Reason: {e.__class__.__name__}::{str(e)}"
