@@ -29,6 +29,7 @@ class NightLightManager(BaseManager):
         )
 
         self.hyprsunset = ProcessManager("hyprsunset", only_one=True)
+        self.hyprsunset.start("-g", self.state.gamma, "-t", self.state.temperature)
         
 
     def handlers(self):
