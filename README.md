@@ -9,23 +9,49 @@ A desktop UI shell designed for `Hyrpland` to be pretty and functional.
 + Panel & Notifications: `Quickshell`
 + Controllers/Menus: `Rofi`
 
+---
+
 https://github.com/user-attachments/assets/11d270ad-722d-4eb4-9711-97d661c764bc
 
-### Installation
+---
 
-`For installation, see:` [installation](docs/installation.md)
+### `Installation`
 
-### Features
+A guide on how to install Carbon Shell.
 
-`For features, see:` [features](docs/features.md)
+### 1) Dependancies
+
+If on `Arch Linux`, the installation script will handle all the packages. 
+
+If you're on some other distribution or want to manually install packages, see [requirements](docs/requirements.md).
+
+### 2) Getting Shell
+
+The shell can be installed by using this command:
+
+``` bash
+curl -fsSL https://raw.githubusercontent.com/kxmtkw/carbon-shell/main/install.sh -o /tmp/install.sh && bash /tmp/install.sh
+```
+
+What this script would do:
++ Install core packages
++ Install packages for essential apps (optional)
++ Install the shell
+
+### 3) Restart
+
+Then just restart hyprland and everything should work.
 
 
-### Bindings
+### `Features`
 
-`For keybinds, see:`  [bindings](docs/bindings.md)
+For features, see: [features](docs/features.md)
 
+### `Bindings`
 
-### Utilities
+For keybinds, see:  [bindings](docs/bindings.md)
+
+### `Utilities`
 
 Along with that some other utilies include:
 
@@ -36,8 +62,7 @@ carbon.audio       # For controlling audio
 carbon.power       # For shutting down, rebooting etc...
 ```
 
-
-### Configuration
+### `Configuration`
 
 The shell is supposed to be configured using the cli tool `carbon.shell`
 .
@@ -47,7 +72,7 @@ carbon.shell COMMAND ...
 ```
 `For a guide on how to use the tool, see:` [cli](docs/cli.md)
 
-#### Examples
+### Examples
 
 Here is an example script that allows you to focus on your work (or something like that).
 ```bash
@@ -79,7 +104,7 @@ while true; do
 done
 ```
 
-#### File Method
+### File Method
 
 If you prefer to use files as configuration, you can edit the json file in `~/.carbon/user/state.json`.
 
