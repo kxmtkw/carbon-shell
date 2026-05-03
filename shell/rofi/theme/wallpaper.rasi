@@ -14,11 +14,11 @@ configuration
 window 
 {    
     transparency:                "real";
-    location:                    center;
+    location:                    south;
     anchor:                      center;
     fullscreen:                  false;
     width:                       1620px;
-    height:                      400px;
+    height:                      420px;
     x-offset:                    0px;
     y-offset:                    0px;
 

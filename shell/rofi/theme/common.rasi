@@ -10,24 +10,22 @@ configuration
 
 
 
-window 
-{    
+window
+{
     transparency:                "real";
-    location:                    center;
+    location:                    south;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       540px;
+    width:                       660px;
     height:                      420px;
     x-offset:                    0px;
     y-offset:                    0px;
 
-    /* properties for all widgets */
     enabled:                     true;
     margin:                      10px;
-    padding:                     0;
     border:                      @themeBorderWidth;
     border-color:                @surfaceContainerHighest;
-    border-radius:               calc(540/20);
+    border-radius:               calc(640/32);
     cursor:                      "default";
-    background-color:            transparent;
+    background-color:            @background;
 }
