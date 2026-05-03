@@ -92,7 +92,8 @@ Here is an example config:
 
 ```json
 {
-    "theme": {
+    "theme": 
+    {
         "mode": "dark",
         "source": "wallpaper",
         "wallpaper": "~/.carbon/assets/default_wallpaper.jpg",
@@ -103,17 +104,30 @@ Here is an example config:
         "face": "~/.carbon/assets/default_face.jpg",
         "wallpaperAnimation": "center"
     },
-    "controller": {},
-    "nightlight": {
+    "controller": 
+    {
+
+    },
+    "nightlight": 
+    {
         "toggled": true,
         "temperature": 6000,
         "gamma": 100
     },
-    "notification": {
+    "idle": 
+    {
+        "toggled": true
+    },
+    "notification": 
+    {
         "do_not_disturb": false
     },
-    "idle": {
-        "toggled": true
+    "power": 
+    {
+        "full_threshold": 95,
+        "warning_threshold": 15,
+        "critical_threshold": 5,
+        "force_hibernate_threshold": 2
     }
 }
 ```
