@@ -22,22 +22,6 @@ What this script would do:
 + Install packages for essential apps (optional)
 + Install the shell
 
-### Environment
-
-Finally, add this line in your shell config. The file should be sourced by all shell instances.
-``` bash
-source ~/.carbon/env
-```
-
-The recomended shell config files are:
-
-+ `~/.zshenv` for zsh
-+ `~/.bashrc` for bash
-+ `~/.config/fish/config.fish` for fish
-
-> [!WARNING]
-> Sourcing unknown sh files is always dangerous, you should take a look inside the env file for reassurance
-
 ### Restart
 
 Then just restart hyprland and everything should work.
