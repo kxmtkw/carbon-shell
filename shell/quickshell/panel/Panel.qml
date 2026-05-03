@@ -63,11 +63,17 @@ PanelWindow
 
 		function hidden(): void
 		{
+			if (panel.panelMode === panel.modeHidden)
+				panel.setNormalMode()
+			else
 			panel.setHiddenMode()
 		}
 
 		function bypass(): void
 		{
+			if (panel.panelMode === panel.modeBypass)
+				panel.setNormalMode()
+			else
 			panel.setBypassMode()
 		}
 	}
