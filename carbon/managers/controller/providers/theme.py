@@ -75,8 +75,7 @@ class Theme(BaseController):
 
 		self.main_options[0] = f"{Icons.light}  Toggle light mode" if self.theme_state.mode == "dark" else f"{Icons.dark}  Toggle dark mode"
 
-		options = self.main_options.copy()
-		options[0] = RofiShell.markActive(options[0])
+		options = self.main_options
 		
 		self.rofi.display(
 			mode=RofiShell.Mode.dmenu,
