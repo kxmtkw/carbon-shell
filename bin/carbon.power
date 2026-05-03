@@ -18,6 +18,11 @@ save() {
 	carbon.shell daemon save-state > /dev/null
 }
 
+save_and_end() {
+	carbon.shell daemon save-state > /dev/null
+	carbon.shell daemon end > /dev/null
+}
+
 if [ -z "$1" ]; then
 	display_help
 	exit 2
@@ -26,11 +31,11 @@ fi
 
 case "$1" in
 	"shutdown")
-		save
+		save_and_end
 		systemctl poweroff
 		;;
 	"reboot")
-		save
+		save_and_end
 		systemctl reboot
 		;;
 	"lock")
@@ -48,12 +53,15 @@ case "$1" in
 		systemctl hibernate
 		;;
 	"logout")
-		save
+		save_and_end
 		hyprctl dispatch exit
 		;;
 	"bios")
-		save
+		save_and_end
 		systemctl reboot --firmware-setup
+		;;
+	"help")
+		display_help
 		;;
 	*)
 		echo "WRONG!"
