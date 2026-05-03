@@ -157,6 +157,11 @@ class CarbonCore:
             )
 
             if state is None: 
+                logger.log(
+                    "core",
+                    f"Loading default state for manager {manager.__class__.__name__}",
+                    logger.Level.debug
+                )
                 manager.setState(manager.state) # default state
                 continue
 
