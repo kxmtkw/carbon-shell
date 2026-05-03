@@ -1,16 +1,24 @@
 # Keybindings
 
-### General
+## System
 
 | Binding | Action |
 |---------|--------|
 | `Super + F9` | Exit Hyprland |
-| `Super + F12` | Reboot |
-| `Super + L` | Lock session |
-| `Super + T` | Open terminal (Alacritty) |
+| `Super + F10` | Power off |
+| `Super + F11` | Reboot |
+| `Super + F12` | Hibernate |
+| `Super + P` | Lock session |
+| `Super + X` | Open terminal (Alacritty) |
 
+## Panel
 
-### Layouts
+| Binding | Action |
+|---------|--------|
+| `Super + ↑` | Show panel |
+| `Super + ↓` | Hide panel |
+
+## Window and Layout
 
 | Binding | Action |
 |---------|--------|
@@ -18,76 +26,57 @@
 | `Super + B` | Toggle split |
 | `Super + N` | Swap split |
 | `Super + M` | Move to root |
+| `Super + K` | Kill window |
 | `Alt + Tab` | Cycle next window |
 | `Alt + Shift + Tab` | Cycle previous window |
-
-
-### Workspaces
-
-| Binding | Action |
-|---------|--------|
-| `Super + 1` | Previous workspace |
-| `Super + 2` | Next workspace |
-| `Super + 3` | Create new workspace (only if last is empty) |
-| `Super + Left` | Workspace -1 |
-| `Super + Right` | Workspace +1 |
-| `Super + Shift + 0–9` | Move window to workspace 1–10 (silent) |
-
-
-### Window Control
-
-| Binding | Action |
-|---------|--------|
 | `Super + LMB drag` | Move window |
 | `Super + RMB drag` | Resize window |
-| `Super + K` | Kill active window |
 
-
-### Controllers
-
-
-| Binding | Opens |
-|---------|-------|
-| `Super + Tab` | Window switcher |
-| `Super + Q` | App launcher |
-| `Super + W` | Network manager |
-| `Super + R` | Runner |
-| `Super + I` | Theme picker |
-| `Super + O` | Media player |
-| `Super + P` | Power menu |
-| `Super + A` | Clipboard |
-| `Super + S` | Screenshot tool |
-| `Super` (release) | Close controller |
-
-
-### Screenshot
+## Workspaces
 
 | Binding | Action |
 |---------|--------|
-| `Print` | Screenshot active output → `~/Pictures` |
-| `Super + Print` | Screenshot active window → `~/Pictures` |
-| `Super + Shift + Print` | Screenshot region → `~/Pictures` |
+| `Super + 1` / `Super + ←` | Previous workspace |
+| `Super + 2` / `Super + →` | Next workspace |
+| `Super + 3` | New workspace (if last is empty) |
+| `Super + Shift + 0–9` | Send window to workspace 1–10 |
 
+## Controllers
 
-### Media & Hardware Keys
+| Binding | Action |
+|---------|--------|
+| `Super + Tab` | Window switcher |
+| `Super + Q` | App launcher |
+| `Super + W` | Network |
+| `Super + R` | Runner |
+| `Super + T` | Theme |
+| `Super + O` | Media player |
+| `Super + A` | Clipboard |
+| `Super + S` | Screenshot |
+| `Super + D` | Power menu |
 
-| Key | Action |
-|-----|--------|
-| `XF86AudioRaiseVolume` | Volume +5 |
-| `XF86AudioLowerVolume` | Volume -5 |
-| `XF86AudioMute` | Toggle mute |
-| `XF86AudioMicMute` | Toggle mic |
-| `XF86MonBrightnessUp` | Brightness +10 |
-| `XF86MonBrightnessDown` | Brightness -10 |
-| `XF86AudioNext` | Next track |
-| `XF86AudioPrev` | Previous track |
-| `XF86AudioPlay/Pause` | Play/pause |
+## Screenshots
 
+| Binding | Action |
+|---------|--------|
+| `Print` | Active screen |
+| `Super + Print` | Active window |
+| `Super + Shift + Print` | Region select |
 
-### Gestures (3-finger)
+## Media & Brightness
+
+| Binding | Action |
+|---------|--------|
+| `Vol+` / `Vol-` | Volume up/down (+5/-5) |
+| `Mute` | Toggle mute |
+| `MicMute` | Toggle mic mute |
+| `Bri+` / `Bri-` | Brightness up/down (+10/-10) |
+| `Play` / `Pause` | Play/pause |
+| `Next` / `Prev` | Next/previous track |
+
+## Gestures (3-finger)
 
 | Gesture | Action |
 |---------|--------|
-| Horizontal swipe | Switch workspace |
-| Swipe down | Toggle fullscreen |
-| Swipe up | Toggle fullscreen |
+| Swipe horizontal | Switch workspace |
+| Swipe up / down | Toggle fullscreen |
