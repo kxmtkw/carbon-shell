@@ -15,11 +15,12 @@ display_help() {
 }
 
 save() {
+	carbon.shell controller close
 	carbon.shell daemon save-state > /dev/null
 }
 
 save_and_end() {
-	carbon.shell daemon save-state > /dev/null
+	save
 	carbon.shell daemon end > /dev/null
 }
 
