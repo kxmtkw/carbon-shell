@@ -11,12 +11,7 @@ class Screenshot(BaseController):
 	def __init__(self):
 		self.rofi = RofiShell("~/.carbon/shell/rofi/screenshot/main.rasi")
 
-		self.prompt = "Screenshot"
-
-		try:
-			self.save_dir = Path(sys.argv[1])
-		except IndexError:
-			self.save_dir = Path("~/Images").expanduser()
+		self.save_dir = Path("~/Pictures").expanduser()
 
 		self.options: list[str] = [
 			"  Screen",
