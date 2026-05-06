@@ -24,7 +24,6 @@ class Screenshot(BaseController):
 
 		self.rofi.display(
 			mode= RofiShell.Mode.dmenu,
-			prompt= self.prompt,
 			options= self.options
 		)
 
