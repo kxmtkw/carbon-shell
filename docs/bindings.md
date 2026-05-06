@@ -78,5 +78,6 @@
 
 | Gesture | Action |
 |---------|--------|
-| Swipe horizontal | Switch workspace |
-| Swipe up / down | Toggle fullscreen |
+| Swipe left / right | Switch workspace |
+| Swipe up / down | Toggle floating window |
+| Pinch | Toggle fullscreen |
