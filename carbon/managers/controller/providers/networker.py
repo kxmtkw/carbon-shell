@@ -23,12 +23,13 @@ class Networker(BaseController):
 		self.wifi_device: str = backend.getDefaultWifiDevice()
 		self.selected_network: str = ""
 
-		backend.listNetworks(None, True)
-
 		
 	def launch(self):
 		self.is_running = True
 		self.current = self.showWifiMenu
+
+		backend.listNetworks(None, True)
+
 		while self.is_running:
 			self.current()
 
@@ -64,7 +65,7 @@ class Networker(BaseController):
 			f"{Icons.settings}   Advanced Settings"
 		]
 
-		if nmcli.radio.wifi() or nmcli.radio.wwan():
+		if not nmcli.radio.wifi() or not nmcli.radio.wwan():
 			RofiShell.markActive(options[3])
 
 		self.rofi.display(
