@@ -167,20 +167,22 @@ class CarbonCore:
 
             try:
                 manager.setState(manager.State(**state))
-            except TypeError:
+            except TypeError as e:
+                msg = f"Corrupted state loaded for manager {name}: Does not match state structure. {str(e)}"
                 logger.log(
                     "core",
-                    f"Corrupted state loaded for manager {name}: Does not match state structure",
+                    msg,
                     logger.Level.warning
                 )
-                errors += f"Corrupted state loaded for manager {name}: Does not match state structure" + "\n"
+                errors += msg + "\n"
             except CarbonError as e:
+                msg = f"Corrupted state loaded for manager {name}: {e.msg}"
                 logger.log(
                     "core",
-                    f"Corrupted state loaded for manager {name}: {e.msg}",
+                    msg,
                     logger.Level.warning
                 )
-                errors += e.msg + "\n"
+                errors += msg + "\n"
                 continue
 
 

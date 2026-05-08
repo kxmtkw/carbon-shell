@@ -82,7 +82,7 @@ class ThemeManager(BaseManager):
 		)
 
 		if self.state.source != "wallpaper":
-			self.setWallpaper(state.wallpaper)
+			self.setWallpaper(img=state.wallpaper)
 
 		self.changeFont(font = state.font)
 		self.setFace(img = state.face)
