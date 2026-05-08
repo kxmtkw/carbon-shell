@@ -281,3 +281,4 @@ class CarbonCore:
 
         with self.lock:
             self.server.send(id, output)
+            self.saveState()
