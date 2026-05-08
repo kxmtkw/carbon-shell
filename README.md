@@ -10,7 +10,9 @@ A desktop UI shell designed for `Hyrpland` to be pretty and functional.
 + Controllers/Menus: `Rofi`
 
 ---
+
 https://github.com/user-attachments/assets/7c049d7c-49b4-412b-a11a-a3797e1d9e94
+
 ---
 
 ### `Installation`
