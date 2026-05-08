@@ -11,7 +11,7 @@ A desktop UI shell designed for `Hyrpland` to be pretty and functional.
 
 ---
 
-https://github.com/user-attachments/assets/11d270ad-722d-4eb4-9711-97d661c764bc
+https://github.com/user-attachments/assets/7c049d7c-49b4-412b-a11a-a3797e1d9e94
 
 ---
 
