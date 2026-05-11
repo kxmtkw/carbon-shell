@@ -47,19 +47,25 @@ class PanelManager(BaseManager):
 
     def setMode(self, mode: Literal["show", "hide", "bypass"]):
         
+        if self.state.mode == mode:
+            return f"Panel already in {mode} mode."
+        
         if mode == "show":
             self.state.mode = mode
             self.qs.setPanelMode("normal")
+            logger.log("panel", "Panel mode set to show.", logger.Level.info)
             return "Panel shown."
         
         elif mode == "hide":
             self.state.mode = mode
             self.qs.setPanelMode("hidden")
+            logger.log("panel", "Panel mode set to hide.", logger.Level.info)
             return "Panel hidden."
         
         elif mode == "bypass":
             self.state.mode = mode
             self.qs.setPanelMode("bypass")
+            logger.log("panel", "Panel mode set to bypass.", logger.Level.info)
             return "Panel bypassing."
 
         else:
