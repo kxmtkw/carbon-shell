@@ -113,4 +113,12 @@ def getParser() -> argparse.ArgumentParser:
 
 	ctrl_sub.add_parser("close", help="Close the active controller")
 
+	# ── panel ─────────────────────────────────────────────────────────
+	panel = sub.add_parser("panel", help="Control the panel")
+	panel_sub = panel.add_subparsers(dest="panel_cmd", metavar="ACTION")
+	panel_sub.required = True
+
+	set_mode = panel_sub.add_parser("set-mode", help="Set the panel mode")
+	set_mode.add_argument("mode", choices=["show", "hide", "bypass"])
+
 	return parser

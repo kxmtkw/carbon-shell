@@ -18,6 +18,7 @@ from carbon.managers.notifications import NotificationManager
 from carbon.managers.nightlight import NightLightManager
 from carbon.managers.idle import IdleManager
 from carbon.managers.power import PowerManager
+from carbon.managers.panel import PanelManager
 
 
 class CarbonCore:
@@ -49,7 +50,8 @@ class CarbonCore:
         self.nightlight_manager = NightLightManager()
         self.idle_manager = IdleManager()
         self.power_manager = PowerManager()
-        self.controller_manager = ControllerManager(self.theme_manager)
+        self.panel_manager = PanelManager()
+        self.controller_manager = ControllerManager(self.theme_manager, self.panel_manager)
 
         self.all_managers = {
             "theme":self.theme_manager,
@@ -57,7 +59,8 @@ class CarbonCore:
             "nightlight":self.nightlight_manager,
             "idle":self.idle_manager,
             "notification":self.notification_manager,
-            "power":self.power_manager
+            "power":self.power_manager,
+            "panel":self.panel_manager
         }
 
         self.dispatch_map = {
@@ -72,7 +75,8 @@ class CarbonCore:
             "controller": self.controller_manager.handlers(),
             "nightlight": self.nightlight_manager.handlers(),
             "idle": self.idle_manager.handlers(),
-            "notifications": self.notification_manager.handlers()
+            "notifications": self.notification_manager.handlers(),
+            "panel": self.panel_manager.handlers()
         }
 
 

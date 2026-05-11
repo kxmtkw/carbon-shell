@@ -6,6 +6,7 @@ from .handlers import (
 	handle_idle,
 	handle_notifications,
 	handle_controller,
+	handle_panel
 )
 
 
@@ -26,6 +27,8 @@ def main():
 			handle_notifications(args)
 		case "controller":
 			handle_controller(args)
+		case "panel":
+			handle_panel(args)
 		case _:
 			parser.print_help()
 
