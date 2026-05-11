@@ -4,6 +4,8 @@ from threading import Lock
 
 from carbon.managers.base import BaseManager
 from carbon.managers.theme import ThemeManager
+from carbon.managers.panel import PanelManager
+
 from carbon.utils import CarbonError, procrun, isValidHex, logger
 
 from carbon.lib.quickshell import Quickshell
@@ -26,11 +28,13 @@ class ControllerManager(BaseManager):
     class State(BaseManager.State):
         pass
 
-    def __init__(self, themer: ThemeManager):
+    def __init__(self, themer: ThemeManager, panel: PanelManager):
         super().__init__()
         self.lock = Lock()
         self.qs = Quickshell()
         self.panel_should_return_normal: bool = True
+        self.panel_should_return_to_mode = "show"
+        self.panel_manager = panel
 
         self.current_controller: BaseController | None = None
 
@@ -78,6 +82,8 @@ class ControllerManager(BaseManager):
 
     def run(self, *, name: str) -> str:
 
+        panel_mode = self.panel_manager.getState().mode
+
         # get controller
         controller: BaseController = self.controllers.get(name)
         if not controller:
@@ -110,9 +116,10 @@ class ControllerManager(BaseManager):
         with self.lock:
             
             self.current_controller = controller
-
-            self.qs.setPanelMode("bypass")
-            self.panel_should_return_normal = True
+            
+            if panel_mode != "bypass":
+                self.panel_manager.setMode("bypass")
+                self.panel_should_return_normal = True
 
             try:
                 controller.launch()
@@ -123,7 +130,7 @@ class ControllerManager(BaseManager):
             self.current_controller = None
 
             if self.panel_should_return_normal:
-                self.qs.setPanelMode("normal")
+                self.panel_manager.setMode(panel_mode)
         
             
         logger.log(

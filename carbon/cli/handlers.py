@@ -325,3 +325,21 @@ def handle_controller(args: argparse.Namespace):
 
 	print(output.output)
 	exit(output.code)
+
+
+def handle_panel(args: argparse.Namespace):
+	manager = "panel"
+
+	match args.panel_cmd:
+
+		case "set-mode":
+			request = CommandRequest(
+				manager, "set-mode",
+				{
+					"mode": args.mode					
+				}
+			)
+			output = sendRequest(request)
+
+	print(output.output)
+	exit(output.code)
