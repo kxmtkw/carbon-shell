@@ -25,7 +25,7 @@ class ThemeManager(BaseManager):
 		contrast: float | int
 		font: str
 		face: str
-		wallpaperAnimation: Literal["wipe", "left", "right", "top", "bottom", "outer", "center", "any", "fade", "random"]
+		wallpaper_animation: Literal["wipe", "left", "right", "top", "bottom", "outer", "center", "any", "fade", "random"]
 
 
 	def __init__(self):
@@ -45,7 +45,7 @@ class ThemeManager(BaseManager):
 			contrast=0.5,
 			font="Iosevka",
 			face="~/.carbon/assets/default_face.jpg",
-			wallpaperAnimation="center"
+			wallpaper_animation="center"
 		)
 
 		super().__init__()
@@ -60,7 +60,7 @@ class ThemeManager(BaseManager):
 			"toggle-mode": self.toggleMode,
 			"change-font": self.changeFont,
 			"set-face": self.setFace,
-			"set-wallpaper-animation": self.setWallpaperAnimation
+			"set-wallpaper-animation": self.setWallpaper_animation
 		}
 
 
@@ -70,7 +70,7 @@ class ThemeManager(BaseManager):
 
 	def setState(self, state: State):
 
-		self.setWallpaperAnimation(style = state.wallpaperAnimation)
+		self.setWallpaper_animation(style = state.wallpaper_animation)
 
 		self.updateTheme(
 			mode     = state.mode,
@@ -100,7 +100,7 @@ class ThemeManager(BaseManager):
 	
 
 	def _setWallpaper_nolock(self, *, img: str) -> str:
-		self.updater.updateWallpaper(img, self.state.wallpaperAnimation)
+		self.updater.updateWallpaper(img, self.state.wallpaper_animation)
 		self.state.wallpaper = img
 		logger.log(
 				"theme",
@@ -268,7 +268,7 @@ class ThemeManager(BaseManager):
 	
 
 	@locked(themeLock)
-	def setWallpaperAnimation(self, *, style: str):
+	def setWallpaper_animation(self, *, style: str):
 		
 		if not hasattr(self, "wallpaper_animation_styles"):
 			self.wallpaper_animation_styles = ("wipe", "left", "right", "top", "bottom", "outer", "center", "any", "fade", "random")
@@ -276,7 +276,7 @@ class ThemeManager(BaseManager):
 		if style not in self.wallpaper_animation_styles:
 			raise CarbonError(f"Invalid style. Allowed styles include:\n{self.wallpaper_animation_styles}")
 		
-		self.state.wallpaperAnimation = style
+		self.state.wallpaper_animation = style
 
 		logger.log(
 			"theme",
