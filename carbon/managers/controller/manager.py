@@ -1,6 +1,7 @@
 
 from dataclasses import dataclass
 from threading import Lock
+import time
 
 from carbon.managers.base import BaseManager
 from carbon.managers.theme import ThemeManager
@@ -82,8 +83,6 @@ class ControllerManager(BaseManager):
 
     def run(self, *, name: str) -> str:
 
-        panel_mode = self.panel_manager.getState().mode
-
         # get controller
         controller: BaseController = self.controllers.get(name)
         if not controller:
@@ -110,16 +109,16 @@ class ControllerManager(BaseManager):
         if self.current_controller:
             self.panel_should_return_normal = False
             self.current_controller.close()
-            self.current_controller = None
         
-
         with self.lock:
             
             self.current_controller = controller
             
+            panel_mode = self.panel_manager.getState().mode
+            self.panel_manager.setMode("bypass")
+            self.panel_should_return_normal = True
             if panel_mode != "bypass":
-                self.panel_manager.setMode("bypass")
-                self.panel_should_return_normal = True
+                self.panel_should_return_to_mode = panel_mode
 
             try:
                 controller.launch()
@@ -130,7 +129,7 @@ class ControllerManager(BaseManager):
             self.current_controller = None
 
             if self.panel_should_return_normal:
-                self.panel_manager.setMode(panel_mode)
+                self.panel_manager.setMode(self.panel_should_return_to_mode)
         
             
         logger.log(
