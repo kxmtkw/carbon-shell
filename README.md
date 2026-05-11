@@ -127,7 +127,7 @@ Here is an example config:
         "contrast": 0.5,
         "font": "Iosevka",
         "face": "~/.carbon/assets/default_face.jpg",
-        "wallpaperAnimation": "center"
+        "wallpaper_animation": "center"
     },
     "controller": 
     {
@@ -153,6 +153,9 @@ Here is an example config:
         "warning_threshold": 15,
         "critical_threshold": 5,
         "force_hibernate_threshold": 2
+    },
+    "panel": {
+        "mode": "show"
     }
 }
 ```
