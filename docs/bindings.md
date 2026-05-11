@@ -81,3 +81,9 @@
 | Swipe left / right | Switch workspace |
 | Swipe up / down | Toggle floating window |
 | Pinch | Toggle fullscreen |
+
+## Gestures (4-finger)
+
+| Gesture | Action |
+|---------|--------|
+| Swipe up / down | Show / Hide Panel |
