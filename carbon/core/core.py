@@ -116,6 +116,8 @@ class CarbonCore:
         if not self.is_running: 
             return "This call shouldn't have been possible."
 
+        self.saveState()
+
         logger.log(
 			"core",
 			"Killing quickshell.",
@@ -123,13 +125,13 @@ class CarbonCore:
 		)
         self.quickshell.kill()
 
+        self.is_running = False
+        self.thread_pool.shutdown(False, cancel_futures=True)
+
         for manager in self.all_managers.values():
             manager.end()
 
         self.server.close()
-        self.state.save()
-        self.is_running = False
-        self.thread_pool.shutdown(False, cancel_futures=True)
 
         logger.log("core", "Shutting down.", logger.Level.info)
 
@@ -256,10 +258,10 @@ class CarbonCore:
                 return
 
         logger.log("core", f"Executing {command.manager}::{command.handler} with arguments: {command.args}", logger.Level.debug)
-        self.thread_pool.submit(self.worker, id, handler, command.args)
+        self.thread_pool.submit(self.worker, id, handler, command.args, save_state=True if command.manager != "daemon" else False)
 
 
-    def worker(self, id: int, func, args):
+    def worker(self, id: int, func, args, *, save_state=True):
 
         try:
             response = func(**args)
@@ -285,4 +287,5 @@ class CarbonCore:
 
         with self.lock:
             self.server.send(id, output)
-            self.saveState()
+            if save_state:
+                self.saveState()
