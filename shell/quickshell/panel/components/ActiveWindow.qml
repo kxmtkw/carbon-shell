@@ -34,21 +34,43 @@ WrapperRectangle
 		}
 	}
 
-
-	Text 
+	Process
     {
-		id:    panel_activeWindow_text
+        id: panel_activeWindow_process
+        running: false
+        command: ["carbon.shell", "controller", "run", "windows"]
+    }
+
+	MouseArea 
+    {
 		anchors.fill: parent
-		color: Theme.Color._onSurface
-		text:  activeWindowString
+        
+		hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
 
-		horizontalAlignment: Text.AlignLeft
-		verticalAlignment: Text.AlignVCenter
 
-		font.family:    Theme.Style.font
-		font.pixelSize: 16
-		font.weight:    Font.Medium
+		onClicked: {
+			panel_activeWindow_process.running = true
+		}
+		
+		Text 
+		{
+			id:    panel_activeWindow_text
+			anchors.fill: parent
+			color: Theme.Color._onSurface
+			text:  activeWindowString
 
-        elide: Text.ElideRight
+			horizontalAlignment: Text.AlignLeft
+			verticalAlignment: Text.AlignVCenter
+
+			font.family:    Theme.Style.font
+			font.pixelSize: 16
+			font.weight:    Font.Medium
+
+			elide: Text.ElideRight
+		}
+
 	}
+
+
 }
