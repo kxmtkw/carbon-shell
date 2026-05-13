@@ -18,8 +18,17 @@ class Runner(BaseController):
 		self.binaries: list[str] = []
 
 		self.loadBinaries()
-	
 
+		self.specials: dict[str, str] = {
+			"@terminal": os.environ.get("TERMINAL", "alacritty"),
+			"@editor": os.environ.get("EDITOR", "alacritty -e nano"),
+			"@browser": os.environ.get("BROWSER", "firefox"),
+			"@files": os.environ.get("FILES", "dolphin"),
+			"@music": os.environ.get("MUSIC", "spotify"),
+		}
+
+		self.binaries.extend(self.specials.keys())
+	
 	def loadBinaries(self) -> set[str]:
 
 		path = os.environ["PATH"]
@@ -76,6 +85,11 @@ class Runner(BaseController):
 		match modifier:
 			case "$":
 				self.execShell(selected.removeprefix("$"))
+			case "@":
+				if selected in self.specials:
+					self.execSpecial(selected)
+				else:
+					self.displayError(f"Unknown Special: {selected}")
 			case _:
 				self.execProc(selected)
 
@@ -98,7 +112,7 @@ class Runner(BaseController):
 		except FileNotFoundError:
 			self.displayError(f"File Not Found: {cmd[0]}")
 		except PermissionError:
-			self.displayError(f"Permission Error: {cmd[0]}")
+			self.displayError(f"Permission Denied: {cmd[0]}")
 
 
 	def execShell(self, cmd: str):
@@ -111,6 +125,16 @@ class Runner(BaseController):
 			stdin=subprocess.DEVNULL
 		)
 		
+
+	def execSpecial(self, cmd: str):
+		
+		if cmd not in self.specials:
+			self.displayError(f"Unknown Special: {cmd}")
+			return
+		
+		target = self.specials[cmd]
+		self.execProc(target)
+
 
 	def close(self):
 		try:
