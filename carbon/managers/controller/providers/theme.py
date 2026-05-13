@@ -36,6 +36,10 @@ class Theme(BaseController):
 		]
 
 
+	def reload(self):
+		return super().reload()
+	
+
 	def loadWallpapers(self):
 		self.wallpapers = Utils.getWallpapers(
 			["~/Pictures/Wallpapers"]

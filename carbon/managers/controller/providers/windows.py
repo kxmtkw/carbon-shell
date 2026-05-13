@@ -9,6 +9,9 @@ class Windows(BaseController):
 		self.rasi = "~/.carbon/shell/rofi/windows/main.rasi"
 		self.rofi = RofiShell(self.rasi)
 	
+	def reload(self):
+		return super().reload()
+	
 	def launch(self):
 		self.rofi.display(
 			mode=RofiShell.Mode.window

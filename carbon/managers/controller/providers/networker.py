@@ -23,7 +23,11 @@ class Networker(BaseController):
 		self.wifi_device: str = backend.getDefaultWifiDevice()
 		self.selected_network: str = ""
 
-		
+
+	def reload(self):
+		backend.listNetworks(None, True)
+
+
 	def launch(self):
 		self.is_running = True
 		self.current = self.showWifiMenu
