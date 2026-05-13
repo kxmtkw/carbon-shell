@@ -86,10 +86,7 @@ class Runner(BaseController):
 			case "$":
 				self.execShell(selected.removeprefix("$"))
 			case "@":
-				if selected in self.specials:
-					self.execSpecial(selected)
-				else:
-					self.displayError(f"Unknown Special: {selected}")
+				self.execSpecial(selected)
 			case _:
 				self.execProc(selected)
 
