@@ -39,30 +39,11 @@ WrapperRectangle
 		hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
 
-        Text 
-        {
-            id:               panel_launcher_icon
-            anchors.centerIn: parent
-            
-            text: "󰌽"
-
-            font.family:    Theme.Style.font
-            font.pixelSize: 22
-            color:          Theme.Color._onSurface
-        }
-
 
 		onClicked: {
 			panel_launcher_process.running = true
 		}
 		
-		onEntered: {
-			parent.color = Theme.Color._surfaceContainer
-		}
-
-		onExited: {
-			parent.color = Theme.Color._invisible
-		}
 
 	}
 

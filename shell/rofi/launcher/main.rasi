@@ -27,11 +27,11 @@ configuration
 window
 {
     transparency:                "real";
-    location:                    southwest;
-    anchor:                      center;
+    location:                    south;
+    anchor:                      south;
     fullscreen:                  false;
-    width:                       660px;
-    height:                      900px;
+    width:                       900px;
+    height:                      700px;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -51,13 +51,12 @@ mainbox
     padding:                     0% 0%;
     background-color:            transparent;
     orientation:                 vertical;
-    children:                    [ "inputbar", "listbox"];
+    children:                    [ "listbox", "inputbar"];
 }
-
 
 inputbar {
     enabled:                     true;
-    margin:                      26px 40px 10px 40px;
+    margin:                      10px 40px 30px 40px;
     padding:                     12px 30px;
     background-color:            @primaryContainer;
     text-color:                  @onPrimaryContainer;
@@ -101,7 +100,7 @@ dummy {
 listbox 
 {
     spacing:                     10px;
-    padding:                     14px 30px 10px 30px;
+    padding:                     30px 30px 10px 30px;
     background-color:            @background;
     orientation:                 horizontal;
     children:                    [ "listview" ];
@@ -116,7 +115,7 @@ listview
     dynamic:                     true;
     scrollbar:                   false;
     layout:                      vertical;
-    reverse:                     false;
+    reverse:                     true;
     fixed-height:                true;
     fixed-columns:               true;
     
