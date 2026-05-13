@@ -29,6 +29,12 @@ class Runner(BaseController):
 
 		self.binaries.extend(self.specials.keys())
 	
+	
+	def reload(self):
+		self.loadBinaries()
+		self.binaries.extend(self.specials.keys())
+
+
 	def loadBinaries(self) -> set[str]:
 
 		path = os.environ["PATH"]

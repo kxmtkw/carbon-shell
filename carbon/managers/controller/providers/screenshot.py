@@ -19,6 +19,8 @@ class Screenshot(BaseController):
 			"󰿦  Region"
 		]
 
+	def reload(self):
+		return super().reload()
 
 	def launch(self):
 
