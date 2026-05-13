@@ -86,20 +86,20 @@ PanelWindow
 		radius: Theme.Style.getMaterialRadius(width, height, "large")
 
 		margin:       10
-		leftMargin:   14
-		rightMargin:  14
+		leftMargin:   16
+		rightMargin:  16
 
 		RowLayout 
         {
 			spacing:         10
 
-			Launcher{}
-
 			Workspaces{}	
 			ActiveWindow{}
-			
-			Item {Layout.fillWidth: true}
 
+			Launcher{
+				Layout.fillWidth: true
+			}
+			
 			RowLayout
 			{
 				spacing: 5
