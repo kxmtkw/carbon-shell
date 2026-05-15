@@ -19,273 +19,278 @@ from carbon.managers.nightlight import NightLightManager
 from carbon.managers.idle import IdleManager
 from carbon.managers.power import PowerManager
 from carbon.managers.panel import PanelManager
+from carbon.managers.lock import LockScreenManager
 
 
 class CarbonCore:
 
-    def __init__(self):
+	def __init__(self):
 
-        logger.log("core", "Hello World!", logger.Level.info)
+		logger.log("core", "Hello World!", logger.Level.info)
 
-        self.server = Server(1)
-        self.dbus = DBus()
-        self.state = StateManager("~/.carbon/user/state.json")
+		self.server = Server(1)
+		self.dbus = DBus()
+		self.state = StateManager("~/.carbon/user/state.json")
 
-        self.lock = threading.Lock()
-        self.thread_pool = ThreadPoolExecutor(5)
-        self.is_running = True
-
-
-    def init(self):
-        
-        self.quickshell = Quickshell()
-        try:
-            self.quickshell.start()
-        except Quickshell.Error as e:
-            logger.log("core", f"Quickshell could not be started. Reason: {e.msg}", logger.Level.warning)
+		self.lock = threading.Lock()
+		self.thread_pool = ThreadPoolExecutor(5)
+		self.is_running = True
 
 
-        self.theme_manager = ThemeManager()
-        self.notification_manager = NotificationManager()
-        self.nightlight_manager = NightLightManager()
-        self.idle_manager = IdleManager()
-        self.power_manager = PowerManager()
-        self.panel_manager = PanelManager()
-        self.controller_manager = ControllerManager(self.theme_manager, self.panel_manager)
-
-        self.all_managers = {
-            "theme":self.theme_manager,
-            "controller":self.controller_manager,
-            "nightlight":self.nightlight_manager,
-            "idle":self.idle_manager,
-            "notification":self.notification_manager,
-            "power":self.power_manager,
-            "panel":self.panel_manager
-        }
-
-        self.dispatch_map = {
-            "daemon": {
-                "end": self.shutdown,
-                "load-state": self.loadState,
-                "save-state": self.saveState,
-                "dump-state": self.dumpState,
-                "get-dispatch-map": self.getDispatchMap
-            },
-            "theme": self.theme_manager.handlers(),
-            "controller": self.controller_manager.handlers(),
-            "nightlight": self.nightlight_manager.handlers(),
-            "idle": self.idle_manager.handlers(),
-            "notifications": self.notification_manager.handlers(),
-            "panel": self.panel_manager.handlers()
-        }
+	def init(self):
+		
+		self.quickshell = Quickshell()
+		try:
+			self.quickshell.start()
+		except Quickshell.Error as e:
+			logger.log("core", f"Quickshell could not be started. Reason: {e.msg}", logger.Level.warning)
 
 
-        Notify.setNotificationFunction(self.dbus.notification_server.sendNotification)
+		self.theme_manager = ThemeManager()
+		self.notification_manager = NotificationManager()
+		self.nightlight_manager = NightLightManager()
+		self.idle_manager = IdleManager()
+		self.power_manager = PowerManager()
+		self.panel_manager = PanelManager()
+		self.lockscreen_manager = LockScreenManager()
+		self.controller_manager = ControllerManager(self.theme_manager, self.panel_manager)
+	   
 
-        self.dbus.notification_server.setCallback(self.notification_manager.newNotification)
-        self.dbus.upower.setCallback(self.power_manager.UPowerCallback)
-        self.dbus.start()
+		self.all_managers = {
+			"theme":self.theme_manager,
+			"controller":self.controller_manager,
+			"nightlight":self.nightlight_manager,
+			"idle":self.idle_manager,
+			"notification":self.notification_manager,
+			"power":self.power_manager,
+			"panel":self.panel_manager,
+			"lockscreen":self.lockscreen_manager
+		}
+
+		self.dispatch_map = {
+			"daemon": {
+				"end": self.shutdown,
+				"load-state": self.loadState,
+				"save-state": self.saveState,
+				"dump-state": self.dumpState,
+				"get-dispatch-map": self.getDispatchMap
+			},
+			"theme": self.theme_manager.handlers(),
+			"controller": self.controller_manager.handlers(),
+			"nightlight": self.nightlight_manager.handlers(),
+			"idle": self.idle_manager.handlers(),
+			"notifications": self.notification_manager.handlers(),
+			"panel": self.panel_manager.handlers(),
+			"lockscreen": self.lockscreen_manager.handlers()
+		}
 
 
-        Notify(
-            "Hello World!",
-            f"Logged in as: {shellrun("whoami")[1].strip()}",
-            timeout=5000
-        )
-        
-        try:
-            self.loadState()
-        except CarbonError as e:
-            Notify(
-                "State not loaded.",
-                e.msg,
-                urgency="critical"
-            )
+		Notify.setNotificationFunction(self.dbus.notification_server.sendNotification)
+
+		self.dbus.notification_server.setCallback(self.notification_manager.newNotification)
+		self.dbus.upower.setCallback(self.power_manager.UPowerCallback)
+		self.dbus.start()
 
 
-    def run(self):
+		Notify(
+			"Hello World!",
+			f"Logged in as: {shellrun("whoami")[1].strip()}",
+			timeout=5000
+		)
+		
+		try:
+			self.loadState()
+		except CarbonError as e:
+			Notify(
+				"State not loaded.",
+				e.msg,
+				urgency="critical"
+			)
 
-        while self.is_running:
-            payload = self.server.listen()
-            if payload is None: continue
-            self.dispatch(*payload)
+
+	def run(self):
+
+		while self.is_running:
+			payload = self.server.listen()
+			if payload is None: continue
+			self.dispatch(*payload)
 
 
-    def shutdown(self) -> str:
+	def shutdown(self) -> str:
 
-        if not self.is_running: 
-            return "This call shouldn't have been possible."
+		if not self.is_running: 
+			return "This call shouldn't have been possible."
 
-        self.saveState()
+		self.saveState()
 
-        logger.log(
+		logger.log(
 			"core",
 			"Killing quickshell.",
 			logger.Level.debug
 		)
-        self.quickshell.kill()
+		self.quickshell.kill()
 
-        self.is_running = False
-        self.thread_pool.shutdown(False, cancel_futures=True)
+		self.is_running = False
+		self.thread_pool.shutdown(False, cancel_futures=True)
 
-        for manager in self.all_managers.values():
-            manager.end()
+		for manager in self.all_managers.values():
+			manager.end()
 
-        self.server.close()
+		self.server.close()
 
-        logger.log("core", "Shutting down.", logger.Level.info)
+		logger.log("core", "Shutting down.", logger.Level.info)
 
-        return "Shutting down."
-    
+		return "Shutting down."
+	
 
-    def loadState(self) -> str:
+	def loadState(self) -> str:
 
-        errors = ""
-        
-        if not self.state.load():
-            msg = f"Corrupted state file. Invalid Json: {self.state.file}."
+		errors = ""
+		
+		if not self.state.load():
+			msg = f"Corrupted state file. Invalid Json: {self.state.file}."
 
-            logger.log(
-                "core",
-                msg,
-                logger.Level.warning
-            )  
-            errors += msg
-                
+			logger.log(
+				"core",
+				msg,
+				logger.Level.warning
+			)  
+			errors += msg
+				
 
-        for name, manager in self.all_managers.items():
-            state = self.state.get(name)
+		for name, manager in self.all_managers.items():
+			state = self.state.get(name)
 
-            logger.log(
-                "core",
-                f"Loading state for manager {manager.__class__.__name__}",
-                logger.Level.debug
-            )
+			logger.log(
+				"core",
+				f"Loading state for manager {manager.__class__.__name__}",
+				logger.Level.debug
+			)
 
-            if state is None: 
-                logger.log(
-                    "core",
-                    f"Loading default state for manager {manager.__class__.__name__}",
-                    logger.Level.debug
-                )
-                manager.setState(manager.state) # default state
-                continue
+			if state is None: 
+				logger.log(
+					"core",
+					f"Loading default state for manager {manager.__class__.__name__}",
+					logger.Level.debug
+				)
+				manager.setState(manager.state) # default state
+				continue
 
-            try:
-                manager.setState(manager.State(**state))
-            except TypeError as e:
-                msg = f"Corrupted state loaded for manager {name}: Does not match state structure. {str(e)}"
-                logger.log(
-                    "core",
-                    msg,
-                    logger.Level.warning
-                )
-                errors += msg + "\n"
-            except CarbonError as e:
-                msg = f"Corrupted state loaded for manager {name}: {e.msg}"
-                logger.log(
-                    "core",
-                    msg,
-                    logger.Level.warning
-                )
-                errors += msg + "\n"
-                continue
-
-
-        logger.log("core", "Loaded state.", logger.Level.info)
-        
-        if errors:
-            raise CarbonError(errors.strip())
-        
-        return "State loaded successfully."
+			try:
+				manager.setState(manager.State(**state))
+			except TypeError as e:
+				msg = f"Corrupted state loaded for manager {name}: Does not match state structure. {str(e)}"
+				logger.log(
+					"core",
+					msg,
+					logger.Level.warning
+				)
+				errors += msg + "\n"
+			except CarbonError as e:
+				msg = f"Corrupted state loaded for manager {name}: {e.msg}"
+				logger.log(
+					"core",
+					msg,
+					logger.Level.warning
+				)
+				errors += msg + "\n"
+				continue
 
 
-    def saveState(self):
-        
-        for name, manager in self.all_managers.items():
-            self.state.update(
-                name,
-                dataclasses.asdict(manager.getState())
-            )
-
-        self.state.save()
-        logger.log("core", "Saved state.", logger.Level.info)
-
-        return "State saved."
-    
-
-    def dumpState(self) -> str:
-        
-        for name, manager in self.all_managers.items():
-            self.state.update(
-                name,
-                dataclasses.asdict(manager.getState())
-            )
-
-        return self.state.dump()
-    
-    
-    def getDispatchMap(self):
-
-        dispatch_map = {}
-
-        for key, value in self.dispatch_map.items():
-            dispatch_map[key] = list(value.keys())
-
-        string = json.dumps(dispatch_map, indent=4)
-
-        return string
+		logger.log("core", "Loaded state.", logger.Level.info)
+		
+		if errors:
+			raise CarbonError(errors.strip())
+		
+		return "State loaded successfully."
 
 
-    def dispatch(self, id: int, command: CommandRequest):
-        
-        logger.log("core", f"Received dispatch request from id:{id}.", logger.Level.info)
+	def saveState(self):
+		
+		for name, manager in self.all_managers.items():
+			self.state.update(
+				name,
+				dataclasses.asdict(manager.getState())
+			)
 
-        try:
-            manager_map = self.dispatch_map[command.manager]
-        except KeyError:
-            logger.log("core", f"Unknown manager requested by client(id:{id}): {command.manager}", logger.Level.warning)
-            with self.lock:
-                self.server.send(id, CommandOutput(1,f"Unknown manager: {command.manager}"))
-                return
-            
-        try:
-            handler = manager_map[command.handler]
-        except KeyError:
-            logger.log("core", f"Unknown handler for manager '{command.manager}' requested by client(id:{id}): {command.handler}", logger.Level.warning)
-            with self.lock:
-                self.server.send(id, CommandOutput(1, f"Unknown handler for manager '{command.manager}': {command.handler}"))
-                return
+		self.state.save()
+		logger.log("core", "Saved state.", logger.Level.info)
 
-        logger.log("core", f"Executing {command.manager}::{command.handler} with arguments: {command.args}", logger.Level.debug)
-        self.thread_pool.submit(self.worker, id, handler, command.args, save_state=True if command.manager != "daemon" else False)
+		return "State saved."
+	
+
+	def dumpState(self) -> str:
+		
+		for name, manager in self.all_managers.items():
+			self.state.update(
+				name,
+				dataclasses.asdict(manager.getState())
+			)
+
+		return self.state.dump()
+	
+	
+	def getDispatchMap(self):
+
+		dispatch_map = {}
+
+		for key, value in self.dispatch_map.items():
+			dispatch_map[key] = list(value.keys())
+
+		string = json.dumps(dispatch_map, indent=4)
+
+		return string
 
 
-    def worker(self, id: int, func, args, *, save_state=True):
+	def dispatch(self, id: int, command: CommandRequest):
+		
+		logger.log("core", f"Received dispatch request from id:{id}.", logger.Level.info)
 
-        try:
-            response = func(**args)
-            code = 0
-        except CarbonError as e:
-            response = e.msg
-            code = 1
-            logger.log(
-                "core", 
-                f"Carbon Error while executing {func.__name__} with arguments {args}: {str(e)} ", 
-                logger.Level.debug
-            )
-        except Exception as e:
-            response = f"{e.__class__.__name__}: {str(e)}"
-            code = 1
-            logger.log(
-                "core", 
-                f"Unexpected Error while executing {func.__name__} with arguments {args}: ({e.__class__.__name__}) {str(e)} ", 
-                logger.Level.warning
-            )
+		try:
+			manager_map = self.dispatch_map[command.manager]
+		except KeyError:
+			logger.log("core", f"Unknown manager requested by client(id:{id}): {command.manager}", logger.Level.warning)
+			with self.lock:
+				self.server.send(id, CommandOutput(1,f"Unknown manager: {command.manager}"))
+				return
+			
+		try:
+			handler = manager_map[command.handler]
+		except KeyError:
+			logger.log("core", f"Unknown handler for manager '{command.manager}' requested by client(id:{id}): {command.handler}", logger.Level.warning)
+			with self.lock:
+				self.server.send(id, CommandOutput(1, f"Unknown handler for manager '{command.manager}': {command.handler}"))
+				return
 
-        output = CommandOutput(code, response)
+		logger.log("core", f"Executing {command.manager}::{command.handler} with arguments: {command.args}", logger.Level.debug)
+		self.thread_pool.submit(self.worker, id, handler, command.args, save_state=True if command.manager != "daemon" else False)
 
-        with self.lock:
-            self.server.send(id, output)
-            if save_state:
-                self.saveState()
+
+	def worker(self, id: int, func, args, *, save_state=True):
+
+		try:
+			response = func(**args)
+			code = 0
+		except CarbonError as e:
+			response = e.msg
+			code = 1
+			logger.log(
+				"core", 
+				f"Carbon Error while executing {func.__name__} with arguments {args}: {str(e)} ", 
+				logger.Level.debug
+			)
+		except Exception as e:
+			response = f"{e.__class__.__name__}: {str(e)}"
+			code = 1
+			logger.log(
+				"core", 
+				f"Unexpected Error while executing {func.__name__} with arguments {args}: ({e.__class__.__name__}) {str(e)} ", 
+				logger.Level.warning
+			)
+
+		output = CommandOutput(code, response)
+
+		with self.lock:
+			self.server.send(id, output)
+			if save_state:
+				self.saveState()

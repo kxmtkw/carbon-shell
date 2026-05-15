@@ -15,6 +15,7 @@ Config/
 logs/
 
 # hyprland
+hyprlock-theme.conf
 color.conf
 override.conf
 hyprviz.**

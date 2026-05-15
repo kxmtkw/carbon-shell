@@ -343,3 +343,30 @@ def handle_panel(args: argparse.Namespace):
 
 	print(output.output)
 	exit(output.code)
+
+
+def handle_lock(args: argparse.Namespace):
+	manager = "lockscreen"
+
+	match args.lock_cmd:
+
+		case "lock":
+			request = CommandRequest(
+				manager, "lock",
+				{
+				}
+			)
+			output = sendRequest(request)
+
+		case "set-style":
+			request = CommandRequest(
+				manager, "set-style",
+				{
+					"style": args.style,
+					"img": args.img
+				}
+			)
+			output = sendRequest(request)
+
+	print(output.output)
+	exit(output.code)
