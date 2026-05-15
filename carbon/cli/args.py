@@ -121,4 +121,14 @@ def getParser() -> argparse.ArgumentParser:
 	set_mode = panel_sub.add_parser("set-mode", help="Set the panel mode")
 	set_mode.add_argument("mode", choices=["show", "hide", "bypass"])
 
+	# ── lock ─────────────────────────────────────────────────────────
+	lock = sub.add_parser("lockscreen", help="Control the lockscreen")
+	lock_sub = lock.add_subparsers(dest="lock_cmd", metavar="ACTION")
+	lock_sub.required = True
+
+	lock = lock_sub.add_parser("lock", help="Lock the screen")
+	style = lock_sub.add_parser("set-style", help="Set lockscreen style")
+	style.add_argument("style", choices=["screenshot", "image", "wallpaper"], help="Lock screen style to use")
+	style.add_argument("--img", metavar="PATH", help="Image to use for 'image' style")
+	
 	return parser
