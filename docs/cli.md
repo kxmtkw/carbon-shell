@@ -186,6 +186,21 @@ carbon.shell controller ACTION
 
 ---
 
+### `lockscreen`
+
+Control the lockscreen
+
+```
+carbon.shell lockscreen ACTION
+```
+
+| Action | Description |
+|--------|-------------|
+| `lock` | Lock the screen duh |
+| `set-style` | Valid style: screenshot, wallpaper, image. --img required when style is image |
+
+---
+
 ### Examples
 
 ```sh

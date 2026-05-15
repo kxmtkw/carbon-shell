@@ -156,6 +156,10 @@ Here is an example config:
     },
     "panel": {
         "mode": "show"
+    },
+	"lockscreen": {
+        "style": "screenshot",
+        "image": null
     }
 }
 ```
