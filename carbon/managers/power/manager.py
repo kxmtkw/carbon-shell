@@ -78,14 +78,16 @@ class PowerManager(BaseManager):
 		perc = info.percentage
 		if not info.status == UPower.Status.charging:
 			if perc <= self.state.force_hibernate_threshold and not self.was_critical_triggered:
-				self.triggerCritical()
+				self.triggerForceHibernate()
 			elif perc <= self.state.critical_threshold and not self.was_critical_triggered:
-				self.triggerCritical()
+				self.triggerCritical(info)
 			elif perc <= self.state.warning_threshold and not self.was_warning_triggered:
 				self.triggerWarning(info)
 		else:
 			if perc >= self.state.full_threshold and not self.was_full_triggered:
 				self.triggerFull()
+			else:
+				self.was_full_triggered = False
 
 
 	def triggerCharging(self, info: UPower.Info):
@@ -104,9 +106,10 @@ class PowerManager(BaseManager):
 
 
 	def triggerCritical(self, info: UPower.Info):
-		if info.percentage <= self.state.force_hibernate_threshold:
-			Notify("Critical Battery", "Hibernating in 5 seconds to prevent data loss!")
-			shellrun("sleep 5 && carbon.power hibernate")
-		else:
-			Notify("Critical Battery", f"Plug in immediately!")
+		perc = int(info.percentage)
+		Notify("Critical Battery", f"Plug in immediately! Only {perc}% remaining!")
 		self.was_critical_triggered = True
+
+	def triggerForceHibernate(self):
+		Notify("Extreme Battery", "Hibernating in 30 seconds to prevent data loss!")
+		shellrun("sleep 30 && carbon.power hibernate")
