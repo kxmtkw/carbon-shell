@@ -15,7 +15,7 @@ display_help() {
 }
 
 save() {
-	carbon.shell controller close
+	carbon.shell controller close  > /dev/null
 	carbon.shell daemon save-state > /dev/null
 }
 
