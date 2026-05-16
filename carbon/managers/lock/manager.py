@@ -23,7 +23,7 @@ class LockScreenManager(BaseManager):
 			style="screenshot",
 			image=None
 		)
-		self.config_file = "~/.config/hypr/hyprlock-theme.conf"
+		self.config_file = "~/.config/hypr/hyprlock/hyprlock-theme.conf"
 
 
 	def handlers(self) -> Dict[str, Callable]:
