@@ -15,13 +15,13 @@ display_help() {
 }
 
 save() {
-	carbon.shell controller close  > /dev/null
-	carbon.shell daemon save-state > /dev/null
+	carbon.shell controller close > /dev/null &
+	carbon.shell daemon save-state > /dev/null &
 }
 
 save_and_end() {
 	save
-	carbon.shell daemon end > /dev/null
+	carbon.shell daemon end > /dev/null &
 }
 
 if [ -z "$1" ]; then
