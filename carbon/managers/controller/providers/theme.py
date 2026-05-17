@@ -359,7 +359,6 @@ class Utils:
 
 		wallpapers.sort()
 
-
 		return wallpapers
 
 
@@ -372,5 +371,7 @@ class Utils:
 				absolute = item.absolute()
 				option = RofiShell.markWithIcon(absolute, absolute)
 				images.append(option)
+			if item.is_dir():
+				images.extend(Utils.getImages(item))
 
 		return images

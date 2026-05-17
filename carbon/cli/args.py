@@ -5,10 +5,8 @@ def getParser() -> argparse.ArgumentParser:
 
 	parser = argparse.ArgumentParser(
 		prog="carbon.shell",
-		description="Carbon Shell — daemon and shell control utility",
+		description="Carbon-Shell daemon and shell control.",
 	)
-
-	parser.add_argument("--version", "-v", action="store_true", help="Show version")
 	
 	sub = parser.add_subparsers(dest="command", metavar="COMMAND")
 	sub.required = True
