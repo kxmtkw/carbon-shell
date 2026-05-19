@@ -119,6 +119,9 @@ def getParser() -> argparse.ArgumentParser:
 	set_mode = panel_sub.add_parser("set-mode", help="Set the panel mode")
 	set_mode.add_argument("mode", choices=["show", "hide", "bypass"])
 
+	set_pos = panel_sub.add_parser("set-position", help="Set the panel position")
+	set_pos.add_argument("pos", choices=["top", "bottom"])
+
 	# ── lock ─────────────────────────────────────────────────────────
 	lock = sub.add_parser("lockscreen", help="Control the lockscreen")
 	lock_sub = lock.add_subparsers(dest="lock_cmd", metavar="ACTION")

@@ -62,6 +62,16 @@ class Quickshell:
 		)
 
 
+	def setPanelPosition(self, pos: Literal["movetotop", "movetobottom"] = "movetobottom"):
+		"Change Panel positions."
+		self._call(
+			"ipc",
+			"call",
+			"panel",
+			pos
+		)
+
+
 	def updateTheme(self):
 		"Ask quickshell to reread the theme json file."
 		self._call(

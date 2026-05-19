@@ -16,6 +16,8 @@ WrapperRectangle
 {
     id: panel_battery
 
+	visible: UPower.displayDevice.isLaptopBattery
+
 	Layout.fillWidth:       false
 	Layout.preferredWidth:  28
 	Layout.preferredHeight: 28
