@@ -51,6 +51,7 @@ PanelWindow
 	implicitHeight: panelMode === modeHidden ? 0 : 48
 	height: implicitHeight
 	color:		   Theme.Color._invisible
+	
 
 	IpcHandler
 	{
@@ -80,10 +81,18 @@ PanelWindow
 
 	WrapperRectangle 
     {	
-		visible: panel.panelMode !== panel.modeHidden
 		anchors.fill: parent
 		color:  Theme.Color._background
 		radius: Theme.Style.getMaterialRadius(width, height, "large")
+
+		opacity: panelMode === modeHidden ? 0 : 100
+
+		Behavior on opacity {
+			NumberAnimation {
+				duration: 200
+				easing.type: Easing.OutCubic
+			}
+		}
 
 		margin:       10
 		leftMargin:   16
