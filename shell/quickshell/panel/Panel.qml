@@ -18,8 +18,12 @@ PanelWindow
 	readonly property int modeBypass: 2
 	property int panelMode: modeNormal
 
+	readonly property int positionTop: 0
+	readonly property int positionBottom: 1
+	property int panelPosition: positionBottom
+
 	WlrLayershell.layer: panelMode === modeBypass ? WlrLayer.Overlay : WlrLayer.Top
-	exclusiveZone: panelMode === modeHidden ? 0 : 48
+	exclusiveZone: implicitHeight
 
 	function setNormalMode() {
 		panelMode = modeNormal
@@ -36,7 +40,8 @@ PanelWindow
 	anchors 
     {
 		right: true
-		bottom: true
+		bottom: panelPosition === positionBottom
+		top: panelPosition === positionTop
 		left: true
 	}		
 
@@ -44,11 +49,11 @@ PanelWindow
     {
 		right: 	8
 		left: 	8
-		top: 	0
-		bottom: panelMode === modeHidden ? 0 : 8
+		top: 	panelMode === modeHidden ? 0 : panelPosition === positionTop ? 8 : 0
+		bottom: panelMode === modeHidden ? 0 : panelPosition === positionBottom ? 8 : 0
 	}
 
-	implicitHeight: panelMode === modeHidden ? 0 : 48
+	implicitHeight: panelMode === modeHidden ? 0 : 46
 	height: implicitHeight
 	color:		   Theme.Color._invisible
 	
@@ -77,6 +82,16 @@ PanelWindow
 			else
 			panel.setBypassMode()
 		}
+
+		function movetotop(): void
+		{
+			panel.panelPosition = panel.positionTop
+		}
+
+		function movetobottom(): void
+		{
+			panel.panelPosition = panel.positionBottom
+		}
 	}
 
 	WrapperRectangle 
@@ -94,7 +109,7 @@ PanelWindow
 			}
 		}
 
-		margin:       10
+		margin:       8
 		leftMargin:   16
 		rightMargin:  16
 

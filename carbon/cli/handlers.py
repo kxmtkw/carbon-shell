@@ -341,6 +341,15 @@ def handle_panel(args: argparse.Namespace):
 			)
 			output = sendRequest(request)
 
+		case "set-position":
+			request = CommandRequest(
+				manager, "set-position",
+				{
+					"position": args.pos				
+				}
+			)
+			output = sendRequest(request)
+
 	print(output.output)
 	exit(output.code)
 
