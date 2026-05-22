@@ -30,7 +30,7 @@ WrapperRectangle
     {
         id: panel_wifi_process
         running: false
-        command: ["carbon.shell", "controller", "run", "networker"]
+        command: ["carbon.shell", "controller", "run", "--name", "networker"]
     }
 
 	MouseArea 
