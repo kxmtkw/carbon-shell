@@ -19,7 +19,8 @@ lower_limit=1
 # lower limit of the brightness
 
 display_help() {
-	echo "Usage: [option] value"
+	echo " -- Carbon Brightness Utility --"
+	echo "Usage:"
 	echo "  increase x : increase by x percentage"
 	echo "  decrease x : decrease by x percentage"
 	echo "  set x      : set to x percentage"

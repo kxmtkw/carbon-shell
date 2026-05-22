@@ -3,7 +3,8 @@
 # Direct power actions utility.
 
 display_help() {
-	echo "Usage: [option]"
+	echo " -- Carbon Power Utility --"
+	echo "Usage:"
 	echo "  lock          : lock session (needs hyprlock)"
 	echo "  shutdown      : poweroff the system"
 	echo "  reboot        : restart the system"

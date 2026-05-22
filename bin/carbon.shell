@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-$CARBONPY -m carbon.cli $@
+$CARBONPY -m carbon.cli.shell $@

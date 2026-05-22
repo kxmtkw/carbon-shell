@@ -3,7 +3,8 @@
 # Util to control the audio
 
 display_help() {
-    echo "Usage: [option] value"
+	echo " -- Carbon Audio Utility --"
+    echo "Usage:"
     echo "  increase x    : increase by x percentage"
     echo "  decrease x    : decrease by x percentage"
     echo "  set x         : set to x percentage"
