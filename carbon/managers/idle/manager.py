@@ -3,6 +3,16 @@ from dataclasses import dataclass, replace
 from carbon.managers.base import BaseManager
 from carbon.utils import ProcessManager, Notify, logger
 
+_help = """
+Help for manager: idle
+
+	> on
+		Turn on the idle manager.
+	> off
+		Turn off the idle manager.
+	> toggle
+		Toggle the idle manager.
+"""
 
 class IdleManager(BaseManager):
 
@@ -47,6 +57,10 @@ class IdleManager(BaseManager):
 
 	def setState(self, state: State):
 		self.toggleIdle(state.toggled)
+
+
+	def getHelp(self):
+		return _help
 
 
 	def toggleIdle(self, on: bool):

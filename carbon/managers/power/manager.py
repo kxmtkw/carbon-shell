@@ -6,6 +6,11 @@ from carbon.lib.dbus import UPower
 
 from carbon.utils import logger, CarbonError, Notify, shellrun, clamp
 
+_help = """
+Help for manager: power
+
+	> This manager has no handlers!
+"""
 
 class PowerManager(BaseManager):
 
@@ -52,6 +57,10 @@ class PowerManager(BaseManager):
 
 	def handlers(self):
 		return {}
+	
+
+	def getHelp(self):
+		return _help
 
 
 	def setState(self, state: PowerManager.State):

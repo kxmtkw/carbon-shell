@@ -26,3 +26,6 @@ class BaseManager:
 	
 	def setState(self, state: State):
 		raise NotImplementedError()
+	
+	def getHelp(self) -> str:
+		raise NotImplementedError()

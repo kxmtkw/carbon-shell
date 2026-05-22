@@ -9,6 +9,15 @@ from carbon.lib.quickshell import Quickshell
 from carbon.utils import logger, CarbonError, Notify, shellrun, clamp
 
 
+_help = """
+Help for manager: panel
+
+	> set-mode --mode [show|hide|bypass]
+		Set panel mode.
+	> set-position --position [top|bottom]
+		Set panel position.
+"""
+
 
 class PanelManager(BaseManager):
 
@@ -49,14 +58,19 @@ class PanelManager(BaseManager):
 	
 
 	def setState(self, state: PanelManager.State):
-		self.setMode(state.mode)
+		self.setMode(mode=state.mode)
+		self.setPosition(position=state.position)
 
 
 	def getState(self):
 		return replace(self.state)
 
 
-	def setMode(self, mode: Literal["show", "hide", "bypass"]):
+	def getHelp(self):
+		return _help
+	
+
+	def setMode(self, *, mode: Literal["show", "hide", "bypass"]):
 		
 		if self.state.mode == mode:
 			return f"Panel already in {mode} mode."
@@ -83,7 +97,7 @@ class PanelManager(BaseManager):
 			raise CarbonError("Invalid panel mode. Valid modes are: show, hide, bypass.")
 		
 		
-	def setPosition(self, position: Literal["top", "bottom"]):
+	def setPosition(self, *, position: Literal["top", "bottom"]):
 		
 		if self.state.position == position:
 			return f"Panel already positioned at {position}."

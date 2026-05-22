@@ -11,10 +11,17 @@ from carbon.managers.base import BaseManager
 from carbon.utils import locked, logger, CarbonError, Notify
 
 
-notificationLock = Lock()
+_help = """
+Help for manager: notifications
+
+	> dnd --state [on|off|toggle]
+		Set 'Do Not Disturb' state.
+"""
+
 
 class NotificationManager(BaseManager):
-	
+
+	notificationLock = Lock()
 
 	@dataclass(init=True, kw_only=True)
 	class State(BaseManager.State):
@@ -57,6 +64,10 @@ class NotificationManager(BaseManager):
 	def getState(self) -> dict[str, Any]:
 		return replace(self.state)
 
+
+	def getHelp(self):
+		return _help
+	
 
 	@locked(notificationLock)
 	def newNotification(self, notif: NotificationServer.Notification):

@@ -7,6 +7,20 @@ from carbon.managers.base import BaseManager
 from carbon.utils import shellrun, logger, CarbonError, ProcessManager
 
 
+_help = """
+Help for manager: nightlight
+
+	> on
+		Turn on nightlight.
+	> off
+		Turn off nightlight.
+	> toggle
+		Toggle nightlight.
+	> set-temperature --value [integar]
+		Set nightlight temperature. Value range: 1000-20000.
+	> set-gamma --value [integar]
+		Set nightlight gamma. Value range: 10-200
+"""
 
 class NightLightManager(BaseManager):
 
@@ -62,6 +76,10 @@ class NightLightManager(BaseManager):
 		time.sleep(0.1)
 		self.setTemperature(state.temperature)
 		self.setGamma(state.gamma)
+
+
+	def getHelp(self):
+		return _help
 
 
 	def toggleNightlight(self, on: bool):

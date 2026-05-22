@@ -13,7 +13,6 @@ from carbon.lib.dbus import DBus
 
 from carbon.managers import BaseManager, MANAGERS
 
-
 class CarbonCore:
 
 	coreLock = threading.Lock()
@@ -52,7 +51,7 @@ class CarbonCore:
 
 		self.dispatch_map = {
 			"daemon": {
-				"end":              self.shutdown,
+				"shutdown":         self.shutdown,
 				"load-state":       self.loadState,
 				"save-state":       self.saveState,
 				"dump-state":       self.dumpState,
@@ -225,6 +224,10 @@ class CarbonCore:
 		string = json.dumps(dispatch_map, indent=4)
 
 		return string
+	
+
+	def getHelp(self):
+		return _help
 
 
 	def dispatch(self, id: int, command: CommandRequest):
@@ -239,19 +242,26 @@ class CarbonCore:
 				self.server.send(id, CommandOutput(1,f"Unknown manager: {command.manager}"))
 				return
 			
-		try:
-			handler = manager_map[command.handler]
-		except KeyError:
-			logger.log("core", f"Unknown handler for manager '{command.manager}' requested by client(id:{id}): {command.handler}", logger.Level.warning)
+		if command.handler == "help":
+			if command.manager == "daemon":
+				handler = self.getHelp
+			else:
+				handler = self.managers[command.manager].getHelp
+
+		elif command.handler not in manager_map:
+			logger.log("core", f"Unknown handler '{command.handler}' for manager '{command.manager}' client(id:{id})", logger.Level.warning)
 			with self.lock:
-				self.server.send(id, CommandOutput(1, f"Unknown handler for manager '{command.manager}': {command.handler}"))
-				return
+				self.server.send(id, CommandOutput(1, f"Unknown handler for {command.manager}: {command.handler}"))
+			return
+		
+		else:
+			handler = manager_map[command.handler]
 
 		logger.log("core", f"Executing {command.manager}::{command.handler} with arguments: {command.args}", logger.Level.debug)
-		self.thread_pool.submit(self.worker, id, handler, command.args, save_state=True if command.manager != "daemon" else False)
+		self.thread_pool.submit(self.worker, id, command.manager, command.handler, handler, command.args, save_state=True if command.manager != "daemon" else False)
 
 
-	def worker(self, id: int, func, args, *, save_state=True):
+	def worker(self, id: int, manager: str, handler: str, func, args, *, save_state=True):
 
 		try:
 			response = func(**args)
@@ -261,7 +271,15 @@ class CarbonCore:
 			code = 1
 			logger.log(
 				"core", 
-				f"Carbon Error while executing {func.__name__} with arguments {args}: {str(e)} ", 
+				f"Carbon Error while executing {manager}::{handler} with arguments {args}: {str(e)}", 
+				logger.Level.debug
+			)
+		except TypeError as e:
+			response = f"{manager}::{handler} {" ".join(str(e).split(" ")[1:])}"
+			code = 1
+			logger.log(
+				"core", 
+				f"Type Error while executing {func.__name__} with arguments {args}: {str(e)}", 
 				logger.Level.debug
 			)
 		except Exception as e:
@@ -269,7 +287,7 @@ class CarbonCore:
 			code = 1
 			logger.log(
 				"core", 
-				f"Unexpected Error while executing {func.__name__} with arguments {args}: ({e.__class__.__name__}) {str(e)} ", 
+				f"Unexpected Error while executing {func.__name__} with arguments {args}: ({e.__class__.__name__}) {str(e)}", 
 				logger.Level.warning
 			)
 
@@ -279,3 +297,19 @@ class CarbonCore:
 			self.server.send(id, output)
 			if save_state:
 				self.saveState()
+
+
+_help = """
+Help for manager: daemon
+
+	> shutdown
+		Shut the daemon down. Use carbon.daemon --end.
+	> load-state
+		Load state from state file.
+	> save-state
+		Manually save the state.
+	> dump-state
+		Print the state to the terminal.
+	> get-dispatch-map
+		Print dispatch map.
+"""

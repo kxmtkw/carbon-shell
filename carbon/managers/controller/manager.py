@@ -23,8 +23,18 @@ from .providers import (
 	Runner
 )
 
-class ControllerManager(BaseManager):
 
+_help = """
+Help for manager: controller
+
+	> run --name [name]
+		Open/Close the named controller.
+	> close
+		Close any active controller.
+"""
+
+
+class ControllerManager(BaseManager):
 
 	@dataclass(init=True, kw_only=True)
 	class State(BaseManager.State):
@@ -88,8 +98,12 @@ class ControllerManager(BaseManager):
 
 	def getState(self):
 		return self.state
-	
 
+
+	def getHelp(self):
+		return _help
+	
+	
 	def setManagers(self, themer: ThemeManager, panel: PanelManager):
 		self.panel_manager = panel
 		self.theme.themer = themer

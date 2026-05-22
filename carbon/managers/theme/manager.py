@@ -10,10 +10,43 @@ from .updater import ThemeUpdater
 from .material import MaterialColors
 
 
-themeLock = Lock()
+_help = """
+Help for manager: theme
+
+	> update-theme 
+	--mode [dark|light]
+	--variant [ash|coal|graphite|diamond]
+	--contrast [decimal]
+	--source [wallpaper|hex]
+	--hex [hexcode]
+	--img [path]
+		Not all arguments are needed. Any missing arguments will just use the previous ones.
+		--hex is considered when --source is hex. Normally, when --source is set to wallpaper, the --img argument will default to the wallpaper. If you pass a custom image here, the theme will update but it won't persist to the next session.
+
+	> switch-mode --mode [dark|light]
+		Switch between light and dark mode.
+
+	> toggle-mode
+		Toggle light or dark mode.
+
+	> change-font --font [name]
+		Change the shell font.
+
+	> set-face --img [path]
+		Update the profile picture for the shell.
+
+	> set-wallpaper --img [path]
+		Set wallpaper.
+
+	> set-wallpaper-animation --style [style]
+		Set wallpaper animation style.
+		Valid styles include: wipe, left, right, top, bottom, outer, center, any, random, fade.
+"""
 
 
 class ThemeManager(BaseManager):
+
+	themeLock = Lock()
 
 	@dataclass(init=True, kw_only=True)
 	class State(BaseManager.State):
@@ -99,6 +132,10 @@ class ThemeManager(BaseManager):
 
 	def getState(self) -> State:
 		return replace(self.state)
+	
+
+	def getHelp(self):
+		return _help
 	
 
 	@locked(themeLock)
