@@ -26,16 +26,24 @@ class LockScreenManager(BaseManager):
 		self.config_file = "~/.config/hypr/hyprlock/hyprlock-theme.conf"
 
 
+	def start(self):
+		pass
+
+
+	def end(self):
+		pass
+
+	
+	def name(self):
+		return "lock"
+
+
 	def handlers(self) -> Dict[str, Callable]:
 		return {
 			"lock": self.lock,
 			"set-style": self.setStyle
 		}
 
-
-	def end(self):
-		pass
-	
 
 	def getState(self) -> State:
 		return replace(self.state)

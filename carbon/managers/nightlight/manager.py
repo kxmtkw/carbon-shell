@@ -10,119 +10,126 @@ from carbon.utils import shellrun, logger, CarbonError, ProcessManager
 
 class NightLightManager(BaseManager):
 
-    @dataclass(init=True, kw_only=True)
-    class State(BaseManager.State):
-        toggled: bool
-        temperature: int
-        gamma: int
+	@dataclass(init=True, kw_only=True)
+	class State(BaseManager.State):
+		toggled: bool
+		temperature: int
+		gamma: int
 
 
-    def __init__(self):
-        super().__init__()
-        self.default_temperature = 6000
-        self.default_gamma = 100
+	def __init__(self):
+		super().__init__()
+		self.default_temperature = 6000
+		self.default_gamma = 100
 
-        self.state = NightLightManager.State(
-            temperature=self.default_temperature,
-            gamma=self.default_gamma,
-            toggled=True
-        )
+		self.state = NightLightManager.State(
+			temperature=self.default_temperature,
+			gamma=self.default_gamma,
+			toggled=True
+		)
 
-        self.hyprsunset = ProcessManager("hyprsunset", only_one=True)
-        self.hyprsunset.start("-g", self.state.gamma, "-t", self.state.temperature)
-        
-
-    def handlers(self):
-        return {
-            "on": lambda: self.toggleNightlight(True),
-            "off": lambda: self.toggleNightlight(False),
-            "toggle": lambda: self.toggleNightlight(not self.state.toggled),
-            "set-temperature": self.setTemperature,
-            "set-gamma": self.setGamma
-        }
+		self.hyprsunset = ProcessManager("hyprsunset", only_one=True)
+		
+		
+	def start(self):
+		self.hyprsunset.start("-g", self.state.gamma, "-t", self.state.temperature)
 
 
-    def end(self):
-        self.toggleNightlight(False)
-    
-
-    def getState(self) -> State:
-        return replace(self.state)
-    
-
-    def setState(self, state: State):
-        self.toggleNightlight(state.toggled)
-        time.sleep(0.1)
-        self.setTemperature(state.temperature)
-        self.setGamma(state.gamma)
+	def end(self):
+		self.toggleNightlight(False)
+		
+	
+	def name(self):
+		return "nightlight"
 
 
-    def toggleNightlight(self, on: bool):
-
-        self.state.toggled = on
-            
-        if self.state.toggled:
-            if not self.hyprsunset.poll(0.1):
-                self.hyprsunset.start("-g", self.state.gamma, "-t", self.state.temperature)
-                logger.log(
-                    "nightlight",
-                    f"Turned on",
-                    logger.Level.info
-                )
-
-            return "Nightlight turned on"
-        
-        else:
-            if self.hyprsunset.poll(0.1):
-                self.hyprsunset.kill()
-                logger.log(
-                    "nightlight",
-                    f"Turned off",
-                    logger.Level.info
-                )
-            
-            return "Nightlight turned off"
+	def handlers(self):
+		return {
+			"on": lambda: self.toggleNightlight(True),
+			"off": lambda: self.toggleNightlight(False),
+			"toggle": lambda: self.toggleNightlight(not self.state.toggled),
+			"set-temperature": self.setTemperature,
+			"set-gamma": self.setGamma
+		}
 
 
-    def setTemperature(self, value: int) -> str:
+	def getState(self) -> State:
+		return replace(self.state)
+	
 
-        if value < 1000 or value > 20000:
-            raise CarbonError("Invalid temperature value. Valid range: 1000-20000.")
-        
-        if not self.state.toggled:
-            return "Updated, but nightlight is off."
-        
-        success, output = shellrun(f"hyprctl hyprsunset temperature {value}")
-
-        if not success:
-            raise CarbonError(f"Failed. Reason: {output}")
-        
-        logger.log(
-            "nightlight",
-            f"Updated temperature to {value}",
-            logger.Level.info
-        )
-        self.state.temperature = value
-        return "Updated temperature."
+	def setState(self, state: State):
+		self.toggleNightlight(state.toggled)
+		time.sleep(0.1)
+		self.setTemperature(state.temperature)
+		self.setGamma(state.gamma)
 
 
-    def setGamma(self, value: int) -> str:
+	def toggleNightlight(self, on: bool):
 
-        if value < 10 or value > 200:
-            raise CarbonError("Invalid gamma value. Valid range: 10-200.")
-        
-        if not self.state.toggled:
-            return "Updated, but nightlight is off."
-        
-        success, output = shellrun(f"hyprctl hyprsunset gamma {value}")
+		self.state.toggled = on
+			
+		if self.state.toggled:
+			if not self.hyprsunset.poll(0.1):
+				self.hyprsunset.start("-g", self.state.gamma, "-t", self.state.temperature)
+				logger.log(
+					"nightlight",
+					f"Turned on",
+					logger.Level.info
+				)
 
-        if not success:
-            raise CarbonError(f"Failed in setGamma. Reason: {output}")
-        
-        logger.log(
-            "nightlight",
-            f"Updated gamma to {value}",
-            logger.Level.info
-        )
-        self.state.gamma = value
-        return "Updated gamma."
+			return "Nightlight turned on"
+		
+		else:
+			if self.hyprsunset.poll(0.1):
+				self.hyprsunset.kill()
+				logger.log(
+					"nightlight",
+					f"Turned off",
+					logger.Level.info
+				)
+			
+			return "Nightlight turned off"
+
+
+	def setTemperature(self, value: int) -> str:
+
+		if value < 1000 or value > 20000:
+			raise CarbonError("Invalid temperature value. Valid range: 1000-20000.")
+		
+		if not self.state.toggled:
+			return "Updated, but nightlight is off."
+		
+		success, output = shellrun(f"hyprctl hyprsunset temperature {value}")
+
+		if not success:
+			raise CarbonError(f"Failed. Reason: {output}")
+		
+		logger.log(
+			"nightlight",
+			f"Updated temperature to {value}",
+			logger.Level.info
+		)
+		self.state.temperature = value
+		return "Updated temperature."
+
+
+	def setGamma(self, value: int) -> str:
+
+		if value < 10 or value > 200:
+			raise CarbonError("Invalid gamma value. Valid range: 10-200.")
+		
+		if not self.state.toggled:
+			return "Updated, but nightlight is off."
+		
+		success, output = shellrun(f"hyprctl hyprsunset gamma {value}")
+
+		if not success:
+			raise CarbonError(f"Failed in setGamma. Reason: {output}")
+		
+		logger.log(
+			"nightlight",
+			f"Updated gamma to {value}",
+			logger.Level.info
+		)
+		self.state.gamma = value
+		return "Updated gamma."

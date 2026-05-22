@@ -25,24 +25,29 @@ from .providers import (
 
 class ControllerManager(BaseManager):
 
+
 	@dataclass(init=True, kw_only=True)
 	class State(BaseManager.State):
 		pass
 
-	def __init__(self, themer: ThemeManager, panel: PanelManager):
+
+	def __init__(self):
 		super().__init__()
 		self.lock = Lock()
 		self.qs = Quickshell()
 		self.panel_should_return_normal: bool = True
 		self.panel_should_return_to_mode = "show"
-		self.panel_manager = panel
-
+		self.panel_manager: PanelManager
 		self.current_controller: BaseController | None = None
+		self.state = self.State()
+
+
+	def start(self):
 
 		self.launcher = Launcher()
 		self.power = Power()
 		self.screenshot = Screenshot()
-		self.theme = Theme(themer)
+		self.theme = Theme()
 		self.networker = Networker()
 		self.clipboard = Clipboard()
 		self.windows = Windows()
@@ -59,7 +64,13 @@ class ControllerManager(BaseManager):
 			"runner": self.runner
 		}
 
-		self.state = self.State()
+
+	def end(self):
+		pass
+
+
+	def name(self):
+		return "controller"
 
 
 	def handlers(self) -> dict[str, callable]:
@@ -67,10 +78,6 @@ class ControllerManager(BaseManager):
 			"run": self.run,
 			"close": self.close
 		}
-
-
-	def end(self):
-		pass
 
 
 	def setState(self, state):
@@ -82,6 +89,11 @@ class ControllerManager(BaseManager):
 	def getState(self):
 		return self.state
 	
+
+	def setManagers(self, themer: ThemeManager, panel: PanelManager):
+		self.panel_manager = panel
+		self.theme.themer = themer
+
 
 	def run(self, *, name: str) -> str:
 

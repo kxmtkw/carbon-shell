@@ -32,23 +32,31 @@ class NotificationManager(BaseManager):
 		)		
 
 
+	def start(self):
+		pass
+	
+
+	def end(self):
+		pass
+	
+
+	def name(self):
+		return "notifications"
+
+
 	def handlers(self) -> Dict[str, Callable]:
 		return {
 			"dnd": self.setDND
 		}
 
 
-	def end(self):
-		pass
-	
+	def setState(self, state: State):
+		self.setDND(state= "on" if state.do_not_disturb else "off")
+
 
 	def getState(self) -> dict[str, Any]:
 		return replace(self.state)
-	
 
-	def setState(self, state: State):
-		self.setDND(state= "on" if state.do_not_disturb else "off")
-	
 
 	@locked(notificationLock)
 	def newNotification(self, notif: NotificationServer.Notification):

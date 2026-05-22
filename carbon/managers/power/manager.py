@@ -38,6 +38,21 @@ class PowerManager(BaseManager):
 		self.was_critical_triggered = False
 
 
+	def start(self):
+		pass
+
+
+	def end(self):
+		pass
+
+
+	def name(self):
+		return "power"
+	
+
+	def handlers(self):
+		return {}
+
 
 	def setState(self, state: PowerManager.State):
 		self.state.full_threshold = clamp(state.full_threshold, 0, 100)
@@ -49,10 +64,6 @@ class PowerManager(BaseManager):
 	def getState(self):
 		return replace(self.state)
 	
-
-	def end(self):
-		pass
-
 
 	def UPowerCallback(self, info: UPower.Info | None):
 

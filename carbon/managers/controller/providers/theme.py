@@ -11,9 +11,8 @@ from carbon.managers.theme import ThemeManager
 
 class Theme(BaseController):
 
-	def __init__(self, themer: ThemeManager):
-		self.themer = themer
-		self.theme_state: ThemeManager.State = themer.getState()
+	def __init__(self):
+		self.themer: ThemeManager = None
 
 		self.rasi_main = "~/.carbon/shell/rofi/theme/main.rasi"
 		self.rasi_entry = "~/.carbon/shell/rofi/theme/entry.rasi"
@@ -49,6 +48,10 @@ class Theme(BaseController):
 	def launch(self):
 		self.is_running = True
 		self.current = self.showMainMenu
+
+		if self.themer is None:
+			raise CarbonError("theme manager not provided to theme controller.")
+		
 
 		while self.is_running:
 			self.theme_state = self.themer.getState()

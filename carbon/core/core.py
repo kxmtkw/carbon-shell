@@ -11,18 +11,12 @@ from carbon.state import StateManager
 from carbon.lib.quickshell import Quickshell
 from carbon.lib.dbus import DBus
 
-from carbon.managers.base import BaseManager
-from carbon.managers.theme import ThemeManager
-from carbon.managers.controller import ControllerManager
-from carbon.managers.notifications import NotificationManager
-from carbon.managers.nightlight import NightLightManager
-from carbon.managers.idle import IdleManager
-from carbon.managers.power import PowerManager
-from carbon.managers.panel import PanelManager
-from carbon.managers.lock import LockScreenManager
+from carbon.managers import BaseManager, MANAGERS
 
 
 class CarbonCore:
+
+	coreLock = threading.Lock()
 
 	def __init__(self):
 
@@ -33,12 +27,14 @@ class CarbonCore:
 		self.state = StateManager("~/.carbon/user/state.json")
 
 		self.lock = threading.Lock()
-		self.thread_pool = ThreadPoolExecutor(5)
+		self.thread_pool = ThreadPoolExecutor(10)
 		self.is_running = True
 
 
 	def init(self):
 		
+		# Starting quiskshell
+
 		self.quickshell = Quickshell()
 		try:
 			self.quickshell.start()
@@ -46,49 +42,37 @@ class CarbonCore:
 			logger.log("core", f"Quickshell could not be started. Reason: {e.msg}", logger.Level.warning)
 
 
-		self.theme_manager = ThemeManager()
-		self.notification_manager = NotificationManager()
-		self.nightlight_manager = NightLightManager()
-		self.idle_manager = IdleManager()
-		self.power_manager = PowerManager()
-		self.panel_manager = PanelManager()
-		self.lockscreen_manager = LockScreenManager()
-		self.controller_manager = ControllerManager(self.theme_manager, self.panel_manager)
-	   
+		# starting up managers
 
-		self.all_managers = {
-			"theme":self.theme_manager,
-			"controller":self.controller_manager,
-			"nightlight":self.nightlight_manager,
-			"idle":self.idle_manager,
-			"notification":self.notification_manager,
-			"power":self.power_manager,
-			"panel":self.panel_manager,
-			"lockscreen":self.lockscreen_manager
-		}
+		self.managers: dict[str, BaseManager] = {}
+
+		for mgr_class in MANAGERS:
+			manager = mgr_class()
+			self.managers[manager.name()] = manager
 
 		self.dispatch_map = {
 			"daemon": {
-				"end": self.shutdown,
-				"load-state": self.loadState,
-				"save-state": self.saveState,
-				"dump-state": self.dumpState,
+				"end":              self.shutdown,
+				"load-state":       self.loadState,
+				"save-state":       self.saveState,
+				"dump-state":       self.dumpState,
 				"get-dispatch-map": self.getDispatchMap
-			},
-			"theme": self.theme_manager.handlers(),
-			"controller": self.controller_manager.handlers(),
-			"nightlight": self.nightlight_manager.handlers(),
-			"idle": self.idle_manager.handlers(),
-			"notifications": self.notification_manager.handlers(),
-			"panel": self.panel_manager.handlers(),
-			"lockscreen": self.lockscreen_manager.handlers()
+			}
 		}
 
+		for name, manager in self.managers.items():
+			manager.start()
+			self.dispatch_map[name] = manager.handlers()
+
+		# wiring things up,
+		# this needs to be done indpendently, might make each manager do this own its own instead of depending on the core.
 
 		Notify.setNotificationFunction(self.dbus.notification_server.sendNotification)
 
-		self.dbus.notification_server.setCallback(self.notification_manager.newNotification)
-		self.dbus.upower.setCallback(self.power_manager.UPowerCallback)
+		self.managers["controller"].setManagers(self.managers["theme"], self.managers["panel"])
+
+		self.dbus.notification_server.setCallback(self.managers["notifications"].newNotification)
+		self.dbus.upower.setCallback(self.managers["power"].UPowerCallback)
 		self.dbus.start()
 
 
@@ -116,6 +100,7 @@ class CarbonCore:
 			self.dispatch(*payload)
 
 
+	@locked(coreLock)
 	def shutdown(self) -> str:
 
 		if not self.is_running: 
@@ -133,7 +118,7 @@ class CarbonCore:
 		self.is_running = False
 		self.thread_pool.shutdown(False, cancel_futures=True)
 
-		for manager in self.all_managers.values():
+		for manager in self.managers.values():
 			manager.end()
 
 		self.server.close()
@@ -158,7 +143,7 @@ class CarbonCore:
 			errors += msg
 				
 
-		for name, manager in self.all_managers.items():
+		for name, manager in self.managers.items():
 			state = self.state.get(name)
 
 			logger.log(
@@ -207,7 +192,7 @@ class CarbonCore:
 
 	def saveState(self):
 		
-		for name, manager in self.all_managers.items():
+		for name, manager in self.managers.items():
 			self.state.update(
 				name,
 				dataclasses.asdict(manager.getState())
@@ -221,7 +206,7 @@ class CarbonCore:
 
 	def dumpState(self) -> str:
 		
-		for name, manager in self.all_managers.items():
+		for name, manager in self.managers.items():
 			self.state.update(
 				name,
 				dataclasses.asdict(manager.getState())

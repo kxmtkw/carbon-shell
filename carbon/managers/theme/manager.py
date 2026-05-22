@@ -51,6 +51,17 @@ class ThemeManager(BaseManager):
 		super().__init__()
 
 
+	def start(self):
+		pass
+
+
+	def end(self):
+		pass
+
+	
+	def name(self):
+		return "theme"
+	
 
 	def handlers(self) -> dict[str, callable]:
 		return {
@@ -62,10 +73,6 @@ class ThemeManager(BaseManager):
 			"set-face": self.setFace,
 			"set-wallpaper-animation": self.setWallpaper_animation
 		}
-
-
-	def end(self):
-		pass
 	
 
 	def setState(self, state: State):

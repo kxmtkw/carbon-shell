@@ -28,14 +28,18 @@ class PanelManager(BaseManager):
 		
 		self.qs = Quickshell()
 
-	
-	def setState(self, state: PanelManager.State):
-		self.setMode(state.mode)
+
+	def start(self):
+		pass
 
 
-	def getState(self):
-		return replace(self.state)
-	
+	def end(self):
+		pass
+
+
+	def name(self):
+		return "panel"
+
 
 	def handlers(self):
 		return {
@@ -44,8 +48,12 @@ class PanelManager(BaseManager):
 		}
 	
 
-	def end(self):
-		pass
+	def setState(self, state: PanelManager.State):
+		self.setMode(state.mode)
+
+
+	def getState(self):
+		return replace(self.state)
 
 
 	def setMode(self, mode: Literal["show", "hide", "bypass"]):
