@@ -24,16 +24,6 @@ from .providers import (
 )
 
 
-_help = """
-Help for manager: controller
-
-	> run --name [name]
-		Open/Close the named controller.
-	> close
-		Close any active controller.
-"""
-
-
 class ControllerManager(BaseManager):
 
 	@dataclass(init=True, kw_only=True)
@@ -174,3 +164,17 @@ class ControllerManager(BaseManager):
 			return "Controller closed."
 		else:
 			return "No controller to close."
+
+
+_help = """
+==> controller
+Open and close controllers. Controllers are basically menus.
+
+handlers:
+
+	> run --name [name]
+		Open/Close the named controller.
+
+	> close
+		Close any active controller.
+"""

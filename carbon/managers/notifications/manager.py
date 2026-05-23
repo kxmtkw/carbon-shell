@@ -11,23 +11,6 @@ from carbon.managers.base import BaseManager
 from carbon.utils import locked, logger, CarbonError, Notify
 
 
-_help = """
-Help for manager: notifications
-
-	> notify
-	--summary [string]
-	--body [string]
-	--app [string]
-	--timeout [int]
-	--urgency [low|normal|critical]
-		Send a notification using the daemon directly.
-		Only the --summary argument is required.
-
-	> dnd --state [on|off|toggle]
-		Set 'Do Not Disturb' state.
-"""
-
-
 class NotificationManager(BaseManager):
 
 	notificationLock = Lock()
@@ -172,3 +155,23 @@ class NotificationManager(BaseManager):
 
 		return f"Notification sent."
 	
+
+
+_help = """
+==> notifications
+Send notifications and control their behaviour.
+
+handlers:
+
+	> notify
+	--summary [string]
+	--body [string]
+	--app [string]
+	--timeout [int]
+	--urgency [low|normal|critical]
+		Send a notification using the daemon directly.
+		Only the --summary argument is required.
+
+	> dnd --state [on|off|toggle]
+		Set 'Do Not Disturb' state.
+"""

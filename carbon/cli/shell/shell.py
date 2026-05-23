@@ -11,7 +11,10 @@ Usage:
 	carbon.shell [manager] [handler] {{--key value}}
 
 For help on any particular manager, use:
-	carbon.shell [manager] help"""
+	carbon.shell [manager] help
+
+For complete help:
+	carbon.shell daemon help-all"""
 
 
 def parseArgs(argv):

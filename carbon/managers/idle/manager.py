@@ -3,16 +3,7 @@ from dataclasses import dataclass, replace
 from carbon.managers.base import BaseManager
 from carbon.utils import ProcessManager, Notify, logger
 
-_help = """
-Help for manager: idle
 
-	> on
-		Turn on the idle manager.
-	> off
-		Turn off the idle manager.
-	> toggle
-		Toggle the idle manager.
-"""
 
 class IdleManager(BaseManager):
 
@@ -83,3 +74,18 @@ class IdleManager(BaseManager):
 				Notify("Idle", "Idle manager turned off.")
 
 			return "Idle manager turned off."
+
+
+_help = """
+==> idle
+Control the idle manager. The idle daemon is responsible for triggering actions due to user inactivity.
+
+handlers:
+
+	> on
+		Turn on the idle manager.
+	> off
+		Turn off the idle manager.
+	> toggle
+		Toggle the idle manager.
+"""

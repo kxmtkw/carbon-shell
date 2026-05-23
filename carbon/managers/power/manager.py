@@ -6,11 +6,7 @@ from carbon.lib.dbus import UPower
 
 from carbon.utils import logger, CarbonError, Notify, shellrun, clamp
 
-_help = """
-Help for manager: power
 
-	> This manager has no handlers!
-"""
 
 class PowerManager(BaseManager):
 
@@ -133,3 +129,13 @@ class PowerManager(BaseManager):
 	def triggerForceHibernate(self):
 		Notify("Extreme Battery", "Hibernating in 30 seconds to prevent data loss!")
 		shellrun("sleep 30 && carbon.power hibernate")
+
+
+_help = """
+==> power
+Power manager, barely works lol.
+
+handlers:
+
+	> This manager has no handlers!
+"""

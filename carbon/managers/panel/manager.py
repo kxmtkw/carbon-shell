@@ -9,15 +9,6 @@ from carbon.lib.quickshell import Quickshell
 from carbon.utils import logger, CarbonError, Notify, shellrun, clamp
 
 
-_help = """
-Help for manager: panel
-
-	> set-mode --mode [show|hide|bypass]
-		Set panel mode.
-	> set-position --position [top|bottom]
-		Set panel position.
-"""
-
 
 class PanelManager(BaseManager):
 
@@ -116,3 +107,17 @@ class PanelManager(BaseManager):
 		
 		else:
 			raise CarbonError("Invalid panel position. Valid positions are: top, bottom")
+		
+
+_help = """
+==> panel
+Configure the panel.
+
+handlers:
+
+	> set-mode --mode [show|hide|bypass]
+		Set panel mode.
+
+	> set-position --position [top|bottom]
+		Set panel position.
+"""

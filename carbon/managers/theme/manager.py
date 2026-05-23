@@ -10,41 +10,6 @@ from .updater import ThemeUpdater
 from .material import MaterialColors
 
 
-_help = """
-Help for manager: theme
-
-	> update-theme 
-	--mode [dark|light]
-	--variant [ash|coal|graphite|diamond]
-	--contrast [decimal]
-	--source [wallpaper|hex]
-	--hex [hexcode]
-	--img [path]
-		Not all arguments are needed. Any missing arguments will just use the previous ones.
-		--hex is considered when --source is hex. 
-		Normally, when --source is set to wallpaper, the --img argument will default to the wallpaper. 
-		If you pass a custom image here, the theme will update but it won't persist to the next session.
-
-	> switch-mode --mode [dark|light]
-		Switch between light and dark mode.
-
-	> toggle-mode
-		Toggle light or dark mode.
-
-	> change-font --font [name]
-		Change the shell font.
-
-	> set-face --img [path]
-		Update the profile picture for the shell.
-
-	> set-wallpaper --img [path]
-		Set wallpaper.
-
-	> set-wallpaper-animation --style [style]
-		Set wallpaper animation style.
-		Valid styles include: wipe, left, right, top, bottom, outer, center, any, random, fade.
-"""
-
 
 class ThemeManager(BaseManager):
 
@@ -331,3 +296,46 @@ class ThemeManager(BaseManager):
 		)
 
 		return "Wallpaper animation style updated."
+
+
+_help = """
+==> theme
+Change and update the shell theme.
+
+handlers:
+
+	> update-theme 
+	--mode [dark|light]
+	--variant [ash|coal|graphite|diamond]
+	--contrast [decimal]
+	--source [wallpaper|hex]
+	--hex [hexcode]
+	--img [path]
+		Generate a theme from a source.
+		Not all arguments are needed. Any missing arguments will just use the previous ones.
+		--mode changes the mode of the theme.
+		--variant changes the theme variant.
+			ash: desaturated scheme; coal: monotone scheme; 
+			graphite: true-to-source scheme; diamond: true material scheme;
+		--hex is considered when --source is hex. 
+		--img will change the wallpaper as well.
+
+	> switch-mode --mode [dark|light]
+		Switch between light and dark mode.
+
+	> toggle-mode
+		Toggle light or dark mode.
+
+	> change-font --font [name]
+		Change the shell font.
+
+	> set-face --img [path]
+		Update the profile picture for the shell.
+
+	> set-wallpaper --img [path]
+		Set wallpaper.
+
+	> set-wallpaper-animation --style [style]
+		Set wallpaper animation style.
+		Valid styles include: wipe, left, right, top, bottom, outer, center, any, random, fade.
+"""

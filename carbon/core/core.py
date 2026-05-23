@@ -55,7 +55,8 @@ class CarbonCore:
 				"load-state":       self.loadState,
 				"save-state":       self.saveState,
 				"dump-state":       self.dumpState,
-				"get-dispatch-map": self.getDispatchMap
+				"get-dispatch-map": self.getDispatchMap,
+				"help-all":         self.getAllHelp
 			}
 		}
 
@@ -224,10 +225,20 @@ class CarbonCore:
 		string = json.dumps(dispatch_map, indent=4)
 
 		return string
-	
+		
 
 	def getHelp(self):
 		return _help
+	
+
+	def getAllHelp(self):
+		all_help = " -- Carbon Shell --"
+		all_help += self.getHelp()
+
+		for manager in self.managers.values():
+			all_help += manager.getHelp()
+
+		return all_help
 
 
 	def dispatch(self, id: int, command: CommandRequest):
@@ -300,7 +311,10 @@ class CarbonCore:
 
 
 _help = """
-Help for manager: daemon
+==> daemon
+Used to control the shell daemon and do special tasks.
+
+handlers:
 
 	> shutdown
 		Shut the daemon down. Use carbon.daemon --end.

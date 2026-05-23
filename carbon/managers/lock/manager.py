@@ -10,15 +10,6 @@ from carbon.utils import logger, CarbonError, Notify, procrun, shellrun
 from .styles import writeLockStyle
 
 
-_help = """
-Help for manager: lockscreen
-
-	> lock
-		Trigger the lockscreen.
-	> set-style --style [screenshot|image|wallpaper] --img [path] (if style = image)
-		Set the lockscreen style. --img argument only needed when --style is image
-"""
-
 class LockScreenManager(BaseManager):
 
 	@dataclass(init=True, kw_only=True)
@@ -108,3 +99,15 @@ class LockScreenManager(BaseManager):
 				
 
 
+_help = """
+==> lockscreen
+Set lockscreen styles.
+
+handlers:
+
+	> lock
+		Trigger the lockscreen.
+
+	> set-style --style [screenshot|image|wallpaper] --img [path] (if style = image)
+		Set the lockscreen style. --img argument only needed when --style is image
+"""
