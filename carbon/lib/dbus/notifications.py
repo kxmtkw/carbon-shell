@@ -119,7 +119,8 @@ class NotificationServer(ServiceInterface):
 		body: str, 
 		*,
 		timeout: int = 5000,
-		urgency: Literal["low", "normal", "critical"] = "normal"
+		urgency: Literal["low", "normal", "critical"] = "normal",
+		app_name: str = "CarbonShell"
 		) -> int:
 		"To send notifications to the server from inside the daemon. This will be wired to carbon.utils.notification's Notify later."
 
@@ -130,7 +131,7 @@ class NotificationServer(ServiceInterface):
 			case _: urgency = 1
 			
 		self.Notify(
-			"CarbonShell",
+			app_name,
 			0,
 			"",
 			summary,

@@ -24,8 +24,9 @@ class _Notify():
 		body: str, 
 		*,
 		timeout: int = 5000,
-		urgency: Literal["low", "normal", "critical"] = "normal"
-		) -> int:
+		urgency: Literal["low", "normal", "critical"] = "normal",
+        app_name: str = "CarbonShell"
+		):
         if self._function is None:
             logger.log(
                 "utils",
@@ -34,7 +35,7 @@ class _Notify():
             )
             return
         
-        self._function(summary, body, timeout=timeout, urgency=urgency)
+        self._function(summary, body, timeout=timeout, urgency=urgency, app_name=app_name)
 
 
 Notify = _Notify()

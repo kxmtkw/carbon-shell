@@ -21,7 +21,9 @@ Help for manager: theme
 	--hex [hexcode]
 	--img [path]
 		Not all arguments are needed. Any missing arguments will just use the previous ones.
-		--hex is considered when --source is hex. Normally, when --source is set to wallpaper, the --img argument will default to the wallpaper. If you pass a custom image here, the theme will update but it won't persist to the next session.
+		--hex is considered when --source is hex. 
+		Normally, when --source is set to wallpaper, the --img argument will default to the wallpaper. 
+		If you pass a custom image here, the theme will update but it won't persist to the next session.
 
 	> switch-mode --mode [dark|light]
 		Switch between light and dark mode.

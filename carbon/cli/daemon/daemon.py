@@ -82,7 +82,7 @@ def restart():
 
 def end():
 	request = CommandRequest(
-		"daemon", "end",
+		"daemon", "shutdown",
 		{				
 		}
 	)

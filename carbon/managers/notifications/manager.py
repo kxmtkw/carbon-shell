@@ -14,6 +14,15 @@ from carbon.utils import locked, logger, CarbonError, Notify
 _help = """
 Help for manager: notifications
 
+	> notify
+	--summary [string]
+	--body [string]
+	--app [string]
+	--timeout [int]
+	--urgency [low|normal|critical]
+		Send a notification using the daemon directly.
+		Only the --summary argument is required.
+
 	> dnd --state [on|off|toggle]
 		Set 'Do Not Disturb' state.
 """
@@ -53,7 +62,8 @@ class NotificationManager(BaseManager):
 
 	def handlers(self) -> Dict[str, Callable]:
 		return {
-			"dnd": self.setDND
+			"dnd": self.setDND,
+			"notify": self.sendNotification
 		}
 
 
@@ -141,4 +151,24 @@ class NotificationManager(BaseManager):
 			self.state.do_not_disturb = dnd
 
 		return msg
+	
+
+	def sendNotification(self, *, summary: str, body: str = "", timeout: int = 5000, urgency: str = "normal", app: str = "CarbonShell"):
+		"Notification handler for the cli"
+
+		if not isinstance(timeout, int):
+			raise CarbonError("timeout should be an integar.")
+		
+		if urgency not in ("low", "normal", "critical"):
+			raise CarbonError("Invalid urgency level. Pick from: low, normal, critical.")
+		
+		Notify(
+			summary,
+			body,
+			timeout=timeout,
+			urgency=urgency,
+			app_name=app
+		)
+
+		return f"Notification sent."
 	
