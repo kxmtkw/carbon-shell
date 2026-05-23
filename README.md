@@ -42,11 +42,6 @@ What this script would do:
 
 Then just restart hyprland and everything should work.
 
-
-### `Features`
-
-For features, see: [features](docs/features.md)
-
 ### `Bindings`
 
 For keybinds, see:  [bindings](docs/bindings.md)
@@ -56,11 +51,21 @@ For keybinds, see:  [bindings](docs/bindings.md)
 Along with that some other utilies include:
 
 ```bash
-carbon.shell       # For starting and controlling the shell daemon
+carbon.daemon      # For starting/ending the shell daemon
+carbon.shell       # For controlling the shell daemon
 carbon.brightness  # For controlling brightness
 carbon.audio       # For controlling audio
 carbon.power       # For shutting down, rebooting etc...
 ```
+
+Reference sheet for each utility:
+
++ [carbon.daemon](docs/utils/daemon.md)
++ [carbon.shell](docs/utils/shell.md)
++ [carbon.power](docs/utils/power.md)
++ [carbon.brightness](docs/utils/brightness.md)
++ [carbon.audio](docs/utils/audio.md)
+
 
 ### `Configuration`
 
@@ -70,16 +75,16 @@ The main utility is `carbon.shell`. It is used to start up the shell daemon and 
 ```bash
 carbon.shell COMMAND ...
 ```
-`For a guide on how to use the tool, see:` [cli](docs/cli.md)
+For a guide on how to use the tool, see: [carbon.shell](docs/utils/shell.md)
 
 ### Examples
 
 Here is an example script that allows you to focus on your work (or something like that).
 ```bash
-carbon.shell theme switch-mode dark
+carbon.shell theme switch-mode --mode dark
 carbon.shell nightlight on
-carbon.shell nightlight set-temperature 5400
-carbon.shell notifications dnd on
+carbon.shell nightlight set-temperature --value 5400
+carbon.shell notifications dnd --state on
 carbon.shell idle off
 ```
 
@@ -89,14 +94,14 @@ while true; do
     hour=$(date +%H)
 
     if (( hour >= 6 && hour < 18 )); then
-        carbon.shell theme switch-mode light
-        carbon.shell theme set-wallpaper ~/Pictures/light.png
-        carbon.shell theme set-contrast 2
+        carbon.shell theme switch-mode --mode light
+        carbon.shell theme set-wallpaper --img ~/Pictures/light.png
+        carbon.shell theme set-contrast --value 1
         carbon.shell nightlight off
     else
         carbon.shell theme switch-mode dark
         carbon.shell theme set-wallpaper ~/Pictures/dark.png
-        carbon.shell theme set-contrast 0.1
+		carbon.shell theme set-contrast --value 0.1
         carbon.shell nightlight on
     fi
 
