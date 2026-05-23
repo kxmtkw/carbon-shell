@@ -143,7 +143,7 @@ class ControllerManager(BaseManager):
 			self.current_controller = controller
 			
 			panel_mode = self.panel_manager.getState().mode
-			self.panel_manager.setMode("bypass")
+			self.panel_manager.setMode(mode="bypass")
 			self.panel_should_return_normal = True
 			if panel_mode != "bypass":
 				self.panel_should_return_to_mode = panel_mode
@@ -157,7 +157,7 @@ class ControllerManager(BaseManager):
 			self.current_controller = None
 
 			if self.panel_should_return_normal:
-				self.panel_manager.setMode(self.panel_should_return_to_mode)
+				self.panel_manager.setMode(mode=self.panel_should_return_to_mode)
 		
 			
 		logger.log(

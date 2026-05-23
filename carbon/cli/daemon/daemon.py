@@ -51,7 +51,7 @@ def start():
 
 def restart():
 	request = CommandRequest(
-		"daemon", "end",
+		"daemon", "shutdown",
 		{				
 		}
 	)
