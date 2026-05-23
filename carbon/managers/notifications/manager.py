@@ -136,7 +136,7 @@ class NotificationManager(BaseManager):
 			case _:        raise CarbonError(f"Invalid state: {state}. Valid: on, off, toggle.")
 
 		if dnd == self.state.do_not_disturb:
-			return
+			return f"DND mode already {'on' if dnd else 'off'}."
 
 		msg     = "DND on. Notifications will now be hidden." if dnd else "DND off. Queued notifications will now be shown."
 		summary = "DND on" if dnd else "DND off"
