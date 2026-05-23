@@ -81,6 +81,7 @@ def parseArgs(argv):
 		else:
 			result["flags"][key] = " ".join(values)
 
+
 	return result
 
 
@@ -88,6 +89,18 @@ def main():
 	
 	try:
 		result =  parseArgs(sys.argv[1:])
+
+		if result["manager"] is None:
+			print(help())
+			exit(2)
+
+		if result["manager"] == "help":
+			print(help())
+			exit(2)
+	
+		if result["handler"] is None:
+			raise ValueError("handler argument required for all managers.")
+		
 	except ValueError as e:
 		Color.Print("[Error] ", Color.red, end="")
 		print(str(e))
