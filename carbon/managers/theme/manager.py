@@ -141,6 +141,11 @@ class ThemeManager(BaseManager):
 		if not img: img = self.state.wallpaper
 
 		
+		try:
+			contrast = float(contrast)
+		except ValueError:
+			raise CarbonError("Invalid contrast value. Expected integar or decimal.")
+		
 		match variant:
 			case "ash":
 				variant_type = MaterialColors.Variant.ash

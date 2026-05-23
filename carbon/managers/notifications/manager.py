@@ -139,8 +139,11 @@ class NotificationManager(BaseManager):
 	def sendNotification(self, *, summary: str, body: str = "", timeout: int = 5000, urgency: str = "normal", app: str = "CarbonShell"):
 		"Notification handler for the cli"
 
-		if not isinstance(timeout, int):
-			raise CarbonError("timeout should be an integar.")
+		try:
+			timeout = int(timeout)
+		except ValueError:
+			raise CarbonError("Invalid timeout value. Expected integar.")
+		
 		
 		if urgency not in ("low", "normal", "critical"):
 			raise CarbonError("Invalid urgency level. Pick from: low, normal, critical.")

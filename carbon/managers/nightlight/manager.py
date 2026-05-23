@@ -97,6 +97,11 @@ class NightLightManager(BaseManager):
 
 	def setTemperature(self, value: int) -> str:
 
+		try:
+			value = float(value)
+		except ValueError:
+			raise CarbonError("Invalid temperature value. Expected integar.")
+
 		if value < 1000 or value > 20000:
 			raise CarbonError("Invalid temperature value. Valid range: 1000-20000.")
 		
@@ -119,6 +124,11 @@ class NightLightManager(BaseManager):
 
 	def setGamma(self, value: int) -> str:
 
+		try:
+			value = float(value)
+		except ValueError:
+			raise CarbonError("Invalid gamma value. Expected integar.")
+		
 		if value < 10 or value > 200:
 			raise CarbonError("Invalid gamma value. Valid range: 10-200.")
 		
