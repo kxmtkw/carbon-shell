@@ -1,6 +1,5 @@
 from dataclasses import dataclass, replace
-from typing import Literal
-from typing import Literal
+from typing import Any, Callable, Literal
 
 from carbon.managers.base import BaseManager
 
@@ -19,8 +18,8 @@ class PanelManager(BaseManager):
 		position: Literal["top", "bottom"]
 
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		super().__init__(internalDispatch)
 		self.state = self.State(
 			mode="show",
 			position="bottom"

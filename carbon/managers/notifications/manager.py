@@ -20,8 +20,8 @@ class NotificationManager(BaseManager):
 		do_not_disturb: bool
 
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		super().__init__(internalDispatch)
 		self.server = getNotificationServer()
 		self.quickshell = Quickshell()
 		self.notifications: list[NotificationServer.Notification] = []

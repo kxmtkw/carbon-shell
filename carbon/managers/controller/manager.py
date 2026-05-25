@@ -1,7 +1,7 @@
-
 from dataclasses import dataclass
 from threading import Lock
 import time
+from typing import Any, Callable
 
 from carbon.managers.base import BaseManager
 from carbon.managers.theme import ThemeManager
@@ -31,8 +31,8 @@ class ControllerManager(BaseManager):
 		pass
 
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		super().__init__(internalDispatch)
 		self.lock = Lock()
 		self.qs = Quickshell()
 		self.panel_should_return_normal: bool = True

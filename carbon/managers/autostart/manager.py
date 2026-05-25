@@ -1,5 +1,5 @@
 from dataclasses import dataclass, replace
-from typing import Callable, Dict, Literal
+from typing import Any, Callable, Dict, Literal
 
 from carbon.managers.base import BaseManager
 
@@ -15,7 +15,8 @@ class AutostartManager(BaseManager):
 		commands: list[str]
 
 
-	def __init__(self):
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		super().__init__(internalDispatch)
 		self.state = self.State(
 			commands=[]
 		)

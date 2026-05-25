@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Callable, Literal
 from threading import Lock
 from dataclasses import dataclass, replace
 
@@ -28,7 +28,7 @@ class ThemeManager(BaseManager):
 		wallpaper_animation: Literal["wipe", "left", "right", "top", "bottom", "outer", "center", "any", "fade", "random"]
 
 
-	def __init__(self):
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
 
 		self.updater = ThemeUpdater()
 		self.material = MaterialColors()
@@ -48,7 +48,7 @@ class ThemeManager(BaseManager):
 			wallpaper_animation="center"
 		)
 
-		super().__init__()
+		super().__init__(internalDispatch)
 
 
 	def start(self):

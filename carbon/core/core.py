@@ -1,6 +1,7 @@
 import json
 import threading, dataclasses
 from concurrent.futures import ThreadPoolExecutor
+from typing import Any
 
 from carbon.ipc.server import Server
 from carbon.ipc.payloads import CommandRequest, CommandOutput
@@ -48,7 +49,7 @@ class CarbonCore:
 		self.managers: dict[str, BaseManager] = {}
 
 		for mgr_class in MANAGERS:
-			manager = mgr_class()
+			manager = mgr_class(self.internalDispatch)
 			self.managers[manager.name()] = manager
 
 		self.dispatch_map = {
@@ -236,6 +237,15 @@ class CarbonCore:
 			all_help += manager.getHelp()
 
 		return all_help
+
+
+	def internalDispatch(
+		self, 
+		manager: str,
+		handler: str,
+		args: dict[str, Any]
+	):
+		self.dispatch(-1, CommandRequest(manager, handler, args))
 
 
 	def dispatch(self, id: int, command: CommandRequest):

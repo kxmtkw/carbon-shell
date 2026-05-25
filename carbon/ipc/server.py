@@ -11,7 +11,7 @@ class Server:
 
 	address = "/tmp/carbon.portal"
 	
-	def __init__(self, timeout: float = 0.5):
+	def __init__(self, timeout: float = 0.5, internal_id: int = -1):
 
 		logger.log("server", f"Starting server at {self.address}", logger.Level.info)
 
@@ -31,6 +31,9 @@ class Server:
 
 		self.socket.settimeout(timeout)
 		self.socket.listen()
+
+		self.internal_id = internal_id
+
 		logger.log(
 			"server",
 			"Server is listening.",
@@ -89,6 +92,10 @@ class Server:
 		
 		
 	def send(self, client_id: int, output: CommandOutput):
+
+		if client_id == self.internal_id:
+			logger.debug("server", "Internal id triggered a send request, ignored.")
+			return
 
 		conn = self.clients.get(client_id)
 		

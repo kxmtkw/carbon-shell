@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from dataclasses import dataclass, replace
 from pathlib import Path
-from typing import Dict, Literal
+from typing import Any, Dict, Literal
 
 from carbon.managers.base import BaseManager
 
@@ -18,7 +18,8 @@ class LockScreenManager(BaseManager):
 		image: str
 
 
-	def __init__(self):
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		super().__init__(internalDispatch)
 		self.state = LockScreenManager.State(
 			style="screenshot",
 			image="~/.carbon/assets/default_wallpaper.jpg"

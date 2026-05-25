@@ -1,4 +1,5 @@
 from dataclasses import dataclass, replace
+from typing import Any, Callable
 
 from carbon.managers.base import BaseManager
 
@@ -19,8 +20,8 @@ class PowerManager(BaseManager):
 		force_hibernate_threshold: float
 
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		super().__init__(internalDispatch)
 		self.state = self.State(
 			full_threshold=95,
 			warning_threshold=15,

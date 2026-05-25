@@ -1,6 +1,6 @@
 
 from dataclasses import dataclass, replace
-from typing import Any
+from typing import Any, Callable
 import time
 
 from carbon.managers.base import BaseManager
@@ -17,8 +17,8 @@ class NightLightManager(BaseManager):
 		gamma: int
 
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		super().__init__(internalDispatch)
 		self.default_temperature = 6000
 		self.default_gamma = 100
 

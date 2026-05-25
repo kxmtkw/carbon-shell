@@ -1,4 +1,5 @@
 from dataclasses import dataclass, replace
+from typing import Any, Callable
 
 from carbon.managers.base import BaseManager
 from carbon.utils import ProcessManager, Notify, logger
@@ -12,8 +13,8 @@ class IdleManager(BaseManager):
 		toggled: bool
 
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		super().__init__(internalDispatch)
 
 		self.state = IdleManager.State(
 			toggled=True

@@ -6,8 +6,8 @@ class BaseManager:
 	class State:
 		pass
 
-	def __init__(self):
-		pass
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		self.internalDispatch: Callable[[str, str, dict[str, Any]], None] = internalDispatch
 	
 	def start(self):
 		raise NotImplementedError()
