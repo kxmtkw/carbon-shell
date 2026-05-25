@@ -74,7 +74,6 @@ class PowerManager(BaseManager):
 
 		if info is None: return
 		
-		print(info)
 		if not info.on_ac_only:
 			self.notifyCharging(info)
 			self.notifyPercentage(info)
@@ -132,7 +131,7 @@ class PowerManager(BaseManager):
 
 _help = """
 ==> power
-Power manager, barely works lol.
+Power manager, informs about battery updates.
 
 handlers:
 

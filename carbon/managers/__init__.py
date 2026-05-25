@@ -1,5 +1,6 @@
 from carbon.managers.base import BaseManager
 
+from carbon.managers.autostart import AutostartManager
 from carbon.managers.theme import ThemeManager
 from carbon.managers.controller import ControllerManager
 from carbon.managers.notifications import NotificationManager
@@ -9,7 +10,9 @@ from carbon.managers.power import PowerManager
 from carbon.managers.panel import PanelManager
 from carbon.managers.lock import LockScreenManager
 
+
 MANAGERS: list[type[BaseManager]] = [
+	AutostartManager,
 	ThemeManager,
 	ControllerManager,
 	NotificationManager,
