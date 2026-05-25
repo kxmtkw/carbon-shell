@@ -74,6 +74,7 @@ class PowerManager(BaseManager):
 
 		if info is None: return
 		
+		print(info)
 		if not info.on_ac_only:
 			self.notifyCharging(info)
 			self.notifyPercentage(info)
@@ -82,17 +83,17 @@ class PowerManager(BaseManager):
 
 
 	def notifyCharging(self, info: UPower.Info):
-
 		if info.status == UPower.Status.charging and self.previous_info.status != UPower.Status.charging:
 			Notify("Charger Connected", f"Device now charging ({int(info.percentage)}%)")
 			self.was_critical_triggered = False
 			self.was_warning_triggered = False
+			self.was_full_triggered = False 
 
 
 	def notifyPercentage(self, info: UPower.Info):
-
 		perc = info.percentage
-		if not info.status == UPower.Status.charging:
+		if info.status != UPower.Status.charging:
+			self.was_full_triggered = False
 			if perc <= self.state.force_hibernate_threshold and not self.was_critical_triggered:
 				self.triggerForceHibernate()
 			elif perc <= self.state.critical_threshold and not self.was_critical_triggered:
@@ -102,8 +103,6 @@ class PowerManager(BaseManager):
 		else:
 			if perc >= self.state.full_threshold and not self.was_full_triggered:
 				self.triggerFull()
-			else:
-				self.was_full_triggered = False
 
 
 	def triggerCharging(self, info: UPower.Info):
