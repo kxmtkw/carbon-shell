@@ -63,6 +63,19 @@ class _Logger():
 		self._file_log(sender, msg, level)
 
 
+	def debug(self, sender: str, msg: str):
+		self.log(sender, msg, self.Level.debug)
+
+	def info(self, sender: str, msg: str):
+		self.log(sender, msg, self.Level.info)
+
+	def warn(self, sender: str, msg: str):
+		self.log(sender, msg, self.Level.warning)
+
+	def critical(self, sender: str, msg: str):
+		self.log(sender, msg, self.Level.critical)
+
+
 	def _terminal_log(self, sender: str, msg: str, level: Level) -> None:
 
 		timestamp = f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]"
