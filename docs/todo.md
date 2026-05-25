@@ -35,7 +35,9 @@ The controller that opens after clicking the battery info. Display basic battery
 Make notifications actually work in quickshell.
 
 
-#### Basic Pacman System
+#### Basic Pacman System (CANCELLED)
+
+> Don't want to tie stuff to arch.
 
 A basic pacman wrapper for:
 
@@ -81,3 +83,8 @@ Adding options like position and even multiple variants.
 Build the shell's own launcher instead of relying on rofi's drun. For some reason, the application rofi -drun launchs lives under the daemon process. That means when daemon ends, all programs that were launched by the rofi launcher also end up closing.
 
 > No need now since i figured out what was wrong. Tho if i want to be able to not show certain apps, then this could be implemented. Also with our daemon, we could lauch the rofi menu even faster since we can cache the applications in memory.
+
+#### Multiple profiles/states
+
+The ability to load and switch between states file could be nice but maybe it defeats the purpose of configuring through the cli tool.
+
