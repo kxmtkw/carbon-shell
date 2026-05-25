@@ -99,8 +99,8 @@ while true; do
         carbon.shell theme set-contrast --value 1
         carbon.shell nightlight off
     else
-        carbon.shell theme switch-mode dark
-        carbon.shell theme set-wallpaper ~/Pictures/dark.png
+        carbon.shell theme switch-mode --mode dark
+        carbon.shell theme set-wallpaper --img ~/Pictures/dark.png
 		carbon.shell theme set-contrast --value 0.1
         carbon.shell nightlight on
     fi
@@ -111,7 +111,7 @@ done
 
 ### File Method
 
-If you prefer to use files as configuration, you can edit the json file in `~/.carbon/user/state.json`.
+If you prefer to use files as configuration, you can edit the json file in `~/.carbon/user/state.toml`.
 
 After editing the file, run:
 ```bash
@@ -120,52 +120,46 @@ carbon.shell daemon load-state
 
 Here is an example config:
 
-```json
-{
-    "theme": 
-    {
-        "mode": "dark",
-        "source": "wallpaper",
-        "wallpaper": "~/.carbon/assets/default_wallpaper.jpg",
-        "hex": "#82a0c0",
-        "variant": "graphite",
-        "contrast": 0.5,
-        "font": "Iosevka",
-        "face": "~/.carbon/assets/default_face.jpg",
-        "wallpaper_animation": "center"
-    },
-    "controller": 
-    {
+```toml
+[autostart]
+commands = []
 
-    },
-    "nightlight": 
-    {
-        "toggled": true,
-        "temperature": 6000,
-        "gamma": 100
-    },
-    "idle": 
-    {
-        "toggled": true
-    },
-    "notification": 
-    {
-        "do_not_disturb": false
-    },
-    "power": 
-    {
-        "full_threshold": 95,
-        "warning_threshold": 15,
-        "critical_threshold": 5,
-        "force_hibernate_threshold": 2
-    },
-    "panel": {
-        "mode": "show"
-    },
-	"lockscreen": {
-        "style": "screenshot",
-        "image": null
-    }
-}
+[theme]
+mode = "dark"
+source = "wallpaper"
+wallpaper = "~/.carbon/assets/default_wallpaper.jpg"
+hex = "#82a0c0"
+variant = "graphite"
+contrast = 0.5
+font = "Iosevka"
+face = "~/.carbon/assets/default_face.jpg"
+wallpaper_animation = "center"
+
+[controller]
+
+[notifications]
+do_not_disturb = false
+
+[nightlight]
+toggled = true
+temperature = 6000.0
+gamma = 100.0
+
+[idle]
+toggled = true
+
+[power]
+full_threshold = 95
+warning_threshold = 15
+critical_threshold = 5
+force_hibernate_threshold = 2
+
+[panel]
+mode = "show"
+position = "bottom"
+
+[lockscreen]
+style = "screenshot"
+image = "~/.carbon/assets/default_wallpaper.jpg"
 ```
 
