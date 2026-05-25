@@ -15,13 +15,13 @@ class LockScreenManager(BaseManager):
 	@dataclass(init=True, kw_only=True)
 	class State():
 		style: Literal["screenshot", "image", "wallpaper"]
-		image: str | None
+		image: str
 
 
 	def __init__(self):
 		self.state = LockScreenManager.State(
 			style="screenshot",
-			image=None
+			image="~/.carbon/assets/default_wallpaper.jpg"
 		)
 		self.config_file = "~/.config/hypr/hyprlock/hyprlock-theme.conf"
 
