@@ -3,7 +3,7 @@ from dataclasses import dataclass, replace
 from threading import Lock, Thread
 from typing import Any, Callable, Dict, Literal
 
-from carbon.lib.dbus import NotificationServer
+from carbon.lib.dbus import NotificationServer, getNotificationServer
 
 from carbon.lib.quickshell import Quickshell
 from carbon.managers.base import BaseManager
@@ -22,9 +22,11 @@ class NotificationManager(BaseManager):
 
 	def __init__(self):
 		super().__init__()
+		self.server = getNotificationServer()
+		self.quickshell = Quickshell()
 		self.notifications: list[NotificationServer.Notification] = []
 
-		self.quickshell = Quickshell()
+		self.server.setCallback(self.newNotification)
 
 		self.state = NotificationManager.State(
 			do_not_disturb=False

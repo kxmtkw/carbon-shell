@@ -2,7 +2,7 @@ from dataclasses import dataclass, replace
 
 from carbon.managers.base import BaseManager
 
-from carbon.lib.dbus import UPower
+from carbon.lib.dbus import UPower, getUpowerClient
 
 from carbon.utils import logger, CarbonError, Notify, shellrun, clamp
 
@@ -37,6 +37,9 @@ class PowerManager(BaseManager):
 		self.was_full_triggered = False
 		self.was_warning_triggered = False
 		self.was_critical_triggered = False
+
+		self.upower_client = getUpowerClient()
+		self.upower_client.setCallback(self.UPowerCallback)
 
 
 	def start(self):

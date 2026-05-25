@@ -9,7 +9,7 @@ from carbon.utils import CarbonError, logger, Notify, shellrun, locked
 
 from carbon.state import StateManager
 from carbon.lib.quickshell import Quickshell
-from carbon.lib.dbus import DBus
+from carbon.lib.dbus import startDbusClient, getNotificationServer
 
 from carbon.managers import BaseManager, MANAGERS
 
@@ -22,7 +22,6 @@ class CarbonCore:
 		logger.log("core", "Hello World!", logger.Level.info)
 
 		self.server = Server(1)
-		self.dbus = DBus()
 		self.state = StateManager("~/.carbon/user/state.toml")
 
 		self.lock = threading.Lock()
@@ -31,6 +30,9 @@ class CarbonCore:
 
 
 	def init(self):
+		
+		# Start Dbus Client
+		startDbusClient()
 		
 		# Starting quiskshell
 
@@ -63,18 +65,13 @@ class CarbonCore:
 		for name, manager in self.managers.items():
 			manager.start()
 			self.dispatch_map[name] = manager.handlers()
-
+		
 		# wiring things up,
 		# this needs to be done indpendently, might make each manager do this own its own instead of depending on the core.
 
-		Notify.setNotificationFunction(self.dbus.notification_server.sendNotification)
+		Notify.setNotificationFunction(getNotificationServer().sendNotification)
 
 		self.managers["controller"].setManagers(self.managers["theme"], self.managers["panel"])
-
-		self.dbus.notification_server.setCallback(self.managers["notifications"].newNotification)
-		self.dbus.upower.setCallback(self.managers["power"].UPowerCallback)
-		self.dbus.start()
-
 
 		Notify(
 			"Hello World!",
