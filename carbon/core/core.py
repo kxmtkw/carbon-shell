@@ -23,7 +23,7 @@ class CarbonCore:
 
 		self.server = Server(1)
 		self.dbus = DBus()
-		self.state = StateManager("~/.carbon/user/state.json")
+		self.state = StateManager("~/.carbon/user/state.toml")
 
 		self.lock = threading.Lock()
 		self.thread_pool = ThreadPoolExecutor(10)

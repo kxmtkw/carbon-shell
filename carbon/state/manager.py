@@ -1,5 +1,5 @@
 from pathlib import Path
-import json
+import toml
 from typing import Any, Callable
 
 from carbon.utils import FileWatcher
@@ -21,7 +21,7 @@ class StateManager:
             self._state_file.parent.mkdir(511, True, True)
 
         with open(self._state_file, "w") as file:
-            json.dump({}, file)
+            toml.dump({}, file)
 
 
     @property
@@ -37,7 +37,7 @@ class StateManager:
     
 
     def dump(self) -> str:
-        string = json.dumps(self._state, skipkeys=True, indent=4) 
+        string = toml.dumps(self._state) 
         return string
 
     def save(self):
@@ -52,9 +52,9 @@ class StateManager:
         
         with open(self._state_file) as file:
             try:
-                self._state = json.load(file)
+                self._state = toml.load(file)
                 return True
-            except json.JSONDecodeError:
+            except toml.TomlDecodeError:
                 self._state = {}
                 return False
 
