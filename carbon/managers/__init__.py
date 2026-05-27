@@ -9,6 +9,7 @@ from carbon.managers.idle import IdleManager
 from carbon.managers.power import PowerManager
 from carbon.managers.panel import PanelManager
 from carbon.managers.lock import LockScreenManager
+from carbon.managers.backlight import BacklightManager
 
 
 MANAGERS: list[type[BaseManager]] = [
@@ -20,5 +21,6 @@ MANAGERS: list[type[BaseManager]] = [
 	IdleManager,
 	PowerManager,
 	PanelManager,
-	LockScreenManager
+	LockScreenManager,
+	BacklightManager
 ]
