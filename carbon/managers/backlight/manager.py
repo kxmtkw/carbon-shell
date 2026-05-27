@@ -1,12 +1,15 @@
 import time
 from typing import Dict, Callable, Any
 from dataclasses import dataclass, replace
+from threading import Lock
 
 from carbon.managers.base import BaseManager
-from carbon.utils import CarbonError, shellrun, clamp, procrun, logger
+from carbon.utils import CarbonError, shellrun, clamp, procrun, logger, locked
+
 
 class BacklightManager(BaseManager):
 
+	backlightLock = Lock()
 
 	@dataclass(init=True, kw_only=True)
 	class State():
@@ -32,6 +35,8 @@ class BacklightManager(BaseManager):
 		self.min_steps = 10
 
 		self.saved_brightness = 100
+
+		self.is_busy = False
 
 	
 	def start(self):
@@ -68,11 +73,11 @@ class BacklightManager(BaseManager):
 		self.setBrightness(value=state.value)
 
 		try:
-			self.state.update_delay = int(state.update_delay)
-			self.state.minimum = int(state.minimum)
-			self.state.maximum = int(state.maximum)
+			self.state.update_delay = float(state.update_delay)
+			self.state.minimum = float(state.minimum)
+			self.state.maximum = float(state.maximum)
 		except ValueError:
-			raise CarbonError("Non-integar types used in numeral values of backlight manager.")
+			raise CarbonError("Non-number types used in numeral values of backlight manager.")
 
 
 	def getHelp(self) -> str:
@@ -90,7 +95,8 @@ class BacklightManager(BaseManager):
 
 		logger.debug("backlight", "Brightness updated.")
 	 
-
+	 
+	@locked(backlightLock)
 	def transitionBrightness(self, target: float):
 
 		current = self.state.value
