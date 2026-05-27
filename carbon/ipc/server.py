@@ -18,6 +18,7 @@ class Server:
 		self.socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 
 		self.clients: dict[int, socket.socket] = {}
+		self.current_id = 0
 
 		self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
@@ -62,7 +63,8 @@ class Server:
 			except TimeoutError, OSError:
 				return None
 			
-			id = len(self.clients)
+			id = self.current_id
+			self.current_id += 1
 			self.clients[id] = conn
 
 			logger.log("server", f"Got request! Associated id:{id} with client.", logger.Level.debug)
