@@ -58,6 +58,7 @@ class Power(BaseController):
 		options = self.options
 
 		if selected == options[0]:
+			time.sleep(0.25)
 			self.internalDispatch("power", "lock", {})
 			return
 		elif selected == options[1]:
@@ -84,6 +85,7 @@ class Power(BaseController):
 		selected = self.rofi.wait()
 		if (selected.strip() != "  Yes"): return
 
+		time.sleep(0.25)
 		self.internalDispatch("power", option, {})
 	
 
