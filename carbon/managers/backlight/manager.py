@@ -3,7 +3,7 @@ from typing import Dict, Callable, Any
 from dataclasses import dataclass, replace
 
 from carbon.managers.base import BaseManager
-from carbon.utils import CarbonError, shellrun, clamp, procrun
+from carbon.utils import CarbonError, shellrun, clamp, procrun, logger
 
 class BacklightManager(BaseManager):
 
@@ -51,6 +51,7 @@ class BacklightManager(BaseManager):
 
 	def handlers(self) -> Dict[str, Callable]:
 		return {
+			"get": self.getBrightness,
 			"set": self.setBrightness,
 			"increase": self.increaseBrightness,
 			"decrease": self.decreaseBrightness,
@@ -75,7 +76,7 @@ class BacklightManager(BaseManager):
 
 
 	def getHelp(self) -> str:
-		return ""
+		return _help
 	
 
 	def updateCurrentBrightness(self):
@@ -86,6 +87,8 @@ class BacklightManager(BaseManager):
 		current_brightness = int(out)
 
 		self.state.value = (current_brightness / self.max_brightness) * 100
+
+		logger.debug("backlight", "Brightness updated.")
 	 
 
 	def transitionBrightness(self, target: float):
@@ -93,7 +96,9 @@ class BacklightManager(BaseManager):
 		current = self.state.value
 		target = clamp(target, self.state.minimum, self.state.maximum)
 
-		if current == target: return
+		if current == target:
+			logger.debug("backlight", "Target was equal to current so no need to perform transition.")
+			return
 
 		diff = target - current
 
@@ -128,7 +133,10 @@ class BacklightManager(BaseManager):
 		
 		self.transitionBrightness(value)
 		
-		return f"Brightness set to {self.state.value}%."
+		msg = f"Brightness set to {self.state.value}%."
+
+		logger.info("backlight", msg)
+		return msg
 
 	
 	def increaseBrightness(self, *, value: float):
@@ -144,8 +152,11 @@ class BacklightManager(BaseManager):
 			raise CarbonError("Value must be within 0-100.")
 
 		self.transitionBrightness(self.state.value + value)
+		
+		msg = f"Brightness increased by {value}%. Is now {self.state.value}%."
 
-		return f"Brightness increased by {value}%. Is now {self.state.value}%."
+		logger.info("backlight", msg)
+		return msg
 
 
 	def decreaseBrightness(self, *, value: float):
@@ -162,18 +173,49 @@ class BacklightManager(BaseManager):
 
 		self.transitionBrightness(self.state.value - value)
 
-		return f"Brightness decreased by {value}%. Is now {self.state.value}%."
+		msg = f"Brightness decreased by {value}%. Is now {self.state.value}%."
+
+		logger.info("backlight", msg)
+		return msg
 
 
 	def saveBrightness(self):
 		self.saved_brightness = self.state.value
-		return f"Brightness saved with value {self.saved_brightness}%."
+		msg = f"Brightness saved with value {self.saved_brightness}%."
+		logger.info("backlight", msg)
+		return msg
 
 
 	def restoreBrightness(self):
 		self.setBrightness(value=self.saved_brightness)
-		return f"Brightness restored to {self.saved_brightness}%."
+		msg = f"Brightness restored to {self.saved_brightness}%."
+		logger.info("backlight", msg)
+		return msg
 	
 
 	
+_help = """
+==> backlight
+Control and set the screen brightness.
 
+handlers:
+
+	> get
+		Get the current brightness value.
+
+	> set --value [number]
+		Set the current value to this percentage.
+		Note that number is clamped between the min and max values.
+
+	> increase --value [number]
+		Increase the brightness by some percentage.
+
+	> decrease --value [number]
+		Decrease the brightness by some percentage.
+
+	> save
+		Save the current brightness.
+
+	> restore
+		Restore the last saved brightness level.
+"""

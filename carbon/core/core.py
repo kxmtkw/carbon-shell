@@ -223,7 +223,7 @@ class CarbonCore:
 		string = json.dumps(dispatch_map, indent=4)
 
 		return string
-		
+
 
 	def getHelp(self):
 		return _help
@@ -325,12 +325,16 @@ handlers:
 
 	> shutdown
 		Shut the daemon down. Use carbon.daemon --end.
+
 	> load-state
 		Load state from state file.
+
 	> save-state
 		Manually save the state.
+
 	> dump-state
 		Print the state to the terminal.
+
 	> get-dispatch-map
 		Print dispatch map.
 """

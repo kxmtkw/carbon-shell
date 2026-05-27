@@ -85,8 +85,10 @@ handlers:
 
 	> on
 		Turn on the idle manager.
+
 	> off
 		Turn off the idle manager.
+		
 	> toggle
 		Toggle the idle manager.
 """
