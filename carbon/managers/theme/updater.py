@@ -41,6 +41,8 @@ class ThemeUpdater:
 
 		for type, paths in self.colorfiles.items():
 			handler = self.updaters.get(type)
+			if not handler: return
+
 			string = handler(colors)
 
 			for file in ([paths] if isinstance(paths, str) else paths):
@@ -80,7 +82,7 @@ class ThemeUpdater:
 		if not path.exists():
 			raise CarbonError(f"File not found: {path}") 
 		
-		success, output = procrun(["swww", "img", "--transition-type", animation, path])
+		success, output = procrun(["awww", "img", "--transition-type", animation, str(path)])
 
 		if not success:
 			raise CarbonError(f"Failed to change wallpaper: swww failure\n{output}")
@@ -101,10 +103,11 @@ class ThemeUpdater:
 	def loadFonts(self) -> list[str]:
 
 		success, output = shellrun("fc-list --format='%{family[0]}\n' | sort | uniq")
-
+		fonts = []
+		
 		if not success: return fonts
 
-		fonts = []
+		
 		for item in output.splitlines():
 			if item.startswith("Noto"): continue
 			fonts.append(item)

@@ -22,7 +22,7 @@ class AutostartManager(BaseManager):
 		)
 
 		self.core_commands = [
-			"swww-daemon", # wallpaper daemon
+			"awww-daemon", # wallpaper daemon
 			"wl-paste --watch cliphist store", # clipboard daemon
 			"systemctl --user start hyprpolkitagent" # polkit agent
 		]
