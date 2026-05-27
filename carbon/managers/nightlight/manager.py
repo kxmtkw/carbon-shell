@@ -36,7 +36,7 @@ class NightLightManager(BaseManager):
 
 
 	def end(self):
-		self.toggleNightlight(False)
+		self.hyprsunset.kill()
 		
 	
 	def name(self):
@@ -60,8 +60,8 @@ class NightLightManager(BaseManager):
 	def setState(self, state: State):
 		self.toggleNightlight(state.toggled)
 		time.sleep(0.1)
-		self.setTemperature(state.temperature)
-		self.setGamma(state.gamma)
+		self.setTemperature(value=state.temperature)
+		self.setGamma(value=state.gamma)
 
 
 	def getHelp(self):
@@ -95,7 +95,7 @@ class NightLightManager(BaseManager):
 			return "Nightlight turned off"
 
 
-	def setTemperature(self, value: int) -> str:
+	def setTemperature(self, *, value: int) -> str:
 
 		try:
 			value = float(value)
@@ -122,7 +122,7 @@ class NightLightManager(BaseManager):
 		return "Updated temperature."
 
 
-	def setGamma(self, value: int) -> str:
+	def setGamma(self, *, value: int) -> str:
 
 		try:
 			value = float(value)

@@ -104,8 +104,6 @@ class CarbonCore:
 		if not self.is_running: 
 			return "This call shouldn't have been possible."
 
-		self.saveState()
-
 		logger.log(
 			"core",
 			"Killing quickshell.",

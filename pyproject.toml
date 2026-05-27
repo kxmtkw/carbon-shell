@@ -23,3 +23,7 @@ dependencies = [
     "dbus-next",
     "watchdog"
 ]
+
+[project.scripts]
+carbon-daemon = "carbon.cli.daemon:main"
+carbon-shell = "carbon.cli.shell:main"

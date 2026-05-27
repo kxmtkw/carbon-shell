@@ -124,9 +124,9 @@ def main():
     Color.Print(":: Starting shell...", Color.blue)
 
     run("pidof Hyprland && echo 'Hyprland already running!' || start-hyprland")
-    run("carbon.daemon --start", hide_output=False)
+    run("carbon-daemon --start", hide_output=False)
     run("hyprctl reload > /dev/null")
-    run("carbon.shell daemon save-state", hide_output=True)
+    run("carbon-shell daemon save-state", hide_output=True)
 
     Color.Print(" :: Carbon shell installed!", Color.green)
 

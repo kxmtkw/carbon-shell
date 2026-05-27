@@ -95,31 +95,31 @@ class PowerManager(BaseManager):
 				return "Locking your so precious computer."
 			
 			case "shutdown":
-				shellrun("systemctl poweroff")
+				shellrun("systemctl poweroff", wait=False)
 				return "Bye Bye!"
 
 			case "reboot":
-				shellrun("systemctl reboot")
+				shellrun("systemctl reboot", wait=False)
 				return "Be right back."
 
 			case "suspend":
 				shellrun("pidof hyprlock || hyprlock", wait=False)
 				time.sleep(1)
-				shellrun("systemctl suspend")
+				shellrun("systemctl suspend", wait=False)
 				return "Good dreams..."
 
 			case "hibernate":
 				shellrun("pidof hyprlock || hyprlock", wait=False)
 				time.sleep(1)
-				shellrun("systemctl hibernate")
+				shellrun("systemctl hibernate", wait=False)
 				return "Winter here already?"
 
 			case "logout":
-				shellrun("hyprctl dispatch exit")
+				shellrun("rm /tmp/carbon.portal; hyprctl dispatch exit", wait=False)
 				return "Logging out. Over."
 
 			case "bios":
-				shellrun("systemctl reboot --firmware-setup")
+				shellrun("systemctl reboot --firmware-setup", wait=False)
 				return "Damn, be careful vro."
 
 			case _:

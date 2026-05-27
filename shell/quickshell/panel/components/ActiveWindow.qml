@@ -38,7 +38,7 @@ WrapperRectangle
     {
         id: panel_activeWindow_process
         running: false
-        command: ["carbon.shell", "controller", "run", "--name", "windows"]
+        command: ["carbon-shell", "controller", "run", "--name", "windows"]
     }
 
 	MouseArea 

@@ -36,7 +36,7 @@ class IdleManager(BaseManager):
 
 
 	def end(self):
-		self.toggleIdle(False)
+		self.hypridle.kill()
 
 
 	def name(self):

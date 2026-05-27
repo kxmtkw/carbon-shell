@@ -28,7 +28,7 @@ WrapperRectangle
     Process 
     {
         id: panel_power_proc
-        command: ["carbon.shell", "controller", "run", "--name", "power"]
+        command: ["carbon-shell", "controller", "run", "--name", "power"]
     }
 
 	MouseArea 
