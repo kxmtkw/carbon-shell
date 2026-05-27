@@ -1,5 +1,6 @@
 from dataclasses import dataclass, replace
 from typing import Any, Callable
+import time
 
 from carbon.managers.base import BaseManager
 
@@ -56,7 +57,15 @@ class PowerManager(BaseManager):
 	
 
 	def handlers(self):
-		return {}
+		return {
+			"lock": lambda: self.runPowerOption("lock"),
+			"shutdown": lambda: self.runPowerOption("shutdown"),
+			"reboot": lambda: self.runPowerOption("reboot"),
+			"suspend": lambda: self.runPowerOption("suspend"),
+			"hibernate": lambda: self.runPowerOption("hibernate"),
+			"logout": lambda: self.runPowerOption("logout"),
+			"bios": lambda: self.runPowerOption("bios")
+		}
 	
 
 	def getHelp(self):
@@ -73,6 +82,50 @@ class PowerManager(BaseManager):
 	def getState(self):
 		return replace(self.state)
 	
+
+	def runPowerOption(self, option: str) -> str:
+
+		self.internalDispatch("controller", "close", {})
+		self.internalDispatch("daemon", "save-state", {})
+
+		match option:
+
+			case "lock":
+				shellrun("pidof hyprlock || hyprlock", wait=False)
+				return "Locking your so precious computer."
+			
+			case "shutdown":
+				shellrun("systemctl poweroff")
+				return "Bye Bye!"
+
+			case "reboot":
+				shellrun("systemctl reboot")
+				return "Be right back."
+
+			case "suspend":
+				shellrun("pidof hyprlock || hyprlock", wait=False)
+				time.sleep(1)
+				shellrun("systemctl suspend")
+				return "Good dreams..."
+
+			case "hibernate":
+				shellrun("pidof hyprlock || hyprlock", wait=False)
+				time.sleep(1)
+				shellrun("systemctl hibernate")
+				return "Winter here already?"
+
+			case "logout":
+				shellrun("hyprctl dispatch exit")
+				return "Logging out. Over."
+
+			case "bios":
+				shellrun("systemctl reboot --firmware-setup")
+				return "Damn, be careful vro."
+
+			case _:
+				logger.warn("power", f"Unknown power option: {option}")
+				return "If you somehow see this message, something wrong."
+
 
 	def UPowerCallback(self, info: UPower.Info | None):
 
@@ -139,5 +192,24 @@ Power manager, informs about battery updates.
 
 handlers:
 
-	> This manager has no handlers!
+	> lock
+		Lock session.
+	
+	> shutdown
+		Poweroff the computer.
+
+	> reboot
+		Restart the system.
+
+	> suspend
+		Causes the system to sleep/suspend.
+
+	> hibernate
+		Causes the system to hibernate.
+
+	> logout
+		Logout user.
+
+	> bios
+		Restart and enter bios.
 """
