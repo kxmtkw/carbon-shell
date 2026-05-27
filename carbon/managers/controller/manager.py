@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from threading import Lock
 import time
-from typing import Any, Callable
+from typing import Any, Callable, Dict
 
 from carbon.managers.base import BaseManager
 from carbon.managers.theme import ThemeManager
@@ -35,25 +35,24 @@ class ControllerManager(BaseManager):
 		super().__init__(internalDispatch)
 		self.lock = Lock()
 		self.qs = Quickshell()
-		self.panel_should_return_normal: bool = True
-		self.panel_should_return_to_mode = "show"
-		self.panel_manager: PanelManager
 		self.current_controller: BaseController | None = None
 		self.state = self.State()
+
+		self.panel_should_return_normal: bool = True
 
 
 	def start(self):
 
-		self.launcher = Launcher()
-		self.power = Power()
-		self.screenshot = Screenshot()
-		self.theme = Theme()
-		self.networker = Networker()
-		self.clipboard = Clipboard()
-		self.windows = Windows()
-		self.runner = Runner()
+		self.launcher = Launcher(self.internalDispatch)
+		self.power = Power(self.internalDispatch)
+		self.screenshot = Screenshot(self.internalDispatch)
+		self.theme = Theme(self.internalDispatch)
+		self.networker = Networker(self.internalDispatch)
+		self.clipboard = Clipboard(self.internalDispatch)
+		self.windows = Windows(self.internalDispatch)
+		self.runner = Runner(self.internalDispatch)
 
-		self.controllers = {
+		self.controllers: Dict[str, BaseController] = {
 			"launcher": self.launcher,
 			"power": self.power,
 			"screenshot": self.screenshot,
@@ -73,7 +72,7 @@ class ControllerManager(BaseManager):
 		return "controller"
 
 
-	def handlers(self) -> dict[str, callable]:
+	def handlers(self) -> dict[str, Callable]:
 		return {
 			"run": self.run,
 			"close": self.close
@@ -94,15 +93,14 @@ class ControllerManager(BaseManager):
 		return _help
 	
 	
-	def setManagers(self, themer: ThemeManager, panel: PanelManager):
-		self.panel_manager = panel
+	def setManagers(self, themer: ThemeManager):
 		self.theme.themer = themer
 
 
 	def run(self, *, name: str) -> str:
 
 		# get controller
-		controller: BaseController = self.controllers.get(name)
+		controller: BaseController | None = self.controllers.get(name)
 		if not controller:
 			raise CarbonError(f"Controller not found: {name}")
 
@@ -132,11 +130,8 @@ class ControllerManager(BaseManager):
 			
 			self.current_controller = controller
 			
-			panel_mode = self.panel_manager.getState().mode
-			self.panel_manager.setMode(mode="bypass")
+			self.internalDispatch("panel", "toggle-bypass", {"state": "on"})
 			self.panel_should_return_normal = True
-			if panel_mode != "bypass":
-				self.panel_should_return_to_mode = panel_mode
 
 			try:
 				controller.launch()
@@ -147,7 +142,7 @@ class ControllerManager(BaseManager):
 			self.current_controller = None
 
 			if self.panel_should_return_normal:
-				self.panel_manager.setMode(mode=self.panel_should_return_to_mode)
+				self.internalDispatch("panel", "toggle-bypass", {"state": "off"})
 		
 			
 		logger.log(

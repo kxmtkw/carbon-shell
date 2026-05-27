@@ -26,6 +26,7 @@ class PanelManager(BaseManager):
 		)
 		
 		self.qs = Quickshell()
+		self.last_active_mode: Literal["show", "hide"] = "show"
 
 
 	def start(self):
@@ -43,6 +44,7 @@ class PanelManager(BaseManager):
 	def handlers(self):
 		return {
 			"set-mode": self.setMode,
+			"toggle-bypass": self.toggleBypassView,
 			"set-position": self.setPosition
 		}
 	
@@ -87,6 +89,22 @@ class PanelManager(BaseManager):
 			raise CarbonError("Invalid panel mode. Valid modes are: show, hide, bypass.")
 		
 		
+	def toggleBypassView(self, *, state: Literal["on", "off"]):
+
+		if state == "off":
+			self.setMode(mode=self.last_active_mode)
+			return f"Switched back to {self.state.mode} mode."
+		
+		elif state == "on":
+			self.last_active_mode = self.state.mode if self.state.mode != "bypass" else "show"
+			self.setMode(mode="bypass")
+
+		else:
+			raise CarbonError(f"Invalid state: {state}. Either 'on' or 'off'.")
+
+		return "Switched to bypass mode."
+	
+		
 	def setPosition(self, *, position: Literal["top", "bottom"]):
 		
 		if self.state.position == position:
@@ -116,6 +134,9 @@ handlers:
 
 	> set-mode --mode [show|hide|bypass]
 		Set panel mode.
+
+	> toggle-bypass --state [on|off]
+		Switch between bypass mode and last active mode.
 
 	> set-position --position [top|bottom]
 		Set panel position.

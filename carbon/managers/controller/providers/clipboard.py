@@ -1,4 +1,5 @@
-from pathlib import Path
+from typing import Any, Callable
+
 from carbon.managers.controller.base import BaseController
 from carbon.lib.rofi import RofiShell
 
@@ -6,8 +7,8 @@ from carbon.utils import shellrun
 
 class Clipboard(BaseController):
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		super().__init__(internalDispatch)
 		self.rasi = "~/.carbon/shell/rofi/clipboard/main.rasi"
 		self.rofi = RofiShell(self.rasi)
 

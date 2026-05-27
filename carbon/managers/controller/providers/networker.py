@@ -1,4 +1,5 @@
 import time
+from typing import Any, Callable
 
 import nmcli
 
@@ -9,7 +10,8 @@ from carbon.lib.networker import Icons
 
 class Networker(BaseController):
 
-	def __init__(self):
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		super().__init__(internalDispatch)
 		self.rasi_normal = "~/.carbon/shell/rofi/networker/normal_menu.rasi"
 		self.rasi_info = "~/.carbon/shell/rofi/networker/info_menu.rasi"
 		self.rasi_mesg = "~/.carbon/shell/rofi/networker/display_mesg.rasi"
@@ -301,4 +303,3 @@ Rate       {network.rate}MiB/s"""
 			self.displayMessageRofi(f"{Icons.error} ", f"Failed to connect to {network.ssid}")
 			time.sleep(3)
 			self.rofi.close()
-

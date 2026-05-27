@@ -1,5 +1,6 @@
 from pathlib import Path
 import subprocess
+from typing import Any, Callable
 from carbon.managers.controller.base import BaseController
 from carbon.lib.rofi import RofiShell
 from carbon.utils import logger
@@ -8,8 +9,8 @@ import shlex
 
 class Runner(BaseController):
 
-	def __init__(self):
-		super().__init__()
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		super().__init__(internalDispatch)
 		self.rasi_main = "~/.carbon/shell/rofi/run/main.rasi"
 		self.rasi_error = "~/.carbon/shell/rofi/run/error.rasi"
 

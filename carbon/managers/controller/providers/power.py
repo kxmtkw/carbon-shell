@@ -1,4 +1,5 @@
 import time
+from typing import Any, Callable
 
 from carbon.lib.rofi import RofiShell
 from carbon.managers.controller.base import BaseController
@@ -8,8 +9,8 @@ from carbon.utils import shellrun
 
 class Power(BaseController):
 	
-	def __init__(self):
-		super().__init__()
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		super().__init__(internalDispatch)
 		self.main_rasi = "~/.carbon/shell/rofi/power/main.rasi"
 		self.confirmation_rasi = "~/.carbon/shell/rofi/confirmation/main.rasi"
 		
@@ -57,19 +58,18 @@ class Power(BaseController):
 		options = self.options
 
 		if selected == options[0]:
-			cmd = "carbon.power lock"
-			time.sleep(0.25)
-			return shellrun(cmd) #no need to confirm locking
+			self.internalDispatch("power", "lock", {})
+			return
 		elif selected == options[1]:
-			cmd = "carbon.power shutdown"
+			option = "shutdown"
 		elif selected == options[2]:
-			cmd = "carbon.power reboot"
+			option = "reboot"
 		elif selected == options[3]:
-			cmd = "carbon.power suspend"
+			option = "suspend"
 		elif selected == options[4]:
-			cmd = "carbon.power hibernate"
+			option = "hibernate"
 		elif selected == options[5]:
-			cmd = "carbon.power logout"
+			option = "logout"
 		else:
 			return
 		
@@ -84,8 +84,7 @@ class Power(BaseController):
 		selected = self.rofi.wait()
 		if (selected.strip() != "  Yes"): return
 
-		time.sleep(0.25) #rofi closes
-		shellrun(cmd)
+		self.internalDispatch("power", option, {})
 	
 
 	def getUptime(self) -> str:
@@ -110,5 +109,5 @@ class Power(BaseController):
 
 
 if __name__ == "__main__":
-	c = Power()
+	c = Power(lambda *_args, **_kwargs: None)
 	c.launch()

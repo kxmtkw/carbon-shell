@@ -72,7 +72,7 @@ class CarbonCore:
 
 		Notify.setNotificationFunction(getNotificationServer().sendNotification)
 
-		self.managers["controller"].setManagers(self.managers["theme"], self.managers["panel"])
+		self.managers["controller"].setManagers(self.managers["theme"])
 
 		Notify(
 			"Hello World!",

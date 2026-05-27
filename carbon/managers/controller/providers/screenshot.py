@@ -1,5 +1,6 @@
 from pathlib import Path
 import sys, time
+from typing import Any, Callable
 
 from carbon.lib.rofi import RofiShell
 from carbon.managers.controller.base import BaseController
@@ -8,7 +9,8 @@ from carbon.utils import shellrun
 
 class Screenshot(BaseController):
 	
-	def __init__(self):
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+		super().__init__(internalDispatch)
 		self.rofi = RofiShell("~/.carbon/shell/rofi/screenshot/main.rasi")
 
 		self.save_dir = Path("~/Pictures").expanduser()
@@ -56,5 +58,5 @@ class Screenshot(BaseController):
 		
 
 if __name__ == "__main__":
-	c = Screenshot()
+	c = Screenshot(lambda *_args, **_kwargs: None)
 	c.launch()
