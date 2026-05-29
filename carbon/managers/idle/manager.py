@@ -72,7 +72,6 @@ class IdleManager(BaseManager):
 			if self.hypridle.poll(0.1):
 				self.hypridle.kill()
 				logger.log("idle", "Idle manager turned off.", logger.Level.info)
-				Notify("Idle", "Idle manager turned off.")
 
 			return "Idle manager turned off."
 
