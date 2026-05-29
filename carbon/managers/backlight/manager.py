@@ -95,7 +95,7 @@ class BacklightManager(BaseManager):
 
 		logger.debug("backlight", "Brightness updated.")
 	 
-	 
+	
 	@locked(backlightLock)
 	def transitionBrightness(self, target: float):
 
@@ -122,7 +122,7 @@ class BacklightManager(BaseManager):
 
 	def getBrightness(self):
 		self.updateCurrentBrightness()
-		return self.state.update_delay
+		return self.state.value
 
 
 	def setBrightness(self, *, value: float):
