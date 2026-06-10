@@ -9,7 +9,6 @@ configuration
 @import "../Config/style.rasi"
 
 
-
 window 
 {    
     transparency:                "real";
@@ -24,40 +23,24 @@ window
     /* properties for all widgets */
     enabled:                     true;
     margin:                      10px;
-    padding:                     0;
-    border:                      @themeBorderWidth;
-    border-color:                @surfaceContainerHighest;
-    border-radius:               calc(600/20);
+    padding:                     @styleGaps;
+    border-radius:               @styleOuterBorderRadius;
     cursor:                      "default";
-    background-color:            transparent;
+    background-color:            @background;
 }
 
 mainbox 
 {
     enabled:                     true;
-    spacing:                     0;
-    margin:                      0px;
-    border:                      0px solid;
-    border-radius:               0%;
-    background-color:            @backgroundTransparentxAA;
+    spacing:                     @styleWidgetSpace;
+	padding:                     @styleInnerGaps;
+    border:                      @styleInlineBorderWidth;
+    border-radius:               @styleInnerBorderRadius;
+	border-color:                @styleInlineBorderColor;
+    background-color:            @styleBoxColor;
     vertical-align:              0.5;
     orientation:                 vertical;
     children:                    [ "listview" ];
-}
-
-inputbar {
-    padding:                     24px 10px 10px 10px;
-    border-radius:               0px;
-    background-color:            @background;
-    text-color:                  @onSurface;
-    children:                    [ "dummy", "prompt", "dummy"];
-}
-dummy {
-    background-color:            transparent;
-}
-prompt {
-    background-color:            inherit;
-    text-color:                  inherit;
 }
 
 
@@ -75,11 +58,10 @@ listview
     fixed-columns:               true;
     
     spacing:                     8px;
-    margin:                      0%;
-    padding:                     28px 40px;
+    margin:                      2px 10px;
     border:                      0px solid;
     border-radius:               0px;
-    background-color:            @background;
+    background-color:            inherit;
     text-color:                  @onSurface;
     vertical-align:              0.5;
     horizontal-align:            0.5;
@@ -90,10 +72,10 @@ element {
     enabled:                     true;
     spacing:                     10px;
     margin:                      0px;
-    padding:                     15px 0px;
+    padding:                     10px 0px;
     border:                      0px;
-    border-radius:               calc(16);
-    background-color:            @background;
+    border-radius:               10px;
+    background-color:            inherit;
     text-color:                  @onSurface;
     orientation:                 horizontal;
     cursor:                      pointer;

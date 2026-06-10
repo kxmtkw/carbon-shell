@@ -29,31 +29,29 @@ window
     /* properties for all widgets */
     enabled:                     true;
     margin:                      10px;
-    padding:                     0;
-    border:                      @themeBorderWidth;
-    border-color:                @surfaceContainerHighest;
-    border-radius:               calc(700/24);
+    padding:                     @styleGaps;
+    border-radius:               @styleOuterBorderRadius;
     cursor:                      "default";
-    background-color:            transparent;
+    background-color:            @background;
 }
 
 mainbox 
 {
     enabled:                     true;
-    spacing:                     0;
-    padding:                     0px 0px;
-    margin:                      0px;
-    border:                      0px solid;
-    border-radius:               0%;
-    background-color:            @background;
+    spacing:                     @styleWidgetSpace;
+	padding:                     @styleInnerGaps;
+    border:                      @styleInlineBorderWidth;
+    border-radius:               @styleInnerBorderRadius;
+	border-color:                @styleInlineBorderColor;
+    background-color:            @styleBoxColor;
     vertical-align:              0.5;
     orientation:                 vertical;
     children:                    [ "inputbar", "message", "listview" ];
 }
 
 inputbar {
-    padding:                     25px 15px 15px 15px;
-    background-color:            @background;
+    padding:                     0px 0px 10px 0px;
+    background-color:            inherit;
     text-color:                  @onSurface;
     children:                    [ "dummy", "prompt", "dummy"];
 }
@@ -69,9 +67,9 @@ prompt {
 
 message {
     enabled:                     true;
-    border-radius:               15px;
-    margin:                      10px 40px;
-    padding:                     16px;
+    border-radius:               @styleWidgetBorderRadius;
+    margin:                      0px 40px;
+	padding:                     16px;
     background-color:            @primaryContainer;
     text-color:                  @onPrimaryContainer;
 }
@@ -100,10 +98,10 @@ listview
     
     spacing:                     10px;
     margin:                      0%;
-    padding:                     16px 40px;
+    padding:                     12px 60px;
     border:                      0px solid;
     border-radius:               0px;
-    background-color:            @background;
+    background-color:            inherit;
     text-color:                  @onSurface;
     vertical-align:              0.5;
     cursor:                      "default";
@@ -114,10 +112,10 @@ element
     enabled:                     true;
     spacing:                     0px;
     margin:                      0px;
-    padding:                     16px 30px;
+    padding:                     16px 40px;
     border:                      0px solid;
-    border-radius:               calc(16);
-    background-color:            @background;
+    border-radius:               0;
+    background-color:            inherit;
     text-color:                  @onSurface;
     cursor:                      pointer;
 }
@@ -131,6 +129,6 @@ element-text
 }
 element selected.normal 
 {
-    background-color:            var(surfaceContainer);
-    text-color:                  var(onSurface);
+	border:                      @styleSelectionBar; 
+    border-color:                @styleSelectionColor;
 }

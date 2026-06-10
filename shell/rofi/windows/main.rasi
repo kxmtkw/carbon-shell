@@ -35,24 +35,23 @@ window
     /* properties for all widgets */
     enabled:                     true;
     margin:                      10px;
-    padding:                     0;
-    border:                      @themeBorderWidth;
-    border-color:                @surfaceContainerHighest;
-    border-radius:               calc(760/28);
+    padding:                     @styleGaps;
+    border-radius:               @styleOuterBorderRadius;
     cursor:                      "default";
-    background-color:            transparent;
+    background-color:            @background;
 }
 
 mainbox 
 {
     enabled:                     true;
-    spacing:                     0;
-    margin:                      0px;
-    border:                      0px solid;
-    border-radius:               0%;
-    background-color:            @backgroundTransparentxAA;
+    spacing:                     @styleWidgetSpace;
+	padding:                     @styleInnerGaps;
+    border:                      @styleInlineBorderWidth;
+    border-radius:               @styleInnerBorderRadius;
+	border-color:                @styleInlineBorderColor;
+    background-color:            @styleBoxColor;
     vertical-align:              0.5;
-    orientation:                 horizontal;
+    orientation:                 vertical;
     children:                    [ "listview" ];
 }
 
@@ -69,12 +68,11 @@ listview
     fixed-height:                false;
     fixed-columns:               false;
     
-    spacing:                     8px;
+    spacing:                     10px;
     margin:                      0%;
-    padding:                     40px 40px;
     border:                      0px solid;
     border-radius:               0px;
-    background-color:            @background;
+    background-color:            inherit;
     text-color:                  @onSurface;
     vertical-align:              0.5;
     cursor:                      "default";
@@ -86,9 +84,9 @@ element {
     margin:                      0px;
     padding:                     15px;
     border:                      0px;
-    border-radius:               calc(16);
-    background-color:            @background;
-    text-color:                  @onSurface;
+    border-radius:               0px;
+    background-color:            inherit;
+    text-color:                  inherit;
     orientation:                 horizontal;
     cursor:                      pointer;
 }
@@ -97,20 +95,20 @@ element normal.normal {
     text-color:                  inherit;
 }
 element selected.normal {
-    background-color:            @surfaceContainer;
-    text-color:                  @onSurface;
+	border:                      @styleSelectionBar; 
+    border-color:                @styleSelectionColor;
 }
 element normal.active {
-    background-color:            @primaryContainer;
-    text-color:                  @onPrimaryContainer;
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveColor;
 }
 element alternate.active {
-    background-color:            @primaryContainer;
-    text-color:                  @onPrimaryContainer;
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveColor;
 }
 element selected.active {
-    background-color:            @primary;
-    text-color:                  @onPrimary;
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveSelectionColor;
 }
 element-icon {
     background-color:            transparent;

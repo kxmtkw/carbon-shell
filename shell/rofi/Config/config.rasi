@@ -22,6 +22,12 @@ configuration {
 	sorting-method: "fzf";
 	max-history-size: 25;
 
+	lazy-grab: true;
+    parse-hosts: false;
+    parse-known-hosts: false;
+
+	cache-dir: "/tmp/rofi-cache";
+
 	// Style
 	
 	show-icons: true;

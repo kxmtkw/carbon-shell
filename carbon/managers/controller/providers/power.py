@@ -79,11 +79,11 @@ class Power(BaseController):
 		self.rofi.display(
 			mode = RofiShell.Mode.dmenu,
 			mesg="Are you sure?",
-			options=["  No", "  Yes"]
+			options=["No", "Yes"]
 		)
 
 		selected = self.rofi.wait()
-		if (selected.strip() != "  Yes"): return
+		if (selected.strip() != "Yes"): return
 
 		time.sleep(0.25)
 		self.internalDispatch("power", option, {})

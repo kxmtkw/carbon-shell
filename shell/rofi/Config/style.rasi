@@ -1,10 +1,20 @@
 * {
-    themeBorderWidth: 0px;
-    themeBorderRadius: 12px;
-    themeRadiusNone: 0;
-    themeRadiusExtraSmall: 4;
-    themeRadiusSmall: 8;
-    themeRadiusMedium: 12;
-    themeRadiusLarge: 16;
-    themeRadiusExtraLarge: 28;
+	styleScale: 1;
+
+    styleInlineBorderWidth: 2px;
+	styleOuterBorderRadius: 20px;
+	styleInnerBorderRadius: 12px;
+	styleWidgetBorderRadius: 8px;
+
+	styleGaps: 10px;
+	styleInnerGaps: 20px;
+	styleWidgetSpace: 12px;
+
+	styleInlineBorderColor: @surfaceContainerHighest;
+	styleBoxColor: @background;
+
+	styleSelectionBar: 0px 0px 0px 8px;
+	styleSelectionColor: @onSurface;
+	styleActiveColor: @surfaceContainerHigh;
+	styleActiveSelectionColor: @primary;
 }
