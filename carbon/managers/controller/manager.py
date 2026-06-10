@@ -16,7 +16,6 @@ from .providers import (
 	Launcher,
 	Power,
 	Screenshot,
-	Theme,
 	Networker,
 	Clipboard,
 	Windows,
@@ -46,7 +45,6 @@ class ControllerManager(BaseManager):
 		self.launcher = Launcher(self.internalDispatch)
 		self.power = Power(self.internalDispatch)
 		self.screenshot = Screenshot(self.internalDispatch)
-		self.theme = Theme(self.internalDispatch)
 		self.networker = Networker(self.internalDispatch)
 		self.clipboard = Clipboard(self.internalDispatch)
 		self.windows = Windows(self.internalDispatch)
@@ -56,7 +54,6 @@ class ControllerManager(BaseManager):
 			"launcher": self.launcher,
 			"power": self.power,
 			"screenshot": self.screenshot,
-			"theme": self.theme,
 			"networker": self.networker,
 			"clipboard": self.clipboard,
 			"windows": self.windows,
@@ -75,7 +72,8 @@ class ControllerManager(BaseManager):
 	def handlers(self) -> dict[str, Callable]:
 		return {
 			"run": self.run,
-			"close": self.close
+			"close": self.close,
+			"list": self.listControllers
 		}
 
 
@@ -91,10 +89,6 @@ class ControllerManager(BaseManager):
 
 	def getHelp(self):
 		return _help
-	
-	
-	def setManagers(self, themer: ThemeManager):
-		self.theme.themer = themer
 
 
 	def run(self, *, name: str) -> str:
@@ -151,6 +145,8 @@ class ControllerManager(BaseManager):
 			logger.Level.debug
 		)
 
+		return f"Ran {name}."
+
 
 	def close(self) -> str:
 		if self.current_controller:
@@ -159,6 +155,16 @@ class ControllerManager(BaseManager):
 			return "Controller closed."
 		else:
 			return "No controller to close."
+		
+	
+	def listControllers(self) -> str:
+
+		if not hasattr(self, "_controller_list_string"):
+			self._controller_list_string = ""
+			for provider in self.controllers.keys():
+				self._controller_list_string += f"{provider} "
+
+		return self._controller_list_string
 
 
 _help = """
@@ -172,4 +178,7 @@ handlers:
 
 	> close
 		Close any active controller.
+
+	> list
+		List all available controllers.
 """

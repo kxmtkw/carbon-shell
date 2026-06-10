@@ -72,8 +72,6 @@ class CarbonCore:
 
 		Notify.setNotificationFunction(getNotificationServer().sendNotification)
 
-		self.managers["controller"].setManagers(self.managers["theme"])
-
 		Notify(
 			"Hello World!",
 			f"Logged in as: {shellrun("whoami")[1].strip()}",
