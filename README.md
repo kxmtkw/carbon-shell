@@ -159,3 +159,45 @@ style = "screenshot"
 image = "~/.carbon/assets/default_wallpaper.jpg"
 ```
 
+### `Project Structure`
+
+The project has been divided into different folders (duh...)
+```sh
+carbon-shell/
+	assets/
+		# Contains the default profile and wallpaper
+	bin/
+		# Used to contain old scripts until I moved them to .venv via pip. 
+	carbon/
+		# The main python module
+		cli/
+			# The cli implementations
+		core/
+			# The core of the daemon
+		ipc/
+			# Classes for ipc between client and daemon
+		lib/
+			# Contains essential classes for the shell to function.
+		managers/
+			# Different managers, each with their own responsibility
+		state/
+			# State manager
+		utils/
+			# Some utilities
+	docs/
+		# Documentation for the shell
+	hypr/
+		# Configuration for Hyprland which manages windows.
+	shell/
+		# Configuration for the visible "shell"
+		rofi/
+			# Rofi configuration (the controllers/menus)
+		quickshell/
+			# Quickshell config (the panel & notifications)
+	installation/
+		# Scripts to install the shell
+```
+
+### `Todo`
+
+A list of todos: [todo](docs/todo.md)
