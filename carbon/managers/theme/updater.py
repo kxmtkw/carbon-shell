@@ -1,9 +1,11 @@
 from pathlib import Path
+from typing import Literal
 
 from carbon.utils import shellrun, writefile, procrun, CarbonError
 
 from .colors import *
 from . import fonts
+from . import shell_styles
 
 from carbon.lib.quickshell import Quickshell
 
@@ -117,3 +119,16 @@ class ThemeUpdater:
 
 	def getFonts(self) -> list[str]:
 		return self.fonts
+	
+
+	def setShellStyle(self, style: Literal["material", "modern"]):
+
+		match style:
+
+			case "material":
+				rofi_string = shell_styles.get_material_style()
+
+			case "modern":
+				rofi_string = shell_styles.get_modern_style()
+
+		writefile("~/.carbon/shell/rofi/Config/style.rasi", rofi_string)

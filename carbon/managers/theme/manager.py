@@ -71,7 +71,8 @@ class ThemeManager(BaseManager):
 			"toggle-mode": self.toggleMode,
 			"change-font": self.changeFont,
 			"set-face": self.setFace,
-			"set-wallpaper-animation": self.setWallpaper_animation
+			"set-wallpaper-animation": self.setWallpaper_animation,
+			"set-shell-style": self.setShellStyle
 		}
 	
 
@@ -301,6 +302,24 @@ class ThemeManager(BaseManager):
 		)
 
 		return "Wallpaper animation style updated."
+	
+
+	@locked(themeLock)
+	def setShellStyle(
+		self,
+		*,
+		style:  Literal["material", "modern"]
+	):
+		
+		if not hasattr(self, "_shell_styles"):
+			self._shell_styles = ("material", "modern")
+
+		if style not in self._shell_styles:
+			raise CarbonError(f"Invalid style. Allowed styles include:\n{self._shell_styles}")
+		
+		self.updater.setShellStyle(style)
+
+		return f"Shell style updated to {style}"
 
 
 _help = """
@@ -324,6 +343,10 @@ handlers:
 			graphite: true-to-source scheme; diamond: true material scheme;
 		--hex is considered when --source is hex. 
 		--img will change the wallpaper as well.
+
+	> set-shell-style --style [style]
+		Set the style of the shell.
+		Valid styles include: material, modern
 
 	> switch-mode --mode [dark|light]
 		Switch between light and dark mode.
