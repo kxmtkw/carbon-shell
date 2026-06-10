@@ -19,6 +19,7 @@ class ThemeManager(BaseManager):
 	class State(BaseManager.State):
 		mode: Literal["dark", "light"]
 		source: Literal["wallpaper", "hex"]
+		style: Literal["material", "modern"]
 		wallpaper: str
 		hex: str
 		variant: Literal["ash", "coal", "graphite", "diamond"]
@@ -39,6 +40,7 @@ class ThemeManager(BaseManager):
 		self.state = self.State(
 			mode="dark",
 			source="wallpaper",
+			style="material",
 			wallpaper="~/.carbon/assets/default_wallpaper.jpg",
 			hex="#82a0c0",
 			variant="graphite",
@@ -94,6 +96,7 @@ class ThemeManager(BaseManager):
 
 		self.changeFont(font = state.font)
 		self.setFace(img = state.face)
+		self.setShellStyle(style= state.style)
 		
 		logger.log("theme", "Loaded theme state.", logger.Level.info)
 
@@ -318,8 +321,9 @@ class ThemeManager(BaseManager):
 			raise CarbonError(f"Invalid style. Allowed styles include:\n{self._shell_styles}")
 		
 		self.updater.setShellStyle(style)
+		self.state.style = style
 
-		return f"Shell style updated to {style}"
+		return f"Shell style updated to {style}."
 
 
 _help = """
