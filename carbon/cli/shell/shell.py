@@ -14,7 +14,10 @@ For help on any particular manager, use:
 	carbon.shell [manager] help
 
 For complete help:
-	carbon.shell daemon help-all"""
+	carbon.shell daemon help-all
+
+For a list of managers:
+	carbon.shell daemon list-managers"""
 
 
 def parseArgs(argv):
@@ -35,7 +38,7 @@ def parseArgs(argv):
 	if i < len(argv) and not argv[i].startswith("--"):
 		val = argv[i].strip()
 		if not val:
-			raise ValueError("manager cannot be empty string")
+			return result
 		result["manager"] = val
 		i += 1
 
@@ -43,7 +46,7 @@ def parseArgs(argv):
 	if i < len(argv) and not argv[i].startswith("--"):
 		val = argv[i].strip()
 		if not val:
-			raise ValueError("handler cannot be empty string")
+			return result
 		result["handler"] = val
 		i += 1
 
@@ -99,7 +102,7 @@ def main():
 			exit(2)
 	
 		if result["handler"] is None:
-			raise ValueError("handler argument required for all managers.")
+			result["handler"] = "help"
 		
 	except ValueError as e:
 		Color.Print("[Error] ", Color.red, end="")

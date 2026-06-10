@@ -59,6 +59,7 @@ class CarbonCore:
 				"save-state":       self.saveState,
 				"dump-state":       self.dumpState,
 				"get-dispatch-map": self.getDispatchMap,
+				"list-managers":    self.listManagers,
 				"help-all":         self.getAllHelp
 			}
 		}
@@ -226,14 +227,31 @@ class CarbonCore:
 	
 
 	def getAllHelp(self):
-		all_help = " -- Carbon Shell --"
-		all_help += self.getHelp()
+
+		if hasattr(self, "_all_help"):
+			return self._all_help
+		
+		self._all_help = " -- Carbon Shell --"
+		self._all_help += self.getHelp()
 
 		for manager in self.managers.values():
-			all_help += manager.getHelp()
+			self._all_help += manager.getHelp()
 
-		return all_help
+		return self._all_help
 
+
+	def listManagers(self):
+
+		if hasattr(self, "_list_managers"):
+			return self._list_managers
+		
+		self._list_managers = ""
+
+		for m in self.managers.keys():
+			self._list_managers += f"{m} "
+
+		return self._list_managers
+	
 
 	def internalDispatch(
 		self, 
@@ -333,4 +351,7 @@ handlers:
 
 	> get-dispatch-map
 		Print dispatch map.
+
+	> list-managers
+		List all managers.
 """
