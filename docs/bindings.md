@@ -49,8 +49,6 @@
 | `Super + Q` | App launcher |
 | `Super + W` | Network |
 | `Super + R` | Runner |
-| `Super + T` | Theme |
-| `Super + O` | Media player |
 | `Super + A` | Clipboard |
 | `Super + S` | Screenshot |
 | `Super + D` | Power menu |
