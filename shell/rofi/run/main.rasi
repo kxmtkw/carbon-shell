@@ -17,35 +17,38 @@ window
     anchor:                      west;
     fullscreen:                  false;
     width:                       600px;
-    height:                      260px;
+    height:                      280px;
     x-offset:                    0px;
     y-offset:                    0px;
 
     enabled:                     true;
     margin:                      10px;
-    border:                      @themeBorderWidth;
-    border-color:                @surfaceContainerHighest;
-    border-radius:               calc(600/20);
+    padding:                     @styleGaps;
+    border-radius:               @styleOuterBorderRadius;
     cursor:                      "default";
-    background-color:            @backgroundTransparentxAA;
+    background-color:            @background;
 }
 
 mainbox 
 {
     enabled:                     true;
-    spacing:                     0;
-    padding:                     0% 0%;
-    background-color:            @background;
+    spacing:                     @styleWidgetSpace;
+	padding:                     @styleInnerGaps;
+    border:                      @styleInlineBorderWidth;
+    border-radius:               @styleInnerBorderRadius;
+	border-color:                @styleInlineBorderColor;
+    background-color:            @styleBoxColor;
+    vertical-align:              0.5;
     orientation:                 vertical;
-    children:                    [ "inputbar", "listbox"];
+    children:                    [ "inputbar", "listview"];
 }
 
 
 inputbar {
     enabled:                     true;
-    margin:                      10px 0px;
-    padding:                     10px 40px 0px 40px;
-    background-color:            @background;
+    margin:                      0px;
+    padding:                     10px;
+    background-color:            inherit;
     text-color:                  @onSurface;
     orientation:                 horizontal;
     children:                    [ "prompt", "entry", "dummy"];
@@ -64,7 +67,7 @@ entry {
     enabled:                     true;
     expand:                      false;
     width:                       20%;
-    padding:                     12px 16px;
+    padding:                     0px 16px;
     border-radius:               @themeBorderRadius;
     background-color:            inherit;
     text-color:                  inherit;
@@ -82,17 +85,6 @@ dummy {
 
 
 
-// LIST VIEW
-
-listbox 
-{
-    spacing:                     4px;
-    padding:                     10px 40px;
-    background-color:            @background;
-    orientation:                 horizontal;
-    children:                    [ "listview" ];
-}
-
 listview 
 {
     enabled:                     true;
@@ -107,6 +99,7 @@ listview
     fixed-columns:               true;
     
     spacing:                     10px;
+	padding:                     10px 40px;
     background-color:            transparent;
     text-color:                  @onSurface;
     cursor:                      "default";
@@ -115,22 +108,31 @@ listview
 element 
 {
     enabled:                     true;
-    spacing:                     10px;
     padding:                     10px;
-    border-radius:               16px;
+    border-radius:               0;
     background-color:            transparent;
     text-color:                  @onSurface;
     cursor:                      pointer;
 }
-element normal.normal 
-{
+element normal.normal {
     background-color:            inherit;
     text-color:                  inherit;
 }
-element selected.normal 
-{
-    background-color:            @surfaceContainer;
-    text-color:                  @onSurface;
+element selected.normal {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleSelectionColor;
+}
+element normal.active {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveColor;
+}
+element alternate.active {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveColor;
+}
+element selected.active {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveSelectionColor;
 }
 
 element-icon 
@@ -148,25 +150,4 @@ element-text
     padding:                     4px;
     vertical-align:              0.5;
     horizontal-align:            0.0;
-}
-
-/*****----- Message -----*****/
-message 
-{
-    background-color:            transparent;
-}
-textbox {
-    padding:                     12px;
-    border-radius:               20px;
-    background-color:            @surfaceContainerHigh;
-    text-color:                  @onSurface;
-    vertical-align:              0.5;
-    horizontal-align:            0.0;
-}
-error-message 
-{
-    padding:                     12px;
-    border-radius:               20px;
-    background-color:            @background;
-    text-color:                  @onSurface;
 }
