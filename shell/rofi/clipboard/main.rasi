@@ -73,7 +73,7 @@ entry {
     horizontal-align:            0;
 }
 
-listview 
+listview
 {
     enabled:                     true;
     columns:                     1;

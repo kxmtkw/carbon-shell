@@ -8,7 +8,7 @@ configuration
 
     drun-categories: "";
 	drun-match-fields: "name,generic,exec,categories,keywords";
-	drun-display-format: "{name}\n<span size='small' color='grey'>{comment}</span>";
+	drun-display-format: "{name} <span size='small' color='grey'>{comment}</span>";
     drun-show-actions: false;
 	drun-url-launcher: "xdg-open";
 	drun-use-desktop-cache: true;
@@ -24,22 +24,21 @@ configuration
 @import "../Config/style.rasi"
 @import "../Config/fonts.rasi"
 
-window
-{
+window 
+{    
     transparency:                "real";
-    location:                    south;
-    anchor:                      south;
+    location:                    center;
+    anchor:                      center;
     fullscreen:                  false;
-    width:                       900px;
-    height:                      700px;
+    width:                       800px;
+    height:                      560px;
     x-offset:                    0px;
     y-offset:                    0px;
 
     enabled:                     true;
     margin:                      10px;
-    border:                      @themeBorderWidth;
-    border-color:                @surfaceContainerHighest;
-    border-radius:               calc(640/32);
+    padding:                     @styleGaps;
+    border-radius:               @styleOuterBorderRadius;
     cursor:                      "default";
     background-color:            @background;
 }
@@ -47,20 +46,24 @@ window
 mainbox 
 {
     enabled:                     true;
-    spacing:                     0;
-    padding:                     0% 0%;
-    background-color:            transparent;
+    spacing:                     @styleWidgetSpace;
+	padding:                     @styleInnerGaps;
+    border:                      @styleInlineBorderWidth;
+    border-radius:               @styleInnerBorderRadius;
+	border-color:                @styleInlineBorderColor;
+    background-color:            @styleBoxColor;
+    vertical-align:              0.5;
     orientation:                 vertical;
-    children:                    [ "listbox", "inputbar"];
+    children:                    [ "inputbar", "listview"];
 }
 
 inputbar {
     enabled:                     true;
-    margin:                      10px 40px 30px 40px;
-    padding:                     12px 30px;
+    padding:                     16px 20px;
+	margin:                      10px 20px;  
     background-color:            @primaryContainer;
     text-color:                  @onPrimaryContainer;
-    border-radius:               18px;
+    border-radius:               10px;
     orientation:                 horizontal;
     children:                    [ "prompt", "entry", "dummy"];
 }
@@ -78,8 +81,7 @@ entry {
     enabled:                     true;
     expand:                      false;
     width:                       620px;
-    padding:                     6px;
-    border-radius:               16px;
+    border-radius:               0;
     background-color:            inherit;
     text-color:                  inherit;
     cursor:                      text;
@@ -95,17 +97,6 @@ dummy {
 
 
 
-// LIST VIEW
-
-listbox 
-{
-    spacing:                     10px;
-    padding:                     30px 30px 10px 30px;
-    background-color:            @background;
-    orientation:                 horizontal;
-    children:                    [ "listview" ];
-}
-
 listview 
 {
     enabled:                     true;
@@ -115,11 +106,12 @@ listview
     dynamic:                     true;
     scrollbar:                   false;
     layout:                      vertical;
-    reverse:                     true;
+    reverse:                     false;
     fixed-height:                true;
     fixed-columns:               true;
     
     spacing:                     10px;
+	margin:                      10px 30px;
     background-color:            transparent;
     text-color:                  @onSurface;
     cursor:                      "default";
@@ -128,22 +120,32 @@ listview
 element 
 {
     enabled:                     true;
-    spacing:                     10px;
-    padding:                     8px 12px;
-    border-radius:               @themeBorderRadius;
+    spacing:                     0px;
+    padding:                     5px 20px;
+    border-radius:               0px;
     background-color:            transparent;
     text-color:                  @onSurface;
     cursor:                      pointer;
 }
-element normal.normal 
-{
+element normal.normal {
     background-color:            inherit;
     text-color:                  inherit;
 }
-element selected.normal 
-{
-    background-color:            @surfaceContainer;
-    text-color:                  @onSurface;
+element selected.normal {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleSelectionColor;
+}
+element normal.active {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveColor;
+}
+element alternate.active {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveColor;
+}
+element selected.active {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveSelectionColor;
 }
 
 element-icon 

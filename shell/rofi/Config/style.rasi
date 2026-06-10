@@ -1,6 +1,6 @@
-* {
-	styleScale: 1;
 
+// NOTE: written by carbon shell
+* {
     styleInlineBorderWidth: 2px;
 	styleOuterBorderRadius: 20px;
 	styleInnerBorderRadius: 12px;
@@ -10,11 +10,11 @@
 	styleInnerGaps: 20px;
 	styleWidgetSpace: 12px;
 
-	styleInlineBorderColor: @surfaceContainerHighest;
+	styleInlineBorderColor: @surfaceContainer;
 	styleBoxColor: @background;
 
 	styleSelectionBar: 0px 0px 0px 8px;
-	styleSelectionColor: @onSurface;
+	styleSelectionColor: @primaryContainer;
 	styleActiveColor: @surfaceContainerHigh;
 	styleActiveSelectionColor: @primary;
 }
