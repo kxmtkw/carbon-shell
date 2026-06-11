@@ -49,7 +49,7 @@ class CarbonCore:
 		self.managers: dict[str, BaseManager] = {}
 
 		for mgr_class in MANAGERS:
-			manager = mgr_class(self.internalDispatch)
+			manager = mgr_class(self.internalDispatch, self.getManagerState)
 			self.managers[manager.name()] = manager
 
 		self.dispatch_map = {
@@ -251,6 +251,11 @@ class CarbonCore:
 			self._list_managers += f"{m} "
 
 		return self._list_managers
+	
+
+	def getManagerState(self, name: str) -> BaseManager.State | None:
+		if name in self.managers:
+			return self.managers[name].getState()
 	
 
 	def internalDispatch(

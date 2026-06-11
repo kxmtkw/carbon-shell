@@ -4,11 +4,12 @@
 mainbox 
 {
     enabled:                     true;
-    spacing:                     0;
-    margin:                      0px;
-    border:                      0px solid;
-    border-radius:               0%;
-    background-color:            @background;
+    spacing:                     @styleWidgetSpace;
+	padding:                     @styleInnerGaps;
+    border:                      @styleInlineBorderWidth;
+    border-radius:               @styleInnerBorderRadius;
+	border-color:                @styleInlineBorderColor;
+    background-color:            @styleBoxColor;
     vertical-align:              0.5;
     orientation:                 vertical;
     children:                    [ "inputbar", "listview" ];
@@ -84,25 +85,25 @@ element
     text-color:                  @onSurface;
     cursor:                      pointer;
 }
-element normal.normal 
-{
+element normal.normal {
     background-color:            inherit;
     text-color:                  inherit;
 }
-element selected.normal 
-{
-    background-color:            @surfaceContainer;
-    text-color:                  @onSurface;
+element selected.normal {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleSelectionColor;
 }
-element normal.active
-{
-    background-color:            @secondary;
-    text-color:                  @onSecondary;
+element normal.active {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveColor;
 }
-element selected.active 
-{
-    background-color:            @primary;
-    text-color:                  @onPrimary;
+element alternate.active {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveColor;
+}
+element selected.active {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveSelectionColor;
 }
 
 element-icon 

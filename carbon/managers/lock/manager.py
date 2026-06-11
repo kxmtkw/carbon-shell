@@ -13,13 +13,13 @@ from .styles import writeLockStyle
 class LockScreenManager(BaseManager):
 
 	@dataclass(init=True, kw_only=True)
-	class State():
+	class State(BaseManager.State):
 		style: Literal["screenshot", "image", "wallpaper"]
 		image: str
 
 
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
-		super().__init__(internalDispatch)
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
+		super().__init__(internalDispatch, getManagerState)
 		self.state = LockScreenManager.State(
 			style="screenshot",
 			image="~/.carbon/assets/default_wallpaper.jpg"

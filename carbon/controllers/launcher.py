@@ -1,13 +1,13 @@
 from typing import Any, Callable
 
-from carbon.managers.controller.base import BaseController
+from carbon.controllers.base import BaseController
 from carbon.lib.rofi import RofiShell
 
-class Windows(BaseController):
+class Launcher(BaseController):
 
 	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
 		super().__init__(internalDispatch)
-		self.rasi = "~/.carbon/shell/rofi/windows/main.rasi"
+		self.rasi = "~/.carbon/shell/rofi/launcher/main.rasi"
 		self.rofi = RofiShell(self.rasi)
 	
 	def reload(self):
@@ -15,7 +15,8 @@ class Windows(BaseController):
 	
 	def launch(self):
 		self.rofi.display(
-			mode=RofiShell.Mode.window
+			prompt="Launcher",
+			mode=RofiShell.Mode.drun
 		)
 		self.rofi.wait()
 

@@ -29,7 +29,8 @@ class ThemeManager(BaseManager):
 		wallpaper_animation: Literal["wipe", "left", "right", "top", "bottom", "outer", "center", "any", "fade", "random"]
 
 
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
+		super().__init__(internalDispatch, getManagerState)
 
 		self.updater = ThemeUpdater()
 		self.material = MaterialColors()
@@ -49,8 +50,6 @@ class ThemeManager(BaseManager):
 			face="~/.carbon/assets/default_face.jpg",
 			wallpaper_animation="center"
 		)
-
-		super().__init__(internalDispatch)
 
 
 	def start(self):

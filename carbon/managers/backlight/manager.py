@@ -12,15 +12,15 @@ class BacklightManager(BaseManager):
 	backlightLock = Lock()
 
 	@dataclass(init=True, kw_only=True)
-	class State():
+	class State(BaseManager.State):
 		value: float
 		update_delay: float
 		minimum: float
 		maximum: float
 
 
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
-		super().__init__(internalDispatch)
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
+		super().__init__(internalDispatch, getManagerState)
 
 		self.state = self.State(
 			value=100,

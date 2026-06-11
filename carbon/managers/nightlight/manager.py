@@ -17,8 +17,8 @@ class NightLightManager(BaseManager):
 		gamma: int
 
 
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
-		super().__init__(internalDispatch)
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
+		super().__init__(internalDispatch, getManagerState)
 		self.default_temperature = 6000
 		self.default_gamma = 100
 

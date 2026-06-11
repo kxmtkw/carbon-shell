@@ -2,7 +2,7 @@ import time
 from typing import Any, Callable
 
 from carbon.lib.rofi import RofiShell
-from carbon.managers.controller.base import BaseController
+from carbon.controllers.base import BaseController
 
 from carbon.utils import shellrun
 

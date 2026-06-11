@@ -11,12 +11,13 @@ class AutostartManager(BaseManager):
 
 
 	@dataclass(init=True, kw_only=True)
-	class State:
+	class State(BaseManager.State):
 		commands: list[str]
 
 
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
-		super().__init__(internalDispatch)
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
+		super().__init__(internalDispatch, getManagerState)
+		
 		self.state = self.State(
 			commands=[]
 		)

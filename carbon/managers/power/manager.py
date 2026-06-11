@@ -21,8 +21,8 @@ class PowerManager(BaseManager):
 		force_hibernate_threshold: float
 
 
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
-		super().__init__(internalDispatch)
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
+		super().__init__(internalDispatch, getManagerState)
 		self.state = self.State(
 			full_threshold=95,
 			warning_threshold=15,

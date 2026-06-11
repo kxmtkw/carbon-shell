@@ -1,7 +1,7 @@
 from pathlib import Path
 import subprocess
 from typing import Any, Callable
-from carbon.managers.controller.base import BaseController
+from carbon.controllers.base import BaseController
 from carbon.lib.rofi import RofiShell
 from carbon.utils import logger
 import os

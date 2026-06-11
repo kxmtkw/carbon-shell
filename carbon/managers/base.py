@@ -3,11 +3,14 @@ from dataclasses import dataclass
 
 class BaseManager:
 
+	@dataclass(init=True, kw_only=True)
 	class State:
 		pass
 
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State|None]):
 		self.internalDispatch: Callable[[str, str, dict[str, Any]], None] = internalDispatch
+		self.getManagerState: Callable[[str], BaseManager.State|None] = getManagerState
+		self.state: BaseManager.State
 	
 	def start(self):
 		raise NotImplementedError()

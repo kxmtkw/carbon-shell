@@ -18,8 +18,8 @@ class PanelManager(BaseManager):
 		position: Literal["top", "bottom"]
 
 
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
-		super().__init__(internalDispatch)
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
+		super().__init__(internalDispatch, getManagerState)
 		self.state = self.State(
 			mode="show",
 			position="bottom"

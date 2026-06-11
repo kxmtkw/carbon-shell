@@ -8,22 +8,23 @@ configuration
 @import "../Config/fonts.rasi"
 @import "../Config/style.rasi"
 
-window
- {
+window 
+{    
     transparency:                "real";
-    location:                    southeast;
-    anchor:                      east;
+    location:                    southwest;
+    anchor:                      center;
     fullscreen:                  false;
     width:                       660px;
-    height:                      900px;
+    height:                      600px;
     x-offset:                    0px;
     y-offset:                    0px;
 
+    /* properties for all widgets */
     enabled:                     true;
     margin:                      10px;
-    border:                      @themeBorderWidth;
-    border-color:                @surfaceContainerHighest;
-    border-radius:               calc(660/20);
+    padding:                     @styleGaps;
+    border-radius:               @styleOuterBorderRadius;
     cursor:                      "default";
-    background-color:            rgba(18, 18, 18, 0.2);
+    background-color:            @background;
 }
+

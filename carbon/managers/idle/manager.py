@@ -13,8 +13,8 @@ class IdleManager(BaseManager):
 		toggled: bool
 
 
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
-		super().__init__(internalDispatch)
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
+		super().__init__(internalDispatch, getManagerState)
 
 		self.state = IdleManager.State(
 			toggled=True

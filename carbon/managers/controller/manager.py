@@ -7,12 +7,12 @@ from carbon.managers.base import BaseManager
 from carbon.managers.theme import ThemeManager
 from carbon.managers.panel import PanelManager
 
-from carbon.utils import CarbonError, procrun, isValidHex, logger
+from carbon.utils import CarbonError, logger
 
 from carbon.lib.quickshell import Quickshell
 
-from .base import BaseController
-from .providers import (
+from ...controllers.base import BaseController
+from carbon.controllers import (
 	Launcher,
 	Power,
 	Screenshot,
@@ -30,8 +30,8 @@ class ControllerManager(BaseManager):
 		pass
 
 
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
-		super().__init__(internalDispatch)
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
+		super().__init__(internalDispatch, getManagerState)
 		self.lock = Lock()
 		self.qs = Quickshell()
 		self.current_controller: BaseController | None = None
