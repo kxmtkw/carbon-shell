@@ -22,7 +22,7 @@ class BacklightManager(BaseManager):
 	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
 		super().__init__(internalDispatch, getManagerState)
 
-		self.state = self.State(
+		self.state: BacklightManager.State = self.State(
 			value=100,
 			update_delay=0.05,
 			minimum=10,
@@ -125,6 +125,7 @@ class BacklightManager(BaseManager):
 		return self.state.value
 
 
+	# handler
 	def setBrightness(self, *, value: float):
 
 		self.updateCurrentBrightness()
@@ -144,7 +145,7 @@ class BacklightManager(BaseManager):
 		logger.info("backlight", msg)
 		return msg
 
-	
+	# handler
 	def increaseBrightness(self, *, value: float):
 		
 		self.updateCurrentBrightness()
@@ -164,7 +165,7 @@ class BacklightManager(BaseManager):
 		logger.info("backlight", msg)
 		return msg
 
-
+	# handler
 	def decreaseBrightness(self, *, value: float):
 		
 		self.updateCurrentBrightness()
@@ -184,14 +185,14 @@ class BacklightManager(BaseManager):
 		logger.info("backlight", msg)
 		return msg
 
-
+	# handler
 	def saveBrightness(self):
 		self.saved_brightness = self.state.value
 		msg = f"Brightness saved with value {self.saved_brightness}%."
 		logger.info("backlight", msg)
 		return msg
 
-
+	# handler
 	def restoreBrightness(self):
 		self.setBrightness(value=self.saved_brightness)
 		msg = f"Brightness restored to {self.saved_brightness}%."

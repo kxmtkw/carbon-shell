@@ -11,7 +11,6 @@ from carbon.utils import logger, CarbonError, Notify, shellrun, clamp
 
 class PanelManager(BaseManager):
 
-
 	@dataclass(init=True, kw_only=True)
 	class State(BaseManager.State):
 		mode: Literal["show", "hide", "bypass"]
@@ -20,7 +19,7 @@ class PanelManager(BaseManager):
 
 	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
 		super().__init__(internalDispatch, getManagerState)
-		self.state = self.State(
+		self.state: PanelManager.State = self.State(
 			mode="show",
 			position="bottom"
 		)
@@ -61,7 +60,7 @@ class PanelManager(BaseManager):
 	def getHelp(self):
 		return _help
 	
-
+	# handler
 	def setMode(self, *, mode: Literal["show", "hide", "bypass"]):
 		
 		if self.state.mode == mode:
@@ -88,7 +87,7 @@ class PanelManager(BaseManager):
 		else:
 			raise CarbonError("Invalid panel mode. Valid modes are: show, hide, bypass.")
 		
-		
+	# handler
 	def toggleBypassView(self, *, state: Literal["on", "off"]):
 
 		if state == "off":

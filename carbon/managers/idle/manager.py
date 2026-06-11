@@ -16,7 +16,7 @@ class IdleManager(BaseManager):
 	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
 		super().__init__(internalDispatch, getManagerState)
 
-		self.state = IdleManager.State(
+		self.state: IdleManager.State = IdleManager.State(
 			toggled=True
 		)
 
@@ -54,7 +54,7 @@ class IdleManager(BaseManager):
 	def getHelp(self):
 		return _help
 
-
+	# handler
 	def toggleIdle(self, on: bool):
 
 		self.state.toggled = on

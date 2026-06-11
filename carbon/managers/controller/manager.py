@@ -90,12 +90,13 @@ class ControllerManager(BaseManager):
 	def getHelp(self):
 		return _help
 
-
+	# handler
 	def run(self, *, name: str) -> str:
 
 		# get controller
 		controller: BaseController | None = self.controllers.get(name)
-		if not controller:
+
+		if controller is None:
 			raise CarbonError(f"Controller not found: {name}")
 
 		logger.log(
@@ -105,8 +106,8 @@ class ControllerManager(BaseManager):
 		)
 		
 		# if active controller was launched again, we close it instead. run() is basically a toggle
-		if self.current_controller is controller:
-			self.current_controller.close()
+		if controller is self.current_controller:
+			self.current_controller.close() # type: ignore # cmon if (BaseController) is (BaseController|None), then its not (None)
 			self.current_controller = None
 			logger.log(
 				"controller",
@@ -147,7 +148,7 @@ class ControllerManager(BaseManager):
 
 		return f"Ran {name}."
 
-
+	# handler
 	def close(self) -> str:
 		if self.current_controller:
 			self.current_controller.close()
@@ -156,7 +157,7 @@ class ControllerManager(BaseManager):
 		else:
 			return "No controller to close."
 		
-	
+	# handler
 	def listControllers(self) -> str:
 
 		if not hasattr(self, "_controller_list_string"):

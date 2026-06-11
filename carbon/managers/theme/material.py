@@ -2,9 +2,9 @@
 import material_color_utilities as material
 from PIL import Image
 from pathlib import Path
+from enum import Enum
 
-
-def hexToRgb(hex: str) -> tuple[int, int, int]:
+def hexToRgb(hex: str) -> tuple:
     hex = hex.lstrip('#')
     return tuple(int(hex[i:i+2], 16) for i in (0, 2, 4))
 
@@ -21,8 +21,8 @@ def lerpColor(c1, c2, t):
 
 class MaterialColors:
 
-
-    class Variant:
+	
+    class Variant(Enum):
         ash      = material.Variant.NEUTRAL
         coal     = material.Variant.MONOCHROME
         graphite = material.Variant.CONTENT
@@ -41,7 +41,7 @@ class MaterialColors:
         
 
 
-    def generateFromImage(self, image: str, contrast: float, variant: str):
+    def generateFromImage(self, image: str, contrast: float, variant: Variant):
 
         theme = material.theme_from_image(Image.open(image), contrast, variant)
 
@@ -52,7 +52,7 @@ class MaterialColors:
         self.lightMapping = self.makeMapping(self.lightScheme)
 
 
-    def generateFromColor(self, color: str, contrast: float, variant: tuple):
+    def generateFromColor(self, color: str, contrast: float, variant: Variant):
 
         theme = material.theme_from_color(color, contrast, variant)
 

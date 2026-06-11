@@ -22,7 +22,7 @@ class NightLightManager(BaseManager):
 		self.default_temperature = 6000
 		self.default_gamma = 100
 
-		self.state = NightLightManager.State(
+		self.state: NightLightManager.State = NightLightManager.State(
 			temperature=self.default_temperature,
 			gamma=self.default_gamma,
 			toggled=True
@@ -67,7 +67,7 @@ class NightLightManager(BaseManager):
 	def getHelp(self):
 		return _help
 
-
+	# handler
 	def toggleNightlight(self, on: bool):
 
 		self.state.toggled = on
@@ -94,8 +94,8 @@ class NightLightManager(BaseManager):
 			
 			return "Nightlight turned off"
 
-
-	def setTemperature(self, *, value: int) -> str:
+	# handler
+	def setTemperature(self, *, value: float) -> str:
 
 		try:
 			value = float(value)
@@ -118,11 +118,11 @@ class NightLightManager(BaseManager):
 			f"Updated temperature to {value}",
 			logger.Level.info
 		)
-		self.state.temperature = value
+		self.state.temperature = int(value)
 		return "Updated temperature."
 
-
-	def setGamma(self, *, value: int) -> str:
+	# handler
+	def setGamma(self, *, value: float) -> str:
 
 		try:
 			value = float(value)
@@ -145,7 +145,7 @@ class NightLightManager(BaseManager):
 			f"Updated gamma to {value}",
 			logger.Level.info
 		)
-		self.state.gamma = value
+		self.state.gamma = int(value)
 		return "Updated gamma."
 
 

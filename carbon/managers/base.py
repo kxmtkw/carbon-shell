@@ -1,6 +1,7 @@
 from typing import Dict, Callable, Any
 from dataclasses import dataclass
 
+
 class BaseManager:
 
 	@dataclass(init=True, kw_only=True)

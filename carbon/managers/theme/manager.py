@@ -38,7 +38,7 @@ class ThemeManager(BaseManager):
 		self.dark_theme = {}
 		self.light_theme = {}
 
-		self.state = self.State(
+		self.state: ThemeManager.State = self.State(
 			mode="dark",
 			source="wallpaper",
 			style="material",
@@ -64,16 +64,16 @@ class ThemeManager(BaseManager):
 		return "theme"
 	
 
-	def handlers(self) -> dict[str, callable]:
+	def handlers(self):
 		return {
 			"set-wallpaper": self.setWallpaper,
 			"update-theme": self.updateTheme,
+			"set-shell-style": self.setShellStyle,
 			"switch-mode": self.switchMode,
 			"toggle-mode": self.toggleMode,
 			"change-font": self.changeFont,
 			"set-face": self.setFace,
 			"set-wallpaper-animation": self.setWallpaper_animation,
-			"set-shell-style": self.setShellStyle
 		}
 	
 
@@ -107,7 +107,8 @@ class ThemeManager(BaseManager):
 	def getHelp(self):
 		return _help
 	
-
+	
+	# handler
 	@locked(themeLock)
 	def setWallpaper(self, *, img: str) -> str:
 		return self._setWallpaper_nolock(img=img)
@@ -123,7 +124,8 @@ class ThemeManager(BaseManager):
 			)
 		return "Wallpaper updated."
 	
-	
+
+	# handler
 	@locked(themeLock)
 	def updateTheme(
 			self, 
@@ -166,7 +168,7 @@ class ThemeManager(BaseManager):
 
 			if not Path(img).expanduser().exists():
 				raise CarbonError(f"Image not found: {img}")
-			self.material.generateFromImage(Path(img).expanduser(), contrast, variant_type)
+			self.material.generateFromImage(img, contrast, variant_type)
 
 			
 			self._setWallpaper_nolock(img=img)
@@ -213,7 +215,7 @@ class ThemeManager(BaseManager):
 
 		return "Theme updated successfully."
 	
-
+	# handler
 	@locked(themeLock)
 	def switchMode(
 			self, 
@@ -241,7 +243,7 @@ class ThemeManager(BaseManager):
 
 		return f"Switched to {mode} mode successfully."
 	
-
+	# handler
 	@locked(themeLock)
 	def toggleMode(self) -> str:
 
@@ -261,6 +263,7 @@ class ThemeManager(BaseManager):
 		return f"Switched to {self.state.mode} mode successfully."
 
 
+	# handler
 	@locked(themeLock)
 	def changeFont(self, *, font: str) -> str:
 		self.updater.updateFont(font)
@@ -273,6 +276,7 @@ class ThemeManager(BaseManager):
 		return f"Font changed to {font} successfully."
 	
 
+	# handler
 	@locked(themeLock)
 	def setFace(self, *, img: str):
 		self.updater.updateFace(img)
@@ -286,6 +290,7 @@ class ThemeManager(BaseManager):
 		return f"Face image updated successfully."
 	
 
+	# handler
 	@locked(themeLock)
 	def setWallpaper_animation(self, *, style: str):
 		
@@ -306,6 +311,7 @@ class ThemeManager(BaseManager):
 		return "Wallpaper animation style updated."
 	
 
+	# handler
 	@locked(themeLock)
 	def setShellStyle(
 		self,

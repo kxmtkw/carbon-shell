@@ -23,11 +23,11 @@ class PowerManager(BaseManager):
 
 	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
 		super().__init__(internalDispatch, getManagerState)
-		self.state = self.State(
+		self.state: PowerManager.State = self.State(
 			full_threshold=95,
-			warning_threshold=15,
-			critical_threshold=5,
-			force_hibernate_threshold=2
+			warning_threshold=20,
+			critical_threshold=10,
+			force_hibernate_threshold=5
 		)
 
 		self.previous_info: UPower.Info = UPower.Info(
@@ -39,6 +39,7 @@ class PowerManager(BaseManager):
 		self.was_full_triggered = False
 		self.was_warning_triggered = False
 		self.was_critical_triggered = False
+		self.was_hibernate_triggered = False
 
 		self.upower_client = getUpowerClient()
 		self.upower_client.setCallback(self.UPowerCallback)
@@ -82,7 +83,7 @@ class PowerManager(BaseManager):
 	def getState(self):
 		return replace(self.state)
 	
-
+	# handler
 	def runPowerOption(self, option: str) -> str:
 
 		self.internalDispatch("controller", "close", {})
@@ -141,6 +142,7 @@ class PowerManager(BaseManager):
 	def notifyCharging(self, info: UPower.Info):
 		if info.status == UPower.Status.charging and self.previous_info.status != UPower.Status.charging:
 			Notify("Charger Connected", f"Device now charging ({int(info.percentage)}%)")
+			self.was_hibernate_triggered = False
 			self.was_critical_triggered = False
 			self.was_warning_triggered = False
 			self.was_full_triggered = False 
@@ -150,7 +152,7 @@ class PowerManager(BaseManager):
 		perc = info.percentage
 		if info.status != UPower.Status.charging:
 			self.was_full_triggered = False
-			if perc <= self.state.force_hibernate_threshold and not self.was_critical_triggered:
+			if perc <= self.state.force_hibernate_threshold and not self.was_hibernate_triggered:
 				self.triggerForceHibernate()
 			elif perc <= self.state.critical_threshold and not self.was_critical_triggered:
 				self.triggerCritical(info)
@@ -178,12 +180,13 @@ class PowerManager(BaseManager):
 
 	def triggerCritical(self, info: UPower.Info):
 		perc = int(info.percentage)
-		Notify("Critical Battery", f"Plug in immediately! Only {perc}% remaining!")
+		Notify("Critical Battery", f"Plug in immediately! Only {perc}% remaining!", urgency="critical")
 		self.was_critical_triggered = True
 
 	def triggerForceHibernate(self):
-		Notify("Extreme Battery", "Hibernating in 30 seconds to prevent data loss!")
-		shellrun("sleep 30 && carbon.power hibernate")
+		Notify("Extreme Battery", "Hibernating in 10 seconds to prevent data loss!", timeout=-1, urgency="critical")
+		shellrun("sleep 10 && carbon.power hibernate")
+		self.was_hibernate_triggered = True
 
 
 _help = """

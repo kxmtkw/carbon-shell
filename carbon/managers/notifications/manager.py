@@ -28,7 +28,7 @@ class NotificationManager(BaseManager):
 
 		self.server.setCallback(self.newNotification)
 
-		self.state = NotificationManager.State(
+		self.state: NotificationManager.State = NotificationManager.State(
 			do_not_disturb=False
 		)		
 
@@ -56,7 +56,7 @@ class NotificationManager(BaseManager):
 		self.setDND(state= "on" if state.do_not_disturb else "off")
 
 
-	def getState(self) -> dict[str, Any]:
+	def getState(self):
 		return replace(self.state)
 
 
@@ -111,7 +111,7 @@ class NotificationManager(BaseManager):
 				logger.Level.debug
 			)
 		
-
+	# handler
 	def setDND(self, *, state: Literal["on", "off", "toggle"]):
 
 		match state:
@@ -137,7 +137,7 @@ class NotificationManager(BaseManager):
 
 		return msg
 	
-
+	# handler
 	def sendNotification(self, *, summary: str, body: str = "", timeout: int = 5000, urgency: str = "normal", app: str = "CarbonShell"):
 		"Notification handler for the cli"
 
@@ -150,7 +150,7 @@ class NotificationManager(BaseManager):
 		if urgency not in ("low", "normal", "critical"):
 			raise CarbonError("Invalid urgency level. Pick from: low, normal, critical.")
 		
-		Notify(
+		self.server.sendNotification(
 			summary,
 			body,
 			timeout=timeout,

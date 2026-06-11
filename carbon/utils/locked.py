@@ -1,6 +1,6 @@
 from threading import Lock
     
-def locked(lock: Lock = None):
+def locked(lock: Lock | None = None):
 
     def decorator(method):
 

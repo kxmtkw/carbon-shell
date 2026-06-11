@@ -18,7 +18,7 @@ class AutostartManager(BaseManager):
 	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
 		super().__init__(internalDispatch, getManagerState)
 		
-		self.state = self.State(
+		self.state: AutostartManager.State = self.State(
 			commands=[]
 		)
 
@@ -64,12 +64,13 @@ class AutostartManager(BaseManager):
 		return _help
 	
 
+	# handler
 	def restartUser(self):
 		self.are_user_executed = False
 		self.execUserCommands()
 		return "Restarting user commands."
 
-
+	# handler
 	def listCommands(self):
 		return f"(core) {self.core_commands}\n(user) {self.state.commands}"
 	

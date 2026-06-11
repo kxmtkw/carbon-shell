@@ -20,7 +20,7 @@ class LockScreenManager(BaseManager):
 
 	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
 		super().__init__(internalDispatch, getManagerState)
-		self.state = LockScreenManager.State(
+		self.state: LockScreenManager.State = LockScreenManager.State(
 			style="screenshot",
 			image="~/.carbon/assets/default_wallpaper.jpg"
 		)
@@ -57,13 +57,13 @@ class LockScreenManager(BaseManager):
 	def getHelp(self):
 		return _help
 
-
+	# handler
 	def lock(self):
 		logger.log("lockscreen", "Locking screen...", logger.Level.info)
-		procrun("hyprlock", wait=False)
+		procrun(["hyprlock"], wait=False)
 		return "Bye Bye!"
 
-	
+	# handler	
 	def setStyle(self, *, style: Literal["screenshot", "image", "wallpaper"], img: str| None = None):
 
 		match style:
