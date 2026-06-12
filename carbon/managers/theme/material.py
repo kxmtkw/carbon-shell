@@ -43,7 +43,7 @@ class MaterialColors:
 
     def generateFromImage(self, image: str, contrast: float, variant: Variant):
 
-        theme = material.theme_from_image(Image.open(image), contrast, variant)
+        theme = material.theme_from_image(Image.open(Path(image).expanduser()), contrast, variant.value)
 
         self.darkScheme = theme.schemes.dark
         self.lightScheme = theme.schemes.light
@@ -54,7 +54,7 @@ class MaterialColors:
 
     def generateFromColor(self, color: str, contrast: float, variant: Variant):
 
-        theme = material.theme_from_color(color, contrast, variant)
+        theme = material.theme_from_color(color, contrast, variant.value)
 
         self.darkScheme = theme.schemes.dark
         self.lightScheme = theme.schemes.light
