@@ -1,0 +1,71 @@
+
+configuration 
+{
+	modi:                       "drun";
+    show-icons:                 true;
+	icon-theme: "Papirus";
+
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "!MousePrimary"; 
+    kb-cancel: ["MousePrimary", "Escape"];
+}
+
+@import "../Config/color.rasi"
+@import "../Config/style.rasi"
+@import "../Config/fonts.rasi"
+
+window {
+    transparency:                "real";
+    location:                    southwest;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       600px;
+    height:                      280px;
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    enabled:                     true;
+    margin:                      @styleOuterMargins;
+	padding:                     @styleInnerMargins;
+    border-radius:               @styleOuterBorderRadius;
+    cursor:                      "default";
+    background-color:            @background;
+}
+
+mainbox {
+    enabled:                     true;
+    spacing:                     @styleWidgetSpace;
+	padding:                     @styleInnerPadding;
+    border:                      @styleInnerBorderWidth;
+    border-radius:               @styleInnerBorderRadius;
+	border-color:                @styleInnerBorderColor;
+    background-color:            @styleMainBoxColor;
+	text-color:                  @onSurface;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+    orientation:                 vertical;
+    children:                    ["inputbar"];
+}
+
+
+inputbar {
+    border-radius:               0px;
+    background-color:            inherit;
+    text-color:                  inherit;
+	padding:                     80px 0px;
+    children:                    [ "dummy", "prompt", "dummy"];
+}
+
+dummy {
+    background-color:            transparent;
+	expand:                      true;
+}
+
+prompt {
+    background-color:            inherit;
+    text-color:                  inherit;
+	vertical-align:              0.5;
+    horizontal-align:            0.5;
+	font:                        @fontText;
+}

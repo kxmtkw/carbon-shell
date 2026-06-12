@@ -6,15 +6,14 @@ configuration
     display-run:               ">>> ";
 }
 
-@import "../Config//color.rasi"
-@import "../Config//style.rasi"
-@import "../Config//fonts.rasi"
+@import "../Config/color.rasi"
+@import "../Config/style.rasi"
+@import "../Config/fonts.rasi"
 
-window
-{
+window {
     transparency:                "real";
     location:                    southwest;
-    anchor:                      west;
+    anchor:                      center;
     fullscreen:                  false;
     width:                       600px;
     height:                      280px;
@@ -22,65 +21,59 @@ window
     y-offset:                    0px;
 
     enabled:                     true;
-    margin:                      10px;
-    padding:                     @styleGaps;
+    margin:                      @styleOuterMargins;
+	padding:                     @styleInnerMargins;
     border-radius:               @styleOuterBorderRadius;
     cursor:                      "default";
     background-color:            @background;
 }
 
-mainbox 
-{
+mainbox {
     enabled:                     true;
     spacing:                     @styleWidgetSpace;
-	padding:                     @styleInnerGaps;
-    border:                      @styleInlineBorderWidth;
+	padding:                     @styleInnerPadding;
+    border:                      @styleInnerBorderWidth;
     border-radius:               @styleInnerBorderRadius;
-	border-color:                @styleInlineBorderColor;
-    background-color:            @styleBoxColor;
+	border-color:                @styleInnerBorderColor;
+    background-color:            @styleMainBoxColor;
+	text-color:                  @onSurface;
     vertical-align:              0.5;
+    horizontal-align:            0.5;
     orientation:                 vertical;
-    children:                    [ "inputbar", "listview"];
+    children:                    ["inputbar", "listview"];
 }
 
 
 inputbar {
-    enabled:                     true;
-    margin:                      0px;
-    padding:                     10px;
+    border-radius:               0px;
     background-color:            inherit;
-    text-color:                  @onSurface;
-    orientation:                 horizontal;
+    text-color:                  inherit;
     children:                    [ "prompt", "entry", "dummy"];
 }
 
+dummy {
+    background-color:            transparent;
+}
+
 prompt {
-    padding:                     0;
-    border-radius:               0px;
     background-color:            inherit;
+	padding:                     10px;
     text-color:                  @onSurface;
-    vertical-align:              0.5;
-    horizontal-align:            0.0;
 }
 
 entry {
     enabled:                     true;
     expand:                      false;
     width:                       20%;
-    padding:                     0px 16px;
-    border-radius:               @themeBorderRadius;
+    padding:                     10px;
+    margin:                      0px;    
+    border-radius:               @styleWidgetBorderRadius;
     background-color:            inherit;
     text-color:                  inherit;
     cursor:                      text;
-    placeholder:                 "";
-    placeholder-color:           inherit;
+    placeholder:                 " Run...";
     vertical-align:              0.5;
     horizontal-align:            0;
-}
-
-dummy {
-    expand:                      true;
-    background-color:            transparent;
 }
 
 
@@ -95,25 +88,33 @@ listview
     scrollbar:                   false;
     layout:                      vertical;
     reverse:                     false;
-    fixed-height:                true;
-    fixed-columns:               true;
+    fixed-height:                false;
+    fixed-columns:               false;
     
     spacing:                     10px;
-	padding:                     10px 40px;
-    background-color:            transparent;
+    margin:                      0px;
+	padding:                     10px 20px;
+    border:                      0px solid;
+    border-radius:               0px;
+    background-color:            inherit;
     text-color:                  @onSurface;
+    vertical-align:              0.5;
     cursor:                      "default";
 }
 
-element 
-{
+element {
     enabled:                     true;
+    spacing:                     0px;
+    margin:                      0px;
     padding:                     10px;
-    border-radius:               0;
-    background-color:            transparent;
-    text-color:                  @onSurface;
+    border:                      0px;
+    border-radius:               0px;
+    background-color:            inherit;
+    text-color:                  inherit;
+    orientation:                 horizontal;
     cursor:                      pointer;
 }
+
 element normal.normal {
     background-color:            inherit;
     text-color:                  inherit;
@@ -135,19 +136,15 @@ element selected.active {
     border-color:                @styleActiveSelectionColor;
 }
 
-element-icon 
-{
+element-icon {
     background-color:            transparent;
-    text-color:                  inherit;
     size:                        32px;
     cursor:                      inherit;
 }
-element-text 
-{
-    background-color:            transparent;
+element-text {
+    background-color:            inherit;
     text-color:                  inherit;
     cursor:                      inherit;
-    padding:                     4px;
     vertical-align:              0.5;
     horizontal-align:            0.0;
 }
