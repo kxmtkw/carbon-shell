@@ -19,7 +19,7 @@ class ThemeManager(BaseManager):
 	class State(BaseManager.State):
 		mode: Literal["dark", "light"]
 		source: Literal["wallpaper", "hex"]
-		style: Literal["material", "modern"]
+		style: Literal["material", "modern", "rigid"]
 		wallpaper: str
 		hex: str
 		variant: Literal["ash", "coal", "graphite", "diamond"]
@@ -316,17 +316,23 @@ class ThemeManager(BaseManager):
 	def setShellStyle(
 		self,
 		*,
-		style:  Literal["material", "modern"]
+		style:  Literal["material", "modern", "rigid"]
 	):
 		
 		if not hasattr(self, "_shell_styles"):
-			self._shell_styles = ("material", "modern")
+			self._shell_styles = ("material", "modern", "rigid")
 
 		if style not in self._shell_styles:
 			raise CarbonError(f"Invalid style. Allowed styles include:\n{self._shell_styles}")
 		
 		self.updater.setShellStyle(style)
 		self.state.style = style
+
+		logger.log(
+			"theme",
+			f"Shell style updated to {style}.",
+			logger.Level.info
+		)
 
 		return f"Shell style updated to {style}."
 

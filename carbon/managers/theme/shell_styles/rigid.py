@@ -1,15 +1,16 @@
 
-def get_modern_style() -> str:
+
+def get_rigid_style() -> str:
 	return f"""
 // NOTE: written by carbon shell
 * {{
-	styleOuterBorderRadius: 30px;
+	styleOuterBorderRadius: 2px;
 
     styleInnerBorderWidth: 2px;
-	styleInnerBorderRadius: 16px;
+	styleInnerBorderRadius: 2px;
 	styleInnerBorderColor: @surfaceContainer;
 
-	styleWidgetBorderRadius: 10px;
+	styleWidgetBorderRadius: 2px;
 	styleWidgetSpace: 12px;
 
 	styleOuterMargins: 10px;

@@ -121,7 +121,7 @@ class ThemeUpdater:
 		return self.fonts
 	
 
-	def setShellStyle(self, style: Literal["material", "modern"]):
+	def setShellStyle(self, style: Literal["material", "modern", "rigid"]):
 
 		match style:
 
@@ -130,5 +130,8 @@ class ThemeUpdater:
 
 			case "modern":
 				rofi_string = shell_styles.get_modern_style()
+
+			case "rigid":
+				rofi_string = shell_styles.get_rigid_style()
 
 		writefile("~/.carbon/shell/rofi/Config/style.rasi", rofi_string)

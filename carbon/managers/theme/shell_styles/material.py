@@ -4,14 +4,14 @@ def get_material_style() -> str:
 	return f"""
 // NOTE: written by carbon shell
 * {{
-	styleOuterBorderRadius: 20px;
+	styleOuterBorderRadius: 30px;
 
     styleInnerBorderWidth: 0px;
-	styleInnerBorderRadius: 12px;
+	styleInnerBorderRadius: 22px;
 	styleInnerBorderColor: @surfaceContainer;
 
-	styleWidgetBorderRadius: 8px;
-	styleWidgetSpace: 12px;
+	styleWidgetBorderRadius: 16px;
+	styleWidgetSpace: 16px;
 
 	styleOuterMargins: 10px;
 	styleInnerMargins: 10px;
