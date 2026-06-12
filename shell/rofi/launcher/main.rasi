@@ -36,8 +36,8 @@ window
     y-offset:                    0px;
 
     enabled:                     true;
-    margin:                      10px;
-    padding:                     @styleGaps;
+    margin:                      @styleOuterMargins;
+    padding:                     @styleInnerMargins;
     border-radius:               @styleOuterBorderRadius;
     cursor:                      "default";
     background-color:            @background;
@@ -47,11 +47,11 @@ mainbox
 {
     enabled:                     true;
     spacing:                     @styleWidgetSpace;
-	padding:                     @styleInnerGaps;
-    border:                      @styleInlineBorderWidth;
+	padding:                     @styleInnerPadding;
+    border:                      @styleInnerBorderWidth;
     border-radius:               @styleInnerBorderRadius;
-	border-color:                @styleInlineBorderColor;
-    background-color:            @styleBoxColor;
+	border-color:                @styleInnerBorderColor;
+    background-color:            @styleMainBoxColor;
     vertical-align:              0.5;
     orientation:                 vertical;
     children:                    [ "inputbar", "listview"];
@@ -63,7 +63,7 @@ inputbar {
 	margin:                      10px 20px;  
     background-color:            @primaryContainer;
     text-color:                  @onPrimaryContainer;
-    border-radius:               10px;
+    border-radius:               @styleWidgetBorderRadius;
     orientation:                 horizontal;
     children:                    [ "prompt", "entry", "dummy"];
 }

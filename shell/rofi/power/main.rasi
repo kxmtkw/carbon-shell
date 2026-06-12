@@ -28,8 +28,8 @@ window
 
     /* properties for all widgets */
     enabled:                     true;
-    margin:                      10px;
-    padding:                     @styleGaps;
+    margin:                      @styleOuterMargins;
+    padding:                     @styleInnerMargins;
     border-radius:               @styleOuterBorderRadius;
     cursor:                      "default";
     background-color:            @background;
@@ -39,11 +39,11 @@ mainbox
 {
     enabled:                     true;
     spacing:                     @styleWidgetSpace;
-	padding:                     @styleInnerGaps;
-    border:                      @styleInlineBorderWidth;
+	padding:                     @styleInnerPadding;
+    border:                      @styleInnerBorderWidth;
     border-radius:               @styleInnerBorderRadius;
-	border-color:                @styleInlineBorderColor;
-    background-color:            @styleBoxColor;
+	border-color:                @styleInnerBorderColor;
+    background-color:            @styleMainBoxColor;
     vertical-align:              0.5;
     orientation:                 vertical;
     children:                    [ "inputbar", "message", "listview" ];
@@ -131,4 +131,16 @@ element selected.normal
 {
 	border:                      @styleSelectionBar; 
     border-color:                @styleSelectionColor;
+}
+element normal.active {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveColor;
+}
+element alternate.active {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveColor;
+}
+element selected.active {
+	border:                      @styleSelectionBar; 
+    border-color:                @styleActiveSelectionColor;
 }

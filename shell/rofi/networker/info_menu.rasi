@@ -5,18 +5,17 @@ mainbox
 {
     enabled:                     true;
     spacing:                     @styleWidgetSpace;
-	padding:                     @styleInnerGaps;
-    border:                      @styleInlineBorderWidth;
+	padding:                     @styleInnerPadding;
+    border:                      @styleInnerBorderWidth;
     border-radius:               @styleInnerBorderRadius;
-	border-color:                @styleInlineBorderColor;
-    background-color:            @surfaceContainer;
+	border-color:                @styleInnerBorderColor;
+    background-color:            @styleMainBoxColor;
     vertical-align:              0.5;
     orientation:                 vertical;
     children:                    [ "inputbar", "message", "listview" ];
 }
 
 inputbar {
-    border-radius:               16px;
     background-color:            inherit;
     text-color:                  @onSurface;
     children:                    [ "dummy", "prompt", "dummy"];
@@ -35,7 +34,7 @@ message {
     enabled:                     true;
 	margin:						 5px;
     padding:                     20px 30px;
-    border-radius:               20px;
+    border-radius:               @styleWidgetBorderRadius;
     background-color:            @primaryContainer;
     text-color:                  @onPrimaryContainer;
 }

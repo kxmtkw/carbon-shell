@@ -11,18 +11,18 @@ configuration
 window 
 {    
     transparency:                "real";
-    location:                    southwest;
+    location:                    southeast;
     anchor:                      center;
     fullscreen:                  false;
     width:                       660px;
-    height:                      600px;
+    height:                      700px;
     x-offset:                    0px;
     y-offset:                    0px;
 
     /* properties for all widgets */
     enabled:                     true;
-    margin:                      10px;
-    padding:                     @styleGaps;
+    margin:                      @styleOuterMargins;
+    padding:                     @styleInnerMargins;
     border-radius:               @styleOuterBorderRadius;
     cursor:                      "default";
     background-color:            @background;

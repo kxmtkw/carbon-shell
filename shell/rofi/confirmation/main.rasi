@@ -21,8 +21,8 @@ window
     y-offset:                    0px;
 
     enabled:                     true;
-    margin:                      10px;
-    padding:                     @styleGaps;
+    margin:                      @styleOuterMargins;
+    padding:                     @styleInnerMargins;
     border-radius:               @styleOuterBorderRadius;
     cursor:                      "default";
     background-color:            @background;
@@ -32,11 +32,11 @@ mainbox
 {
     enabled:                     true;
     spacing:                     @styleWidgetSpace;
-	padding:                     @styleInnerGaps;
-    border:                      @styleInlineBorderWidth;
+	padding:                     @styleInnerPadding;
+    border:                      @styleInnerBorderWidth;
     border-radius:               @styleInnerBorderRadius;
-	border-color:                @styleInlineBorderColor;
-    background-color:            @styleBoxColor;
+	border-color:                @styleInnerBorderColor;
+    background-color:            @styleMainBoxColor;
     vertical-align:              0.5;
     orientation:                 vertical;
     children:                    [ "message", "listview" ];
@@ -93,7 +93,7 @@ element
     padding:                     12px 26px;
     border:                      0px solid;
     border-radius:               0px;
-    background-color:            @background;
+    background-color:            inherit;
     text-color:                  @onSurface;
     cursor:                      pointer;
 }

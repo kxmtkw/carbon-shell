@@ -9,11 +9,11 @@ mainbox
 {
     enabled:                     true;
     spacing:                     @styleWidgetSpace;
-	padding:                     @styleInnerGaps;
-    border:                      @styleInlineBorderWidth;
+	padding:                     @styleInnerPadding;
+    border:                      @styleInnerBorderWidth;
     border-radius:               @styleInnerBorderRadius;
-	border-color:                @styleInlineBorderColor;
-    background-color:            @styleBoxColor;
+	border-color:                @styleInnerBorderColor;
+    background-color:            @styleMainBoxColor;
     vertical-align:              0.5;
     orientation:                 vertical;
     children:                    [ "inputbar", "message"];
@@ -41,7 +41,7 @@ message {
     enabled:                     true;
     margin:                      20px 30px;
     padding:                     20px 40px;
-    border-radius:               20px;
+    border-radius:               @styleWidgetBorderRadius;
     background-color:            @surfaceContainer;
     text-color:                  @onSurface;
 }
