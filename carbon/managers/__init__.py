@@ -10,6 +10,7 @@ from carbon.managers.power import PowerManager
 from carbon.managers.panel import PanelManager
 from carbon.managers.lock import LockScreenManager
 from carbon.managers.backlight import BacklightManager
+from carbon.managers.audio import AudioManager
 
 
 MANAGERS: list[type[BaseManager]] = [
@@ -22,5 +23,6 @@ MANAGERS: list[type[BaseManager]] = [
 	PowerManager,
 	PanelManager,
 	LockScreenManager,
-	BacklightManager
+	BacklightManager,
+	AudioManager
 ]
