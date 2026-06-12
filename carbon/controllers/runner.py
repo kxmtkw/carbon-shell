@@ -1,42 +1,57 @@
 from pathlib import Path
-import subprocess
+import subprocess, os, shlex, math
 from typing import Any, Callable
 from carbon.controllers.base import BaseController
 from carbon.lib.rofi import RofiShell
+from carbon.managers.base import BaseManager
 from carbon.utils import logger
-import os
-import shlex
+from simpleeval import simple_eval, NameNotDefined
+
+from carbon.utils.functions import procrun, shellrun
 
 class Runner(BaseController):
 
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
-		super().__init__(internalDispatch)
-		self.rasi_main = "~/.carbon/shell/rofi/run/main.rasi"
-		self.rasi_error = "~/.carbon/shell/rofi/run/error.rasi"
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], BaseManager.State|None]):
+		super().__init__(internalDispatch, getManagerState)
+		
+		self.rasi_main = "~/.carbon/shell/rofi/runner/main.rasi"
+		self.rasi_error = "~/.carbon/shell/rofi/runner/error.rasi"
+		self.rasi_display = "~/.carbon/shell/rofi/runner/display.rasi"
 
 		self.rofi = RofiShell(self.rasi_main)
 
 		self.binaries: list[str] = []
+		self.specials: dict[str, str] = {}
 
-		self.loadBinaries()
-
-		self.specials: dict[str, str] = {
-			"@terminal": os.environ.get("TERMINAL", "alacritty"),
-			"@editor": os.environ.get("EDITOR", "alacritty -e nano"),
-			"@browser": os.environ.get("BROWSER", "firefox"),
-			"@files": os.environ.get("FILES", "dolphin"),
-			"@music": os.environ.get("MUSIC", "spotify"),
+		self.calc_variables = {
+			"pi": math.pi,
+			"e": math.e,
+			"_": 0
 		}
 
-		self.binaries.extend(self.specials.keys())
+		self.calc_functions = {
+			"sin": math.sin,
+			"cos": math.cos,
+			"tan": math.tan,
+			"round": round,
+			"sqrt": math.sqrt,
+			"radians": math.radians,
+			"degrees": math.degrees,
+			"log": math.log10,
+			"ln": math.log1p
+		}
+
 	
-	
-	def reload(self):
+	def setConfig(self, config: dict[str, Any]):
 		self.loadBinaries()
+		 
+		for name, val in config.items():
+			self.specials[f"@{name}"] = str(val)
+
 		self.binaries.extend(self.specials.keys())
 
 
-	def loadBinaries(self) -> set[str]:
+	def loadBinaries(self):
 
 		path = os.environ["PATH"]
 		directories = path.split(":")
@@ -59,6 +74,18 @@ class Runner(BaseController):
 	def displayError(self, msg: str):
 
 		self.rofi.updateTheme(self.rasi_error)
+
+		self.rofi.display(
+			mode=RofiShell.Mode.dmenu,
+			prompt=msg
+		)
+
+		self.rofi.wait()
+
+
+	def displayMesg(self, msg: str):
+
+		self.rofi.updateTheme(self.rasi_display)
 
 		self.rofi.display(
 			mode=RofiShell.Mode.dmenu,
@@ -94,6 +121,10 @@ class Runner(BaseController):
 				self.execShell(selected.removeprefix("$"))
 			case "@":
 				self.execSpecial(selected)
+			case "=":
+				self.execCalc(selected.removeprefix("="))
+			case "?":
+				self.execSearch(selected.removeprefix("?"))
 			case _:
 				self.execProc(selected)
 
@@ -138,6 +169,24 @@ class Runner(BaseController):
 		
 		target = self.specials[cmd]
 		self.execProc(target)
+
+
+	def execCalc(self, expr: str):
+		try:
+			result = simple_eval(expr, names=self.calc_variables, functions=self.calc_functions)
+		except SyntaxError:
+			self.displayError(f"Invalid syntax")
+			return
+		except NameNotDefined as e:
+			self.displayError(f"Name not defined: {e.name}")
+			return
+		
+		self.calc_variables["_"] = result
+		self.displayMesg(str(result))
+
+
+	def execSearch(self, text: str):
+		procrun(["xdg-open", f"https://www.google.com/search?q={text}"], wait=False)
 
 
 	def close(self):

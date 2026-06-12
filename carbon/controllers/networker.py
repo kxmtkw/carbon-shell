@@ -7,11 +7,12 @@ from carbon.controllers.base import BaseController
 from carbon.lib.rofi import RofiShell
 from carbon.lib import networker as backend
 from carbon.lib.networker import Icons
+from carbon.managers.base import BaseManager
 
 class Networker(BaseController):
 
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
-		super().__init__(internalDispatch)
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], BaseManager.State|None]):
+		super().__init__(internalDispatch, getManagerState)
 		self.rasi_normal = "~/.carbon/shell/rofi/networker/normal_menu.rasi"
 		self.rasi_info = "~/.carbon/shell/rofi/networker/info_menu.rasi"
 		self.rasi_mesg = "~/.carbon/shell/rofi/networker/display_mesg.rasi"

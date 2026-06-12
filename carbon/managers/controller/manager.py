@@ -11,7 +11,7 @@ from carbon.utils import CarbonError, logger
 
 from carbon.lib.quickshell import Quickshell
 
-from ...controllers.base import BaseController
+from carbon.controllers.base import BaseController
 from carbon.controllers import (
 	Launcher,
 	Power,
@@ -27,7 +27,7 @@ class ControllerManager(BaseManager):
 
 	@dataclass(init=True, kw_only=True)
 	class State(BaseManager.State):
-		pass
+		runner: dict[str, Any]
 
 
 	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
@@ -35,20 +35,29 @@ class ControllerManager(BaseManager):
 		self.lock = Lock()
 		self.qs = Quickshell()
 		self.current_controller: BaseController | None = None
-		self.state = self.State()
-
 		self.panel_should_return_normal: bool = True
+
+		self.state = self.State(
+			runner = {
+				"terminal": "alacritty",
+				"files":    "dolphin",
+				"browser":  "firefox",
+				"editor":   "alacritty -e nano",
+				"music":    "spotify"
+			}
+		)
+		
 
 
 	def start(self):
 
-		self.launcher = Launcher(self.internalDispatch)
-		self.power = Power(self.internalDispatch)
-		self.screenshot = Screenshot(self.internalDispatch)
-		self.networker = Networker(self.internalDispatch)
-		self.clipboard = Clipboard(self.internalDispatch)
-		self.windows = Windows(self.internalDispatch)
-		self.runner = Runner(self.internalDispatch)
+		self.launcher = Launcher(self.internalDispatch, self.getManagerState)
+		self.power = Power(self.internalDispatch, self.getManagerState)
+		self.screenshot = Screenshot(self.internalDispatch, self.getManagerState)
+		self.networker = Networker(self.internalDispatch, self.getManagerState)
+		self.clipboard = Clipboard(self.internalDispatch, self.getManagerState)
+		self.windows = Windows(self.internalDispatch, self.getManagerState)
+		self.runner = Runner(self.internalDispatch, self.getManagerState)
 
 		self.controllers: Dict[str, BaseController] = {
 			"launcher": self.launcher,
@@ -79,8 +88,15 @@ class ControllerManager(BaseManager):
 
 	def setState(self, state):
 		
-		for controller in self.controllers.values():
-			controller.reload()
+		for name, controller in self.controllers.items():
+			if hasattr(state, name):
+				config = getattr(state, name)
+				if isinstance(config, dict):
+					controller.setConfig(config)
+				setattr(self.state, name, config)
+			elif hasattr(self.state, name):
+				controller.setConfig(getattr(self.state, name))
+
 
 
 	def getState(self):

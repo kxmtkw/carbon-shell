@@ -3,17 +3,20 @@ def get_modern_style() -> str:
 	return f"""
 // NOTE: written by carbon shell
 * {{
-    styleInlineBorderWidth: 2px;
 	styleOuterBorderRadius: 20px;
-	styleInnerBorderRadius: 12px;
-	styleWidgetBorderRadius: 8px;
 
-	styleGaps: 10px;
-	styleInnerGaps: 20px;
+    styleInnerBorderWidth: 2px;
+	styleInnerBorderRadius: 12px;
+	styleInnerBorderColor: @surfaceContainer;
+
+	styleWidgetBorderRadius: 8px;
 	styleWidgetSpace: 12px;
 
-	styleInlineBorderColor: @surfaceContainer;
-	styleBoxColor: @background;
+	styleOuterMargins: 10px;
+	styleInnerMargins: 10px;
+	styleInnerPadding: 20px;
+	
+	styleMainBoxColor: @background;
 
 	styleSelectionBar: 0px 0px 0px 8px;
 	styleSelectionColor: @primaryContainer;

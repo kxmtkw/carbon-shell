@@ -4,13 +4,15 @@ from typing import Any, Callable
 from carbon.lib.rofi import RofiShell
 from carbon.controllers.base import BaseController
 
+from carbon.managers.base import BaseManager
 from carbon.utils import shellrun
 
 
 class Power(BaseController):
 	
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
-		super().__init__(internalDispatch)
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], BaseManager.State|None]):
+		super().__init__(internalDispatch, getManagerState)
+
 		self.main_rasi = "~/.carbon/shell/rofi/power/main.rasi"
 		self.confirmation_rasi = "~/.carbon/shell/rofi/confirmation/main.rasi"
 		
@@ -109,7 +111,3 @@ class Power(BaseController):
 		except RofiShell.Error:
 			pass
 
-
-if __name__ == "__main__":
-	c = Power(lambda *_args, **_kwargs: None)
-	c.launch()

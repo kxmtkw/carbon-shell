@@ -5,12 +5,14 @@ from typing import Any, Callable
 from carbon.lib.rofi import RofiShell
 from carbon.controllers.base import BaseController
 
+from carbon.managers.base import BaseManager
 from carbon.utils import shellrun
 
 class Screenshot(BaseController):
 	
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
-		super().__init__(internalDispatch)
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], BaseManager.State|None]):
+		super().__init__(internalDispatch, getManagerState)
+		
 		self.rofi = RofiShell("~/.carbon/shell/rofi/screenshot/main.rasi")
 
 		self.save_dir = Path("~/Pictures").expanduser()

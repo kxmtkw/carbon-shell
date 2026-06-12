@@ -1,10 +1,16 @@
 from typing import Any, Callable
+from carbon.managers.base import BaseManager
 
 class BaseController:
 
-	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None]):
+	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], BaseManager.State|None]):
 		self.internalDispatch = internalDispatch
+		self.getManagerState: Callable[[str], BaseManager.State|None] = getManagerState
+		self.config = {}
 	
+	def setConfig(self, config: dict[str, Any]):
+		pass
+
 	def reload(self):
 		pass
 	
