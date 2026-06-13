@@ -14,29 +14,25 @@ class BacklightManager(BaseManager):
 	@dataclass(init=True, kw_only=True)
 	class State(BaseManager.State):
 		value: float
-		update_delay: float
-		minimum: float
-		maximum: float
 
 
 	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
 		super().__init__(internalDispatch, getManagerState)
 
 		self.state: BacklightManager.State = self.State(
-			value=100,
-			update_delay=0.05,
-			minimum=10,
-			maximum=100
+			value=100
 		)
 
 		self.max_brightness: int = 0
 
 		self.max_steps = 60
 		self.min_steps = 10
+		self.update_delay = 0.05
+
+		self.minimum: int = 10
+		self.maximum: int = 100
 
 		self.saved_brightness = 100
-
-		self.is_busy = False
 
 	
 	def start(self):
@@ -72,13 +68,6 @@ class BacklightManager(BaseManager):
 	def setState(self, state: State):
 		self.setBrightness(value=state.value)
 
-		try:
-			self.state.update_delay = float(state.update_delay)
-			self.state.minimum = float(state.minimum)
-			self.state.maximum = float(state.maximum)
-		except ValueError:
-			raise CarbonError("Non-number types used in numeral values of backlight manager.")
-
 
 	def getHelp(self) -> str:
 		return _help
@@ -100,7 +89,7 @@ class BacklightManager(BaseManager):
 	def transitionBrightness(self, target: float):
 
 		current = self.state.value
-		target = clamp(target, self.state.minimum, self.state.maximum)
+		target = clamp(target, self.minimum, self.maximum)
 
 		if current == target:
 			logger.debug("backlight", "Target was equal to current so no need to perform transition.")
@@ -114,7 +103,7 @@ class BacklightManager(BaseManager):
 		for i in range(step_count):
 			current = current + step_size
 			procrun(["brightnessctl", "--device", "*backlight*", "set", f"{current}%"])
-			time.sleep(self.state.update_delay)
+			time.sleep(self.update_delay)
 
 		procrun(["brightnessctl", "--device", "*backlight*", "set", f"{target}%"])
 		self.state.value = target

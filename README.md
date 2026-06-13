@@ -113,17 +113,17 @@ After editing the file, run:
 carbon-shell daemon load-state
 ```
 
-Here is an example config:
+Here is the default config:
 
 ```toml
 [autostart]
 commands = []
 
-[theme]
+[theme] 
 mode = "dark"
 source = "wallpaper"
-style = "material"
-wallpaper = "~/.carbon/assets/default_wallpaper.jpg"
+style = "modern"
+wallpaper = "~/.carbon/assets/default_wallpaper.png"
 hex = "#82a0c0"
 variant = "graphite"
 contrast = 0.5
@@ -131,24 +131,22 @@ font = "Iosevka"
 face = "~/.carbon/assets/default_face.jpg"
 wallpaper_animation = "center"
 
-[controller]
-
 [notifications]
 do_not_disturb = false
 
 [nightlight]
 toggled = true
-temperature = 6000.0
-gamma = 100.0
+temperature = 6000
+gamma = 100
 
 [idle]
 toggled = true
 
 [power]
 full_threshold = 95
-warning_threshold = 15
-critical_threshold = 5
-force_hibernate_threshold = 2
+warning_threshold = 20
+critical_threshold = 10
+force_hibernate_threshold = 5
 
 [panel]
 mode = "show"
@@ -156,7 +154,22 @@ position = "bottom"
 
 [lockscreen]
 style = "screenshot"
-image = "~/.carbon/assets/default_wallpaper.jpg"
+image = "~/.carbon/assets/default_wallpaper.png"
+
+[backlight]
+value = 100.0
+
+[audio]
+volume = 100.0
+muted = false
+mic_muted = false
+
+[controller.runner]
+terminal = "alacritty"
+files = "dolphin"
+browser = "firefox"
+editor = "alacritty -e nano"
+music = "spotify"
 ```
 
 ### `Project Structure`
@@ -166,8 +179,6 @@ The project has been divided into different folders (duh...)
 carbon-shell/
 	assets/
 		# Contains the default profile and wallpaper
-	bin/
-		# Used to contain old scripts until I moved them to .venv via pip. 
 	carbon/
 		# The main python module
 		cli/

@@ -16,8 +16,6 @@ class AudioManager(BaseManager):
 		volume: float
 		muted: bool
 		mic_muted: bool
-		minimum: float
-		maximum: float
 
 
 	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], State]):
@@ -26,13 +24,12 @@ class AudioManager(BaseManager):
 		self.state: AudioManager.State = self.State(
 			volume=100,
 			muted=False,
-			mic_muted=False,
-			minimum=0,
-			maximum=100
+			mic_muted=False
 		)
 
-		self.saved_volume = 100
-		self.saved_mic_volume = 100
+		self.minimum = 0
+		self.maximum = 110
+
 
 	def start(self):
 		pass
@@ -70,12 +67,6 @@ class AudioManager(BaseManager):
 		self.muteMic(muted=state.mic_muted)
 		self.muteVolume(muted=state.muted)
 
-		try:
-			self.state.minimum = float(state.minimum)
-			self.state.maximum = float(state.maximum)
-		except ValueError:
-			raise CarbonError("Non-number types used in numeral values of audio manager.")
-
 
 	def getHelp(self) -> str:
 		return _help
@@ -106,7 +97,7 @@ class AudioManager(BaseManager):
 		except ValueError:
 			raise CarbonError("Value must be a number.")
 		
-		value = clamp(value, self.state.minimum, self.state.maximum)
+		value = clamp(value, self.minimum, self.maximum)
 		procrun(["pactl", "set-sink-volume", "@DEFAULT_SINK@", f"{value}%"])
 		self.state.volume = value
 

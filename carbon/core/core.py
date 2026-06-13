@@ -88,6 +88,8 @@ class CarbonCore:
 				urgency="critical"
 			)
 
+		self.saveState()
+
 
 	def run(self):
 
@@ -128,7 +130,7 @@ class CarbonCore:
 		errors = ""
 		
 		if not self.state.load():
-			msg = f"Corrupted state file. Invalid Json: {self.state.file}."
+			msg = f"Corrupted or no state file: {self.state.file}."
 
 			logger.log(
 				"core",

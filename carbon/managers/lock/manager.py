@@ -22,7 +22,7 @@ class LockScreenManager(BaseManager):
 		super().__init__(internalDispatch, getManagerState)
 		self.state: LockScreenManager.State = LockScreenManager.State(
 			style="screenshot",
-			image="~/.carbon/assets/default_wallpaper.jpg"
+			image="~/.carbon/assets/default_wallpaper.png"
 		)
 		self.config_file = "~/.config/hypr/hyprlock/hyprlock-theme.conf"
 

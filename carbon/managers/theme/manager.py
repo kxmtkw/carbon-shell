@@ -41,8 +41,8 @@ class ThemeManager(BaseManager):
 		self.state: ThemeManager.State = self.State(
 			mode="dark",
 			source="wallpaper",
-			style="material",
-			wallpaper="~/.carbon/assets/default_wallpaper.jpg",
+			style="modern",
+			wallpaper="~/.carbon/assets/default_wallpaper.png",
 			hex="#82a0c0",
 			variant="graphite",
 			contrast=0.5,
