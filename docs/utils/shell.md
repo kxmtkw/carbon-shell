@@ -142,3 +142,17 @@ Control screen brightness.
 | `decrease` | `--value [number]` | Decrease brightness by percentage. |
 | `save` | - | Save current brightness. |
 | `restore` | - | Restore last saved brightness. |
+
+
+## audio
+
+Control audio
+
+| Handler | Arguments | Description |
+| --- | --- | --- |
+| `get` | - | Get current volume value. |
+| `set` | `--value [number]` | Set volume (clamped to min/max). |
+| `increase` | `--value [number]` | Increase volume by percentage. |
+| `decrease` | `--value [number]` | Decrease volume by percentage. |
+| `mute/unmute/toggle-mute` | - | Update volume mute status. |
+| `mute-mic/unmute-mic/toggle-mic` | - | Update mic mute status. |

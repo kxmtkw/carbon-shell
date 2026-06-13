@@ -1,7 +1,7 @@
 
 ## Todo
 
-#### Better Runner
+#### Better Runner `(DONE)`o
 
 Runner needs more modes. Some example modes could be:
 
@@ -45,7 +45,7 @@ A media player needs to be implemented. Ideally the implementation can be done u
 I added theming for KDE/QT apps but GTK apps still need some love.
 
 
-#### Better controller configuration `(ONGOING)`
+#### Better controller configuration `(DONE)`
 
 Adding options like position and even multiple variants.
 
