@@ -27,7 +27,7 @@ class BacklightManager(BaseManager):
 
 		self.max_steps = 60
 		self.min_steps = 10
-		self.update_delay = 0.05
+		self.update_delay = 0.01
 
 		self.minimum: int = 10
 		self.maximum: int = 100
@@ -74,7 +74,7 @@ class BacklightManager(BaseManager):
 	def getHelp(self) -> str:
 		return _help
 	
-
+	@locked(backlightLock)
 	def updateCurrentBrightness(self):
 		success, out = procrun(["brightnessctl", "g"])
 		if not success:
@@ -86,7 +86,7 @@ class BacklightManager(BaseManager):
 
 		logger.debug("backlight", "Brightness updated.")
 	 
-	
+	@locked(backlightLock)
 	def transitionBrightness(self, target: float):
 		
 		self.is_busy = True
@@ -119,8 +119,6 @@ class BacklightManager(BaseManager):
 		return self.state.value
 
 
-	# handler
-	@locked(backlightLock)
 	def setBrightness(self, *, value: float):
 
 		self.updateCurrentBrightness()
@@ -141,7 +139,6 @@ class BacklightManager(BaseManager):
 		return msg
 
 	
-	@locked(backlightLock)
 	def increaseBrightness(self, *, value: float):
 		
 		self.updateCurrentBrightness()
@@ -163,7 +160,6 @@ class BacklightManager(BaseManager):
 
 
 	# handler
-	@locked(backlightLock)
 	def decreaseBrightness(self, *, value: float):
 		
 		self.updateCurrentBrightness()
@@ -184,7 +180,6 @@ class BacklightManager(BaseManager):
 		return msg
 
 	# handler
-	@locked(backlightLock)
 	def saveBrightness(self):
 		self.saved_brightness = self.state.value
 		msg = f"Brightness saved with value {self.saved_brightness}%."
@@ -192,7 +187,6 @@ class BacklightManager(BaseManager):
 		return msg
 
 	# handler
-	@locked(backlightLock)
 	def restoreBrightness(self):
 		self.setBrightness(value=self.saved_brightness)
 		msg = f"Brightness restored to {self.saved_brightness}%."
