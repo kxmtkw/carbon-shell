@@ -18,6 +18,8 @@ class Runner(BaseController):
 		self.rasi_error = "~/.carbon/shell/rofi/runner/error.rasi"
 		self.rasi_display = "~/.carbon/shell/rofi/runner/display.rasi"
 
+		self.is_running = True
+
 		self.rofi = RofiShell(self.rasi_main)
 
 		self.binaries: list[str] = []
@@ -97,19 +99,23 @@ class Runner(BaseController):
 
 	def launch(self):
 
-		self.rofi.updateTheme(self.rasi_main)
+		self.is_running = True
 
-		self.rofi.display(
-			mode=RofiShell.Mode.dmenu,
-			prompt=">>> ",
-			options=self.binaries
-		)
+		while self.is_running:
 
-		selected = self.rofi.wait()
+			self.rofi.updateTheme(self.rasi_main)
 
-		if not selected: return
+			self.rofi.display(
+				mode=RofiShell.Mode.dmenu,
+				prompt=">>> ",
+				options=self.binaries
+			)
 
-		self.parse(selected)
+			selected = self.rofi.wait()
+
+			if not selected: return
+
+			self.parse(selected)
 
 
 	def parse(self, selected: str):
@@ -144,6 +150,8 @@ class Runner(BaseController):
 				stderr=subprocess.DEVNULL,
 				stdin=subprocess.DEVNULL
 			)
+			self.close()
+
 		except FileNotFoundError:
 			self.displayError(f"File Not Found: {cmd[0]}")
 		except PermissionError:
@@ -159,6 +167,8 @@ class Runner(BaseController):
 			stderr=subprocess.DEVNULL,
 			stdin=subprocess.DEVNULL
 		)
+
+		self.close()
 		
 
 	def execSpecial(self, cmd: str):
@@ -169,6 +179,8 @@ class Runner(BaseController):
 		
 		target = self.specials[cmd]
 		self.execProc(target)
+
+		self.close()
 
 
 	def execCalc(self, expr: str):
@@ -187,10 +199,12 @@ class Runner(BaseController):
 
 	def execSearch(self, text: str):
 		procrun(["xdg-open", f"https://www.google.com/search?q={text}"], wait=False)
+		self.close()
 
 
 	def close(self):
 		try:
+			self.is_running = False
 			self.rofi.close()
 		except RofiShell.Error:
 			pass
