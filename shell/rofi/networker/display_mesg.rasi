@@ -20,7 +20,7 @@ mainbox
 }
 
 inputbar {
-    padding:                     15px;
+    padding:                     160px 10px 10px 10px;
     border-radius:               0px;
     background-color:            @background;
     text-color:                  @onSurface;

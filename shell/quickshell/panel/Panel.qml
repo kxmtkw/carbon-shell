@@ -98,7 +98,7 @@ PanelWindow
     {	
 		anchors.fill: parent
 		color:  Theme.Color._background
-		radius: Theme.Style.getMaterialRadius(width, height, "large")
+		radius: Theme.Style.getMaterialRadius(width, height, "medium")
 
 		opacity: panelMode === modeHidden ? 0 : 100
 
