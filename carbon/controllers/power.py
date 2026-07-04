@@ -34,6 +34,9 @@ class Power(BaseController):
 		else:
 			self.user_name = "Unknown User"
 
+	def name(self) -> str:
+		return "power"
+	
 	def reload(self):
 		return super().reload()
 

@@ -13,6 +13,9 @@ class Clipboard(BaseController):
 		self.rasi = "~/.carbon/shell/rofi/clipboard/main.rasi"
 		self.rofi = RofiShell(self.rasi)
 
+	def name(self) -> str:
+		return "clipboard"
+	
 	def reload(self):
 		return super().reload()
 	

@@ -23,6 +23,9 @@ class Screenshot(BaseController):
 			"󰿦  Region"
 		]
 
+	def name(self) -> str:
+		return "screenshot"
+	
 	def reload(self):
 		return super().reload()
 

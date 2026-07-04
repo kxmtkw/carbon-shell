@@ -12,15 +12,7 @@ from carbon.utils import CarbonError, logger
 from carbon.lib.quickshell import Quickshell
 
 from carbon.controllers.base import BaseController
-from carbon.controllers import (
-	Launcher,
-	Power,
-	Screenshot,
-	Networker,
-	Clipboard,
-	Windows,
-	Runner
-)
+from carbon.controllers import CONTROLLERS
 
 
 class ControllerManager(BaseManager):
@@ -51,23 +43,12 @@ class ControllerManager(BaseManager):
 
 	def start(self):
 
-		self.launcher = Launcher(self.internalDispatch, self.getManagerState)
-		self.power = Power(self.internalDispatch, self.getManagerState)
-		self.screenshot = Screenshot(self.internalDispatch, self.getManagerState)
-		self.networker = Networker(self.internalDispatch, self.getManagerState)
-		self.clipboard = Clipboard(self.internalDispatch, self.getManagerState)
-		self.windows = Windows(self.internalDispatch, self.getManagerState)
-		self.runner = Runner(self.internalDispatch, self.getManagerState)
+		self.controllers: Dict[str, BaseController] = {}
 
-		self.controllers: Dict[str, BaseController] = {
-			"launcher": self.launcher,
-			"power": self.power,
-			"screenshot": self.screenshot,
-			"networker": self.networker,
-			"clipboard": self.clipboard,
-			"windows": self.windows,
-			"runner": self.runner
-		}
+		for c_class in CONTROLLERS:
+			controller = c_class(self.internalDispatch, self.getManagerState)
+			self.controllers[controller.name()] = controller
+
 
 
 	def end(self):

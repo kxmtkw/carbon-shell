@@ -11,6 +11,9 @@ class BaseController:
 	def setConfig(self, config: dict[str, Any]):
 		pass
 
+	def name(self) -> str:
+		raise NotImplementedError()
+
 	def reload(self):
 		pass
 	

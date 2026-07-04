@@ -12,6 +12,9 @@ class Windows(BaseController):
 		self.rasi = "~/.carbon/shell/rofi/windows/main.rasi"
 		self.rofi = RofiShell(self.rasi)
 	
+	def name(self):
+		return "windows"
+	
 	def reload(self):
 		return super().reload()
 	

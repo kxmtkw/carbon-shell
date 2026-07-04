@@ -11,6 +11,9 @@ class Launcher(BaseController):
 		self.rasi = "~/.carbon/shell/rofi/launcher/main.rasi"
 		self.rofi = RofiShell(self.rasi)
 	
+	def name(self) -> str:
+		return "launcher"
+	
 	def reload(self):
 		return super().reload()
 	

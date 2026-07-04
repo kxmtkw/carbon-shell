@@ -44,6 +44,10 @@ class Runner(BaseController):
 		}
 
 	
+	def name(self) -> str:
+		return "runner"
+	
+
 	def setConfig(self, config: dict[str, Any]):
 		self.loadBinaries()
 		 

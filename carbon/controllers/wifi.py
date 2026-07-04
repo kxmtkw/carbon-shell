@@ -9,7 +9,7 @@ from carbon.lib import networker as backend
 from carbon.lib.networker import Icons
 from carbon.managers.base import BaseManager
 
-class Networker(BaseController):
+class Wifi(BaseController):
 
 	def __init__(self, internalDispatch: Callable[[str, str, dict[str, Any]], None], getManagerState: Callable[[str], BaseManager.State|None]):
 		super().__init__(internalDispatch, getManagerState)
@@ -26,6 +26,8 @@ class Networker(BaseController):
 		self.wifi_device: str = backend.getDefaultWifiDevice()
 		self.selected_network: str = ""
 
+	def name(self) -> str:
+		return "wifi"
 
 	def reload(self):
 		backend.listNetworks(None, True)
@@ -35,9 +37,8 @@ class Networker(BaseController):
 		self.is_running = True
 		self.current = self.showWifiMenu
 
-		backend.listNetworks(None, True)
-
 		while self.is_running:
+			backend.listNetworks(None, True)
 			self.current()
 
 
@@ -57,75 +58,6 @@ class Networker(BaseController):
 			mesg=mesg
 		)
 		
-
-	def showMainMenu(self):
-
-		self.rofi.updateTheme(self.rasi_info)
-		
-		mesg = f"Device name:  {nmcli.general.get_hostname()}"
-		
-		options = [
-			f"{Icons.devices}   List Devices",
-			f"{Icons.wifi}   Configure Wifi",
-			f"{Icons.hotspot}   Configure Hotspot",
-			f"{Icons.airplane}   Toggle Airplane Mode",
-			f"{Icons.settings}   Advanced Settings"
-		]
-
-		if not nmcli.radio.wifi() or not nmcli.radio.wwan():
-			RofiShell.markActive(options[3])
-
-		self.rofi.display(
-			mode=RofiShell.Mode.dmenu,
-			prompt="Networker",
-			mesg=mesg,
-			options=options
-		)
-
-		selected = self.rofi.wait()
-
-		if not selected: 
-			self.close()
-
-		elif selected == options[0]:
-			self.current = self.showDeviceMenu
-
-		elif selected == options[1]:
-			self.current = self.showWifiMenu
-
-		elif selected == options[2]:
-			self.current = self.showHotspotMenu
-
-		elif selected == options[3]:
-			backend.toggleAllRadio()
-
-		elif selected == options[4]:
-			backend.launchNnConnectionEditor()
-			exit(0)
-			
-
-	def showDeviceMenu(self):
-		
-		self.rofi.updateTheme(self.rasi_normal)
-
-		options = backend.listDevices()
-
-		self.rofi.display(
-			mode=RofiShell.Mode.dmenu,
-			prompt="Network Devices",
-			options=options
-		)
-
-		selected = self.rofi.wait()
-
-		self.current = self.showMainMenu 
-		if not selected: return
-
-
-	def showHotspotMenu(self):
-		# todo
-		self.current = self.showMainMenu
-
 
 	def showWifiMenu(self):
 
@@ -160,7 +92,7 @@ Status    {device.state.capitalize()}"""
 
 		options.extend([
 			f">>>  {Icons.devices}   Change Device",
-			f">>>  {Icons.settings}   Networker Menu"    
+			f">>>  {Icons.settings}   Advanced Settings"    
 		])
 
 		self.rofi.display(
@@ -186,7 +118,8 @@ Status    {device.state.capitalize()}"""
 			self.current = self.showWifiDeviceOptions
 
 		elif selected == options[-1]:
-			self.current = self.showMainMenu
+			backend.launchNnConnectionEditor()
+			self.close()
 
 		else:
 			self.selected_network = backend.getIdFromFormatted(selected)
@@ -304,3 +237,4 @@ Rate       {network.rate}MiB/s"""
 			self.displayMessageRofi(f"{Icons.error} ", f"Failed to connect to {network.ssid}")
 			time.sleep(3)
 			self.rofi.close()
+			self.close()
