@@ -30,7 +30,7 @@ If you're on some other distribution or want to manually install packages, see [
 The shell can be installed by using this command:
 
 ``` bash
-curl -fsSL https://raw.githubusercontent.com/kxmtkw/carbon-shell/main/install.sh -o /tmp/install.sh && bash /tmp/install.sh
+curl -fsSL https://raw.githubusercontent.com/kxmtkw/CarbonShell/main/install.sh -o /tmp/install.sh && bash /tmp/install.sh
 ```
 
 What this script would do:
