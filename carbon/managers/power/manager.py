@@ -181,11 +181,15 @@ class PowerManager(BaseManager):
 	def triggerCritical(self, info: UPower.Info):
 		perc = int(info.percentage)
 		Notify("Critical Battery", f"Plug in immediately! Only {perc}% remaining!", urgency="critical")
+		self.was_warning_triggered = True
 		self.was_critical_triggered = True
 
 	def triggerForceHibernate(self):
-		Notify("Extreme Battery", "Hibernating in 10 seconds to prevent data loss!", timeout=-1, urgency="critical")
-		shellrun("sleep 10 && carbon.power hibernate")
+		Notify("Extreme Battery", "Hibernating in 5 seconds to prevent data loss!", timeout=-1, urgency="critical")
+		time.sleep(5)
+		self.runPowerOption("hibernate")
+		self.was_warning_triggered = True
+		self.was_critical_triggered = True 
 		self.was_hibernate_triggered = True
 
 
