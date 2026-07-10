@@ -40,7 +40,7 @@ class Runner(BaseController):
 			"radians": math.radians,
 			"degrees": math.degrees,
 			"log": math.log10,
-			"ln": math.log1p
+			"ln": lambda x: math.log(x, math.e)
 		}
 
 	
