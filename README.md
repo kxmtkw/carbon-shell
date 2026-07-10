@@ -3,7 +3,7 @@
 
 # Carbon Shell 
 
-A desktop UI shell designed for `Hyrpland` to be pretty and functional.
+A desktop UI shell designed for `Hyprland` to be functional and pretty.
 
 + Window Manager: `Hyprland`
 + Panel & Notifications: `Quickshell`
@@ -38,9 +38,20 @@ What this script would do:
 + Install packages for essential apps (optional)
 + Install the shell
 
-### 3) Restart
+### 3) Starting shell
 
-Then just restart hyprland and everything should work.
+Start the shell by first restrating hyprland.
+```bash
+hyprctl reload
+```
+Then run:
+```bash
+carbon-daemon --start
+```
+You might also want to run the following command to save state in to the config file.
+```bash
+carbon-shell daemon save-state
+```
 
 ### `Bindings`
 
@@ -63,9 +74,7 @@ Reference sheet for each utility:
 
 ### `Configuration`
 
-The shell is supposed to be configured using the cli tool `carbon-shell`
-.
-The main utility is `carbon-shell`. It is used to start up the shell daemon and send commands to it.
+The shell is supposed to be configured using the cli tool `carbon-shell`.
 ```bash
 carbon-shell COMMAND ...
 ```
@@ -106,7 +115,7 @@ done
 
 ### File Method
 
-If you prefer to use files as configuration, you can edit the json file in `~/.carbon/user/state.toml`.
+If you prefer to use files as configuration, you can edit the json file in `~/.config/carbon/state.toml`.
 
 After editing the file, run:
 ```bash

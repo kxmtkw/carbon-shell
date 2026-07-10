@@ -1,6 +1,22 @@
 # Carbon Shell Documentation
 
 This document outlines the available commands and handlers for the **Carbon Shell** system.
+The CLI has the following command structure.
+```bash
+carbon-shell manager handler --key value ...
+```
+
+The `--key value` is unique for each handler and each handler might take varying number of arguments.
+
+To get the list of all managers:
+```bash
+carbon-shell daemon list-managers
+```
+
+To get the handlers of a manager, simply run:
+```bash
+carbon-shell manager
+```
 
 
 ## daemon
