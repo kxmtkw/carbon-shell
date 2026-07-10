@@ -113,20 +113,11 @@ def main():
     run("touch ~/.carbon/hypr/override.conf")
     run("mkdir ~/.carbon/hypr/user")
 
-
     Color.Print(":: Finalizing setup...", Color.blue)
 
-    run("mkdir cache")
-    run("mkdir user")
-
     run("mkdir -p /home/haseeb/.local/share/color-schemes")
-
-    Color.Print(":: Starting shell...", Color.blue)
-
-    run("pidof Hyprland && echo 'Hyprland already running!' || start-hyprland")
-    run("carbon-daemon --start", hide_output=False)
-    run("hyprctl reload > /dev/null")
-    run("carbon-shell daemon save-state", hide_output=True)
+    run("mkdir ~/.config/carbon")
+    run("mkdir ~/.config/carbon/data")
 
     Color.Print(" :: Carbon shell installed!", Color.green)
 

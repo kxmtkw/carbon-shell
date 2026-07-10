@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 import threading, dataclasses
 from concurrent.futures import ThreadPoolExecutor
 from typing import Any
@@ -14,6 +15,7 @@ from carbon.lib.dbus import startDbusClient, getNotificationServer
 
 from carbon.managers import BaseManager, MANAGERS
 
+
 class CarbonCore:
 
 	coreLock = threading.Lock()
@@ -22,8 +24,16 @@ class CarbonCore:
 
 		logger.log("core", "Hello World!", logger.Level.info)
 
+		self.configdir = Path("~/.config/carbon").expanduser()
+
+		if not self.configdir.exists():
+			self.configdir.mkdir(511, True)
+		
+		if not (self.configdir / "data").exists():
+			(self.configdir / "data").mkdir()
+
 		self.server = Server(1)
-		self.state = StateManager("~/.carbon/user/state.toml")
+		self.state = StateManager(self.configdir / "state.toml")
 
 		self.lock = threading.Lock()
 		self.thread_pool = ThreadPoolExecutor(10)

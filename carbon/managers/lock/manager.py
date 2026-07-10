@@ -84,12 +84,12 @@ class LockScreenManager(BaseManager):
 					raise CarbonError(f"File not found: {img}")
 				
 				self.state.image = img
-				shellrun(f"cp {img} ~/.carbon/user/lockscreen")
-				writeLockStyle(self.config_file, "~/.carbon/user/lockscreen")
+				shellrun(f"cp {img} ~/.config/carbon/data/lockscreen")
+				writeLockStyle(self.config_file, "~/.config/carbon/data/lockscreen")
 
 			case "wallpaper":
 				self.state.style = "wallpaper"
-				writeLockStyle(self.config_file, "~/.carbon/user/wall")
+				writeLockStyle(self.config_file, "~/.config/carbon/data/wall")
 
 			case _:
 				raise CarbonError(f"Unknown lock style: {style}")
