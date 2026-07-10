@@ -1,4 +1,4 @@
-import json
+import json, sys
 from pathlib import Path
 import threading, dataclasses
 from concurrent.futures import ThreadPoolExecutor
@@ -15,13 +15,18 @@ from carbon.lib.dbus import startDbusClient, getNotificationServer
 
 from carbon.managers import BaseManager, MANAGERS
 
-
 class CarbonCore:
 
 	coreLock = threading.Lock()
 
 	def __init__(self):
 
+		if len(sys.argv) > 1:
+			mode = sys.argv[1]
+			if mode == "debug":
+				logger.enable()
+			
+				
 		logger.log("core", "Hello World!", logger.Level.info)
 
 		self.config = ConfigManager(Path("~/.config/carbon"))
@@ -31,9 +36,9 @@ class CarbonCore:
 		self.is_running = True
 
 
+
 	def init(self):
 
-		
 		# Start Dbus Client
 		startDbusClient()
 		
@@ -80,8 +85,6 @@ class CarbonCore:
 		)
 		
 		try:
-			print(self.config.ConfigVar)
-
 			self.loadState()
 		except CarbonError as e:
 			Notify(
@@ -91,7 +94,7 @@ class CarbonCore:
 			)
 
 		self.saveState()
-
+		
 
 	def run(self):
 

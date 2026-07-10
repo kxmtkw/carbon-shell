@@ -17,6 +17,7 @@ class _Logger():
 		warning = 2
 		critical = 3
 
+	_silent = True
 
 	def __init__(self) -> None:
 
@@ -34,11 +35,12 @@ class _Logger():
 		self.setOutfile("~/.carbon/logs/carbon.log")
 		self.setStartupError("/tmp/carbon_startup_error.txt")
 
-	
-	def disableStdout(self) -> None:
-		self.to_terminal = False
 
-	@locked()
+	@classmethod
+	def enable(cls) -> None:
+		cls._silent = False
+
+	
 	def setOutfile(self, path: str) -> None:
 		self.log_file = Path(path).expanduser()
 		if not self.log_file.parent.exists():
@@ -46,7 +48,7 @@ class _Logger():
 		if not self.log_file.exists():
 			self.log_file.touch()
 				
-	@locked()
+
 	def setStartupError(self, path: str) -> None:
 		self.startup_error_file = Path(path).expanduser()
 		if not self.startup_error_file.parent.exists():
@@ -56,7 +58,8 @@ class _Logger():
 
 
 	def log(self, sender: str, msg: str, level: Level) -> None:
-		
+		if _Logger._silent: return 
+
 		if self.to_terminal:
 			self._terminal_log(sender, msg, level)
 

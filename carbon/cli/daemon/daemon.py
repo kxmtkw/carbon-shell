@@ -6,10 +6,11 @@ import subprocess, sys, time
 def help():
 	return """ -- Carbon Daemon Utility --
 Usage:
-	--start      Start the daemon.
-	--restart    Restart the daemon.
-	--end        Kill the daemon.
-	--help       Print this message."""
+	--start         Start the daemon.
+	--restart       Restart the daemon.
+	--end           Kill the daemon.
+	--debug-start 	Launch the shell in debug mode.
+	--help          Print this message."""
 
 
 def parseFlag(argv: list[str]) -> str | None:
@@ -41,6 +42,26 @@ def start():
 
 	if process.poll() is None:
 		print("Daemon successfully started.")
+		return
+	
+	from carbon.utils import logger, Color
+
+	print("Could not start daemon.")
+	print(logger.extractStartupError(), end='')
+
+
+def debugStart():
+	process = subprocess.Popen(
+		[sys.executable, "-m", "carbon.core", "debug"],
+		stdout=subprocess.DEVNULL,
+		stderr=subprocess.DEVNULL,  
+		stdin=subprocess.DEVNULL,
+		start_new_session=True
+	)
+	time.sleep(1)
+
+	if process.poll() is None:
+		print("Daemon successfully started in debug mode.")
 		return
 	
 	from carbon.utils import logger, Color
@@ -109,6 +130,8 @@ def main():
 			restart()
 		case "end":
 			end()
+		case "debug-start":
+			debugStart()
 		case "help":
 			print(help())
 			exit(2)
