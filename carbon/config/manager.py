@@ -4,13 +4,35 @@ from typing import Any, Callable
 
 from carbon.utils import FileWatcher
 
-class StateManager:
+from .vars import _ConfigVar
+
+
+class ConfigManager:
+
+	ConfigVar: _ConfigVar = None
 
 	def __init__(self, path: Path):
+
+		self.configdir = path.expanduser()
+
+		ConfigManager.ConfigVar = _ConfigVar(
+			self.configdir,
+			self.configdir / "state.toml",
+			self.configdir / "data",
+		)
 		self._state = {}
-		self._state_file = path
+
+
+		if not self.configdir.exists():
+			self.configdir.mkdir(511, True)
+		
+		if not (self.configdir / "data").exists():
+			(self.configdir / "data").mkdir()
+
+		self._state_file = self.configdir / "state.toml"
+
 		self._is_loading_needed = True
-	
+
 		if not self._state_file.exists():
 			self.create()
 			return

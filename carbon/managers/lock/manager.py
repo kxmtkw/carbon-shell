@@ -3,6 +3,7 @@ from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, Dict, Literal
 
+from carbon.config.manager import ConfigManager
 from carbon.managers.base import BaseManager
 
 from carbon.utils import logger, CarbonError, Notify, procrun, shellrun
@@ -85,11 +86,11 @@ class LockScreenManager(BaseManager):
 				
 				self.state.image = img
 				shellrun(f"cp {img} ~/.config/carbon/data/lockscreen")
-				writeLockStyle(self.config_file, "~/.config/carbon/data/lockscreen")
+				writeLockStyle(self.config_file,  str(ConfigManager.ConfigVar.datadir / 'lockscreen'))
 
 			case "wallpaper":
 				self.state.style = "wallpaper"
-				writeLockStyle(self.config_file, "~/.config/carbon/data/wall")
+				writeLockStyle(self.config_file, str(ConfigManager.ConfigVar.datadir / 'wall'))
 
 			case _:
 				raise CarbonError(f"Unknown lock style: {style}")

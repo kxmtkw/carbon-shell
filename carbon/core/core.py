@@ -9,7 +9,7 @@ from carbon.ipc.payloads import CommandRequest, CommandOutput
 
 from carbon.utils import CarbonError, logger, Notify, shellrun, locked
 
-from carbon.state import StateManager
+from carbon.config import ConfigManager
 from carbon.lib.quickshell import Quickshell
 from carbon.lib.dbus import startDbusClient, getNotificationServer
 
@@ -24,23 +24,15 @@ class CarbonCore:
 
 		logger.log("core", "Hello World!", logger.Level.info)
 
-		self.configdir = Path("~/.config/carbon").expanduser()
-
-		if not self.configdir.exists():
-			self.configdir.mkdir(511, True)
-		
-		if not (self.configdir / "data").exists():
-			(self.configdir / "data").mkdir()
-
+		self.config = ConfigManager(Path("~/.config/carbon"))
 		self.server = Server(1)
-		self.state = StateManager(self.configdir / "state.toml")
 
-		self.lock = threading.Lock()
 		self.thread_pool = ThreadPoolExecutor(10)
 		self.is_running = True
 
 
 	def init(self):
+
 		
 		# Start Dbus Client
 		startDbusClient()
@@ -62,6 +54,7 @@ class CarbonCore:
 			manager = mgr_class(self.internalDispatch, self.getManagerState)
 			self.managers[manager.name()] = manager
 
+
 		self.dispatch_map = {
 			"daemon": {
 				"shutdown":         self.shutdown,
@@ -78,9 +71,6 @@ class CarbonCore:
 			manager.start()
 			self.dispatch_map[name] = manager.handlers()
 		
-		# wiring things up,
-		# this needs to be done indpendently, might make each manager do this own its own instead of depending on the core.
-
 		Notify.setNotificationFunction(getNotificationServer().sendNotification)
 
 		Notify(
@@ -90,6 +80,8 @@ class CarbonCore:
 		)
 		
 		try:
+			print(self.config.ConfigVar)
+
 			self.loadState()
 		except CarbonError as e:
 			Notify(
@@ -130,6 +122,8 @@ class CarbonCore:
 
 		self.server.close()
 
+		self.saveState()
+
 		logger.log("core", "Shutting down.", logger.Level.info)
 
 		return "Shutting down."
@@ -139,8 +133,8 @@ class CarbonCore:
 
 		errors = ""
 		
-		if not self.state.load():
-			msg = f"Corrupted or no state file: {self.state.file}."
+		if not self.config.load():
+			msg = f"Corrupted or no state file: {self.config.file}."
 
 			logger.log(
 				"core",
@@ -151,7 +145,7 @@ class CarbonCore:
 				
 
 		for name, manager in self.managers.items():
-			state = self.state.get(name)
+			state = self.config.get(name)
 
 			logger.log(
 				"core",
@@ -200,12 +194,12 @@ class CarbonCore:
 	def saveState(self):
 		
 		for name, manager in self.managers.items():
-			self.state.update(
+			self.config.update(
 				name,
 				dataclasses.asdict(manager.getState())
 			)
 
-		self.state.save()
+		self.config.save()
 		logger.log("core", "Saved state.", logger.Level.info)
 
 		return "State saved."
@@ -214,12 +208,12 @@ class CarbonCore:
 	def dumpState(self) -> str:
 		
 		for name, manager in self.managers.items():
-			self.state.update(
+			self.config.update(
 				name,
 				dataclasses.asdict(manager.getState())
 			)
 
-		return self.state.dump()
+		return self.config.dump()
 	
 	
 	def getDispatchMap(self):
@@ -287,7 +281,7 @@ class CarbonCore:
 			manager_map = self.dispatch_map[command.manager]
 		except KeyError:
 			logger.log("core", f"Unknown manager requested by client(id:{id}): {command.manager}", logger.Level.warning)
-			with self.lock:
+			with self.coreLock:
 				self.server.send(id, CommandOutput(1,f"Unknown manager: {command.manager}"))
 				return
 			
@@ -299,7 +293,7 @@ class CarbonCore:
 
 		elif command.handler not in manager_map:
 			logger.log("core", f"Unknown handler '{command.handler}' for manager '{command.manager}' client(id:{id})", logger.Level.warning)
-			with self.lock:
+			with self.coreLock:
 				self.server.send(id, CommandOutput(1, f"Unknown handler for {command.manager}: {command.handler}"))
 			return
 		
@@ -342,7 +336,7 @@ class CarbonCore:
 
 		output = CommandOutput(code, response)
 
-		with self.lock:
+		with self.coreLock:
 			self.server.send(id, output)
 			if save_state:
 				self.saveState()

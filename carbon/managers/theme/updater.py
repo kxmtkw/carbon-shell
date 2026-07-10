@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Literal
 
+from carbon.config.manager import ConfigManager
 from carbon.utils import shellrun, writefile, procrun, CarbonError
 
 from .colors import *
@@ -10,7 +11,6 @@ from . import shell_styles
 from carbon.lib.quickshell import Quickshell
 
 class ThemeUpdater:
-
 
 	def __init__(self):
 		self.colorfiles = {}
@@ -71,7 +71,7 @@ class ThemeUpdater:
 		if not Path(path).expanduser().exists():
 			raise CarbonError(f"Face image not found: {path}")
 		
-		out = shellrun(f"cp {path} ~/.config/carbon/data/face")
+		out = shellrun(f"cp {path} {ConfigManager.ConfigVar.datadir / 'face'}")
 
 		if not out[0]:
 			raise CarbonError(f"Failed to update face image. Reason: {out[1]}")
@@ -89,7 +89,7 @@ class ThemeUpdater:
 		if not success:
 			raise CarbonError(f"Failed to change wallpaper: swww failure\n{output}")
 			
-		out = shellrun(f"cp {path} ~/.config/carbon/data/wall")		
+		out = shellrun(f"cp {path} {ConfigManager.ConfigVar.datadir / 'wall'}")		
 
 		if not out[0]:
 			raise CarbonError(f"Failed to update wallpaper image. Reason: {out[1]}")
