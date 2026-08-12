@@ -1,5 +1,12 @@
 
 
+> [!WARNING]
+> Due to hyprland changing their configuration language to lua and my laptop getting fucked, this shell is broken for now.
+>
+> :(
+> 
+> Anyways I plan on rewriting the shell in Fabric, a UI toolkit, so it can replace both Quickshell and Rofi. Fabric is in python so the shell logic can be reused. (I will rewrite that anyways lol.)
+
 
 # Carbon Shell 
 
