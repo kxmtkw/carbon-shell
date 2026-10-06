@@ -1,11 +1,15 @@
 
 
 > [!WARNING]
-> Due to hyprland changing their configuration language to lua and my laptop getting fucked, this shell is broken for now.
+> This shell is now deprecated and no longer works!
 >
 > :(
-> 
-> Anyways I plan on rewriting the shell in Fabric, a UI toolkit, so it can replace both Quickshell and Rofi. Fabric is in python so the shell logic can be reused. (I will rewrite that anyways lol.)
+>
+> This mostly happened because (1) Hyprland changed its config language to lua (2) It proved to be quite time consuming to make a cohesive shell (3) I am too lazy.
+>
+> I switched to calaestia shell lol. 
+> If I ever come back to this, I will try to rewrite this shell in `Fabric` completely so I do not have to join together random stuff to make the shell work.
+
 
 
 # Carbon Shell 
